@@ -1,0 +1,39 @@
+
+/* 미팅룸 스타일 */
+#mtr-area{
+    width:900px;
+    padding-top:10px;
+    margin:20px;            
+}
+#mtr-area>div{
+    float:left;
+    height:100%;
+}
+#mtr-area,#mtr2{
+	padding:20px;
+}
+#mtrForm>table{width:100%;}
+#mtrTable input{
+width: 100%;
+height: 100%;
+}
+#meeting-area{
+    border: 1px;
+    border-color: black;
+}
+#meetingbtn{
+    background-color:rgb(45, 130, 235);
+    color: white;
+}
+#mtr-img{
+    width: 90%;
+    height: 90%;
+    padding: 10px;
+    background-color:rgb(45, 130, 235);
+}
+
+.contents{
+	width:70%;
+	height:90%;
+	padding: 10px;
+}   
