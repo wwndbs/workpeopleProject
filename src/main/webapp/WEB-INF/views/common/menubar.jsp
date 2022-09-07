@@ -251,7 +251,7 @@
 
 				<ul class="sidebar-sub-nav collapse" id="navExtra4">
 					<li class="sidebar-nav-item">
-						<a href="./layouts/login.html" class="sidebar-nav-link">
+						<a href="myProject.pr" class="sidebar-nav-link">
 							<span class="sidebar-nav-abbr"> Mo </span> <span class="sidebar-nav-name"> 내 프로젝트 조회 </span>
 						</a>
 					</li>
