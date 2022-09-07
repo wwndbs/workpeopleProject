@@ -34,7 +34,7 @@
 <!--summernote-lite-->
 <script src="resources/api/summernote/summernote-lite.js"></script>
 <script src="resources/api/summernote/lang/summernote-ko-KR.js"></script>
-<link rel="stylesheet" href="../workpeople-resources/summernote/summernote-lite.css">
+<link rel="stylesheet" href="resources/api/summernote/summernote-lite.css">
 
 
 
