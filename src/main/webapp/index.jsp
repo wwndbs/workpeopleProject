@@ -248,7 +248,6 @@
 			})
 		})
 	</script>
-<script src="resources/bootstrap/dist/js/vendor.js"></script>
-<script src="resources/bootstrap/dist/js/adminx.js"></script>
+	<jsp:include page="WEB-INF/views/common/footer.jsp"/>
 </body>
 </html>
