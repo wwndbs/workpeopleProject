@@ -8,8 +8,6 @@
 
 <!-- bootstrap template -->
 <link rel="stylesheet" type="text/css" href="resources/bootstrap/dist/css/adminx.css" media="screen" />
-<script src="resources/bootstrap/dist/js/vendor.js"></script>
-<script src="resources/bootstrap/dist/js/adminx.js"></script>
 
 <!--bootstrap, jQuery-->
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
