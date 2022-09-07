@@ -256,7 +256,7 @@
 						</a>
 					</li>
 					<li class="sidebar-nav-item">
-						<a href="./layouts/login.html" class="sidebar-nav-link">
+						<a href="totalList.pr" class="sidebar-nav-link">
 							<span class="sidebar-nav-abbr"> Mo </span> <span class="sidebar-nav-name"> 전체 프로젝트 조회 </span>
 						</a>
 					</li>
