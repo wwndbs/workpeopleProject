@@ -248,5 +248,7 @@
 			})
 		})
 	</script>
+<script src="resources/bootstrap/dist/js/vendor.js"></script>
+<script src="resources/bootstrap/dist/js/adminx.js"></script>
 </body>
 </html>
