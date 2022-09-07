@@ -115,25 +115,25 @@
 
 				<ul class="sidebar-sub-nav collapse" id="navForms">
 					<li class="sidebar-nav-item">
-						<a href="./layouts/form_elements.html" class="sidebar-nav-link">
+						<a href="documentList.ap" class="sidebar-nav-link">
 							<span class="sidebar-nav-abbr"> Wr </span> <span class="sidebar-nav-name"> 결재작성 </span>
 						</a>
 					</li>
 
 					<li class="sidebar-nav-item">
-						<a href="./layouts/form_advanced.html" class="sidebar-nav-link">
+						<a href="approvalList.ap" class="sidebar-nav-link">
 							<span class="sidebar-nav-abbr"> Vi </span> <span class="sidebar-nav-name"> 결재조회 </span>
 						</a>
 					</li>
 
 					<li class="sidebar-nav-item">
-						<a href="./layouts/form_advanced.html" class="sidebar-nav-link">
+						<a href="referenceList.ap" class="sidebar-nav-link">
 							<span class="sidebar-nav-abbr"> Re </span> <span class="sidebar-nav-name"> 참조문서 </span>
 						</a>
 					</li>
 
 					<li class="sidebar-nav-item">
-						<a href="./layouts/form_advanced.html" class="sidebar-nav-link">
+						<a href="saveList.ap" class="sidebar-nav-link">
 							<span class="sidebar-nav-abbr"> Sa </span> <span class="sidebar-nav-name"> 임시저장 문서 </span>
 						</a>
 					</li>
@@ -235,7 +235,7 @@
 					</li>
 
 					<li class="sidebar-nav-item">
-						<a href="./layouts/login.html" class="sidebar-nav-link">
+						<a href="todoList.td" class="sidebar-nav-link">
 							<span class="sidebar-nav-abbr"> Ad </span> <span class="sidebar-nav-name"> To-Do </span>
 						</a>
 					</li>

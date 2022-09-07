@@ -89,7 +89,7 @@
 									<li><a href="">대기</a></li>
 								</ul>
 								<span>
-									<a href=""><i class="fas fa-ellipsis-h"></i></a>
+									<a href="approvalList.ap"><i class="fas fa-ellipsis-h"></i></a>
 								</span>
 							</div>
 							<table class="table table-hover" style="text-align: center;">
@@ -209,7 +209,7 @@
 									<li><a href="">완료</a></li>
 								</ul>
 								<span>
-									<a href=""><i class="fas fa-ellipsis-h"></i></a>
+									<a href="todoList.td"><i class="fas fa-ellipsis-h"></i></a>
 								</span>
 							</div>
 							<ul class="todo-list">
