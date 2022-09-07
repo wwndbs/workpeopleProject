@@ -1,0 +1,902 @@
+/*common*/
+ul{
+    margin : 0;
+    padding : 0;
+    list-style: none;
+}
+
+input:focus,
+button:focus,
+textarea:focus{
+    outline: none;
+}
+
+/*대시보드*/
+.top-wrapper,
+.bottom-wrapper{
+    display: flex;
+    flex-direction: row;
+}
+
+.top-wrapper>div,
+.top-wrapper>.profile-alert-wrapper>div,
+.bottom-wrapper>div{
+    background-color: white;
+    border : 1px solid rgb(224, 224, 224);
+    border-radius: 5px;
+}
+
+.bottom-wrapper{
+    margin-top : 20px;
+}
+
+/*프로필, 알림 스타일*/
+.top-wrapper>.profile-alert-wrapper{
+    width : 300px;
+    height : 370px;
+    display : flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-right : 20px;
+    border-style: none;
+    background-color : #f6f9fa;
+}
+
+.top-wrapper>.profile-alert-wrapper>.profile-area{
+    height : 270px;
+    background-color: rgb(0, 135, 239);
+    text-align: center;
+    padding-top : 60px;
+}
+
+.top-wrapper>.profile-alert-wrapper>.alert-area{
+    height : 80px;
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    padding-top : 15px;
+}
+
+.profile-alert-wrapper img{
+    width : 90px;
+    height : 90px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.profile-alert-wrapper #profile-name{
+    font-size : 18px;
+    font-weight: bold;
+    color : white;
+}
+
+.profile-alert-wrapper #department-name{
+    font-size : 16px;
+    color : white;
+}
+
+.profile-alert-wrapper .alert-item{
+    border-style: none;
+}
+
+.profile-alert-wrapper .alert-item a:hover{
+    text-decoration: none;
+}
+
+.profile-alert-wrapper span{
+    font-size : 18px;
+    font-weight :600;
+}
+
+/*게시판 스타일*/
+.top-wrapper>.notice-area{
+    width : 750px;
+    height : 370px;
+    margin-right : 20px;
+    padding : 20px 20px 20px 20px;
+}
+
+.notice-area>.notice-menu{
+    display : flex;
+    justify-content: space-between;
+}
+
+.notice-area>.notice-menu ul{
+    display: flex;
+    font-size : 16px;
+}
+
+.notice-area>.notice-menu li{
+    margin-right : 20px;
+}
+
+.notice-area>.notice-menu a{
+    color : black;
+}
+
+.notice-area>.notice-menu a:hover{
+    color : rgb(0, 135, 239);
+    text-decoration: none;
+}
+
+.notice-area>.notice-menu li:first-child{
+    font-size : 20px;
+    font-weight: bold;
+    line-height: 22px;
+}
+
+.notice-area>.notice-list>li{
+    font-size : 16px;
+    font-weight: normal;
+    display : flex;
+    justify-content: space-between;
+    margin-bottom : 12px;
+}
+
+.notice-area>.notice-list a{
+    color : black;
+}
+
+.notice-area>.notice-list a:hover{
+    color : rgb(0, 135, 239);
+}
+
+/*결재내역 스타일*/
+.top-wrapper>.approval-area{
+    width : 700px;
+    height : 370px;
+    padding : 20px 20px 20px 20px;
+}
+
+.approval-area>.approval-menu{
+    display : flex;
+    justify-content: space-between;
+    margin-bottom : 10px;
+}
+
+.approval-area>.approval-menu ul{
+    display: flex;
+    font-size : 16px;
+}
+
+.approval-area>.approval-menu li{
+    margin-right : 20px;
+}
+
+.approval-area>.approval-menu a{
+    color : black;
+}
+
+.approval-area>.approval-menu a:hover{
+    color : rgb(0, 135, 239);
+    text-decoration: none;
+}
+
+.approval-area>.approval-menu li:first-child{
+    font-size : 20px;
+    font-weight: bold;
+    line-height: 22px;
+}
+
+.approval-area>.table{
+    font-size : 16px;
+}
+
+.approval-area td{
+    cursor: pointer;
+}
+
+
+/*근태관리 스타일*/
+.bottom-wrapper>.time-area{
+    width : 300px;
+    height : 370px;
+    margin-right : 20px;
+    padding : 20px;
+    text-align: center;
+}
+
+.time-area>ul{
+    display : flex;
+    justify-content: space-between;
+    margin-bottom : 70px;
+}
+
+.time-area>ul>li:first-child{
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 22px;
+}
+
+.time-area>ul>li>a{
+    color : black;
+}
+
+.time-area>ul>li>a:hover{
+    color : rgb(0, 135, 239);
+}
+
+.time-area>#clock{
+    color : rgb(0, 135, 239);
+}
+
+.time-area>#clock>h3{
+    font-size : 40px;
+}
+
+.time-area>#time{
+    margin-top : 50px;
+}
+
+.time-area>#btn{
+    margin-top : 20px;
+}
+
+.time-area>#btn>button{
+    width : 100px;
+}
+
+/*프로젝트 스타일*/
+.bottom-wrapper>.project-area{
+    width : 750px;
+    height : 370px;
+    margin-right : 20px;
+    padding : 20px;
+    overflow: hidden;
+    position : relative;
+}
+
+.project-area>ul{
+    display : flex;
+    justify-content: space-between;
+    margin-bottom : 25px;
+}
+
+.project-area>ul>li:first-child{
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 22px;
+}
+
+.project-area>ul>li>a{
+    color : black;
+}
+
+.project-area>ul>li>a:hover{
+    color : rgb(0, 135, 239);
+}
+
+.project-area>.project-container{
+    position : absolute;
+    width : 1200px;
+    height : 220px;
+    transition: all 1s;
+    display : flex;
+}
+
+.project-area>.project-container>.project{
+    width : 225px;
+    height : 200px;
+    border : 1px solid rgb(224, 224, 224);
+    border-radius: 10px;
+    padding : 15px;
+    cursor: pointer;
+    margin-right : 15px;
+    display : flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.project-area>.project-container>.project:hover{
+	background-color : #f4f9fe;
+}
+
+.project-area>.project-container>.project>span:nth-child(2){
+    text-align: right;
+}
+
+.project-area>.slide-btn{
+    text-align: center;
+    margin-top : 270px;
+}
+
+.project-area>.slide-btn>i{
+    cursor : pointer;
+}
+
+/*할 일 스타일*/
+.bottom-wrapper>.todo-area{
+    width : 700px;
+    height : 370px;
+    padding : 20px 20px 20px 20px;
+}
+
+.todo-area>.todo-menu{
+    display : flex;
+    justify-content: space-between;
+    margin-bottom : 20px;
+}
+
+.todo-area>.todo-menu ul{
+    display: flex;
+    font-size : 16px;
+}
+
+.todo-area>.todo-menu li{
+    margin-right : 20px;
+}
+
+.todo-area>.todo-menu a{
+    color : black;
+}
+
+.todo-area>.todo-menu a:hover{
+    color : rgb(0, 135, 239);
+    text-decoration: none;
+}
+
+.todo-area>.todo-menu li:first-child{
+    font-size : 20px;
+    font-weight: bold;
+    line-height: 22px;
+}
+
+.todo-area>.todo-list>li{
+    height : 60px;
+    padding : 0 20px 0 20px;
+    line-height: 60px;
+    border : 1px solid rgb(224, 224, 224);
+    border-radius: 10px;
+    cursor: pointer;
+    font-size : 16px;
+    margin-bottom : 10px;
+    transition: all 0.3s;
+}
+
+.todo-area>.todo-list>li:hover{
+    background-color: #f4f9fe;
+}
+
+
+
+/*결재내역 조회 부분*/
+/*검색부분*/
+.search-wrapper{
+    width : 100%;
+    height : 80px;
+    display: flex;
+    background-color: white;
+    border : 1px solid rgb(224, 224, 224);
+    border-radius: 5px;
+    padding : 0 20px 0 20px;
+}
+
+.search-wrapper>span{
+    line-height: 80px;
+    font-size : 20px;
+    font-weight : bold;
+}
+
+.search-wrapper>.search-area{
+    width : 600px;
+    height : 40px;
+    margin : auto;
+    display : flex;
+    justify-content: space-between;
+}
+
+.search-wrapper>.search-area>input{
+    width : 520px;
+}
+
+.search-wrapper>.search-area>button{
+    width : 70px;
+}
+
+/*메뉴부분*/
+.menu-wrapper{
+    height : 35px;
+    margin : 10px 0 10px 0;
+}
+
+.menu-wrapper>button{
+    width : 70px;
+    height : 35px;
+    margin-right : 5px;
+}
+
+/*리스트부분*/
+.list-wrapper{
+    width : 100%;
+    height : 650px;
+    background-color : white;
+    border : 1px solid rgb(224, 224, 224);
+    border-radius: 5px;
+    padding : 20px;
+}
+
+.list-wrapper>table{
+    margin-bottom: 40px;
+}
+
+.list-wrapper>table>thead>tr>th{
+    font-size : 14px;
+}
+
+.list-wrapper>table>thead>tr a{
+    color : rgb(134, 134, 134);
+}
+
+.list-wrapper>table>tbody>tr{
+    cursor: pointer;
+}
+
+.list-wrapper>.bottom-btn{
+    width : 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.list-wrapper>.bottom-btn>.justify-content-center{
+    margin : 0 700px 0 0;
+}
+
+/*태그색상*/
+.tag-orange{
+    width : 80px;
+    height : 20px;
+    background-color: rgb(243, 156, 18);
+    margin : auto;
+    color : white;
+    border-radius: 50px;
+}
+.tag-red{
+    width : 80px;
+    height : 20px;
+    background-color: rgb(231, 76, 60);
+    margin : auto;
+    color : white;
+    border-radius: 50px;
+}
+.tag-green{
+    width : 80px;
+    height : 20px;
+    background-color: rgb(46, 204, 113);
+    margin : auto;
+    color : white;
+    border-radius: 50px;
+}
+.tag-gray{
+    width : 80px;
+    height : 20px;
+    background-color: rgb(158, 158, 158);
+    margin : auto;
+    color : white;
+    border-radius: 50px;
+}
+
+
+
+/*Todo부분*/
+.todo-content-wrapper{
+    height : 700px;
+    display : flex;
+    justify-content: space-between;
+    margin-top : 10px;
+}
+
+.todo-content-wrapper>.todo-list-area{
+    width : 570px;
+    display : flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.todo-content-wrapper .todo-title{
+    color : white;
+    height : 40px;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.todo-content-wrapper .todo-list{
+    height : 650px;
+    padding : 20px 20px 20px 20px;
+    background-color: white;
+    border : 1px solid rgb(224, 224, 224);
+    border-radius: 5px;
+    overflow: auto;
+}
+
+.todo-list>ul>li{
+    height : 50px;
+    margin-bottom : 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    padding : 10px 20px 10px 20px;
+    background-color :#f4f9fe;
+    transition : all 0.3s;
+}
+
+.todo-list>ul>li>span{
+    display : inline-block;
+    width : 430px;
+    max-height : 80px;
+    white-space: normal;
+    word-break: normal;
+}
+
+.todo-list>ul>li:hover{
+    background-color: #ecf6ff;
+}
+
+.todo-list button{
+    border-style : none;
+    background-color : #00ffff00;
+    cursor: pointer;
+    color :rgb(158, 158, 158);
+    font-size : 18px;
+}
+
+.todo-list button:hover{
+    color : rgb(231, 76, 60);
+}
+
+.blue{
+    background-color: rgb(0, 135, 239);
+}
+
+.orange{
+    background-color: rgb(243, 156, 18);
+}
+
+.green{
+    background-color : rgb(46, 204, 113);
+}
+
+
+
+/*결재양식선택*/
+.document-content-wrapper{
+    height : 700px;
+    display: flex;
+    margin-top : 10px;
+}
+
+.document-content-wrapper>.category-area{
+    flex-grow: 1;
+    margin-right : 20px;
+    background-color: white;
+    border : 1px solid rgb(224, 224, 224);
+    border-radius: 5px;
+    padding : 20px;
+}
+
+.document-content-wrapper>.category-area>span,
+.document-content-wrapper>.document-area>span{
+    font-size : 20px;
+    font-weight : bold;
+}
+
+.document-content-wrapper>.category-area>ul>li:first-child{
+    margin-top : 30px;
+}
+
+.document-content-wrapper>.category-area>ul>li{
+    margin-top : 10px;
+    padding : 10px;
+    cursor: pointer;
+    height : 60px;
+    font-size : 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    border : 1px solid rgb(224, 224, 224);
+    line-height: 35px;
+}
+
+.document-content-wrapper>.category-area>ul>li:hover{
+    background-color: #f4f9fe;
+}
+
+.document-content-wrapper>.document-area{
+    flex-grow: 2;
+    background-color: white;
+    border : 1px solid rgb(224, 224, 224);
+    border-radius: 5px;
+    padding : 20px;
+}
+
+.document-content-wrapper>.document-area>ul{
+    width : 800px;
+    margin : 30px 0 0 0;
+}
+
+.document-content-wrapper>.document-area>ul>li{
+    height : 60px;
+    font-size : 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    padding : 10px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom : 10px;
+    border : 1px solid rgb(224, 224, 224);
+    line-height: 35px;
+}
+
+.document-content-wrapper>.document-area>ul>li:hover{
+    background-color: #f4f9fe;
+}
+
+
+
+/*결재작성 - 휴가*/
+.document-wrapper{
+    display : flex;
+    height : 800px;
+    justify-content: space-between;
+}
+
+.document-wrapper>.write-area{
+    width : 1300px;
+    background-color: white;
+    border : 1px solid rgb(224, 224, 224);
+    border-radius: 5px;
+    margin-right : 20px;
+    overflow: auto;
+    padding : 60px;
+    box-sizing: border-box;
+}
+
+.document-wrapper>.write-area>table{
+    width : 1000px;
+    margin : auto;
+    text-align: center;
+}
+
+.document-wrapper>.write-area>.btn-area{
+    width : 1000px;
+    text-align: right;
+    margin : 50px auto 0 auto;
+}
+
+.document-wrapper>.approval-wrapper{
+    width : 500px;
+    display : flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.document-wrapper>.approval-wrapper>button{
+    width : 100%;
+    height : 50px;
+    font-size : 18px;
+}
+
+.approval-wrapper>.approval-reference-area{
+    height : 360px;
+    background-color: white;
+    border : 1px solid rgb(224, 224, 224);
+    border-radius: 5px;
+    padding : 15px;
+    overflow: auto;
+}
+
+.approval-wrapper>.approval-reference-area p{
+    font-size : 20px;
+    font-weight: bold;
+}
+
+.approval-wrapper>.approval-reference-area li{
+    display : flex;
+    justify-content: space-between;
+    margin-bottom : 20px;
+}
+
+.approval-wrapper>.approval-reference-area img{
+    width : 30px;
+    height : 30px;
+    border-radius: 50%;
+}
+
+.approval-wrapper>.approval-reference-area button{
+    border-style : none;
+    background-color : #00ffff00;
+    cursor: pointer;
+    color :rgb(158, 158, 158);
+    font-size : 18px;
+}
+
+.approval-wrapper>.approval-reference-area button:hover{
+    color : rgb(231, 76, 60);
+}
+
+
+
+/*결재선 모달 부분*/
+.modal-background{
+    width : 100%;
+    height : 100%;
+    background-color : rgba(0, 0, 0, 0.5);
+    z-index : 9999;
+    position : absolute;
+    top : 0;
+    left : 0;
+}
+
+.modal-background>.modal-wrapper{
+    width : 1000px;
+    height : 500px;
+    background-color: white;
+    border : 1px solid rgb(224, 224, 224);
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    padding : 15px;
+    margin : auto;
+    position : absolute;
+    top : 0;
+    bottom : 0;
+    left : 0;
+    right : 0;
+}
+
+.modal-background>.modal-wrapper>.content-area{
+    display : flex;
+    height : 420px;
+}
+
+.modal-background>.modal-wrapper>.content-area>.content-01{
+    width : 200px;
+    margin-right :15px;
+    background-color: white;
+    border : 1px solid rgb(224, 224, 224);
+    padding : 15px;
+}
+
+.content-01 button{
+    border-style : none;
+    background-color : #00ff0000;
+    cursor: pointer;
+}
+
+.content-01 ul{
+    margin : 0 0 15px 30px;
+}
+
+.content-01 a{
+    color : black;
+}
+
+.modal-background>.modal-wrapper>.content-area>.content-02{
+    width : 345px;
+    background-color: white;
+    border : 1px solid rgb(224, 224, 224);
+    padding : 15px;
+}
+
+.content-02>.search{
+    display: flex;
+    margin-bottom : 20px;
+}
+
+.content-02>.search>input{
+    width : 100%;
+}
+
+.content-02>.member-list{
+    height : 340px;
+    overflow: auto;
+}
+
+.content-02 li{
+    display : flex;
+    margin : 10px 0 10px 0;
+    align-items: center;
+}
+
+.content-02 img{
+    width : 30px;
+    border-radius: 50%;
+}
+
+.content-02>.member-list button{
+    background-color : #00ff0000;
+    color : gray;
+    cursor: pointer;
+    border-style: none;
+    margin-left : 90px;
+}
+
+.content-02 input{
+    margin-right : 10px;
+}
+
+.modal-background>.modal-wrapper>.content-area>.content-03{
+    width : 60px;
+}
+
+.content-03>div{
+    font-size : 20px;
+    color : gray;
+    text-align: center;
+    vertical-align: middle;
+    height : 50%;
+    padding-top : 55px;
+}
+
+.content-03>div>i{
+    cursor: pointer;
+    margin : 15px 0 15px 0;
+}
+
+.content-03>div>i:hover{
+    color : rgb(90, 90, 90);
+}
+
+.modal-background>.modal-wrapper>.content-area>.content-04{
+    width : 345px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.content-04>.approval-line,
+.content-04>.reference{
+    height : 49%;
+    overflow : auto;
+    padding : 15px;
+    background-color: white;
+    border : 1px solid rgb(224, 224, 224);
+}
+
+.content-04>.approval-line li,
+.content-04>.reference li{
+    display : flex;
+    margin : 10px 0 10px 0;
+    align-items: center;
+}
+
+.content-04>.approval-line input,
+.content-04>.reference input{
+    margin-right : 10px;
+}
+
+.content-04>.approval-line img,
+.content-04>.reference img{
+    width : 30px;
+    border-radius: 50%;
+}
+
+.content-04>.approval-line button,
+.content-04>.reference button{
+    background-color : #00ff0000;
+    color : gray;
+    cursor: pointer;
+    border-style: none;
+    margin-left : 90px;
+}
+
+.content-04>.approval-line button:hover,
+.content-04>.reference button:hover{
+    color : rgb(231, 76, 60);
+}
+
+.modal-background>.modal-wrapper>.modal-btn{
+    text-align: right;
+    margin-top : 15px;
+}
+
+
+
+/*결재승인*/
+.approval-check{
+    cursor: pointer;
+}
