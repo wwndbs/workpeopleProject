@@ -13,6 +13,7 @@
 		<typeAlias type="com.gd.workpp.project.model.vo.Project" alias="Project" />
 		<typeAlias type="com.gd.workpp.project.model.vo.ProMember" alias="ProMember" />
 		<typeAlias type="com.gd.workpp.project.model.vo.ProBoard" alias="ProBoard" />
+		<typeAlias type="com.gd.workpp.mail.model.vo.Mail" alias="Mail" />
 	</typeAliases>
 	
 	 <mappers>
@@ -20,6 +21,7 @@
 	 	<mapper resource="/mappers/approval-mapper.xml" />
 	 	<mapper resource="/mappers/holiday-mapper.xml" />
 	 	<mapper resource="/mappers/project-mapper.xml" />
+	 	<mapper resource="/mappers/mail-mapper.xml" />
 	 </mappers>
 
 	
