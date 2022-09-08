@@ -72,9 +72,10 @@
 .board-table{
     background-color: white;
     padding: 5% 3%;
-    height: 80%;
+    height: 70%;
     width: 95%;
     margin: auto;
+    border: 1px solid rgb(224, 224, 224);
 }
 
 .board-table table{
