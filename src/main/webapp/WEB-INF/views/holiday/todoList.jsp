@@ -22,9 +22,10 @@
 
 					<div class="search-wrapper">
 						<span>할 일</span>
-						<form class="search-area">
-							<input type="text" placeholder="새로운 할 일을 생성해보세요." class="form-control">
-							<button class="btn btn-primary">등록</button>
+						<form class="search-area" action="insertTodo.td">
+							<input type="hidden" value="${ loginUser.userNo }" name="userNo">
+							<input type="text" placeholder="새로운 할 일을 생성해보세요." class="form-control" name="todoContent">
+							<button class="btn btn-primary" type="submit">등록</button>
 						</form>
 					</div>
 					<div class="todo-content-wrapper">
@@ -32,18 +33,7 @@
 							<div class="todo-title blue">할 일</div>
 							<div class="todo-list" id="list" draggable="true">
 								<ul>
-									<li id="item">
-										<span>오늘의 할 일은 무엇일까요</span>
-										<button><i class="fas fa-times"></i></button>
-									</li>
-									<li id="item">
-										<span>오늘의 할 일은 무엇일까요</span>
-										<button><i class="fas fa-times"></i></button>
-									</li>
-									<li id="item">
-										<span>오늘의 할 일은 무엇일까요</span>
-										<button><i class="fas fa-times"></i></button>
-									</li>
+									<!-- ajax조회 -->
 								</ul>
 							</div>
 						</div>
@@ -51,14 +41,7 @@
 							<div class="todo-title orange">진행중</div>
 							<div class="todo-list" id="run" draggable="true">
 								<ul>
-									<li id="item">
-										<span>오늘의 할 일은 무엇일까요</span>
-										<button><i class="fas fa-times"></i></button>
-									</li>
-									<li id="item">
-										<span>오늘의 할 일은 무엇일까요</span>
-										<button><i class="fas fa-times"></i></button>
-									</li>
+									<!-- ajax조회 -->
 								</ul>
 							</div>
 						</div>
@@ -66,14 +49,7 @@
 							<div class="todo-title green">완료</div>
 							<div class="todo-list" id="success" draggable="true">
 								<ul>
-									<li id="item">
-										<span>오늘의 할 일은 무엇일까요</span>
-										<button><i class="fas fa-times"></i></button>
-									</li>
-									<li id="item">
-										<span>오늘의 할 일은 무엇일까요</span>
-										<button><i class="fas fa-times"></i></button>
-									</li>
+									<!-- ajax조회 -->
 								</ul>
 							</div>
 						</div>
@@ -85,6 +61,43 @@
 	
 	<!-- 드래그 제이쿼리 -->
 	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+	
+	<script>
+		$(function(){
+			$.ajax({
+				url : "todoListView.td",
+				success : function(todolist){
+					let list = "";
+					let run = "";
+					let success = "";
+					for(let i = 0; i < todolist.length; i++){
+						if(todolist[i].status == 1){
+							list += '<li id="item">'
+							     +  	'<span>' + todolist[i].todoContent + '</span>'
+							     +      '<button><i class="fas fa-times"></i></button>'
+							     +  '</li>';
+							$("#list ul").html(list);
+						}else if(todolist[i].status == 2){
+							 run += '<li id="item">'
+							     +  	'<span>' + todolist[i].todoContent + '</span>'
+							     +      '<button><i class="fas fa-times"></i></button>'
+							     +  '</li>';
+							 $("#run ul").html(run);
+						}else{
+							 success += '<li id="item">'
+							     +  	'<span>' + todolist[i].todoContent + '</span>'
+							     +      '<button><i class="fas fa-times"></i></button>'
+							     +  '</li>';
+							 $("#success ul").html(success);
+						}
+					}
+				},
+				error : function(){
+					console.log("할 일 조회 부분 ajax연결 실패");
+				}
+			})
+		})
+	</script>
 	
 	<script>
 		$(function() {
