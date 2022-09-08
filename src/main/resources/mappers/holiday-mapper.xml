@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="holidayMapper">
+
+	<resultMap id="todoResult" type="Todo">
+		<result column="todo_no" property="todoNo" />
+		<result column="user_no" property="userNo" />
+		<result column="todo_content" property="todoContent" />
+		<result column="create_date" property="createDate" />
+		<result column="modify_date" property="modifyDate" />
+		<result column="status" property="status" />
+	</resultMap>
+
+	<select id="todoListView" resultMap="todoResult">
+		select todo_no
+		     , user_no
+		     , todo_content
+		     , create_date
+		     , modify_date
+		     , status
+		  from todo
+		 where user_no = #{userNo}
+		 order by create_date desc
+		 
+	</select>
+	
+	<insert id="insertTodo">
+		insert into
+	      todo (
+	       	   todo_no
+	       	 , user_no
+	       	 , todo_content
+	           )
+	    values (
+	    	   seq_todo.nextval
+	    	 , #{userNo}
+	    	 , #{todoContent}
+	           )
+	</insert>
+</mapper>
