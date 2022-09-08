@@ -10,5 +10,9 @@
 <body>
 <script src="resources/bootstrap/dist/js/vendor.js"></script>
 <script src="resources/bootstrap/dist/js/adminx.js"></script>
+
+<!--ionic icon-->
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 </html>

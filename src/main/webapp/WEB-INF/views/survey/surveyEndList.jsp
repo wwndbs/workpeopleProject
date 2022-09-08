@@ -42,7 +42,7 @@
 	
 	            <!-- 상단 카테고리명 -->
 	            <div class="pb-3">
-	              <h5 style="font-weight: 400"><b>진행중인 설문</b></h2>
+	              <h5 style="font-weight: 400"><b>마감된 설문</b></h2>
 	            </div>
 	
 	            <!--메인페이지 컨텐츠-->
@@ -50,7 +50,7 @@
 	              
 	              <!-- 게시글 시작 -->
 	                <div class="notice-area div4">
-	                  <table class="pro-table table-hover mb-0">
+	                  <table class="pro-table  table-hover mb-0">
 	                    <thead>
 	                      <tr>
 	                        <th width="40px"></th>
@@ -64,7 +64,7 @@
 	                      </tr>
 	                    </thead>
 	                    <tbody class="notice-list">
-	                      <tr onclick="location.href='listDetail.su'">
+	                      <tr onclick="location.href='endListDetail.su'">
 	                        <td></td>
 	                        <td>10</td>
 	                        <td><div class="btn btn-sm btn-primary btn2">참여완료</div></td>
@@ -177,7 +177,7 @@
 	                    </div>
 	                    <div class="search-div" style="width:30%; display:flex; ">
 	                      <input class="form-control mb-2 search1" type="text" placeholder="게시물 검색" style="height:40px;">
-	                      <button type="submit" class="btn btn-sm btn-primary" style="height:40px; width:100px">검색</button>
+	                      <button type="submit" class="btn btn-sm btn-primary" style="height:40px;">검색</button>
 	                    </div>
 	                  </div>
 	
@@ -207,13 +207,13 @@
 	        </div>
 	      </div>
 	    </div>
-	    
+    
     <!-- bootstrap -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
     <script src="resources/bootstrap/dist/js/vendor.js"></script>
-    <script src="resources/bootstrap/dist/js/adminx.js"></script>
-    
+    <script src="resources/bootstrap/dist/js/adminx.js"></script>    
+
 </body>
 </html>

@@ -9,11 +9,13 @@
 	<typeAliases>
 		<typeAlias type="com.gd.workpp.member.model.vo.Member" alias="Member" />
 		<typeAlias type="com.gd.workpp.approval.model.vo.Document" alias="Document" />
+		<typeAlias type="com.gd.workpp.holiday.model.vo.Todo" alias="Todo" />
 	</typeAliases>
 	
 	 <mappers>
 	 	<mapper resource="/mappers/member-mapper.xml" />
 	 	<mapper resource="/mappers/approval-mapper.xml" />
+	 	<mapper resource="/mappers/holiday-mapper.xml" />
 	 </mappers>
 
 	

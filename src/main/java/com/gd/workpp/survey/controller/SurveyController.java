@@ -17,5 +17,23 @@ public class SurveyController {
 	public String surveyList() {
 		return "survey/surveyList";
 	}
+	
+	// 진행중인설문 리스트 상세
+	@RequestMapping("listDetail.su")
+	public String surveyListDetail() {
+		return "survey/surveyListDetail";
+	}
+	
+	// 마감된설문 리스트
+	@RequestMapping("endList.su")
+	public String surveyEndList() {
+		return "survey/surveyEndList";
+	}
+	
+	// 마감된설문 리스트 상세
+	@RequestMapping("endListDetail.su")
+	public String survyeEndListDetail() {
+		return "survey/survyeEndListDetail";
+	}
 
 }

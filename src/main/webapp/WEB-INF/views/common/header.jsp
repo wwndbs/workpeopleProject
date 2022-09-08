@@ -21,8 +21,12 @@
 <!--fontawesome kit-->
 <script src="https://kit.fontawesome.com/ea8287c514.js" crossorigin="anonymous"></script>
 
+<!-- google icon -->
+<link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
+    
 <!--css-->
 <link rel="stylesheet" href="resources/css/yh.css">
+<link rel="stylesheet" href="resources/css/juyun.css">
 <link rel="stylesheet" href="resources/css/sanghyun.css">
 <link rel="stylesheet" href="resources/css/hyerim.css">
 

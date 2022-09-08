@@ -36,12 +36,6 @@ public class ApprovalController {
 		return mv;
 	}
 	
-	@RequestMapping("todoList.td")
-	public ModelAndView todoListView(ModelAndView mv) {
-		mv.setViewName("approval/todoList");
-		return mv;
-	}
-	
 	@RequestMapping("overtime.ap")
 	public String overtimeView() {
 		return "approval/overtime";

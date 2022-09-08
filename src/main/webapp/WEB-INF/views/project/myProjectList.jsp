@@ -26,7 +26,8 @@
       .font3{font-size: 90%; font-weight: bold; color:rgb(244, 217, 14)}
       .approval1{width: 98.5% !important; font-weight: bold; font-size: 15px;}
       .btn1{margin: 10px -1500px 0px 1500px; width: 70%;}
-      .box1{cursor : pointer; margin: 0px -5px 0px 0px;}
+      .box1{cursor : pointer; margin: 0px -5px 0px 0px;} 
+	  .box1:hover{background-color : #f4f9fe;}
       .col-lg-3{max-width: 80%;}
 	  .container-fluid{margin-right: 0px !important;}	
     </style>
@@ -44,29 +45,34 @@
 	        <div class="adminx-main-content">
 	          <div class="container-fluid">
 	
-	            <!-- 관리자 승인탭 -->
-	            <div class="form-group">
-	              <select class="form-control approval1" id="demoStyle" name="demoStyle">
-	                <option value="default" class="op1">가입요청 <label>3</label></option>
-	                <option class="text-secondary" value="secondary"><label class="se-la">8월달 매출보고서</label><label for="">&nbsp; 인사팀 김동동대리</label></option>
-	                <option class="text-secondary" value="secondary"><label class="se-la">8월달 매출보고서</label><label for="">&nbsp; 인사팀 김동동대리</label></option>
-	                <option class="text-secondary" value="secondary"><label class="se-la">8월달 매출보고서</label><label for="">&nbsp; 인사팀 김동동대리</label></option>
-	              </select>
-	            </div>
+	            <!-- 관리자에게만 보여지는 승인탭(팀장/부장) -->
+	            <c:if test="${ loginUser.jobName == '부장' || loginUser.jobName == '팀장' }">
+		            <div class="form-group">
+		              <select class="form-control approval1" id="demoStyle" name="demoStyle">
+		                <option value="default" class="op1">가입요청 <label>3</label></option>
+		                <option class="text-secondary" value="secondary"><label class="se-la">8월달 매출보고서</label><label for="">&nbsp; 인사팀 김동동대리</label></option>
+		                <option class="text-secondary" value="secondary"><label class="se-la">8월달 매출보고서</label><label for="">&nbsp; 인사팀 김동동대리</label></option>
+		                <option class="text-secondary" value="secondary"><label class="se-la">8월달 매출보고서</label><label for="">&nbsp; 인사팀 김동동대리</label></option>
+		              </select>
+		            </div>
+	            </c:if>
 	
-	            <!-- 상단 카테고리표시 -->
+	            <!-- 내팀 -->
 	            <div class="pb-3">
 	              <h5 style="font-weight: 400"><b>My Team</b>
-	              <!-- 제출버튼 -->
-	              <button type="button" class="btn btn-primary btn1" onclick="location.href='enrollPro.pr'" style="width: 7.5%; height: 40px; font-size: 17px;">프로젝트 생성</button>
+	              <!-- 관리자에게만 보여지는 프로젝트 생성버튼-->
+	              <c:if test="${ loginUser.jobName == '부장' || loginUser.jobName == '팀장' }">
+	              	<button type="button" class="btn btn-primary btn1" onclick="location.href='enrollPro.pr'" style="width: 7.5%; height: 40px; font-size: 17px;">프로젝트 생성</button>
+	              </c:if>
 	              </h5>
 	            </div>
-	
+	            
 	            <!--프로젝트 박스-->
 	            <div class="row">
+	              <!-- 내가 참여한 프로젝트만  -->
 	              <div class="col-md-6 col-lg-3 d-flex">
 	                <div class="color"></div>
-	                <div class="card mb-grid table-hover mb-0 w-100 box1" onclick="location.href='proList.pr'">
+	                <div class="card mb-grid project w-100 box1" onclick="location.href='proList.pr'">
 	                  <div class="card-body d-flex flex-column">                                            
 	                    <div class="d-flex justify-content-between mb-3">
 	                      <h5 class="card-title mb-0">

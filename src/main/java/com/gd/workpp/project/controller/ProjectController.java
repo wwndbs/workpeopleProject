@@ -1,8 +1,10 @@
 package com.gd.workpp.project.controller;
 
+import java.util.ArrayList;
+
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.gd.workpp.project.model.vo.Project;
 
@@ -13,6 +15,12 @@ public class ProjectController {
 	@RequestMapping("myProject.pr")
 	public String myProjectList() {
 		return "project/myProjectList";
+	}
+	
+	// 내프로젝트 리스트
+	@RequestMapping("myList.pr")
+	public ModelAndView selectList(ModelAndView mv) {
+		ArrayList<Project> list = 
 	}
 	
 	// 프로젝트 상세리스트 화면

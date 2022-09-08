@@ -70,6 +70,7 @@
         background-color:rgb(45, 130, 235);
         border-color:rgb(45, 130, 235);
     }
+    
     </style>
 </head>
 <body>

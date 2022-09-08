@@ -6,25 +6,29 @@
 <meta charset="UTF-8">
 <title>워크피플</title>
 <!-- 
-	author : 최영헌
+	author : 박상현
 	
 	경로는 servlet-context.xml파일에 <resources mapping="/resources/**" location="/resources/" /> 로 명시되어있어
 	resources로 경로를 시작하면됨
 	
 	header.jsp에 link 넣음
  -->
-
+<style>
+	#hold{
+	  	background-color: gainsboro;
+	  	text-align:center;   
+	}
+</style>
 </head>
 <body>
 	<div class="adminx-container">
-		<!-- 상단 메뉴 바 -->
-		<jsp:include page="../common/header.jsp" />
+      <!-- 상단 메뉴 바 -->
+      <jsp:include page="../common/header.jsp" />
+      
+      <!-- 좌측 슬라이드 메뉴 바 -->
+      <jsp:include page="../common/menubar.jsp" />
 		
-		<!-- 좌측 슬라이드 메뉴 바 -->
-		<jsp:include page="../common/menubar.jsp" />
-		
-		<!-- 컨텐츠 부분 wrapper -->
-    <div class="adminx-content">
+		<div class="adminx-content">
         <div class="adminx-main-content">
             <div class="container-fluid">
 
@@ -36,7 +40,7 @@
                         
                         <div id="upm1">
 
-                            <h2>개인 정보 수정</h2>
+                            <h2>사원 정보 수정</h2>
                             <br>
                             <br>
                             <!--프로필 부분-->
@@ -94,11 +98,11 @@
                                     </tr>
                                     
                                     <tr>
-                                        <td style="font-weight:800;">임시비밀번호</td>
+                                        <td style="font-weight:800;">사원번호</td>
                                     </tr>
 
                                     <tr>
-                                        <td colspan="2" align="center"><input type="text" id="" class="form-control" name="" style="height:30px;" placeholder="사원번호" required></td>
+                                        <td colspan="2" align="center"><input type="text" id="" class="form-control" name="" style="height:30px;" placeholder="사원번호" required readonly></td>
                                     </tr>
                                     
                                     <tr>
@@ -111,7 +115,7 @@
                                 </table>
                                 <br>
                                 <div align="center">
-                                    <button type="" id="loginbtn" data-toggle="modal" data-target="#loginModal">비밀번호 변경</button>
+                                    <button type="" id="loginbtn">삭제하기</button>
                                     <button type="submit" id="loginbtn" >저장하기</button>
                                     <button type="reset" id="loginbtn" >취소하기</button>
                                 </div>
@@ -127,57 +131,10 @@
             </div>
         </div>
     </div>
+ </div>
 
-    <div class="modal fade" id="loginModal">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title">비밀번호 변경</h4>
-            </div>
-
-            <form action="login.me" method="post">
-                <!-- Modal Body -->
-                <div class="modal-body">
-                    <label for="userPwd" class="mr-sm-2"></label>
-                    <input type="password" class="form-control mb-2 mr-sm-2" placeholder="현재 비밀번호" id="" name="">
-                    <input type="password" class="form-control mb-2 mr-sm-2" placeholder="변경할 비밀번호" id="" name="">
-                </div>
-                
-                <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">변경</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
-                </div>
-            </form>
-            </div>
-        </div>
-    </div>
-	</div>
 	
-	<script>
-		// 프로젝트 슬라이드
-		$(function() {
-			let position = 0;
-			$(".slide-btn>#right-btn").click(function() {
-				position += 235;
-				$(".project-container").css('transform', 'translateX(-' + position + 'px)');
-				
-				if (position > 235) {
-					position = -235;
-				}
-			})
-
-			$(".slide-btn>#left-btn").click(function() {
-				position -= 235;
-				$(".project-container").css('transform', 'translateX(-' + position + 'px)');
-				
-				if (position < 0) {
-					position = 705;
-				}
-			})
-		})
-	</script>
+	
 	<jsp:include page="../common/footer.jsp"/>
 </body>
 </html>
