@@ -2,6 +2,7 @@ package com.gd.workpp.project.model.service;
 
 import java.util.ArrayList;
 
+import com.gd.workpp.project.model.vo.ProBoard;
 import com.gd.workpp.project.model.vo.Project;
 
 public interface ProjectService {
@@ -13,7 +14,7 @@ public interface ProjectService {
 	int insertProject(Project p);
 	
 	// 3. 프로젝트 게시물 리스트조회
-	//ArrayList<ProjectBoard> selectProBoardList();
+	ArrayList<ProBoard> selectProBoardList(int projectNo);
 	
 	// 4. 프로젝트 삭제
 	int deleteProject(int projectNo);

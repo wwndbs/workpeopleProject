@@ -2,14 +2,20 @@ package com.gd.workpp.project.controller;
 
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.gd.workpp.project.model.service.ProjectService;
+import com.gd.workpp.project.model.vo.ProBoard;
 import com.gd.workpp.project.model.vo.Project;
 
 @Controller
 public class ProjectController {
+	
+	@Autowired
+	private ProjectService pService;
 	
 	// 내프로젝트 화면띄우기
 	@RequestMapping("myProject.pr")
@@ -20,15 +26,17 @@ public class ProjectController {
 	// 내프로젝트 리스트
 	@RequestMapping("myList.pr")
 	public ModelAndView selectList(ModelAndView mv) {
-		ArrayList<Project> list = 
+		ArrayList<Project> list = pService.selectList();
+		return mv;
 	}
 	
 	// 프로젝트 상세리스트 화면
 	@RequestMapping("proList.pr")
-	public String projectList() {
+	public String projectList(int no) {
+		ArrayList<ProBoard> list = pService.selectProBoardList(no);
 		return "project/projectDetailList";
 	}
-	
+		
 	// 프로젝트 게시물 등록화면
 	@RequestMapping("enrollBoard.pr")
 	public String proBoardEnrollForm() {

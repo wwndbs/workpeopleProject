@@ -26,7 +26,7 @@
   .box1{cursor : pointer}
   .box1:hover{background-color : #f4f9fe;}
   .demo-icon-display{color: rgb(77,77,77)}
-  .demo-icon-display span{font-size:15px}
+  .demo-icon-display span{font-size:14px}
 </style>
 </head>
 <body>

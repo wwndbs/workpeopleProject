@@ -123,7 +123,7 @@
 	
 	                  <!-- 게시물 마감기한 -->
 	                  <div style="display: flex; float: left !important; margin: 0px 10px -13px 20px;">
-	                    <label for="" style="width: 110px; margin: 7px 0px 0px -3px;"><b>마감기한</b></label>
+	                    <label for="" style="width: 110px; margin: 7px 0px 0px 0px;"><b>마감기한</b></label>
 	                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	                    <!-- 시작시 기본 날짜 설정은 value를 이용 -->
 	                    <input type="date" id="datePicker" class="form-control date1" value="" />

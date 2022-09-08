@@ -19,6 +19,27 @@
 		<result column="user_no" property="userMemNo"/>		
 	</resultMap>
 	
+	<resultMap type="ProBoard" id="proBoardResult">
+		<result column="pro_board_no" property="proBoardNo"/>
+		<result column="project_no" property="projectNo"/>
+		<result column="user_no" property="boardWriterNo"/>
+		<result column="pro_board_status" property="proBoardStatus"/>
+		<result column="create_date" property="createDate"/>
+		<result column="modify_date" property="modifyDate"/>
+		<result column="start_date" property="startDate"/>
+		<result column="end_date" property="endDate"/>
+		<result column="pro_board_level" property="proBoardLevel"/>
+		<result column="status" property="boardStatus"/>
+		<result column="count" property="count"/>
+		<result column="attach_path" property="attachPath"/>
+		<result column="attch_origin" property="attchOrigin"/>
+		<result column="attach_modify" property="attachModify"/>
+		<result column="pro_title" property="proTitle"/>
+		<result column="pro_content" property="proContent"/>
+		<result column="pro_board_yn" property="proBoardYn"/>
+	</resultMap>
+	
+	<!-- [김은지] 내프로젝트 리스트 조회 -->
 	<select id="selectList" resultMap="projectResult">
 		select
 		       project_title p
@@ -29,4 +50,35 @@
 		 where pm.user_no = #{userMemNo}
 	</select>
 	
+	<!-- [김은지] 프로젝트 상세리스트 조회 -->
+	<select id="selectProBoardList" resultMap="proBoardResult">
+		select
+		       pb.PRO_BOARD_NO
+		     , pb.pro_board_status
+		     , pb.pro_board_level
+		     , pb.pro_title
+		     , m.user_name || '' || m.job_name as "user_jb"
+		     , to_char(pb.create_date, 'YYYY-MM-DD') as "create_date"
+		     , to_char(pb.modify_date, 'YYYY-MM-DD') as "modify_date"
+		     , pb.start_date  || ' ~ ' || pb.end_date as "start~end date"
+		  from pro_board pb
+		  join member m on (m.user_no = pb.user_no)
+		 where pb.project_no = 8
+		 order
+		    by pb.pro_board_no desc
+	</select>
+	
+	
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+

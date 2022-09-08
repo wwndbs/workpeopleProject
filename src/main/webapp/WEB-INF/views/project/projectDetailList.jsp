@@ -10,12 +10,12 @@
   .div1{
     width: 98%;
     height: 40% !important;
-    background-color: white 
-    !important
+    background-color: white
+    !important;
   }
   .div2{width: 98%; height: 46% !important;}
   .div1 span{color:black !important}
-  .div3{width: 248px !important; height: 350px !important; margin: -340px 0px 340px 0px;}
+  .div3{width: 244px !important; height: 350px !important; margin: -340px 0px 340px 0px;}
   .div4{width: 11000px !important; height: 780px !important; margin: 0px 200px 0px -140px;}
   .bottom-wrapper{height: 1px;}
   .btn1{margin: 21px -1560px -36px 1560px; font-size: 16px; height: 38px !important;}
@@ -30,6 +30,7 @@
   th{border-bottom: 1px solid #d9d9d9; height: 43px;}
   tbody tr{cursor: pointer;}
   .notice-area{margin-right:-10px !important}
+  .pp1{margin: -32px 110px -70px -45px}
 </style>
 </head>
 <body>
@@ -59,8 +60,8 @@
 	              <!--프로필 부분-->
 	              <div class="profile-alert-wrapper">
 	                <div class="profile-area div1">
-	                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="margin: -23px 150px 0px 30px; width:70px; height: 70px;"><br>
-	                  <div style="margin: -65px -80px 0px 0px;">
+	                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="margin: -27px 77px 0px -10px; width:80px; height: 80px;"><br>
+	                  <div style="margin: -65px -40px 0px 70px;">
 	                    <span id="profile-name" style="">홍길동</span><br>
 	                    <span id="department-name">인사부서/대리</span>
 	                  </div>
@@ -110,131 +111,34 @@
 	                      <th>우선순위</th>
 	                      <th>제목</th>
 	                      <th>담당자</th>
+	                      <th>작성일</th>
 	                      <th>수정일</th>
 	                      <th>마감기한</th>
 	                    </tr>
 	                  </thead>
 	                  <tbody class="notice-list">
-	                    <tr onclick="location.href='boardDetail.pr'">
-	                      <td></td>
-	                      <td>12</td>
-	                      <td><div class="btn btn-sm btn-primary btn2">완료</div></td>
-	                      <td>높음</td>
-	                      <td>업무게시글 제목</td>
-	                      <td>김동동 대리</td>
-	                      <td>2022-09-02</td>
-	                      <td>2022-09-02 ~ 2022-09-02</td>
-	                    </tr>
-	                    <tr>
-	                      <td></td>
-	                      <td>11</td>
-	                      <td><div class="btn btn-sm btn-warning btn2">보류</div></td>
-	                      <td>높음</span>
-	                      <td>업무게시글 제목</td>
-	                      <td>김동동 대리</td>
-	                      <td>2022-09-02</span>
-	                      <td>2022-09-02 ~ 2022-09-02</span>
-	                    </tr>
-	                    <tr>
-	                      <td></td>
-	                      <td>10</td>
-	                      <td><div class="btn btn-sm btn-primary btn2">완료</div></td>
-	                      <td>높음</td>
-	                      <td>업무게시글 제목</td>
-	                      <td>김동동 대리</td>
-	                      <td>2022-09-02</td>
-	                      <td>2022-09-02 ~ 2022-09-02</td>
-	                      </tr>
-	                    <tr>
-	                      <td></td>
-	                      <td>9</td>
-	                      <td><div class="btn btn-sm btn-primary btn2">완료</div></td>
-	                      <td>높음</td>
-	                      <td>업무게시글 제목</td>
-	                      <td>김동동 대리</td>
-	                      <td>2022-09-02</td>
-	                      <td>2022-09-02 ~ 2022-09-02</td>
-	                    </tr>
-	                    <tr>
-	                      <td></td>
-	                      <td>8</td>
-	                      <td><div class="btn btn-sm btn-primary btn2">완료</div></td>
-	                      <td>높음</td>
-	                      <td>업무게시글 제목</td>
-	                      <td>김동동 대리</td>
-	                      <td>2022-09-02</td>
-	                      <td>2022-09-02 ~ 2022-09-02</td>
-	                    </tr>
-	                    <tr>
-	                      <td></td>
-	                      <td>7</td>
-	                      <td><div class="btn btn-sm btn-success btn2">진행</div></td>
-	                      <td>높음</td>
-	                      <td>업무게시글 제목</td>
-	                      <td>김동동 대리</td>
-	                      <td>2022-09-02</td>
-	                      <td>2022-09-02 ~ 2022-09-02</td>
-	                    </tr>
-	                    <tr>
-	                      <td></td>
-	                      <td>6</td>
-	                      <td><div class="btn btn-sm btn-success btn2">진행</div></td>
-	                      <td>높음</td>
-	                      <td>업무게시글 제목</td>
-	                      <td>김동동 대리</td>
-	                      <td>2022-09-02</td>
-	                      <td>2022-09-02 ~ 2022-09-02</td>
-	                    </tr>
-	                    <tr>
-	                      <td></td>
-	                      <td>5</td>
-	                      <td><div class="btn btn-sm btn-success btn2">진행</div></td>
-	                      <td>높음</td>
-	                      <td>업무게시글 제목</td>
-	                      <td>김동동 대리</td>
-	                      <td>2022-09-02</td>
-	                      <td>2022-09-02 ~ 2022-09-02</td>
-	                    </tr>
-	                    <tr>
-	                      <td></td>
-	                      <td>4</td>
-	                      <td><div class="btn btn-sm btn-primary btn2">완료</div></td>
-	                      <td>높음</td>
-	                      <td>업무게시글 제목</td>
-	                      <td>김동동 대리</td>
-	                      <td>2022-09-02</td>
-	                      <td>2022-09-02 ~ 2022-09-02</td>
-	                    </tr>
-	                    <tr>
-	                      <td></td>
-	                      <td>3</td>
-	                      <td><div class="btn btn-sm btn-primary btn2">완료</div></td>
-	                      <td>높음</td>
-	                      <td>업무게시글 제목</td>
-	                      <td>김동동 대리</td>
-	                      <td>2022-09-02</td>
-	                      <td>2022-09-02 ~ 2022-09-02</td>
-	                    </tr>
-	                    <tr>
-	                      <td></td>
-	                      <td>2</td>
-	                      <td><div class="btn btn-sm btn-primary btn2">완료</div></td>
-	                      <td>높음</td>
-	                      <td>업무게시글 제목</td>
-	                      <td>김동동 대리</td>
-	                      <td>2022-09-02</td>
-	                      <td>2022-09-02 ~ 2022-09-02</td>
-	                    </tr>
-	                    <tr>
-	                      <td></td>
-	                      <td>1</td>
-	                      <td><div class="btn btn-sm btn-primary btn2">완료</div></td>
-	                      <td>높음</td>
-	                      <td>업무게시글 제목</td>
-	                      <td>김동동 대리</td>
-	                      <td>2022-09-02</td>
-	                      <td>2022-09-02 ~ 2022-09-02</td>
-	                    </tr>
+	                  	<c:choose>
+	                  		<c:when test="${ empty list }">
+	                  			<tr>
+	                  				<td colspan="9">현재 게시글이 없습니다.</td>
+	                  			</tr>
+	                  		</c:when>
+	                  		<c:otherwise>
+	                  			<c:forEach var="p" items="${ list }">
+			                    <tr onclick="location.href='boardDetail.pr'">
+			                      <td></td>
+			                      <td>${ p.proBoardNo }</td>
+			                      <td><div class="btn btn-sm btn-primary btn2">${ p.proBoardStatus }</div></td>
+			                      <td>${ p.proBoardLevel }</td>
+			                      <td>${ }</td>
+			                      <td>김동동 대리</td>
+			                      <td>2022-09-02</td>
+			                      <td>2022-09-02</td>
+			                      <td>2022-09-02 ~ 2022-09-02</td>
+			                    </tr>
+			                    </c:forEach>
+		                    </c:otherwise>
+	                    </c:choose>
 	                </table>
 	                <br>
 	                <!-- 페이징처리 -->
@@ -262,9 +166,9 @@
 	            <div class="bottom-wrapper">
 	              <div class="time-area div3">
 	                <!-- 스크롤박스 -->
-	                <div class="scroll"style="overflow:auto; width:100%; height:320px; margin: 0px 10px 0px 8px;">
+	                <div class="scroll"style="overflow:auto; width:100%; height:320px; margin: -5px 10px 0px 8px;">
 	                <!-- 한명에 대한 정보 -->
-	                <div class="profile-area" style="margin: 0px 150px 0px 0px;">
+	                <div class="profile-area pp1">
 	                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px">
 	                  <div style="margin: -42px -100px 0px 50px; float: left; width:80px">
 	                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
@@ -273,7 +177,7 @@
 	                </div>
 	                <br>
 	                <!-- 한명에 대한 정보 -->
-	                <div class="profile-area" style="margin: 0px 150px 0px 0px;">
+	                <div class="profile-area pp1">
 	                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px">
 	                  <div style="margin: -42px -100px 0px 50px; float: left; width:80px">
 	                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
@@ -282,7 +186,7 @@
 	                </div>
 	                <br>
 	                <!-- 한명에 대한 정보 -->
-	                <div class="profile-area" style="margin: 0px 150px 0px 0px;">
+	                <div class="profile-area pp1">
 	                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px">
 	                  <div style="margin: -42px -100px 0px 50px; float: left; width:80px">
 	                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
@@ -291,7 +195,7 @@
 	                </div>
 	                <br>
 	                <!-- 한명에 대한 정보 -->
-	                <div class="profile-area" style="margin: 0px 150px 0px 0px;">
+	                <div class="profile-area pp1">
 	                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px">
 	                  <div style="margin: -42px -100px 0px 50px; float: left; width:80px">
 	                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
@@ -300,7 +204,7 @@
 	                </div>
 	                <br>
 	                <!-- 한명에 대한 정보 -->
-	                <div class="profile-area" style="margin: 0px 150px 0px 0px;">
+	                <div class="profile-area pp1">
 	                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px">
 	                  <div style="margin: -42px -100px 0px 50px; float: left; width:80px">
 	                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
@@ -309,7 +213,7 @@
 	                </div>
 	                <br>
 	                <!-- 한명에 대한 정보 -->
-	                <div class="profile-area" style="margin: 0px 150px 0px 0px;">
+	                <div class="profile-area pp1">
 	                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px">
 	                  <div style="margin: -42px -100px 0px 50px; float: left; width:80px">
 	                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
@@ -318,7 +222,7 @@
 	                </div>
 	                <br>
 	                <!-- 한명에 대한 정보 -->
-	                <div class="profile-area" style="margin: 0px 150px 0px 0px;">
+	                <div class="profile-area pp1">
 	                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px">
 	                  <div style="margin: -42px -100px 0px 50px; float: left; width:80px">
 	                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
@@ -327,7 +231,7 @@
 	                </div>
 	                <br>
 	                <!-- 한명에 대한 정보 -->
-	                <div class="profile-area" style="margin: 0px 150px 0px 0px;">
+	                <div class="profile-area pp1">
 	                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px">
 	                  <div style="margin: -42px -100px 0px 50px; float: left; width:80px">
 	                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
@@ -336,7 +240,7 @@
 	                </div>
 	                <br>
 	                <!-- 한명에 대한 정보 -->
-	                <div class="profile-area" style="margin: 0px 150px 0px 0px;">
+	                <div class="profile-area pp1">
 	                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px">
 	                  <div style="margin: -42px -100px 0px 50px; float: left; width:80px">
 	                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
@@ -345,7 +249,7 @@
 	                </div>
 	                <br>
 	                <!-- 한명에 대한 정보 -->
-	                <div class="profile-area" style="margin: 0px 150px 0px 0px;">
+	                <div class="profile-area pp1">
 	                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px">
 	                  <div style="margin: -42px -100px 0px 50px; float: left; width:80px">
 	                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
@@ -354,7 +258,7 @@
 	                </div>
 	                <br>
 	                <!-- 한명에 대한 정보 -->
-	                <div class="profile-area" style="margin: 0px 150px 0px 0px;">
+	                <div class="profile-area pp1">
 	                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px">
 	                  <div style="margin: -42px -100px 0px 50px; float: left; width:80px">
 	                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
