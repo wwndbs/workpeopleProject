@@ -30,6 +30,5 @@ public class ProBoard {
 	private String proTitle;
 	private String proContent;
 	private String proBoardYn;
-	
 
 }

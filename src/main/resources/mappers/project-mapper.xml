@@ -58,6 +58,7 @@
 		     , pb.pro_board_level
 		     , pb.pro_title
 		     , m.user_name || '' || m.job_name as "user_jb"
+		     , m.user_name || '' || m.job_name as "직급"
 		     , to_char(pb.create_date, 'YYYY-MM-DD') as "create_date"
 		     , to_char(pb.modify_date, 'YYYY-MM-DD') as "modify_date"
 		     , pb.start_date  || ' ~ ' || pb.end_date as "start~end date"

@@ -131,6 +131,7 @@
 			                      <td><div class="btn btn-sm btn-primary btn2">${ p.proBoardStatus }</div></td>
 			                      <td>${ p.proBoardLevel }</td>
 			                      <td>${ }</td>
+			                      <td>${ p.proTitle }</td>
 			                      <td>김동동 대리</td>
 			                      <td>2022-09-02</td>
 			                      <td>2022-09-02</td>
