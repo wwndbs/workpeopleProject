@@ -8,7 +8,7 @@
   	<typeAliases>
 		<typeAlias type="com.gd.workpp.approval.model.vo.Document" alias="Document" />
 	</typeAliases>
-
+ 
 	 <mappers>
 	 	<mapper resource="/mappers/approval-mapper.xml" />
 	 </mappers>
