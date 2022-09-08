@@ -27,7 +27,7 @@ public class MemberController {
 			mv.setViewName("common/errorPage");
 		}else { // 성공
 			session.setAttribute("loginUser", loginUser);
-			mv.setViewName("redirect:/");
+			mv.setViewName("main");
 		}
 		
 		return mv;

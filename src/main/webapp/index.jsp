@@ -70,7 +70,6 @@
         background-color:rgb(45, 130, 235);
         border-color:rgb(45, 130, 235);
     }
-    
     </style>
 </head>
 <body>
@@ -78,7 +77,7 @@
     <div id="header">
         <div id="header1">
             <div id="header1-1">
-                <img src="workpeople-resources/images/workpeople-logo-blue02.png" alt="">
+                <img src="resources/images/workpeople-logo-blue02.png" alt="">
                 <br><br><br>
             </div>
 
