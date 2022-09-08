@@ -292,7 +292,7 @@
 					</li>
 
 					<li class="sidebar-nav-item">
-						<a href="./layouts/login.html" class="sidebar-nav-link">
+						<a href="endList.su" class="sidebar-nav-link">
 							<span class="sidebar-nav-abbr"> Mo </span> <span class="sidebar-nav-name"> 마감된 설문 </span>
 						</a>
 					</li>

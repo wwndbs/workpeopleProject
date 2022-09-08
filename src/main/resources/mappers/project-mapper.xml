@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="projectMapper">
+	
+	<resultMap id="projectResult" type="Project">
+		<result column="project_no" property="projectNo"/>
+		<result column="user_no" property="userNo"/>
+		<result column="project_title" property="projectTitle"/>
+		<result column="project_content" property="projectContent"/>
+		<result column="status" property="status"/>
+		<result column="category" property="category"/>
+		<result column="pro_open" property="proOpen"/>
+		<result column="dep_name" property="depName"/>
+		<result column="pro_date" property="proDate"/>
+	</resultMap>
+	
+	<resultMap type="ProMember" id="proMemberResult">
+		<result column="project_no" property="proMemNo"/>
+		<result column="user_no" property="userMemNo"/>		
+	</resultMap>
+	
+	<select id="selectList" resultMap="projectResult">
+		select
+		       project_title p
+		     , dep_name p
+		     , category p
+		  from project p 
+		  join pro_member pm on (p.project_no = pm.project_no)    
+		 where pm.user_no = #{userMemNo}
+	</select>
+	
+</mapper>

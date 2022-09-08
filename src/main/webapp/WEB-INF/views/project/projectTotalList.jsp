@@ -24,6 +24,9 @@
   .font2{font-size: 75%;}
   .font3{font-size: 90%; font-weight: bold; color:rgb(244, 217, 14)}
   .box1{cursor : pointer}
+  .box1:hover{background-color : #f4f9fe;}
+  .demo-icon-display{color: rgb(77,77,77)}
+  .demo-icon-display span{font-size:15px}
 </style>
 </head>
 <body>
