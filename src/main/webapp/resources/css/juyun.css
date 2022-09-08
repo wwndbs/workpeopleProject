@@ -1,0 +1,498 @@
+@charset "UTF-8";
+
+/*메일 div 구조*/
+.container-mail{
+    display: flex;
+    height: 100%;
+}
+
+.mail-main-form{
+    overflow: auto; 
+    width: 100%; 
+    height: 100%; 
+    padding: 25px 0px 0px 25px;
+}
+
+/*메일 사이드바*/
+.mail-sidebar{
+    width : 220px;
+    height: 100%;
+    background-color: #fff;
+    border : 1px solid rgb(224, 224, 224);
+    position: sticky;
+}
+
+.mail-sidebar>div{
+    padding: 20px;
+}
+
+.mail-sidebar h5{
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.mail-sidebar .sidebar2 a,
+.mail-sidebar .sidebar4 a{
+    color: black;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+.mail-sidebar .sidebar3 a{
+    color: black;
+    text-decoration: none;
+    margin-left: 7px;
+}
+
+.mail-btn-enroll{
+    width: 178px;
+    height: 35px;
+    background-color: white;
+    border : 1px solid rgb(41, 128, 185);
+    border-radius: 5px;
+}
+
+.mail-btn-sidebar{
+    width: 60px;
+    height: 20px;
+    background-color: white;
+    border : 1px solid rgb(41, 128, 185);
+    border-radius: 3px;
+    font-size: 11px;
+}
+
+.mail-btn-enroll:hover,
+.mail-btn-sidebar:hover{
+    background-color: #9fcdff;
+    color: white;
+    border: none;
+}
+
+.mailbox-list>li{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom : 5px;
+}
+
+.sidebar3 .tag-list>li{
+    list-style: none;
+    margin-left: 10px;
+    margin-bottom : 6px;
+    
+    display: flex;
+    justify-content: space-between;
+}
+
+.sidebar3 .tag-list>li>ion-icon{
+    margin-top: 5px;
+}
+
+/*메일 내부 공통*/
+.mail-h{
+    font-size: 22px;
+    font-weight: 500;
+    margin-right: 10px;
+}
+
+.mail-btn-content{
+    width: 420px; /*메일함마다 인라인으로 조절*/
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 0px 15px 0px;
+}
+
+.mail-btn1{
+    width: 90px;
+    height: 33px;
+    line-height: 33px;
+    background-color: #0087EF;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+}
+
+
+.mail-btn2{
+    width: 100px;
+    height: 33px;
+    line-height: 33px;
+    background-color: rgb(71, 181, 255);
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+}
+
+.mail-btn3{
+    width: 100px;
+    height: 33px;
+    line-height: 33px;
+    background-color: rgb(121, 218, 232);
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+}
+
+.mail-btn4{
+    width: 100px;
+    height: 33px;
+    line-height: 31px;
+    background-color: #fff;
+    border: 1px solid black;
+    border-radius: 8px;
+    font-size: 15px;
+    color: black;
+    display: flex;
+    justify-content: center;
+}
+
+.mail-btn5{
+    width: 80px;
+    height: 33px;
+    line-height: 31px;
+    background-color: #fff;
+    border: 1px solid black;
+    border-radius: 8px;
+    font-size: 15px;
+    color: black;
+    display: flex;
+    justify-content: center;
+}
+
+.dropdown { /*공통 드롭다운*/
+    position: relative;
+    display: inline-block;
+  }
+
+.dropdown-tagList { /*태그버튼 적용 드롭다운*/
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 180px;
+    box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.2);
+    padding: 7px 7px 7px 7px;
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-tagList {
+    display: block;
+}
+
+.mail-a-taglist{
+    display: inline-block;
+    line-height: 19px;
+    width: 35px;
+    height: 20px;
+    background-color: white;
+    border : 1px solid gray;
+    font-size: 11px;
+    text-align: center;
+    color: black;
+}
+
+.dropdown-tagList .tagName{
+    margin-left: 3px;
+    margin-right: 5px;
+    font-size: 14px;
+}
+
+/*메일쓰기*/
+.mail-table-write{
+    width: 95%;
+}
+
+.mail-table-write tr{
+    height: 40px;
+}
+
+.mail-table-write td{
+    text-align: center;
+}
+
+.mail-table-write th{
+    font-size: 15px;
+}
+
+.mail-btn-addressbook{
+    width: 85px;
+    height: 30px;
+    background-color: white;
+    border : 1px solid rgb(41, 128, 185);
+    border-radius: 3px;
+    font-size: 14px;
+}
+
+.mail-btn-file{
+    width: 60px;
+    height: 23px;
+    background-color: white;
+    border : 1px solid rgb(41, 128, 185);
+    font-size: 12px;
+}
+
+.mail-filebox{
+    width: 100%;
+    height: 90px;
+    border: 1px dashed rgb(41, 128, 185);
+    background-color: #fff;
+    line-height: 90px;
+}
+
+.mail-filebox span{
+    font-size: 13px;
+}
+
+/*여기부터 받는사람*/
+
+.mail-input-wrap{
+    width: 100%;
+    min-height: 30px;
+    border: 1px solid #ddd;
+    background: white;
+    position: relative;
+}
+
+.mail-input-wrap,
+.mail-input-div{
+    overflow: hidden;
+    padding: 0 2px;
+    line-height: 30px;
+}
+
+.mail-input-div{
+    margin-right: 62px;
+}
+
+.mail-input-wrap textarea{
+    vertical-align: top;
+    margin-top: 0px;
+    min-height: 30px;
+    line-height: 23px;
+    border: 0 none;
+    padding: 3px;
+    resize: none;
+    overflow: hidden;
+    box-shadow: none;
+    font-size: 13px;
+    height: 27px;
+    display: inline;
+    white-space: nowrap;
+    width: 160px;
+}
+
+.mail-input-div ul{
+    list-style: none;
+    width: 88%;
+}
+
+#toAddrWrap .mail-addr-out{
+    margin-left: 5px;
+    float: left;
+    padding: 0px 5px 0px 5px;
+    border: 1px solid #ffc3b4;
+    background: #fed5d5;
+    height: 29px;
+}
+
+#ccAddrWrap .mail-addr-out{
+    margin-left: 5px;
+    float: left;
+    padding: 0px 5px 0px 5px;
+    border: 1px solid #e4deaa;
+    background: #fefad5;
+    height: 29px;
+}
+
+.mail-addr-create{
+    margin-left: 5px;
+    float: left;
+}
+
+.select-recent-addr{
+    position: absolute;
+    top: 1px;
+    right: 5px;
+    background: transparent;
+    height: 25px;
+    width: 170px;
+    border: 0;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.mail-addr-out{
+    display: inline-block;
+    cursor: default;
+    max-width: 300px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 12px;
+}
+
+.mail-addr-out .btn-addr-remove{
+    cursor: pointer;
+    display: inline-block;
+}
+
+.mail-addr-out .btn-addr-remove ion-icon{
+    vertical-align: -2px;
+}
+
+/*메일함*/
+.mail-table-list{
+    width: 95%;
+}
+
+.mail-table-list .d1,
+.mail-table-list .d2,
+.mail-table-list .d2{
+    width: 2%;
+}
+
+.mail-table-list .d4{
+    width: 14%;
+    font-size: 15px;
+}
+
+.mail-table-list .d5{
+    width: 72%;
+    font-size: 15px;
+}
+
+.mail-table-list .d6{
+    width: 8%;
+    font-size: 14px;
+}
+
+.mail-table-list .d4 span{
+    margin-left: 40px;
+}
+
+.mail-table-list .d2 ion-icon,
+.mail-table-list .d3 ion-icon{
+    vertical-align: -2px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.mail-table-list .d5 ion-icon{
+    vertical-align: -2px;
+    font-size: 16px;
+    margin-left: 8px;
+    cursor: pointer;
+}
+
+.mail-table-list .d4 span:hover,
+.mail-table-list .d5 span:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.mail-table-list tr{
+    height: 30px;
+}
+
+.mail-table-list tr:hover{
+    background: lightgray;
+}
+
+.mail-list-division td{
+    font-size: 14px;
+}
+
+/*메일 상세보기*/
+.mail-btn-cntbox{
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+}
+
+.mail-detail-content{
+    width: 95%;
+    height: 600px;
+}
+
+.mail-detail-content .header{
+    margin: 20px 0px 20px 0px;
+}
+
+.mail-table-detail tr{
+    height: 33px;
+    font-size: 14px;
+}
+
+.mail-table-detail tr td span{
+    margin-left: 5px;
+}
+ 
+.filelist>.filelist-header{
+    background: white;
+    border: 1px solid lightgray;
+}
+
+.filelist>.filelist-header>span{
+    margin-left: 5px;
+    font-size: 14px;
+}
+
+.filelist>.filelist-wrap{
+    background: white;
+    border: 1px solid lightgray;
+}
+
+.filelist>.filelist-wrap a{
+    margin-left: 25px;
+    font-size: 14px;
+}
+
+.mail-detail-content .content{
+    width: 100%;
+    background-color: white;
+    border : 1px solid rgb(224, 224, 224);
+    border-radius: 5px;
+    height: 70%;
+    padding: 15px;
+}
+
+.mail-address-form{
+    background-color: rgb(206, 248, 255);
+    border : 1px solid rgb(206, 248, 255);
+    border-radius: 15px;
+    padding: 4px 10px;
+
+}
+
+/*modal*/
+.modal_close{
+    float: right;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+    border: none;
+}
+
+.modal-footer .btn-jycancle{
+    width: 70px;
+    background: rgb(190, 190, 190);
+    border: 1px solid rgb(190, 190, 190);
+    color: white;
+}
+
+.modal-footer .btn-jyok{
+    width: 70px;
+    background: #06283D;
+    border: 1px solid #06283D;
+    color: white;
+}
