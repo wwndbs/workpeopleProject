@@ -11,7 +11,7 @@
 	경로는 servlet-context.xml파일에 <resources mapping="/resources/**" location="/resources/" /> 로 명시되어있어
 	resources로 경로를 시작하면됨
 	
-	header.jsp에 link 넣음
+	header.jsp에 link 넣음 
  -->
 
 </head>
