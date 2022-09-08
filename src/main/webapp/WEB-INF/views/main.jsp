@@ -18,10 +18,10 @@
 <body>
    <div class="adminx-container">
       <!-- 상단 메뉴 바 -->
-      <jsp:include page="WEB-INF/views/common/header.jsp" />
+      <jsp:include page="common/header.jsp" />
       
       <!-- 좌측 슬라이드 메뉴 바 -->
-      <jsp:include page="WEB-INF/views/common/menubar.jsp" />
+      <jsp:include page="common/menubar.jsp" />
       
       <!-- 컨텐츠 부분-->
       <div class="adminx-content">
@@ -248,6 +248,6 @@
          })
       })
    </script>
-   <jsp:include page="WEB-INF/views/common/footer.jsp"/>
+   <jsp:include page="common/footer.jsp"/>
 </body>
 </html>
