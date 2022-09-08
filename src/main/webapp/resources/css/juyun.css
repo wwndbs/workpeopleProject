@@ -485,14 +485,20 @@
 
 .modal-footer .btn-jycancle{
     width: 70px;
+    height: 38px;
+    vertical-align: 38px;
     background: rgb(190, 190, 190);
     border: 1px solid rgb(190, 190, 190);
     color: white;
+    font-size: 15px;
 }
 
 .modal-footer .btn-jyok{
     width: 70px;
+    height: 38px;
+    vertical-align: 38px;
     background: #06283D;
     border: 1px solid #06283D;
     color: white;
+    font-size: 15px;
 }
