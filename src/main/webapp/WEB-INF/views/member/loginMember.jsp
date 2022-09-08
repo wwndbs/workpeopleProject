@@ -95,13 +95,13 @@
         <div id="body3">
             <div id="body3-1"></div>
             <div id="body3-2">
-                <form id="loginForm" method="post" action="" enctype="multipart/form-data">
+                <form id="loginForm" method="post" action="login.me" enctype="multipart/form-data">
                     <table id="loginTable" align="center">
                         <tr>
-                            <td align="center"><input type="text" id="" class="form-control" name="" style="height:30px;" placeholder="이메일" required></td>
+                            <td align="center"><input type="text" id="email" class="form-control" name="email" style="height:30px;" placeholder="이메일" required></td>
                         </tr>
                         <tr>
-                            <td align="center"><input type="text" id="" class="form-control" name="" style="height:30px;" placeholder="비밀번호" required></td>
+                            <td align="center"><input type="password" id="userPwd" class="form-control" name="userPwd" style="height:30px;" placeholder="비밀번호" required></td>
                         </tr>
                     </table>
                     

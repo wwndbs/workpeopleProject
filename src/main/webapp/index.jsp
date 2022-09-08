@@ -1,253 +1,121 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>워크피플</title>
-<!-- 
-	author : 최영헌
-	
-	경로는 servlet-context.xml파일에 <resources mapping="/resources/**" location="/resources/" /> 로 명시되어있어
-	resources로 경로를 시작하면됨
-	
-	header.jsp에 link 넣음 
- -->
-
+<title>Insert title here</title>
+<style>
+    div{box-sizing: border-box;}
+    form{box-sizing: border-box;}
+    tr{box-sizing: border-box;}
+    td{box-sizing: border-box; padding-top: 5px;}
+    input{padding:0px;margin:0px;}
+    #header{
+        width:100%;
+        height:100px;
+        padding-top:10px;
+        margin:auto;
+    }
+    #header>div{width:100%; margin-bottom:10px}
+    #header1>div{
+        height:100%;
+        float:left;
+    }
+    #header1-1{width:20%;position:relative;}
+    #header1-2{width:70%;}
+    #header1-1>img{height:80%;position:absolute;margin:auto;top:0;bottom:0;right: 0;left:0;}
+    #body>div{
+        width:100%;
+    }
+    #body1{
+        height: 100px;
+    }
+    #body2{
+        text-align: center;
+        color:rgb(45, 130, 235);
+        font-size: 30px;
+        font-weight: 800;
+    }
+    #loginForm>table{
+        width:100%;
+    }
+	#loginForm>table{width:100%;}
+    #body3{
+        height: 300px;
+    }
+    #body3>div{
+        height:100%;
+        float:left;
+    }
+    #body3-1{
+        width:35%;
+        position:relative;
+    }
+    #body3-2{
+        width:30%;
+    }
+    #body3-3{
+        width:35%;
+    }
+    #loginTable input{
+        width: 100%;
+        height: 100%;
+    }
+    #loginbtn{
+        width: 100%;
+        height: 30px;
+        color:white;
+        background-color:rgb(45, 130, 235);
+        border-color:rgb(45, 130, 235);
+    }
+    
+    </style>
 </head>
 <body>
-	<div class="adminx-container">
-		<!-- 상단 메뉴 바 -->
-		<jsp:include page="WEB-INF/views/common/header.jsp" />
-		
-		<!-- 좌측 슬라이드 메뉴 바 -->
-		<jsp:include page="WEB-INF/views/common/menubar.jsp" />
-		
-		<!-- 컨텐츠 부분-->
-		<div class="adminx-content">
-			<div class="adminx-main-content">
-				<div class="container-fluid">
-	
-					<!--메인페이지 컨텐츠-->
-					<div class="top-wrapper">
-						<!--프로필 부분-->
-						<div class="profile-alert-wrapper">
-							<div class="profile-area">
-								<img src="resources/images/defaultProfile.jpg" alt="프로필이미지"><br> <span id="profile-name">홍길동</span><br> <span id="department-name">인사부서/대리</span>
-							</div>
-	
-							<!--알림 부분-->
-							<div class="alert-area">
-								<div class="alert-item">
-									<span>메일</span><br> <span><a href="">0</a></span>
-								</div>
-								<div class="alert-item">
-									<span>쪽지</span><br> <span><a href="">12</a></span>
-								</div>
-								<div class="alert-item">
-									<span>채팅</span><br> <span><a href="">23</a></span>
-								</div>
-							</div>
-						</div>
-	
-						<!--게시판 부분-->
-						<div class="notice-area">
-							<div class="notice-menu">
-								<ul>
-									<li>게시판</li>
-									<li><a href="">공지사항</a></li>
-									<li><a href="">부서게시판</a></li>
-									<li><a href="">익명게시판</a></li>
-								</ul>
-								<span>
-									<a href=""><i class="fas fa-ellipsis-h"></i></a>
-								</span>
-							</div>
-							
-							<hr>
-							
-							<ul class="notice-list">
-								<li><span><a href="">2022년도 서울특별시 외국인 명예시민(Honorary Citizenship of Seoul)</a></span><span>2022-22-22</span></li>
-								<li><span><a href="">안심소득 시범사업 참여가구 모집 1차 선정결과 공고</a></span><span>2022-22-22</span></li>
-								<li><span><a href=""> 문화비축기지 장소지원 프로젝트 (아트랩-Art Lab) 모집공고</a></span><span>2022-22-22</span></li>
-								<li><span><a href=""> 서울특별시 남부여성발전센터, 북부여성발전센터 운영 수탁기관 선정 결과공고</a></span><span>2022-22-22</span></li>
-								<li><span><a href="">2022년도 서울특별시 외국인 명예시민(Honorary Citizenship of Seoul)</a></span><span>2022-22-22</span></li>
-								<li><span><a href="">안심소득 시범사업 참여가구 모집 1차 선정결과 공고</a></span><span>2022-22-22</span></li>
-								<li><span><a href=""> 문화비축기지 장소지원 프로젝트 (아트랩-Art Lab) 모집공고</a></span><span>2022-22-22</span></li>
-								<li><span><a href=""> 서울특별시 남부여성발전센터, 북부여성발전센터 운영 수탁기관 선정 결과공고</a></span><span>2022-22-22</span></li>
-							</ul>
-						</div>
-	
-						<!--결재 부분-->
-						<div class="approval-area">
-							<div class="approval-menu">
-								<ul>
-									<li>결재</li>
-									<li><a href="">진행</a></li>
-									<li><a href="">완료</a></li>
-									<li><a href="">반려</a></li>
-									<li><a href="">대기</a></li>
-								</ul>
-								<span>
-									<a href="approvalList.ap"><i class="fas fa-ellipsis-h"></i></a>
-								</span>
-							</div>
-							<table class="table table-hover" style="text-align: center;">
-								<thead>
-									<tr>
-										<th style="text-align: left;">제목</th>
-										<th width="150">작성일</th>
-										<th width="70">첨부</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td style="text-align: left;">휴가신청서(휴가)</td>
-										<td>2022-22-22</td>
-										<td>
-											<i class="fas fa-file-download"></i>
-										</td>
-									</tr>
-									<tr>
-										<td style="text-align: left;">휴가신청서(휴가)</td>
-										<td>2022-22-22</td>
-										<td>
-											<i class="fas fa-file-download"></i>
-										</td>
-									</tr>
-									<tr>
-										<td style="text-align: left;">휴가신청서(휴가)</td>
-										<td>2022-22-22</td>
-										<td>
-											<i class="fas fa-file-download"></i>
-										</td>
-									</tr>
-									<tr>
-										<td style="text-align: left;">휴가신청서(휴가)</td>
-										<td>2022-22-22</td>
-										<td>
-											<i class="fas fa-file-download"></i>
-										</td>
-									</tr>
-									<tr>
-										<td style="text-align: left;">휴가신청서(휴가)</td>
-										<td>2022-22-22</td>
-										<td>
-											<i class="fas fa-file-download"></i>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-	
-					<div class="bottom-wrapper">
-						<!--근태 부분-->
-						<div class="time-area">
-							<ul>
-								<li>근태</li>
-								<li>
-									<a href=""><i class="fas fa-ellipsis-h"></i></a>
-								</li>
-							</ul>
-							<div id="clock">
-								<span>2022년 12월 12일 (월)</span>
-								<h3><strong>12:00:00</strong></h3>
-							</div>
-							<div id="time">
-								<span><strong>출근시간</strong></span>
-								&nbsp;&nbsp;
-								<span><strong style="color: gray;">09:16</strong></span>
-								<br>
-								<span><strong>퇴근시간</strong></span>
-								&nbsp;&nbsp;
-								<span><strong style="color: gray;">미확인</strong></span>
-							</div>
-							<div id="btn">
-								<button class="btn btn-primary">출근</button>
-								<button class="btn btn-secondary">퇴근</button>
-							</div>
-						</div>
-	
-						<!--프로젝트 부분-->
-						<div class="project-area">
-							<ul>
-								<li>프로젝트</li>
-								<li>
-									<a href=""><i class="fas fa-ellipsis-h"></i></a>
-								</li>
-							</ul>
-							<div class="project-container">
-								<div class="project">
-									<span>프로젝트명</span> <span><i class="fas fa-user-alt"></i>&nbsp;13</span>
-								</div>
-								<div class="project">
-									<span>프로젝트명</span> <span><i class="fas fa-user-alt"></i>&nbsp;13</span>
-								</div>
-								<div class="project">
-									<span>프로젝트명</span> <span><i class="fas fa-user-alt"></i>&nbsp;13</span>
-								</div>
-								<div class="project">
-									<span>프로젝트명</span> <span><i class="fas fa-user-alt"></i>&nbsp;13</span>
-								</div>
-								<div class="project">
-									<span>프로젝트명</span> <span><i class="fas fa-user-alt"></i>&nbsp;13</span>
-								</div>
-							</div>
-							<div class="slide-btn">
-								<i class="fas fa-chevron-left" id="left-btn"></i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="fas fa-chevron-right" id="right-btn"></i>
-							</div>
-						</div>
-	
-						<!--할 일 부분-->
-						<div class="todo-area">
-							<div class="todo-menu">
-								<ul>
-									<li>To-Do</li>
-									<li><a href="">할 일</a></li>
-									<li><a href="">진행중</a></li>
-									<li><a href="">완료</a></li>
-								</ul>
-								<span>
-									<a href="todoList.td"><i class="fas fa-ellipsis-h"></i></a>
-								</span>
-							</div>
-							<ul class="todo-list">
-								<li>오늘의 할 일은 뭐지?</li>
-								<li>오늘의 할 일은 뭐지?</li>
-								<li>오늘의 할 일은 뭐지?</li>
-								<li>오늘의 할 일은 뭐지?</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<script>
-		// 프로젝트 슬라이드
-		$(function() {
-			let position = 0;
-			$(".slide-btn>#right-btn").click(function() {
-				position += 235;
-				$(".project-container").css('transform', 'translateX(-' + position + 'px)');
-				
-				if (position > 235) {
-					position = -235;
-				}
-			})
 
-			$(".slide-btn>#left-btn").click(function() {
-				position -= 235;
-				$(".project-container").css('transform', 'translateX(-' + position + 'px)');
-				
-				if (position < 0) {
-					position = 705;
-				}
-			})
-		})
-	</script>
-	<jsp:include page="WEB-INF/views/common/footer.jsp"/>
+    <div id="header">
+        <div id="header1">
+            <div id="header1-1">
+                <img src="resources/images/workpeople-logo-blue02.png" alt="">
+                <br><br><br>
+            </div>
+
+            <div id="header1-2">
+            </div>
+        </div>
+    </div>
+
+    <div id="body">
+        <div id="body1"></div>
+        <div id="body2">워크피플</div>
+        <br><br>
+
+        <div id="body3">
+            <div id="body3-1"></div>
+            <div id="body3-2">
+                <form id="loginForm" method="post" action="login.me" enctype="multipart/form-data">
+                    <table id="loginTable" align="center">
+                        <tr>
+                            <td align="center"><input type="text" id="email" class="form-control" name="email" style="height:30px;" placeholder="이메일" required></td>
+                        </tr>
+                        <tr>
+                            <td align="center"><input type="password" id="userPwd" class="form-control" name="userPwd" style="height:30px;" placeholder="비밀번호" required></td>
+                        </tr>
+                    </table>
+                    
+                    <a href="" id="find-pwd" style="font-size: 10px; ">비밀번호 찾기</a>
+                    <br><br>
+
+                    <div align="center">
+                        <button type="submit" id="loginbtn">로그인</button>
+                    </div>
+                </form>
+            </div>
+            <div id="body3-3"></div>
+        </div>
+
+    </div>
 </body>
 </html>
