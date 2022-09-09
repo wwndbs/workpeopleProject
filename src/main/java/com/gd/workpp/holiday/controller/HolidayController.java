@@ -32,18 +32,6 @@ public class HolidayController {
 	
 	/**
 	 * author : 최영헌
-	 * 로그인한 사용자의 할 일 목록 조회 요청을 처리해주는 메소드
-	 */
-	@ResponseBody
-	@RequestMapping(value="todoListView.td", produces="application/json; charset=UTF-8")
-	public String todoListView(HttpSession session) {
-		Member m = (Member)session.getAttribute("loginUser");
-		ArrayList<Todo> list = hService.todoListView(m);
-		return new Gson().toJson(list);
-	}
-	
-	/**
-	 * author : 최영헌
 	 * 할 일 추가 요청을 처리해주는 메소드
 	 * @param todoContent : 사용자가 입력한 할 일
 	 * @param userNo : 로그인한 사용자 번호
