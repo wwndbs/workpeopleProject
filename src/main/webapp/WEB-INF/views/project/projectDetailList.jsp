@@ -130,12 +130,11 @@
 			                      <td>${ p.proBoardNo }</td>
 			                      <td><div class="btn btn-sm btn-primary btn2">${ p.proBoardStatus }</div></td>
 			                      <td>${ p.proBoardLevel }</td>
-			                      <td>${ }</td>
 			                      <td>${ p.proTitle }</td>
-			                      <td>김동동 대리</td>
-			                      <td>2022-09-02</td>
-			                      <td>2022-09-02</td>
-			                      <td>2022-09-02 ~ 2022-09-02</td>
+			                      <td>${ p.userNo }</td>
+			                      <td>${ p.createDate }</td>
+			                      <td>${ p.modifyDate }</td>
+			                      <td>${ p.startDate }${ p.endDate }</td>
 			                    </tr>
 			                    </c:forEach>
 		                    </c:otherwise>
