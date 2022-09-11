@@ -46,6 +46,13 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<c:if test="${ not empty alertMsg }">
+		<script>
+			alert("${ alertMsg }");
+		</script>
+		<c:remove var="alertMsg" scope="session" />
+	</c:if>
+
 	<nav class="navbar navbar-expand justify-content-between fixed-top">
 		<a class="navbar-brand mb-0 h1 d-none d-md-block" href="index.html">
 			<img src="resources/images/workpeople-logo-blue02.png" height="30" alt="">
