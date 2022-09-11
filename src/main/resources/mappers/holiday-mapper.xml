@@ -37,4 +37,10 @@
 	    	 , #{todoContent}
 	           )
 	</insert>
+	
+	<delete id="deleteTodo" parameterType="_int">
+		delete
+		  from todo
+		 where todo_no = #{todoNo}
+	</delete>
 </mapper>

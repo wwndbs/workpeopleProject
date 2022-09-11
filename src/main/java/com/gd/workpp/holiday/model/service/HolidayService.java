@@ -10,4 +10,6 @@ public interface HolidayService {
 	ArrayList<Todo> todoListView(Member m);
 
 	int insertTodo(String todoContent, String userNo);
+	
+	int deleteTodo(int no);
 }

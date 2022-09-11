@@ -22,4 +22,8 @@ public class HolidayDao {
 		map.put("userNo", userNo);
 		return sqlSession.insert("holidayMapper.insertTodo", map);
 	}
+	
+	public int deleteTodo(SqlSessionTemplate sqlSession, int no) {
+		return sqlSession.delete("holidayMapper.deleteTodo", no);
+	}
 }

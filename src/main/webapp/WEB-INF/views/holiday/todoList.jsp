@@ -62,6 +62,7 @@
 	<!-- 드래그 제이쿼리 -->
 	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 	
+	<!-- 할 일 리스트 조회 ajax -->
 	<script>
 		$(function(){
 			$.ajax({
@@ -73,18 +74,21 @@
 					for(let i = 0; i < todolist.length; i++){
 						if(todolist[i].status == 1){
 							list += '<li id="item">'
+							     +      '<span style="display : none;">' + todolist[i].todoNo + '</span>'
 							     +  	'<span>' + todolist[i].todoContent + '</span>'
 							     +      '<button><i class="fas fa-times"></i></button>'
 							     +  '</li>';
 							$("#list ul").html(list);
 						}else if(todolist[i].status == 2){
 							 run += '<li id="item">'
+							     +      '<span style="display : none;">' + todolist[i].todoNo + '</span>'
 							     +  	'<span>' + todolist[i].todoContent + '</span>'
 							     +      '<button><i class="fas fa-times"></i></button>'
 							     +  '</li>';
 							 $("#run ul").html(run);
 						}else{
-							 success += '<li id="item">'
+					     success += '<li id="item">'
+						         +      '<span style="display : none;">' + todolist[i].todoNo + '</span>'
 							     +  	'<span>' + todolist[i].todoContent + '</span>'
 							     +      '<button><i class="fas fa-times"></i></button>'
 							     +  '</li>';
@@ -97,6 +101,13 @@
 				}
 			})
 		})
+	</script>
+	
+	<!-- 할 일 삭제 ajax -->
+	<script>
+		$(document).on("click", "#item>button", function() {
+			location.href="deleteTodo.td?no=" + $(this).parent().children().eq(0).text();
+		});
 	</script>
 	
 	<script>

@@ -27,4 +27,9 @@ public class HolidayServiceImpl implements HolidayService {
 	public int insertTodo(String todoContent, String userNo) {
 		return hDao.insertTodo(sqlSession, todoContent, userNo);
 	}
+
+	@Override
+	public int deleteTodo(int no) {
+		return hDao.deleteTodo(sqlSession, no);
+	}
 }
