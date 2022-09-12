@@ -60,46 +60,46 @@
 
 				<ul class="sidebar-sub-nav collapse" id="navTables">
 					<li class="sidebar-nav-item">
-						<a href="./layouts/tables.html" class="sidebar-nav-link">
+						<a href="commute.at" class="sidebar-nav-link">
 							<span class="sidebar-nav-abbr"> Vi </span> <span class="sidebar-nav-name"> 출퇴근 기록 </span>
 						</a>
 					</li>
 					<li class="sidebar-nav-item">
-						<a href="./layouts/tables.html" class="sidebar-nav-link">
+						<a href="attendance.at" class="sidebar-nav-link">
 							<span class="sidebar-nav-abbr"> Vi </span> <span class="sidebar-nav-name"> 개인 근태현황 조회 </span>
 						</a>
 					</li>
 					<li class="sidebar-nav-item">
-						<a href="./layouts/tables.html" class="sidebar-nav-link">
+						<a href="holiday.at" class="sidebar-nav-link">
 							<span class="sidebar-nav-abbr"> Vi </span> <span class="sidebar-nav-name"> 휴가관리 </span>
 						</a>
 					</li>
 					<li class="sidebar-nav-item">
-						<a href="./layouts/tables.html" class="sidebar-nav-link">
+						<a href="work.at" class="sidebar-nav-link">
 							<span class="sidebar-nav-abbr"> Vi </span> <span class="sidebar-nav-name"> 연장근무 내역조회 </span>
 						</a>
 					</li>
 
 					<li class="sidebar-nav-item">
-						<a href="./layouts/tables.html" class="sidebar-nav-link">
+						<a href="commuteMember.at" class="sidebar-nav-link">
 							<span class="sidebar-nav-abbr"> Vi </span> <span class="sidebar-nav-name"> 사원별 출퇴근 현황 조회 </span>
 						</a>
 					</li>
 
 					<li class="sidebar-nav-item">
-						<a href="./layouts/tables_data.html" class="sidebar-nav-link">
+						<a href="attendanceMember.at" class="sidebar-nav-link">
 							<span class="sidebar-nav-abbr"> Vi </span> <span class="sidebar-nav-name"> 사원별 근태 현황 조회 </span>
 						</a>
 					</li>
 
 					<li class="sidebar-nav-item">
-						<a href="./layouts/tables_data.html" class="sidebar-nav-link">
+						<a href="atHolidayGive.atl" class="sidebar-nav-link">
 							<span class="sidebar-nav-abbr"> Ac </span> <span class="sidebar-nav-name"> 연차승인 </span>
 						</a>
 					</li>
 
 					<li class="sidebar-nav-item">
-						<a href="./layouts/tables_data.html" class="sidebar-nav-link">
+						<a href="holidayMemberList.at" class="sidebar-nav-link">
 							<span class="sidebar-nav-abbr"> Vi </span> <span class="sidebar-nav-name"> 연차 사용내역 조회 </span>
 						</a>
 					</li>
