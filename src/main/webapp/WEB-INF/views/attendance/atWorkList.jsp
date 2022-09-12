@@ -58,7 +58,7 @@
 		<jsp:include page="../common/menubar.jsp" />
 		
 		
-		      <!-- 컨텐츠 부분 wrapper -->
+	  <!-- 컨텐츠 부분 wrapper -->
       <div class="adminx-content">
         <div class="adminx-main-content">
 
