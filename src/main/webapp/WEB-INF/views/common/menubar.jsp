@@ -93,7 +93,7 @@
 					</li>
 
 					<li class="sidebar-nav-item">
-						<a href="atHolidayGive.atl" class="sidebar-nav-link">
+						<a href="atHolidayGive.at" class="sidebar-nav-link">
 							<span class="sidebar-nav-abbr"> Ac </span> <span class="sidebar-nav-name"> 연차승인 </span>
 						</a>
 					</li>
@@ -217,7 +217,7 @@
 
 				<ul class="sidebar-sub-nav collapse" id="navExtra3">
 					<li class="sidebar-nav-item">
-						<a href="./layouts/login.html" class="sidebar-nav-link">
+						<a href="holidayPersonal.ho" class="sidebar-nav-link">
 							<span class="sidebar-nav-abbr"> Ad </span> <span class="sidebar-nav-name"> 개인 일정 관리 </span>
 						</a>
 					</li>
