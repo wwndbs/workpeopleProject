@@ -72,10 +72,9 @@
 .board-table{
     background-color: white;
     padding: 5% 3%;
-    height: 70%;
+    height: 80%;
     width: 95%;
     margin: auto;
-    border: 1px solid rgb(224, 224, 224);
 }
 
 .board-table table{
@@ -405,4 +404,53 @@
     text-decoration: underline;
     line-height: 1.5;
     padding: 3px 0;
+}
+
+.enrollForm .btn-file input[type="file"]{
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.enrollForm .btn-file .size{
+    margin: 0;
+    color: #999;
+}
+
+.board-content .enrollForm .file-wrap, .board-content .enrollForm .img-wrap{
+    list-style-type: none !important;
+}
+
+.board-content .enrollForm .img-wrap{
+    margin: 0 16px;
+}
+
+.board-content .enrollForm .line hr{
+    margin: 0;
+    border: none;
+    border-bottom: 1px solid #ebebeb;
+    height: 1px;
+}
+
+.board-content .enrollForm .editor{
+    position: relative;
+    margin: 20px 0;
+    width: 100%;
+}
+
+.board-content .enrollForm .editor .btn{
+    position: absolute;
+    right: 0;
+    top: -20px;
+}
+
+.board-content .enrollForm .go-editor{
+    width: 100%;
+    height: 450px;
+    padding-bottom: 10px;
+    overflow: visible;
+    line-height: 0;
 }

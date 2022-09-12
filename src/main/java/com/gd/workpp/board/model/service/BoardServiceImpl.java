@@ -5,4 +5,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class BoardServiceImpl implements BoardService {
 
+	@Override
+	public int selectListCount() {
+		return 0;
+	}
+
 }

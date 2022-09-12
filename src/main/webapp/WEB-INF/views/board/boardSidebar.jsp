@@ -24,16 +24,18 @@
 
                   <h6>부서별 게시판</h6>
                   <ul class="dept-list">
+                  	<li><a href="">개발팀</a></li>
                     <li><a href="">인사팀</a></li>
                     <li><a href="">총무팀</a></li>
                     <li><a href="">회계팀</a></li>
                     <li><a href="">영업팀</a></li>
-                    <li><a href="">개발팀</a></li>
                   </ul>
                   
                   <a href=""><h6>익명 게시판</h6></a>
                 
                   <a href=""><h6>내 게시글 조회</h6></a>
+                  
+                  <a href="enrollForm.bo"><h6>글쓰기</h6></a>
                 </div>
 
               </div>
