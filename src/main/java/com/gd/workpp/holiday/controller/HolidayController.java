@@ -59,4 +59,17 @@ public class HolidayController {
 			return "common/errorPage";
 		}
 	}
+	
+	// author : 장서원 / 개인일정조회 페이지
+	@RequestMapping("holidayPersonal.ho")
+	public String holidayPersonalList() {
+		return "holiday/holidayPersonalList";
+	}
+	
+	
+	
+	
+	
+	
+	
 }
