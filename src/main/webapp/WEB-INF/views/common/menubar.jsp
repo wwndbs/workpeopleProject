@@ -218,19 +218,13 @@
 				<ul class="sidebar-sub-nav collapse" id="navExtra3">
 					<li class="sidebar-nav-item">
 						<a href="schedulePersonal.sc" class="sidebar-nav-link">
-							<span class="sidebar-nav-abbr"> Ad </span> <span class="sidebar-nav-name"> 개인 일정 관리 </span>
+							<span class="sidebar-nav-abbr"> Ad </span> <span class="sidebar-nav-name"> 개인 일정 </span>
 						</a>
 					</li>
 
 					<li class="sidebar-nav-item">
-						<a href="./layouts/signup.html" class="sidebar-nav-link">
-							<span class="sidebar-nav-abbr"> Vi </span> <span class="sidebar-nav-name"> 회사 일정 조회 </span>
-						</a>
-					</li>
-
-					<li class="sidebar-nav-item">
-						<a href="./layouts/login.html" class="sidebar-nav-link">
-							<span class="sidebar-nav-abbr"> Ad </span> <span class="sidebar-nav-name"> 회사 일정 관리 </span>
+						<a href="scheduleCompany.sc" class="sidebar-nav-link">
+							<span class="sidebar-nav-abbr"> Ad </span> <span class="sidebar-nav-name"> 회사 일정 </span>
 						</a>
 					</li>
 
