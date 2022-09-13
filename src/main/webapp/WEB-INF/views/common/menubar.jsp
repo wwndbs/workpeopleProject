@@ -264,7 +264,7 @@
 			</li>
 			<!--게시판-->
 			<li class="sidebar-nav-item">
-				<a class="sidebar-nav-link collapsed" href="nlist.bo" aria-expanded="false" aria-controls="navExtra">
+				<a class="sidebar-nav-link collapsed" href="list.bo?no=1" aria-expanded="false" aria-controls="navExtra">
 					<span class="sidebar-nav-icon"> <i class="fas fa-chalkboard"></i></span>
 					<span class="sidebar-nav-name"> 게시판 </span>
 					<span class="sidebar-nav-end"> <i data-feather="chevron-right" class="nav-collapse-icon"></i></span>
