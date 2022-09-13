@@ -78,8 +78,8 @@
                     </tr>
                     <tr height="60px">
                       <td colspan="2" style="padding-bottom:20px;">
-                        <button class="btn btn-primary" id="commute-start-modal" style="width:75px; margin-right:10px;">출근</button>
-                        <button class="btn btn-danger" id="commute-end-modal" style="width:75px; margin-left:10px;">퇴근</button>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#commute-start-modal" data-backdrop="static" style="width:75px; margin-right:10px;">출근</button>
+                        <button class="btn btn-danger" data-toggle="modal" data-target="#commute-end-modal" data-backdrop="static" style="width:75px; margin-left:10px;">퇴근</button>
                       </td>
                     </tr>
                   </table>
@@ -296,7 +296,55 @@
       </div>
     </div>
     
-    <!-- 출근 등록 모달 -->
+	<!-- 출근 등록 모달 -->
+	<form action="" method="POST">
+		<div class="modal" id="commute-start-modal">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<button type="button" class="modal_close" data-dismiss="modal" style="margin-left: 95%;">&times;</button>
+					</div>
+					<!-- Modal body -->
+					<div class="modal-body" style="text-align:center;">
+					    출근등록 하시겠습니까?
+					</div>
+					<!-- Modal footer -->
+					<div class="modal-footer" style="justify-content:center;">
+						<button type="submit" class="btn btn-jyok" id="commute-start-btn">등록</button>
+						<button type="button" class="btn btn-jycancle" data-dismiss="modal">취소</button>					
+					</div>
+				</div>
+			</div>
+		</div>
+    </form>
+    
+    <!-- 퇴근 등록 모달 -->
+	<form action="" method="POST">
+		<div class="modal" id="commute-end-modal">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<button type="button" class="modal_close" data-dismiss="modal" style="margin-left: 95%;">&times;</button>
+					</div>
+					<!-- Modal body -->
+					<div class="modal-body" style="text-align:center;">
+					    퇴근등록 하시겠습니까?
+					</div>
+					<!-- Modal footer -->
+					<div class="modal-footer" style="justify-content:center;">
+						<button type="submit" class="btn btn-jyok" id="commute-end-btn">등록</button>
+						<button type="button" class="btn btn-jycancle" data-dismiss="modal">취소</button>
+					</div>
+				</div>
+			</div>
+		</div>
+    </form>
+    
+    
+    
+    
     
 		
 		<jsp:include page="../common/footer.jsp" />

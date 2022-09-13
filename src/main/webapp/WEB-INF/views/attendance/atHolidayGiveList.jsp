@@ -48,9 +48,9 @@
                       <!-- 검색폼 -->
                       <div style="display:flex; padding-top:30px; padding-bottom:30px; margin:0 auto;">
 
-                        <button type="button" class="btn btn-sm btn-primary" style="height:40px; margin-right:15px;">휴가지급</button>
+                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#holiday-give" data-backdrop="static" style="height:40px; margin-right:15px;">휴가지급</button>
 
-                        <button type="button" class="btn btn-sm btn-primary" style="height:40px; margin-right:420px;">보너스 휴가지급</button>
+                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#holiday-bonus" data-backdrop="static" style="height:40px; margin-right:420px;">보너스 휴가지급</button>
 
                         <div class="form-group1">
                           <select class="form-control select1" id="select-dept" name="dept" style="width:100px; height:40px;">
@@ -74,12 +74,11 @@
                         </div>
                         <div class="search-div" style="width:20%; display:flex; ">
                           <input class="form-control mb-2 search1" type="text" placeholder="사원명을 입력해주세요." style="height:40px;">
-                          <button type="submit" class="btn btn-sm btn-primary" style="height:40px;">검색</button>
+                          <button type="submit" class="btn btn-sm btn-primary" style="width:60px; height:40px;">검색</button>
                         </div>
 
-                        <button type="button" class="btn btn-sm btn-secondary" style="height:40px; margin-left:420px;">근속연수 조회</button>
-
-                        <button type="button" class="btn btn-sm btn-danger" style="height:40px; margin-left:15px;">휴가 회수</button>
+                        <button type="button" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#service-year" data-backdrop="static" style="height:40px; margin-left:420px;">근속연수 조회</button>
+                        <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#holiday-recall" data-backdrop="static" style="height:40px; margin-left:15px; margin-right:15px;">휴가 회수</button>
 
                       </div>
                       
@@ -246,6 +245,120 @@
         </div>
       </div>
     </div>
+    
+    <!-- 휴가지급 모달 -->
+    <form action="" method="POST">
+	    <div class="modal" id="holiday-give">
+	        <div class="modal-dialog modal-dialog-centered">
+	            <div class="modal-content">
+	                <!-- Modal Header -->
+	                <div class="modal-header">
+	                    <h6 class="modal-title">휴가지급</h6>
+	                    <button type="button" class="modal_close" data-dismiss="modal">&times;</button>
+	                </div>
+	                <!-- Modal body -->
+	                <div class="modal-body" style="text-align:center;">
+	                    전 사원에게 휴가 13일을 <br>
+						지급하시겠습니까? <br>
+						(단, 근속연수 1년 미만 사원 제외)
+	                </div>
+	                <!-- Modal footer -->
+	                <div class="modal-footer" style="justify-content:center;">
+		                <button type="submit" class="btn btn-jyok" id="holiday-give-btn">지급</button>	                
+		                <button type="button" class="btn btn-jycancle" data-dismiss="modal">취소</button>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+    </form>
+    
+    <!-- 보너스 휴가지급 모달 -->
+    <form action="" method="POST">
+	    <div class="modal" id="holiday-bonus">
+	        <div class="modal-dialog modal-dialog-centered">
+	            <div class="modal-content">
+	                <!-- Modal Header -->
+	                <div class="modal-header">
+	                    <h6 class="modal-title">보너스 휴가지급</h6>
+	                    <button type="button" class="modal_close" data-dismiss="modal">&times;</button>
+	                </div>
+	                <!-- Modal body -->
+	                <div class="modal-body" style="text-align:center;">
+	                    <table style="display:inline-block;">
+	                    	<tr>
+	                    		<td>휴가일수 : </td>
+	                    		<td style="padding-left:15px;"><input type="number" style="width:100px;"></td>
+	                    	</tr>
+	                    </table>
+	                </div>
+	                <!-- Modal footer -->
+	                <div class="modal-footer" style="justify-content:center;">
+		                <button type="submit" class="btn btn-jyok" id="holiday-bonus-btn">지급</button>	                
+		                <button type="button" class="btn btn-jycancle" data-dismiss="modal">취소</button>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+    </form>
+    
+    <!-- 근속연수 조회 모달 -->
+    <form action="" method="POST">
+	    <div class="modal" id="service-year">
+	        <div class="modal-dialog modal-dialog-centered">
+	            <div class="modal-content">
+	                <!-- Modal Header -->
+	                <div class="modal-header">
+	                    <h6 class="modal-title">근속연수 조회</h6>
+	                    <button type="button" class="modal_close" data-dismiss="modal">&times;</button>
+	                </div>
+	                <!-- Modal body -->
+	                <div class="modal-body" style="text-align:center;">
+	                    <table style="display:inline-block;">
+	                    	<tr>
+	                    		<td>근속연수 : </td>
+	                    		<td style="padding-left:15px;"><input type="number" style="width:100px;"></td>
+	                    	</tr>
+	                    </table>
+	                </div>
+	                <!-- Modal footer -->
+	                <div class="modal-footer" style="justify-content:center;">
+		                <button type="submit" class="btn btn-jyok" id="service-year-btn">조회</button>	                
+		                <button type="button" class="btn btn-jycancle" data-dismiss="modal">취소</button>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+    </form>
+    
+    <!-- 휴가회수 모달 -->
+    <form action="" method="POST">
+	    <div class="modal" id="holiday-recall">
+	        <div class="modal-dialog modal-dialog-centered">
+	            <div class="modal-content">
+	                <!-- Modal Header -->
+	                <div class="modal-header">
+	                    <h6 class="modal-title">휴가회수</h6>
+	                    <button type="button" class="modal_close" data-dismiss="modal">&times;</button>
+	                </div>
+	                <!-- Modal body -->
+	                <div class="modal-body" style="text-align:center;">
+	                    <table style="display:inline-block;">
+	                    	<tr>
+	                    		<td>휴가일수 : </td>
+	                    		<td style="padding-left:15px;"><input type="number" style="width:100px;"></td>
+	                    	</tr>
+	                    </table>
+	                </div>
+	                <!-- Modal footer -->
+	                <div class="modal-footer" style="justify-content:center;">
+		                <button type="submit" class="btn btn-jyok" id="holiday-recall-btn">회수</button>	                
+		                <button type="button" class="btn btn-jycancle" data-dismiss="modal">취소</button>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+    </form>
+
 		
 		
 		<jsp:include page="../common/footer.jsp" />
