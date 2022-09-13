@@ -29,6 +29,7 @@
 <link rel="stylesheet" href="resources/css/juyun.css">
 <link rel="stylesheet" href="resources/css/sanghyun.css">
 <link rel="stylesheet" href="resources/css/hyerim.css">
+<link rel="stylesheet" href="resources/css/seowon.css">
 
 
 <!--summernote-common-->

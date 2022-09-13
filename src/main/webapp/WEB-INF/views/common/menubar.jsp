@@ -94,13 +94,13 @@
 
 					<li class="sidebar-nav-item">
 						<a href="atHolidayGive.at" class="sidebar-nav-link">
-							<span class="sidebar-nav-abbr"> Ac </span> <span class="sidebar-nav-name"> 연차승인 </span>
+							<span class="sidebar-nav-abbr"> Ac </span> <span class="sidebar-nav-name"> 사원 휴가관리 </span>
 						</a>
 					</li>
 
 					<li class="sidebar-nav-item">
 						<a href="holidayMemberList.at" class="sidebar-nav-link">
-							<span class="sidebar-nav-abbr"> Vi </span> <span class="sidebar-nav-name"> 연차 사용내역 조회 </span>
+							<span class="sidebar-nav-abbr"> Vi </span> <span class="sidebar-nav-name"> 사원 휴가내역 조회 </span>
 						</a>
 					</li>
 				</ul>
