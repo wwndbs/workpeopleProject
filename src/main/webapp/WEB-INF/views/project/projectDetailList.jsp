@@ -116,7 +116,10 @@
 	                      <th>마감기한</th>
 	                    </tr>
 	                  </thead>
-	                  <tbody class="notice-list">
+	                  <tbody class="notice-list">	               
+		                <input type="hidden" name="userName" value="${ m.userName }">
+		                <input type="hidden" name="jobName" value="${ m.jobName }">
+		                <input type="hidden" name="userJob" value="${ m.userJob }">		                
 	                  	<c:choose>
 	                  		<c:when test="${ empty list }">
 	                  			<tr>
@@ -128,13 +131,29 @@
 			                    <tr onclick="location.href='boardDetail.pr'">
 			                      <td></td>
 			                      <td>${ p.proBoardNo }</td>
-			                      <td><div class="btn btn-sm btn-primary btn2">${ p.proBoardStatus }</div></td>
-			                      <td>${ p.proBoardLevel }</td>
+			                      <c:if test="${ p.proBoardStatus == 1}">
+				                      <td><div class="btn btn-sm btn-success btn2">진행</div></td>		                      
+			                      </c:if>
+			                      <c:if test="${ p.proBoardStatus == 2}">
+			                      	<td><div class="btn btn-sm btn-warning btn2" style="color:white">보류</div></td>
+			                      </c:if>
+			                      <c:if test="${ p.proBoardStatus == 3}">
+			                      	<td><div class="btn btn-sm btn-primary btn2">완료</div></td>
+			                      </c:if>
+			                      <c:if test="${ p.proBoardLevel == 1}">
+				                      <td>낮음</td>		                      
+			                      </c:if>
+			                      <c:if test="${ p.proBoardLevel == 2}">
+				                      <td>보통</td>		                      
+			                      </c:if>
+			                      <c:if test="${ p.proBoardLevel == 3}">
+				                      <td>높음</td>		                      
+			                      </c:if>
 			                      <td>${ p.proTitle }</td>
-			                      <td>${ p.userNo }</td>
+			                      <td>${ p.pbUserName }${ p.pbJobName }</td>
 			                      <td>${ p.createDate }</td>
 			                      <td>${ p.modifyDate }</td>
-			                      <td>${ p.startDate }${ p.endDate }</td>
+			                      <td>${ p.startDate } ~ ${ p.endDate }</td>
 			                    </tr>
 			                    </c:forEach>
 		                    </c:otherwise>
