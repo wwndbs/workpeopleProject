@@ -53,11 +53,11 @@
                         <tr style="height:50px;">
                           <td><b>근무상태</b></td>
                           <td style="padding-top:10px;">
-                            <input type="checkbox" id="status1" name="c-status" value="전체"><label name="status1" style="margin-left:5px;">전체</label>
-                            <input type="checkbox" id="status2" name="c-status" value="정상" style="margin-left:10px;"><label name="status2" style="margin-left:5px;">정상</label>
-                            <input type="checkbox" id="status3" name="c-status" value="지각" style="margin-left:10px;"><label name="status3" style="margin-left:5px;">지각</label>
-                            <input type="checkbox" id="status4" name="c-status" value="연차" style="margin-left:10px;"><label name="status4" style="margin-left:5px;">연차</label>
-                            <input type="checkbox" id="status5" name="c-status" value="결근" style="margin-left:10px;"><label name="status5" style="margin-left:5px;">결근</label>
+                            <input type="radio" id="status1" name="c-status" value="전체"><label name="status1" style="margin-left:5px;">전체</label>
+                            <input type="radio" id="status2" name="c-status" value="정상" style="margin-left:10px;"><label name="status2" style="margin-left:5px;">정상</label>
+                            <input type="radio" id="status3" name="c-status" value="지각" style="margin-left:10px;"><label name="status3" style="margin-left:5px;">지각</label>
+                            <input type="radio" id="status4" name="c-status" value="연차" style="margin-left:10px;"><label name="status4" style="margin-left:5px;">연차</label>
+                            <input type="radio" id="status5" name="c-status" value="결근" style="margin-left:10px;"><label name="status5" style="margin-left:5px;">결근</label>
                           </td>
                           <td></td>
                         </tr>

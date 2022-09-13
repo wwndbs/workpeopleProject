@@ -12,37 +12,6 @@
       padding-top:5px !important;
     }
 
-    .holiday-main{
-        background-color:white;
-        border:1px solid rgb(224, 224, 224);
-        border-radius:5px;
-        width:100%;
-        height:250px !important;
-    }
-
-    .holiday-manage{
-        background-color:white;
-        border:1px solid rgb(224, 224, 224);
-        border-radius:5px;
-        height:100% !important;
-    }
-
-    .top-table{
-      margin-left:10%;
-      margin-top:60px;
-    }
-
-    .span-top{
-      font-size:17px;
-      font-weight:bold;
-      margin-right:20px;
-    }
-
-    .span-bottom{
-      font-size:30px;
-      margin-right:20px;
-    }
-
   </style>
 <script src="https://kit.fontawesome.com/8fdc8bab0d.js" crossorigin="anonymous"></script>
 </head>

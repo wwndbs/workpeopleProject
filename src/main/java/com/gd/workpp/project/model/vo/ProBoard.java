@@ -30,5 +30,9 @@ public class ProBoard {
 	private String proTitle;
 	private String proContent;
 	private String proBoardYn;
+	
+	private String userNo;
+	private String pbUserName;
+	private String pbJobName;
 
 }

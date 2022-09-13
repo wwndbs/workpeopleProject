@@ -94,13 +94,13 @@
 
 					<li class="sidebar-nav-item">
 						<a href="atHolidayGive.at" class="sidebar-nav-link">
-							<span class="sidebar-nav-abbr"> Ac </span> <span class="sidebar-nav-name"> 연차승인 </span>
+							<span class="sidebar-nav-abbr"> Ac </span> <span class="sidebar-nav-name"> 사원 휴가관리 </span>
 						</a>
 					</li>
 
 					<li class="sidebar-nav-item">
 						<a href="holidayMemberList.at" class="sidebar-nav-link">
-							<span class="sidebar-nav-abbr"> Vi </span> <span class="sidebar-nav-name"> 연차 사용내역 조회 </span>
+							<span class="sidebar-nav-abbr"> Vi </span> <span class="sidebar-nav-name"> 사원 휴가내역 조회 </span>
 						</a>
 					</li>
 				</ul>
@@ -217,20 +217,14 @@
 
 				<ul class="sidebar-sub-nav collapse" id="navExtra3">
 					<li class="sidebar-nav-item">
-						<a href="holidayPersonal.ho" class="sidebar-nav-link">
-							<span class="sidebar-nav-abbr"> Ad </span> <span class="sidebar-nav-name"> 개인 일정 관리 </span>
+						<a href="schedulePersonal.sc" class="sidebar-nav-link">
+							<span class="sidebar-nav-abbr"> Ad </span> <span class="sidebar-nav-name"> 개인 일정 </span>
 						</a>
 					</li>
 
 					<li class="sidebar-nav-item">
-						<a href="./layouts/signup.html" class="sidebar-nav-link">
-							<span class="sidebar-nav-abbr"> Vi </span> <span class="sidebar-nav-name"> 회사 일정 조회 </span>
-						</a>
-					</li>
-
-					<li class="sidebar-nav-item">
-						<a href="./layouts/login.html" class="sidebar-nav-link">
-							<span class="sidebar-nav-abbr"> Ad </span> <span class="sidebar-nav-name"> 회사 일정 관리 </span>
+						<a href="scheduleCompany.sc" class="sidebar-nav-link">
+							<span class="sidebar-nav-abbr"> Ad </span> <span class="sidebar-nav-name"> 회사 일정 </span>
 						</a>
 					</li>
 

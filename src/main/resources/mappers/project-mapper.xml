@@ -39,6 +39,12 @@
 		<result column="pro_board_yn" property="proBoardYn"/>
 	</resultMap>
 	
+	<resultMap type="Member" id="memberResult">
+		<result column="user_name" property="pbUserName"/>
+		<result column="job_name" property="pbJobName"/>
+		<result column="user_no" property="userNo"/>
+	</resultMap>
+	
 	<!-- [김은지] 내프로젝트 리스트 조회 -->
 	<select id="selectList" resultMap="projectResult">
 		select
@@ -53,6 +59,25 @@
 	<!-- [김은지] 프로젝트 상세리스트 조회 -->
 	<select id="selectProBoardList" resultMap="proBoardResult">
 		select
+		       pb.pro_board_no
+		     , pb.pro_board_status
+		     , pb.pro_board_level
+		     , pb.pro_title
+		     , m.user_name as "pbUserName"
+		     , m.job_name as "pbJobName"
+		     , pb.create_date
+		     , pb.modify_date
+		     , pb.start_date
+		     , pb.end_date 
+		  from pro_board pb
+		  join member m on (m.user_no = pb.user_no)
+		 where pb.project_no = 8
+		 order
+		    by pb.pro_board_no desc
+	</select>
+
+	<!-- 
+			select
 		       pb.PRO_BOARD_NO
 		     , pb.pro_board_status
 		     , pb.pro_board_level
@@ -66,9 +91,7 @@
 		 where pb.project_no = 8
 		 order
 		    by pb.pro_board_no desc
-	</select>
-	
-	
+	 -->
 </mapper>
 
 

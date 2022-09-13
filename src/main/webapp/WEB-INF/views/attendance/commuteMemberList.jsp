@@ -11,11 +11,6 @@
     .adminx-main-content {
 		padding-top:5px !important;
     }
-    
-    #commute-modify-btn01{
-    	margin-left:15px;
-    	height:41px;
-    }
 
   </style>
 </head>

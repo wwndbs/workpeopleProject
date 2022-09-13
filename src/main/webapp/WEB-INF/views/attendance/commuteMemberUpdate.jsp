@@ -92,7 +92,7 @@
                               <td>대리</td>
                               <td>09:30~18:00</td>
                               <td>09:00~18:00</td>
-                              <td><button class="btn btn-pill btn-sm btn-primary">승인대기</button></td>
+                              <td><button class="btn btn-pill btn-sm btn-primary" data-toggle="modal" data-target="#commute-modify-modal" data-backdrop="static">승인대기</button></td>
                             </tr>
                             <tr>
                                 <td>2022-09-05</td>
@@ -102,7 +102,7 @@
                                 <td>대리</td>
                                 <td>09:20~18:00</td>
                                 <td>09:00~18:00</td>
-                                <td><button class="btn btn-pill btn-sm btn-primary">승인대기</button></td>
+                                <td><button class="btn btn-pill btn-sm btn-primary" data-toggle="modal" data-target="#commute-modify-modal" data-backdrop="static">승인대기</button></td>
                             </tr>
                             <tr>
                                 <td>2022-09-02</td>
@@ -217,6 +217,51 @@
         </div>
       </div>
     </div>
+    
+    <!-- 출퇴근기록 수정요청현황 모달 -->
+    <form action="" method="POST">
+	    <div class="modal" id="commute-modify-modal">
+	        <div class="modal-dialog modal-dialog-centered">
+	            <div class="modal-content">
+	                <!-- Modal Header -->
+	                <div class="modal-header">
+	                    <h6 class="modal-title">사원 출퇴근기록 수정</h6>
+	                    <button type="button" class="modal_close" data-dismiss="modal">&times;</button>
+	                </div>
+	                <!-- Modal body -->
+	                <div class="modal-body">
+	                    <table style="margin-left:50px;">
+	                    	<tr>
+	                    		<td>근무일</td>
+	                    		<td>&nbsp;&nbsp;&nbsp;:&nbsp;</td>
+	                    		<td style="padding-left:15px;"><input type="text" style="width:100px;" readonly></td>
+	                    	</tr>
+	                    	<tr>
+	                    		<td>근무시간</td>
+	                    		<td>&nbsp;&nbsp;&nbsp;:&nbsp;</td>
+	                    		<td style="padding-left:15px;"><input type="time" name="" value="" style="width:120px;">&nbsp;~&nbsp;<input type="time" name="" value="" style="width:120px;"></td>
+	                    	</tr>
+	                    	<tr>
+	                    		<td>수정요청시간</td>
+	                    		<td>&nbsp;&nbsp;&nbsp;:&nbsp;</td>
+	                    		<td style="padding-left:15px;"><input type="time" name="" value="" style="width:120px;" readonly>&nbsp;~&nbsp;<input type="time" name="" value="" style="width:120px;" readonly></td>
+	                    	</tr>
+	                    	<tr>
+	                    		<td>요청사유 작성</td>
+	                    		<td>&nbsp;&nbsp;&nbsp;:&nbsp;</td>
+	                    		<td style="padding-left:15px;"><textarea style="resize:none; width:258px; height:60px;" readonly></textarea></td>
+	                    	</tr>
+	                    </table>
+	                </div>
+	                <!-- Modal footer -->
+	                <div class="modal-footer" style="justify-content:center;">
+		                <button type="submit" class="btn btn-jyok" id="commute-modify-modal-btn">수정</button>	                
+		                <button type="button" class="btn btn-jycancle" data-dismiss="modal">취소</button>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+    </form>
 		
 		
 		<jsp:include page="../common/footer.jsp" />

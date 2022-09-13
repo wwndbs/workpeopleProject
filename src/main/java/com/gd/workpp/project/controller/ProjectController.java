@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gd.workpp.project.model.service.ProjectService;
@@ -31,10 +32,13 @@ public class ProjectController {
 	}
 	
 	// 프로젝트 상세리스트 화면
+	@ResponseBody
 	@RequestMapping("proList.pr")
-	public String projectList(int no) {
+	public ModelAndView projectList(int no, ModelAndView mv) {
 		ArrayList<ProBoard> list = pService.selectProBoardList(no);
-		return "project/projectDetailList";
+		mv.addObject("list", list)
+		  .setViewName("project/projectDetailList");
+		return mv;
 	}
 		
 	// 프로젝트 게시물 등록화면
