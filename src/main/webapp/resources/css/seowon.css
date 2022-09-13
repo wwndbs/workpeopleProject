@@ -113,8 +113,6 @@
     }
 
 /* 연장근무내역조회 atWorkList.jsp */
-
-
     .holiday-manage{
         background-color:white;
         border:1px solid rgb(224, 224, 224);
@@ -128,6 +126,13 @@
     	height:41px;
     }
     
+/* 개인일정조회 schedulePersonalList.jsp */
+  #holiday-personal-calendar {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
 /*  */
+
 
 
