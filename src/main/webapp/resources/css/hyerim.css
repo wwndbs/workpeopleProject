@@ -75,6 +75,8 @@
     height: 80%;
     width: 95%;
     margin: auto;
+    border: 1px solid rgb(224, 224, 224);
+    border-radius: 5px;
 }
 
 .board-table table{

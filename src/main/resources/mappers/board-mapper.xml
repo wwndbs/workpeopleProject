@@ -2,6 +2,64 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="boardMapper">
 
-	<select id="selectListCount"></select>
+	<resultMap id="boardResult" type="Board">
+		<result column="board_no" property="boardNo"/>
+		<result column="user_no" property="userNo"/>
+		<result column="board_title" property="boardTitle"/>
+		<result column="create_date" property="createDate"/>
+		<result column="count" property="count"/>
+		<result column="job_name" property="jobName"/>
+		<result column="user_name" property="userName"/>
+	</resultMap>
+
+	<!-- 게시판(공지, 익명) 글 개수 조회 -->
+	<select id="selectListCount" resultType="_int">
+		select
+			   count(*)
+		  from board
+		 where status = 'Y'
+		   and board_type = #{no}
+	</select>
+	
+	<!-- 게시판(부서) 글 개수 조회 -->
+	<select id="selectDeptCount" resultType="_int">
+		select
+			   count(*)
+		  from board
+		 where status = 'Y'
+		   and dep_name = #{depName}
+	</select>
+	
+	<!-- 게시판(공지, 익명) 글 목록 조회 -->
+	<select id="selectList" resultMap="boardResult">
+		select
+			   board_no
+			 , user_no
+			 , board_title
+			 , b.create_date
+			 , count
+			 , job_name
+			 , user_name
+		  from board b
+		  join member using(user_no)
+		 where b.status = 'Y'
+		   and board_type = #{no}
+	</select>
+	
+	<!-- 게시판(부서) 글 목록 조회 -->
+	<select id="selectDeptList" resultMap="boardResult">
+		select
+			   board_no
+			 , user_no
+			 , board_title
+			 , b.create_date
+			 , count
+			 , job_name
+			 , user_name
+		  from board b
+		  join member using(user_no)
+		 where b.status = 'Y'
+		   and dep_name = #{depName}
+	</select>
 
 </mapper>
