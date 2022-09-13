@@ -24,6 +24,7 @@ public class Document {
 	private String message;
 	private String originName;
 	private String changeName;
+	private String filePath;
 	private int approvalCount;
 	
 	// plan

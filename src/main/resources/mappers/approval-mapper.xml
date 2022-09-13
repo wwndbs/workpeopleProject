@@ -2,4 +2,43 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="approvalMapper">
 
+	<resultMap id="documentResult" type="Document">
+		<result column="document_no" property="documentNo" />
+		<result column="user_no" property="userNo" />
+		<result column="document_category" property="documentCategory" />
+		<result column="document_form" property="documentForm" />
+		<result column="document_title" property="documentTitle" />
+		<result column="create_date" property="createDate" />
+		<result column="document_content" property="documentContent" />
+		<result column="progress" property="progress" />
+		<result column="status" property="status" />
+		<result column="message" property="message" />
+		<result column="originName" property="originName" />
+		<result column="changeName" property="changeName" />
+		<result column="file_path" property="filePath" />
+		<result column="approvalCount" property="approvalCount" />
+	</resultMap>
+
+	<select id="selectApprovalCount" resultType="_int">
+		select count(*)
+		  from document
+	</select>
+	
+	<select id="selectApprovalList" resultMap="documentResult">
+		select document_no
+		     , user_no
+		     , document_form
+		     , document_title
+		     , create_date
+		     , document_content
+		     , progress
+		     , status
+		     , message
+		     , origin_name
+		     , change_name
+		     , file_path
+		     , approval_count
+		  from document
+		 order by create_date desc
+	</select>
 </mapper>
