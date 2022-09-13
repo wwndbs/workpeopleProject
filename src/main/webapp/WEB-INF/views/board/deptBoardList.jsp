@@ -56,26 +56,42 @@
                                 <th width="10%">조회</th>
                             </tr>
                         </thead>
-                        <tbody> <!-- 시간 다르게 표현하기 도전 -->
-                        	<c:choose>
-                        		<c:when test="${ empty list }">
-                        			<tr>
-                        				<td colspan="5">현재 게시글이 없습니다.</td>
-                        			</tr>
-                        		</c:when>
-                        		<c:otherwise> 
-                        			<c:forEach var="i" items="${ list }">
-			                            <tr>
-			                            	<input type="hidden" value="${ list.boardNo }">
-			                                <td>${ list.length() - i }</td>
-			                                <td>${ list.boardTitle }</td>
-			                                <td>${ list.userName } ${ list.jobName }</td>
-			                                <td>${ list.createDate }</td>
-			                                <td>${ list.count }</td>
-			                            </tr>
-		                            </c:forEach>
-		                        </c:otherwise>
-		                    </c:choose>
+                        <tbody>
+                            <tr>
+                                <td>55</td>
+                                <td>공지사항</td>
+                                <td>김재현 부장</td>
+                                <td>11:30</td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <td>55</td>
+                                <td>공지사항</td>
+                                <td>김재현 부장</td>
+                                <td>11:30</td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <td>55</td>
+                                <td>공지사항</td>
+                                <td>김재현 부장</td>
+                                <td>11:30</td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <td>55</td>
+                                <td>공지사항</td>
+                                <td>김재현 부장</td>
+                                <td>11:30</td>
+                                <td>5</td>
+                            </tr>
+                            <tr>
+                                <td>55</td>
+                                <td>공지사항</td>
+                                <td>김재현 부장</td>
+                                <td>11:30</td>
+                                <td>5</td>
+                            </tr>
                         </tbody>
                     </table>
 
@@ -86,15 +102,9 @@
                     <!-- 페이징 -->
                     <div class="card-footer d-flex justify-content-end">
                       <ul class="pagination pagination-clean pagination-sm mb-0">
-                      	<c:if test="${ pi.currentPage eq 1 }">
-	                        <li class="page-item">
-	                          <a class="page-link" href="list.bo?no=1&cpage=${ pi.currentPage - 1 }">‹</a>
-	                        </li>
-                      	</c:if>
-                      	
-                      	<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-                      	
-                      	</c:forEach>
+                        <li class="page-item disabled">
+                          <a class="page-link" href="#" tabindex="-1">‹</a>
+                        </li>
                         <li class="page-item active"><a class="page-link" href="#">1</a></li>
                         <li class="page-item"><a class="page-link" href="#">2</a></li>
                         <li class="page-item"><a class="page-link" href="#">3</a></li>
