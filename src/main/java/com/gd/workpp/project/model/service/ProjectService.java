@@ -18,5 +18,12 @@ public interface ProjectService {
 	
 	// 4. 프로젝트 삭제
 	int deleteProject(int projectNo);
+	
+	// 5. 프로젝트 게시물 상세조회
+	int increaseCount(int proBoardNo);
+	ProBoard selectDetailProBoard(int proBoardNo);
+	
+	// 6. 프로젝트 게시물 작성하기
+	int insertProBoard(ProBoard pb);
 
 }

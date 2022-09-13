@@ -93,29 +93,33 @@
 	            <div class="pb-3">
 	              <h5 style="font-weight: 400"><b>프로젝트 게시물 등록</b></h5>
 	              <hr style="margin: 15px 0px 6px 0px">
-	            </div>
+	            </div>	            
 	            
 	              <div class="card mb-grid div3" style="color:rgb(79, 79, 79);">
-	                <form class="form1">
+	                <form class="form1" id="enrollForm" method="post" action="insertBoard.pr" enctype="multipart/form-data">
+               
+			          <input type="hidden" name="projectNo" value="${ projectNo }">
+			          <input type="hidden" name="boardWriterNo" value="${ loginUser.userNo }">
+			          
 	                  <!-- 제목쪽 div -->
 	                  <div class="form-div">
 	                    <!-- 게시물 제목 입력 -->
-	                    <input class="form-control mb-2" type="text" placeholder="게시물 제목을 입력하세요.">
+	                    <input class="form-control mb-2" type="text" name="proTitle" placeholder="게시물 제목을 입력하세요." required>
 	                    <hr width="850px">
 	                  </div>
 	
 	                  <!-- 게시물 진행단계 -->
 	                  <div style="margin: -10px 20px 0px 20px;">
 	                    <label class="form-check-label pro1">
-	                      <label for=""><b>진행단계</b></label>
+	                      <label for="proBoardStatus"><b>진행단계</b>
 	                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+	                      <input class="form-check-input" type="radio" name="proBoardStatus" id="proceed" value="1" required>
 	                      진행
 	                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+	                      <input class="form-check-input" type="radio" name="proBoardStatus" id="complete" value="2" required>
 	                      완료
 	                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+	                      <input class="form-check-input" type="radio" name="proBoardStatus" id="postpone" value="3" required>
 	                      보류           
 	                    </label>
 	                  </div>
@@ -126,9 +130,9 @@
 	                    <label for="" style="width: 110px; margin: 7px 0px 0px 0px;"><b>마감기한</b></label>
 	                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	                    <!-- 시작시 기본 날짜 설정은 value를 이용 -->
-	                    <input type="date" id="datePicker" class="form-control date1" value="" />
+	                    <input type="date" name="startDate" id="datePicker" class="form-control date1" value="" required/>
 	                    &nbsp;~&nbsp;
-	                    <input type="date" id="datePicker" class="form-control date1" value="" />
+	                    <input type="date" name="endDate" id="datePicker" class="form-control date1" value="" required/>
 	                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	                  </div>
@@ -138,13 +142,13 @@
 	                    <label class="form-check-label pro1">
 	                      <label for=""><b>중요도</b></label>
 	                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+	                      <input class="form-check-input" type="radio" name="proBoardLevel" id="high" value="3" required>
 	                      높음
 	                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+	                      <input class="form-check-input" type="radio" name="proBoardLevel" id="average" value="2" required>
 	                      보통
 	                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+	                      <input class="form-check-input" type="radio" name="proBoardLevel" id="low" value="1" required>
 	                      낮음           
 	                    </label>
 	                  </div>
@@ -154,20 +158,20 @@
 	                  <!-- 게시물 내용 입력 -->
 	                  <div class="form-group" style="margin: 0px 20px 0px 20px;">
 	                    <br>
-	                    <textarea class="form-control" id="exampleFormControlTextarea1" style="resize: none"  placeholder="내용을 입력하세요."></textarea>
+	                    <textarea class="form-control" id="exampleFormControlTextarea1" name="proContent" style="resize: none"  placeholder="내용을 입력하세요." required></textarea>
 	                  </div>
 	                  <br><br>
 	
 	                  <!-- 파일첨부 -->
 	                  <div class="file1">
-	                    <label for="" style="float: left"><b>파일첨부</b></label>
+	                    <label for="upfile" style="float: left"><b>파일첨부</b></label>
 	                    <div class="file2">
-	                      <input type="file" class="custom-file-input" id="customFile">
+	                      <input type="file" class="custom-file-input" id="customFile" name="upfile">
 	                      <label class="custom-file-label" style="width: 755px; margin: 650px 0px 0px 100px;" for="customFile">파일 선택</label>
 	                    </div>
 	                  </div>
 	                  <br><br><br>
-	
+	                  
 	                  <!-- 버튼 -->
 	                  <button type="button" onclick="location.href='proList.pr'" class="btn btn-secondary btn4" style="width: 14%;">목록으로</button>
 	                  <button type="submit" class="btn btn-primary btn4" style="width: 14%;">게시물 등록</button>

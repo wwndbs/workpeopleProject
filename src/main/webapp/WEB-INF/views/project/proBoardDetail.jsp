@@ -36,7 +36,7 @@
       }
       .btn1{margin: 180px -520px -90px 520px; height: 35px !important;}
       .search1{margin: 10px 10px 10px 10px; width: 85%;}
-      .h5-1{margin: 20px 690px 20px 20px; width:20%}
+      .h5-1{margin: 20px 690px 20px 20px; width:80%; text-align:left}
       .btn2{width: 100px;}
       .ssm{margin: -45px -350px 0px 325px;}
       .person1{width: 94%; margin: 15px 480px 0px -323px !important;}
@@ -54,20 +54,6 @@
       .reply-insert{width: 98%; height: 20%;}
       .btn3{width: 10%; margin: 10px 10px 0px -7px;}
       .delete1, .modify1{cursor: pointer;}
-      /* 모달 */
-      .modal{ 
-        position:absolute; width:100%; height:100%; background: rgba(0,0,0,0.8); top:0; left:0; display:none;
-      }
-
-      .modal_content{
-        width:400px; height:200px;
-        background:#fff; border-radius:10px;
-        position:relative; top:50%; left:50%;
-        margin-top:-100px; margin-left:-200px;
-        text-align:center;
-        box-sizing:border-box; padding:74px 0;
-        line-height:23px; cursor:pointer;
-      }
     </style>
 </head>
 <body>
@@ -91,81 +77,128 @@
 	              <div class="card mb-grid div3" style="color:rgb(79, 79, 79);">
 	                <form class="form1">
 	                  <!-- 제목쪽 div -->
-	                  <div>
-	                    <h5 class="h5-1" style="font-weight: 400;"><b>프로젝트 게시물 제목</b></h5>
+	                  <div class="h5div">	                  	
+			            <input type="hidden" name="no" value="${ pb.proBoardNo }">	                  	
+	                    <h5 class="h5-1" style="font-weight: 400;"><b>${ pb.proTitle }</b></h5>
 	                    <!-- 수정|삭제|목록가기 -->
-	                    <div class="ssm">
-	                      <span onclick="modify();" style="margin: 0px 0px 0px 0px;">수정</span>&nbsp;
-	                      <span class="delete1" style="margin: 0px 0px 0px 0px;">삭제</span>&nbsp;&nbsp;
-	                      <button type="button" onclick="location.href='proList.pr'" class="btn btn-sm btn-secondary btn2">목록으로</button>
+	                    <div class="ssm">	                    	                    
+	                      <span type="button" data-toggle="modal" data-target="#modify" data-backdrop="static" class="modify1" style="margin: 0px 0px 0px 0px;">수정</span>&nbsp;
+	                      <span type="button" data-toggle="modal" data-target="#delete" data-backdrop="static" class="delete1" style="margin: 0px 0px 0px 0px;">삭제</span>&nbsp;&nbsp;
+	                      <button type="button" onclick="location.href='proList.pr?no=8'" class="btn btn-sm btn-secondary btn2">목록으로</button>
 	                    </div>
 	                  </div>
 	                  <hr width="850px">
-	
-	                  <!-- 수정삭제 모달 -->
-	                  <div class="modal">
-	                    <div class="modal_content" 
-	                         title="클릭하면 창이 닫힙니다."
-	                         onclick="fadeout();">
-	                      여기에 모달창 내용을 적어줍니다.<br>
-	                      이미지여도 좋고 글이어도 좋습니다.
-	                    </div>
-	                  </div>
 	                  
-	                  <script>
-	                    function modify(){
-	                        $(".modal").fadeIn();
-	
-	                      }
-	                      
-	                      function fadeout(){
-	                        $(".modal").fadeOut();
-	                    }
-	                  </script>  
-	
+			        <!-- 게시물 수정 모달 -->
+			        <form action="" method="POST">
+				       <div class="modal" id="modify">
+				           <div class="modal-dialog modal-dialog-centered">
+				               <div class="modal-content">
+				                  <!-- Modal Header -->
+				                  <div class="modal-header">
+				                     <h6 class="modal-title">게시물 수정</h6>
+				                     <button type="button" class="modal_close" data-dismiss="modal">&times;</button>
+				                  </div>
+				                  <!-- Modal body -->
+				                  <div class="modal-body" style="text-align:center;">
+				                      게시물을 수정하시겠습니까?
+				                  </div>
+				                  <!-- Modal footer -->
+				                  <div class="modal-footer" style="justify-content:center;">
+					                <button type="submit" class="btn btn-jyok" id="holiday-give-btn">수정</button>	                
+					                <button type="button" class="btn btn-jycancle" data-dismiss="modal">취소</button>
+				                  </div>
+				              </div>
+				           </div>
+				        </div>
+			        </form>         
+
+			        <!-- 게시물 삭제 모달 -->
+			        <form action="" method="POST">
+				       <div class="modal" id="delete">
+				           <div class="modal-dialog modal-dialog-centered">
+				               <div class="modal-content">
+				                  <!-- Modal Header -->
+				                  <div class="modal-header">
+				                     <h6 class="modal-title">게시물 삭제</h6>
+				                     <button type="button" class="modal_close" data-dismiss="modal">&times;</button>
+				                  </div>
+				                  <!-- Modal body -->
+				                  <div class="modal-body" style="text-align:center;">
+				                      게시물을 삭제하시겠습니까?
+				                  </div>
+				                  <!-- Modal footer -->
+				                  <div class="modal-footer" style="justify-content:center;">
+					                <button type="submit" class="btn btn-jyok" id="holiday-give-btn">지급</button>	                
+					                <button type="button" class="btn btn-jycancle" data-dismiss="modal">취소</button>
+				                  </div>
+				              </div>
+				           </div>
+				        </div>
+			        </form>	                  
+	                  
+                      <input type="hidden" name="no" value="${ pb.proBoardNo }">		                  	
 	                  <!-- 게시글 간략정보 -->
 	                  <div class="demo-icon-display">
 	                    <!-- 진행|완료|보류 -->
 	                    <div style="margin: 20px 480px 0px 0px;">
 	                      <i data-feather="clock"></i>
-	                      <span><div class="btn btn-sm btn-primary btn2 ifect1" style="margin: 0px 5px 0px 10px;">진행</div></span>
-	                      <span><div class="btn btn-sm btn-secondary btn2 ifect1" style="margin: 0px 5px 0px 0px;">완료</div></span>
-	                      <span><div class="btn btn-sm btn-secondary btn2 ifect1">보류</div></span>
+	                      <c:if test="${ pb.proBoardStatus == 1}">
+		                      <span><div class="btn btn-sm btn-primary btn2 ifect1" style="margin: 0px 5px 0px 10px;">진행</div></span>
+		                      <span><div class="btn btn-sm btn-secondary btn2 ifect1" style="margin: 0px 5px 0px 0px;">완료</div></span>
+		                      <span><div class="btn btn-sm btn-secondary btn2 ifect1">보류</div></span>                      
+	                      </c:if>
+	                      <c:if test="${ pb.proBoardStatus == 2}">
+		                      <span><div class="btn btn-sm btn-secondary btn2 ifect1" style="margin: 0px 5px 0px 10px;">진행</div></span>
+		                      <span><div class="btn btn-sm btn-primary btn2 ifect1" style="margin: 0px 5px 0px 0px;">완료</div></span>
+		                      <span><div class="btn btn-sm btn-secondary btn2 ifect1">보류</div></span>                      
+	                      </c:if>	  
+	                      <c:if test="${ pb.proBoardStatus == 3}">
+		                      <span><div class="btn btn-sm btn-secondary btn2 ifect1" style="margin: 0px 5px 0px 10px;">진행</div></span>
+		                      <span><div class="btn btn-sm btn-secondary btn2 ifect1" style="margin: 0px 5px 0px 0px;">완료</div></span>
+		                      <span><div class="btn btn-sm btn-primary btn2 ifect1">보류</div></span>                      
+	                      </c:if>	  	                      	                      	                      
 	                    </div>
-	                    <!-- 참여인원 --> 
+	                    <!-- 게시글 작성자 --> 
 	                    <div class="demo-icon-display person1">
 	                      <i data-feather="user"></i>
-	                      <span><div class="btn btn-sm btn-secondary btn2" style="margin: 0px 0px 0px 10px;"><i data-feather="user"></i>김동동</div></span>
+	                      <span><div class="btn btn-sm btn-secondary btn2" style="margin: 0px 0px 0px 10px;"><i data-feather="user"></i>${ pb.pbUserName }</div></span>
 	                    </div>
 	                    <!-- 시작/마감기한 -->
 	                    <div style="margin: 15px 470px 0px -217px;">
 	                      <div class="demo-icon-display">
 	                        <i data-feather="calendar"></i>
 	                        <span style="font-size: 15px">&nbsp;&nbsp;
-	                          2022-08-01 부터
+	                          ${ pb.startDate } 부터
 	                        </span>
 	                      </div>
 	                      <div class="demo-icon-display" style="margin: 11px 0px 0px 0px;">
 	                        <i data-feather="calendar"></i>
-	                        <span style="font-size: 15px">&nbsp;&nbsp;
-	                          2022-08-01 까지
+	                        <span style="font-size: 15px">&nbsp;
+	                          ${ pb.endDate } 까지
 	                        </span>
 	                      </div>
 	                    </div>
 	                    <!-- 중요도 -->
 	                    <div class="important1">
-	                      <div class="demo-icon-display">
-	                        <i data-feather="flag"></i>
-	                        &nbsp;&nbsp;<i data-feather="arrow-up" style="width: 20px; color:rgb(255, 94, 94); font-size: 15px"></i>&nbsp;높음
-	                      </div>
-	                      <div class="demo-icon-display" hidden>
-	                        <i data-feather="flag"></i>
-	                        &nbsp;&nbsp;&nbsp;<span><b>-</b></span>&nbsp;&nbsp;&nbsp;보통
-	                      </div>
-	                      <div class="demo-icon-display" hidden>
-	                        <i data-feather="flag"></i>
-	                        &nbsp;&nbsp;<i data-feather="arrow-down" style="width: 20px; color:rgb(90, 90, 255); font-size: 15px"></i>&nbsp;낮음
-	                      </div>
+	                      <c:if test="${ pb.proBoardLevel == 1}">
+		                    <div class="demo-icon-display">
+		                        <i data-feather="flag"></i>
+		                        &nbsp;&nbsp;<i data-feather="arrow-down" style="width: 20px; color:rgb(90, 90, 255); font-size: 15px"></i>&nbsp;낮음
+	                      	</div>
+	                      </c:if>
+	                      <c:if test="${ pb.proBoardLevel == 2}">
+		                      <div class="demo-icon-display">
+		                        <i data-feather="flag"></i>
+		                        &nbsp;&nbsp;&nbsp;<span><b>-</b></span>&nbsp;&nbsp;&nbsp;보통
+		                      </div>
+	                      </c:if>
+	                      <c:if test="${ pb.proBoardLevel == 3}">
+		                      <div class="demo-icon-display">
+		                        <i data-feather="flag"></i>
+		                        &nbsp;&nbsp;<i data-feather="arrow-up" style="width: 20px; color:rgb(255, 94, 94); font-size: 15px"></i>&nbsp;높음
+		                      </div>
+	                      </c:if>
 	                    </div>
 	                    <br>
 	                    <hr style="margin: 0 auto; width: 96.5%;">
@@ -175,44 +208,22 @@
 	                  <!-- 게시물내용 시작 -->
 	                  <div class="pro-content">
 	                    <!-- 이미지 -->
-	                    <div>
-	                      <img src="https://naver-help-phinf.pstatic.net/MjAyMjA2MjJfMTM3/MDAxNjU1ODg3NjU0MzM0.4bLu5yDKhKILZlsBrkpc0vuIIqWOMKOEBzbm7mBDfN0g.MBb1uJnq_FoyHApqjLyl__F8hXJBKe4YnjobKMpwb2Ig.PNG/%EA%B7%B8%EB%A6%BC17.png?type=w1000" alt="">
-	                      <br><br>
-	                    </div>
-	                    <textarea name="" id="" cols="100" rows="13" style="border: none; resize: none;">
-	샘송에서 우리회사 시스템을 이용하기위해 방문 상담을 요청했습니다. 담당자께서는 확인하시어 방문일정 조율 부탁드립니다.                      
-	
-	담당자 : 샘송 김하늘 대리
-	
-	전화번호 : 02-2222-8888
-	
-	샘송에서 우리회사 시스템을 이용하기위해 방문 상담을 요청했습니다. 담당자께서는 확인하시어 방문일정 조율 부탁드립니다.                      
-	
-	담당자 : 샘송 김하늘 대리
-	
-	전화번호 : 02-2222-8888
-	
-	샘송에서 우리회사 시스템을 이용하기위해 방문 상담을 요청했습니다. 담당자께서는 확인하시어 방문일정 조율 부탁드립니다.                      
-	
-	담당자 : 샘송 김하늘 대리
-	
-	전화번호 : 02-2222-8888
-	
-	샘송에서 우리회사 시스템을 이용하기위해 방문 상담을 요청했습니다. 담당자께서는 확인하시어 방문일정 조율 부탁드립니다.                      
-	
-	담당자 : 샘송 김하늘 대리
-	
-	전화번호 : 02-2222-8888
-	                    </textarea>
+	                    <c:if test="${ not empty pb.attachPath }">	                    
+		                    <div>
+		                      <img src="${ pb.attachPath }" alt="">
+		                      <br><br>
+		                    </div>
+		                </c:if>    
+	                    <textarea name="" id="" cols="99" rows="13" style="border: none; resize: none;">${ pb.proContent }</textarea>
 	                  </div>
 	
 	                  <!-- 조회수/댓글 -->
-	                  <div style="font-size:14px; float: right; margin: 10px 15px -0px 0px;">
+	                  <div style="font-size:14px; text-align:right; margin: 10px 15px -0px 0px;">
 	                    <span>댓글 3</span>
 	                    &nbsp;
-	                    <span>조회수 10</span>
+	                    <span>조회수 ${ pb.count }</span>
 	                  </div>
-	                  <br><br>
+	                  <br>
 	
 	                  <!-- 댓글창 -->
 	                  <div action="" class="rep-div">
@@ -330,7 +341,9 @@
 	            </div>
 	          </div>
 	        </div>
-	      </div>         
+	      </div>
+	                  
+              
 	
 	    <!-- bootstrap -->
 	    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>

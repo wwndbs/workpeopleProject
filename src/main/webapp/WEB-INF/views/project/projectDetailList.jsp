@@ -50,6 +50,7 @@
 	            <div class="pb-3">
 	              <h5 style="font-weight: 400">
 	              	<b>프로젝트명</b>
+	              		<input type="hidden" name="projectNo" value="${ pb.projectNo }">
 	              		<button type="submit" onclick="location.href='enrollBoard.pr'" class="btn btn-primary btn1" style="width: 7%; height: 40px;">게시물 등록</button>
 	              </h5>	              	
 	            </div>
@@ -102,7 +103,7 @@
 	              <!-- 게시글 시작 -->
 	              <h5 style="font-weight: 400; font-size: 16px; margin: -30px 0px 0px 0px; width: 1000px;"><b>전체 업무</b>&nbsp;<b>(20)</b></h2>
 	              <div class="notice-area div4">
-	                <table class="pro-table table-hover mb-0">
+	                <table class="pro-table table-hover mb-0" id="proList">
 	                  <thead>
 	                    <tr>
 	                      <th width="40px"></th>
@@ -116,10 +117,7 @@
 	                      <th>마감기한</th>
 	                    </tr>
 	                  </thead>
-	                  <tbody class="notice-list">	               
-		                <input type="hidden" name="userName" value="${ m.userName }">
-		                <input type="hidden" name="jobName" value="${ m.jobName }">
-		                <input type="hidden" name="userJob" value="${ m.userJob }">		                
+	                  <tbody class="notice-list">	                               
 	                  	<c:choose>
 	                  		<c:when test="${ empty list }">
 	                  			<tr>
@@ -127,38 +125,45 @@
 	                  			</tr>
 	                  		</c:when>
 	                  		<c:otherwise>
-	                  			<c:forEach var="p" items="${ list }">
-			                    <tr onclick="location.href='boardDetail.pr'">
+	                  			<c:forEach var="pb" items="${ list }">
+			                    <tr>
 			                      <td></td>
-			                      <td>${ p.proBoardNo }</td>
-			                      <c:if test="${ p.proBoardStatus == 1}">
+			                      <td class="no">${ pb.proBoardNo }</td>
+			                      <c:if test="${ pb.proBoardStatus == 1}">
 				                      <td><div class="btn btn-sm btn-success btn2">진행</div></td>		                      
 			                      </c:if>
-			                      <c:if test="${ p.proBoardStatus == 2}">
+			                      <c:if test="${ pb.proBoardStatus == 3}">
 			                      	<td><div class="btn btn-sm btn-warning btn2" style="color:white">보류</div></td>
 			                      </c:if>
-			                      <c:if test="${ p.proBoardStatus == 3}">
+			                      <c:if test="${ pb.proBoardStatus == 2}">
 			                      	<td><div class="btn btn-sm btn-primary btn2">완료</div></td>
 			                      </c:if>
-			                      <c:if test="${ p.proBoardLevel == 1}">
+			                      <c:if test="${ pb.proBoardLevel == 1}">
 				                      <td>낮음</td>		                      
 			                      </c:if>
-			                      <c:if test="${ p.proBoardLevel == 2}">
+			                      <c:if test="${ pb.proBoardLevel == 2}">
 				                      <td>보통</td>		                      
 			                      </c:if>
-			                      <c:if test="${ p.proBoardLevel == 3}">
+			                      <c:if test="${ pb.proBoardLevel == 3}">
 				                      <td>높음</td>		                      
 			                      </c:if>
-			                      <td>${ p.proTitle }</td>
-			                      <td>${ p.pbUserName }${ p.pbJobName }</td>
-			                      <td>${ p.createDate }</td>
-			                      <td>${ p.modifyDate }</td>
-			                      <td>${ p.startDate } ~ ${ p.endDate }</td>
+			                      <td>${ pb.proTitle }</td>
+			                      <td>${ pb.pbUserName }${ pb.pbJobName }</td>
+			                      <td>${ pb.createDate }</td>
+			                      <td>${ pb.modifyDate }</td>
+			                      <td>${ pb.startDate } ~ ${ pb.endDate }</td>
 			                    </tr>
 			                    </c:forEach>
 		                    </c:otherwise>
 	                    </c:choose>
 	                </table>
+	                <script>
+	                	$(function(){
+	                		$("#proList>tbody>tr").click(function(){
+	                			location.href = 'boardDetail.pr?no=' + $(this).children(".no").text();
+	                		})
+	                	})
+	                </script>
 	                <br>
 	                <!-- 페이징처리 -->
 	                <div class="card-footer d-flex justify-content-end page1">

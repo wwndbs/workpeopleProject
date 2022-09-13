@@ -24,7 +24,4 @@ public class Member {
 	private String profImg;
 	private String userEmail;
 	private String userPwd;
-	
-	// 김은지 별칭추가	
-	private String userJob;
 }

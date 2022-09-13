@@ -73,6 +73,7 @@
 	              <div class="col-md-6 col-lg-3 d-flex">
 	                <div class="color"></div>
 	                <div class="card mb-grid project w-100 box1" onclick="location.href='proList.pr?no=8'">
+	                <input type="hidden" name="projectNo" value="${ pb.projectNo }">
 	                <input type="hidden" name="no" value="${ p.proBoardNo }">
 	                  <div class="card-body d-flex flex-column">                                            
 	                    <div class="d-flex justify-content-between mb-3">

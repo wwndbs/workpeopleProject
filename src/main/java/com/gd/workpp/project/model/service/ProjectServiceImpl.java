@@ -38,6 +38,21 @@ public class ProjectServiceImpl implements ProjectService {
 		return 0;
 	}
 
+	@Override
+	public int increaseCount(int proBoardNo) {
+		return pDao.increaseCount(sqlSession, proBoardNo);
+	}
+
+	@Override
+	public ProBoard selectDetailProBoard(int proBoardNo) {
+		return pDao.selectDetailProBoard(sqlSession, proBoardNo);
+	}
+
+	@Override
+	public int insertProBoard(ProBoard pb) {
+		return pDao.insertProBoard(sqlSession, pb);
+	}
+
 }
 
 

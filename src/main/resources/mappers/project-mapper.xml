@@ -75,23 +75,76 @@
 		 order
 		    by pb.pro_board_no desc
 	</select>
-
-	<!-- 
-			select
-		       pb.PRO_BOARD_NO
-		     , pb.pro_board_status
-		     , pb.pro_board_level
+	
+	<!-- [김은지] 프로젝트게시물 조회수증가 -->
+	<update id="increaseCount">
+		update
+		       pro_board
+		   set count = count+1
+		 where pro_board_no = #{proBoardNo}
+		   and status = 'Y'
+	</update>
+	
+	<!-- [김은지] 프로젝트게시물 상세조회 -->
+	<select id="selectDetailProBoard" resultMap="proBoardResult">
+		select
+			   pb.pro_board_no
 		     , pb.pro_title
-		     , m.user_name || '' || m.job_name as "user_jb"
-		     , to_char(pb.create_date, 'YYYY-MM-DD') as "create_date"
-		     , to_char(pb.modify_date, 'YYYY-MM-DD') as "modify_date"
-		     , pb.start_date  || ' ~ ' || pb.end_date as "start~end date"
+		     , pb.pro_board_status
+		     , m.user_name as "pbUserName"
+		     , m.job_name as "pbJobName"
+		     , pb.start_date
+		     , pb.end_date 
+		     , pb.pro_board_level
+		     , pb.attach_path
+		     , pb.pro_content
+		     , count
 		  from pro_board pb
 		  join member m on (m.user_no = pb.user_no)
-		 where pb.project_no = 8
-		 order
-		    by pb.pro_board_no desc
-	 -->
+		 where pb.pro_board_no = #{proBoardNo}
+	</select>
+	
+	<!-- [김은지] 프로젝트게시물 등록 -->
+	<insert id="insertProBoard">
+		insert
+		  into pro_board
+		  (
+		    pro_board_no
+		  , project_no
+		  , user_no
+          , pro_board_status
+          , create_date
+          , modify_date
+          , start_date
+          , end_date
+          , pro_board_level
+          , status          
+          , attach_path
+          , attach_origin
+          , attach_modify
+          , pro_title
+          , pro_content
+		  )
+		  values
+		  (
+		    seq_pro_board.nextval
+		  , #{projectNo}
+		  , #{boardWriterNo}
+		  , #{proBoardStatus}
+		  , sysdate
+		  , sysdate
+          , to_char(#{startDate}, 'YYYY-MM-DD') AS "startDate"  
+          , to_char(#{endDate}, 'YYYY-MM-DD') AS "endDate"  
+          , #{proBoardLevel}  
+          , 'Y'
+          , #{attachPath}  
+          , #{attchOrigin}  
+          , #{attachModify}  
+          , #{proTitle}  
+          , #{proContent}  
+		  )
+	</insert>
+
 </mapper>
 
 
