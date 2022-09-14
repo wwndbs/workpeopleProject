@@ -23,4 +23,28 @@ public class MebmerServiceImpl implements MemberService{
 		return loginUser;
 	}
 
+
+	@Override
+	public int updateMember(Member m) {
+		return mDao.updateMember(sqlSession,m);
+	}
+
+
+	@Override
+	public int uploadProfileImg(Member m) {
+		return mDao.uploadProfileImg(sqlSession,m);
+	}
+
+
+	@Override
+	public int updatePwd(Member m) {
+		return mDao.updatePwd(sqlSession,m);
+	}
+
+
+	@Override
+	public int createMember(Member m) {
+		return mDao.createMember(sqlSession,m);
+	}
+
 }

@@ -18,6 +18,12 @@
 	  	background-color: gainsboro;
 	  	text-align:center;   
 	}
+	#profileImg{
+	    width:150px;
+	    height:150px;
+	    border:1px solid lightgray;
+	    border-radius: 50%;
+	}
 </style>
 </head>
 <body>
@@ -46,7 +52,7 @@
                             <!--프로필 부분-->
                             <div class="profile-alert-wrapper">
                                 <div class="profile-area">
-                                <img src="resources/profile_images/defaultProfile.jpg" alt="프로필이미지"><br>
+                                <img src="resources/profile_images/defaultProfile.jpg" alt="프로필이미지" id="profileImg" ><br>
                                 <span id="profile-name"></span><br>
                                 <span id="department-name"></span>
                                 </div>
@@ -54,7 +60,7 @@
                         </div>
                         <div id="upm2">
                             
-                            <form id="upmForm" method="post" action="" enctype="multipart/form-data">
+                            <form id="upmForm" method="post" action="create.me" enctype="multipart/form-data">
                                 <table id="upmTable" align="center">
 
                                     <tr>
@@ -62,7 +68,7 @@
                                     </tr>
 
                                     <tr>
-                                        <td colspan="2" align="center"><input type="text" id="" class="form-control" name="" style="height:30px;" placeholder="사내이메일" required></td>
+                                        <td colspan="2" align="center"><input type="text" id="email" class="form-control" name="email" style="height:30px;" placeholder="사내이메일" required></td>
                                     </tr>
 
                                     <tr>
@@ -70,7 +76,7 @@
                                     </tr>
 
                                     <tr>
-                                        <td colspan="2" align="center"><input type="text" id="" class="form-control" name="" style="height:30px;" placeholder="사원명" required></td>
+                                        <td colspan="2" align="center"><input type="text" id="userName" class="form-control" name="userName" style="height:30px;" placeholder="사원명" required></td>
                                     </tr>
 
                                     <tr>
@@ -78,7 +84,7 @@
                                     </tr>
 
                                     <tr>
-                                        <td colspan="2" align="center"><input type="text" id="" class="form-control" name="" style="height:30px;" placeholder="010-0000-0000" required></td>
+                                        <td colspan="2" align="center"><input type="text" id="phone" class="form-control" name="phone" style="height:30px;" placeholder="010-0000-0000" ></td>
                                     </tr>
                                     
                                     <tr>
@@ -86,7 +92,7 @@
                                     </tr>
 
                                     <tr>
-                                        <td colspan="2" align="center"><input type="text" id="" class="form-control" name="" style="height:30px;" placeholder="이메일" required></td>
+                                        <td colspan="2" align="center"><input type="text" id="userEmail" class="form-control" name="userEmail" style="height:30px;" placeholder="사원 개인 이메일" ></td>
                                     </tr>
                                     
                                     <tr>
@@ -95,24 +101,24 @@
 
                                     <tr>
                                         <td>
-                                            <select id="" class="form-control" name="" style="height:40px; width:100%" required>
+                                            <select id="depName" class="form-control" name="depName" style="height:40px; width:100%" required>
                                                 <option value="">부서선택</option>
-                                                <option value="">인사부</option>
-                                                <option value="">총무부</option>
-                                                <option value="">영업부</option>
-                                                <option value="">회계부</option>
-                                                <option value="">개발부</option>
+                                                <option value="인사팀">인사팀</option>
+                                                <option value="총무팀">총무팀</option>
+                                                <option value="영업팀">영업팀</option>
+                                                <option value="회계팀">회계팀</option>
+                                                <option value="개발팀">개발팀</option>
                                             </select>
                                         </td>
                                         
                                         <td>
-                                            <select id="" class="form-control" name="" style="height:40px; width:100%" required>
+                                            <select id="jobName" class="form-control" name="jobName" style="height:40px; width:100%" required>
                                                 <option value="">직책선택</option>
-                                                <option value="">사원</option>
-                                                <option value="">대리</option>
-                                                <option value="">과장</option>
-                                                <option value="">팀장</option>
-                                                <option value="">부장</option>
+                                                <option value="사원">사원</option>
+                                                <option value="대리">대리</option>
+                                                <option value="과장">과장</option>
+                                                <option value="팀장">팀장</option>
+                                                <option value="부장">부장</option>
                                             </select>
                                         </td>
                                     </tr>
@@ -122,21 +128,15 @@
                                     </tr>
 
                                     <tr>
-                                        <td colspan="2" align="center"><input type="text" id="" class="form-control" name="" style="height:30px;" placeholder="임시비밀번호" required></td>
+                                        <td colspan="2" align="center"><input type="text" id="userPwd" class="form-control" name="userPwd" style="height:30px;" placeholder="임시비밀번호" required></td>
                                     </tr>
                                     
-                                    <tr>
-                                        <td style="font-weight:800;">입사일</td>
-                                    </tr>
-
-                                    <tr>
-                                        <td colspan="2" align="center"><input type="text" id="" class="form-control" name="" style="height:30px;" placeholder="YYYY-MM-DD" required></td>
-                                    </tr>
+                                    
                                 </table>
                                 <br>
                                 <div align="center">
-                                    <button type="submit" id="loginbtn" data-toggle="modal" data-target="#loginModal">생성하기</button>
-                                    <button type="reset" id="loginbtn" data-toggle="modal" data-target="#loginModal">취소하기</button>
+                                    <button type="submit" id="loginbtn">생성하기</button>
+                                    <button type="reset" id="loginbtn">취소하기</button>
                                 </div>
                             </form>
                         </div>

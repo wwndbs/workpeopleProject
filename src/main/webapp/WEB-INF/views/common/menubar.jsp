@@ -26,14 +26,14 @@
 
 				<ul class="sidebar-sub-nav collapse" id="example">
 					<li class="sidebar-nav-item">
-						<a href="./layouts/charts_chartjs.html" class="sidebar-nav-link">
+						<a href="updateForm.me" class="sidebar-nav-link">
 							<span class="sidebar-nav-abbr"> Mo </span> <span class="sidebar-nav-name"> 개인정보수정 </span>
 						</a>
 					</li>
 
 					<li class="sidebar-nav-item">
-						<a href="./layouts/charts_morris.html" class="sidebar-nav-link">
-							<span class="sidebar-nav-abbr"> Ac </span> <span class="sidebar-nav-name"> 사원승인 </span>
+						<a href="createForm.me" class="sidebar-nav-link">
+							<span class="sidebar-nav-abbr"> Ac </span> <span class="sidebar-nav-name"> 사원계정생성 </span>
 						</a>
 					</li>
 
