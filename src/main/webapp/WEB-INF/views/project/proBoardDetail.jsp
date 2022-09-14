@@ -214,7 +214,7 @@
 		                      <br><br>
 		                    </div>
 		                </c:if>    
-	                    <textarea name="" id="" cols="99" rows="13" style="border: none; resize: none;">${ pb.proContent }</textarea>
+	                    <textarea name="" id="" cols="99" rows="13" style="border: none; resize: none;" readonly>${ pb.proContent }</textarea>
 	                  </div>
 	
 	                  <!-- 조회수/댓글 -->

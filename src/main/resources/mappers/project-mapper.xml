@@ -32,7 +32,7 @@
 		<result column="status" property="boardStatus"/>
 		<result column="count" property="count"/>
 		<result column="attach_path" property="attachPath"/>
-		<result column="attch_origin" property="attchOrigin"/>
+		<result column="attach_origin" property="attachOrigin"/>
 		<result column="attach_modify" property="attachModify"/>
 		<result column="pro_title" property="proTitle"/>
 		<result column="pro_content" property="proContent"/>
@@ -53,7 +53,7 @@
 		<result column="modify_date" property="rModifyDate"/>
 	</resultMap>
 	
-	<!-- 내프로젝트 리스트 조회 -->
+	<!-- 내팀의 프로젝트 리스트 조회 -->
 	<select id="selectList" resultMap="projectResult">
 		select
 		       project_title p
@@ -149,12 +149,12 @@
 		  , #{proBoardStatus}
 		  , sysdate
 		  , sysdate
-          , to_char(#{startDate}, 'YYYY-MM-DD') AS "startDate"  
-          , to_char(#{endDate}, 'YYYY-MM-DD') AS "endDate"  
+          , #{startDate}
+          , #{endDate}
           , #{proBoardLevel}  
           , 'Y'
           , #{attachPath}  
-          , #{attchOrigin}  
+          , #{attachOrigin}  
           , #{attachModify}  
           , #{proTitle}  
           , #{proContent}  

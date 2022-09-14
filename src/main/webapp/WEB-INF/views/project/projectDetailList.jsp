@@ -50,14 +50,14 @@
 	            <div class="pb-3" style="margin: -11px 0px 0px 0px">
 	              <h5 style="font-weight: 400">
 	              	<b>프로젝트명</b>
-	              		<input type="hidden" name="projectNo" value="${ pb.projectNo }">
+	              		<input type="hidden" name="no" value="${ pb.projectNo }">
 	              		<button type="submit" class="btn btn-primary btn1" id="insert" style="width: 7%; height: 40px;">게시물 등록</button>
 	              </h5>	              	
 	            </div>
 	            <script>
 	            	$(function(){
 	            		$("#insert").click(function(){
-	            			location.href = 'enrollBoard.pr?no=' + $('input[name=projectNo]').val();
+	            			location.href = 'enrollBoard.pr?no=${no}';
 	            		})
 	            	})
             	</script>
@@ -167,6 +167,7 @@
 	                <script>
 	                	$(function(){
 	                		$("#proList>tbody>tr").click(function(){
+	                			console.log("클릭");
 	                			location.href = 'boardDetail.pr?no=' + $(this).children(".no").text();
 	                		})
 	                	})

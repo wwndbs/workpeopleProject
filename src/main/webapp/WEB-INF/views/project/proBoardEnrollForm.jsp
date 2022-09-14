@@ -75,6 +75,7 @@
   .file1{margin: 0px 20px 0px 20px;}
   .file2{height:10px}
   .date1{width:150px !important}
+  .form-control-file{width:100% !important;}
 </style>
 </head>
 <body>
@@ -98,7 +99,7 @@
 	              <div class="card mb-grid div3" style="color:rgb(79, 79, 79);">
 	                <form class="form1" id="enrollForm" method="post" action="insertBoard.pr" enctype="multipart/form-data">
                
-			          <input type="hidden" name="projectNo" value="${ projectNo }">
+			          <input type="hidden" name="projectNo" value="${ no }">
 			          <input type="hidden" name="boardWriterNo" value="${ loginUser.userNo }">
 			          
 	                  <!-- 제목쪽 div -->
@@ -160,17 +161,14 @@
 	                    <br>
 	                    <textarea class="form-control" id="exampleFormControlTextarea1" name="proContent" style="resize: none"  placeholder="내용을 입력하세요." required></textarea>
 	                  </div>
-	                  <br><br>
+	                  <br>
 	
 	                  <!-- 파일첨부 -->
-	                  <div class="file1">
-	                    <label for="upfile" style="float: left"><b>파일첨부</b></label>
-	                    <div class="file2">
-	                      <input type="file" class="custom-file-input" id="customFile" name="upfile">
-	                      <label class="custom-file-label" style="width: 755px; margin: 650px 0px 0px 100px;" for="customFile">파일 선택</label>
-	                    </div>
+	                  <div class="file1" style="text-align:left">
+	                    <label for="upfile" style="float: left"><b></b></label>
+                        <td><input type="file" id="upfile" class="form-control-file border" name="upfile"></td>
 	                  </div>
-	                  <br><br><br>
+	                  <br><br> 
 	                  
 	                  <!-- 버튼 -->
 	                  <button type="button" onclick="location.href='proList.pr'" class="btn btn-secondary btn4" style="width: 14%;">목록으로</button>
