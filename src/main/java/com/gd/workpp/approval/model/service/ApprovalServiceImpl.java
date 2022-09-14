@@ -20,13 +20,18 @@ public class ApprovalServiceImpl implements ApprovalService {
 	private SqlSessionTemplate sqlSession;
 
 	@Override
-	public int selectApprovalCount() {
-		return apDao.selectApprovalCount(sqlSession);
+	public int selectApprovalCount(int viewPage, String userNo) {
+		return apDao.selectApprovalCount(sqlSession, viewPage, userNo);
 	}
 
 	@Override
-	public ArrayList<Document> selectApprovalList(PageInfo pi) {
-		return apDao.selectApprovalList(sqlSession, pi);
+	public ArrayList<Document> selectApprovalList(PageInfo pi, int viewPage, String userNo) {
+		return apDao.selectApprovalList(sqlSession, pi, viewPage, userNo);
+	}
+
+	@Override
+	public int selectReferenceCount(String userNo) {
+		return apDao.selectReferenceCount(sqlSession, userNo);
 	}
 	
 	

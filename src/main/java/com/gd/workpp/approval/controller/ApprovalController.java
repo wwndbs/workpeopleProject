@@ -2,6 +2,8 @@ package com.gd.workpp.approval.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,7 @@ import com.gd.workpp.approval.model.service.ApprovalServiceImpl;
 import com.gd.workpp.approval.model.vo.Document;
 import com.gd.workpp.common.model.vo.PageInfo;
 import com.gd.workpp.common.template.Pagination;
+import com.gd.workpp.member.model.vo.Member;
 
 @Controller
 public class ApprovalController {
@@ -29,15 +32,31 @@ public class ApprovalController {
 	@RequestMapping("approvalList.ap")
 	public ModelAndView approvalListView(@RequestParam(value="cpage", defaultValue="1")int currentPage,
 								         @RequestParam(value="page", defaultValue="1")int viewPage,
-								         ModelAndView mv){
-		int listCount = apService.selectApprovalCount();
+								         ModelAndView mv, HttpSession session){
+		Member m = (Member)session.getAttribute("loginUser");
+		String userNo = m.getUserNo();
+		
+		int listCount = apService.selectApprovalCount(viewPage, userNo);
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
-		ArrayList<Document> list = apService.selectApprovalList(pi);
+		ArrayList<Document> list = apService.selectApprovalList(pi, viewPage, userNo);
 		
 		mv.addObject("list", list);
+		mv.addObject("pi", pi);
 		mv.setViewName("approval/approvalList");
+		
 		return mv;
 	}
+	
+//	@RequestMapping("referenceList.ap")
+//	public ModelAndView referenceListView(@RequestParam(value="cpage", defaultValue="1")int currentPage,
+//			                              ModelAndView mv, HttpSession session) {
+//		Member m = (Member)session.getAttribute("loginUser");
+//		String userNo = m.getUserNo();
+//		
+//		int listCount = apService.selectReferenceCount(userNo);
+//		
+//		return mv;
+//	}
 	
 	@RequestMapping("documentList.ap")
 	public ModelAndView documentListView(ModelAndView mv) {
