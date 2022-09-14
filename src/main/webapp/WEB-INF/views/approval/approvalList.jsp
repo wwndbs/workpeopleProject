@@ -22,17 +22,17 @@
 
 					<div class="search-wrapper">
 						<span>결재조회</span>
-						<div class="search-area">
+						<form class="search-area" action="">
 							<input type="text" placeholder="결재검색" class="form-control">
 							<button class="btn btn-primary">검색</button>
-						</div>
+						</form>
 					</div>
 					<div class="menu-wrapper">
-						<button class="btn btn-secondary btn-sm">전체(99)</button>
-						<button class="btn btn-secondary btn-sm">진행(99)</button>
-						<button class="btn btn-secondary btn-sm">완료(99)</button>
-						<button class="btn btn-secondary btn-sm">반려(99)</button>
-						<button class="btn btn-secondary btn-sm">대기(99)</button>
+						<button class="btn btn-secondary btn-sm" onclick="location.href='approvalList.ap'">전체(99)</button>
+						<button class="btn btn-secondary btn-sm" onclick="location.href='approvalList.ap?page=2'">진행(99)</button>
+						<button class="btn btn-secondary btn-sm" onclick="location.href='approvalList.ap?page=3'">완료(99)</button>
+						<button class="btn btn-secondary btn-sm" onclick="location.href='approvalList.ap?page=4'">반려(99)</button>
+						<button class="btn btn-secondary btn-sm" onclick="location.href='approvalList.ap?page=5'">대기(99)</button>
 					</div>
 					<div class="list-wrapper">
 						<table class="table table-hover" style="text-align: center;">
@@ -47,124 +47,88 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td>1</td>
-									<td>차량배차 신청서</td>
-									<td>차량배차 신청합니다.</td>
-									<td>홍길동</td>
-									<td>2022-22-22</td>
-									<td>
-										<div class="tag-orange">진행중</div>
-									</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>차량배차 신청서</td>
-									<td>차량배차 신청합니다.</td>
-									<td>홍길동</td>
-									<td>2022-22-22</td>
-									<td>
-										<div class="tag-orange">진행중</div>
-									</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>차량배차 신청서</td>
-									<td>차량배차 신청합니다.</td>
-									<td>홍길동</td>
-									<td>2022-22-22</td>
-									<td>
-										<div class="tag-red">반려</div>
-									</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>차량배차 신청서</td>
-									<td>차량배차 신청합니다.</td>
-									<td>홍길동</td>
-									<td>2022-22-22</td>
-									<td>
-										<div class="tag-red">반려</div>
-									</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>차량배차 신청서</td>
-									<td>차량배차 신청합니다.</td>
-									<td>홍길동</td>
-									<td>2022-22-22</td>
-									<td>
-										<div class="tag-green">완료</div>
-									</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>차량배차 신청서</td>
-									<td>차량배차 신청합니다.</td>
-									<td>홍길동</td>
-									<td>2022-22-22</td>
-									<td>
-										<div class="tag-green">완료</div>
-									</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>차량배차 신청서</td>
-									<td>차량배차 신청합니다.</td>
-									<td>홍길동</td>
-									<td>2022-22-22</td>
-									<td>
-										<div class="tag-gray">대기</div>
-									</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>차량배차 신청서</td>
-									<td>차량배차 신청합니다.</td>
-									<td>홍길동</td>
-									<td>2022-22-22</td>
-									<td>
-										<div class="tag-gray">대기</div>
-									</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>차량배차 신청서</td>
-									<td>차량배차 신청합니다.</td>
-									<td>홍길동</td>
-									<td>2022-22-22</td>
-									<td>
-										<div class="tag-orange">진행중</div>
-									</td>
-								</tr>
-								<tr>
-									<td>1</td>
-									<td>차량배차 신청서</td>
-									<td>차량배차 신청합니다.</td>
-									<td>홍길동</td>
-									<td>2022-22-22</td>
-									<td>
-										<div class="tag-orange">진행중</div>
-									</td>
-								</tr>
+								<c:choose>
+									<c:when test="${ not empty list }">
+										<c:forEach var="list" items="${ list }">
+											<tr>
+												<td>${ list.documentNo }</td>
+												<td>${ list.documentForm }</td>
+												<td>${ list.documentTitle }</td>
+												<td>${ list.userNo }</td>
+												<td>${ list.createDate }</td>
+												<c:choose>
+													<c:when test="${ list.progress == 0 }">
+														<td>
+															<div class="tag-gray">대기</div>
+														</td>
+													</c:when>
+													<c:when test="${ list.progress == 1 }">
+														<td>
+															<div class="tag-orange">진행중</div>
+														</td>
+													</c:when>
+													<c:when test="${ list.progress == 2 }">
+														<td>
+															<div class="tag-green">완료</div>
+														</td>
+													</c:when>
+													<c:when test="${ list.progress == 3 }">
+														<td>
+															<div class="tag-red">반려</div>
+														</td>
+													</c:when>
+												</c:choose>
+											</tr>
+										</c:forEach>
+									</c:when>
+									<c:otherwise>
+										<tr>
+											<td colspan="6">결재 문서가 없습니다.</td>
+										</tr>
+									</c:otherwise>
+								</c:choose>
 							</tbody>
 						</table>
-						<ul class="pagination justify-content-center">
-							<li class="page-item"><a class="page-link" href="javascript:void(0);">«</a></li>
-							<li class="page-item"><a class="page-link" href="javascript:void(0);">‹</a></li>
-							<li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
-							<li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-							<li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
-							<li class="page-item"><a class="page-link" href="javascript:void(0);">4</a></li>
-							<li class="page-item"><a class="page-link" href="javascript:void(0);">5</a></li>
-							<li class="page-item"><a class="page-link" href="javascript:void(0);">›</a></li>
-							<li class="page-item"><a class="page-link" href="javascript:void(0);">»</a></li>
-						</ul>
+						<c:if test="${ not empty list }">
+							<ul class="pagination justify-content-center">
+								<c:if test="${ pi.currentPage != 1 }">
+									<li class="page-item"><a class="page-link" href="approvalList.ap?cpage=${ pi.currentPage }">«</a></li>
+									<li class="page-item"><a class="page-link" href="approvalList.ap?cpage=${ pi.currentPage - 1 }">‹</a></li>								
+								</c:if>
+								
+								<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+									<li class="page-item"><a class="page-link" href="approvalList.ap?cpage=${ p }">${ p }</a></li>
+								</c:forEach>
+								
+								<c:if test="${ pi.currentPage != pi.endPage }">
+									<li class="page-item"><a class="page-link" href="approvalList.ap?cpage=${ pi.currentPage + 1 }">›</a></li>
+									<li class="page-item"><a class="page-link" href="approvalList.ap?cpage=${ pi.endPage }">»</a></li>
+								</c:if>
+							</ul>
+						</c:if>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	
+	<script>
+		$.(function(){
+			$.ajax({
+				url : "",
+				data : {
+					// TODO : 조회 갯수 가져 오는 작업
+				},
+				success : function(){
+					
+				},
+				error : function(){
+					
+				}
+			})
+		})
+	</script>
+	
 	<jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

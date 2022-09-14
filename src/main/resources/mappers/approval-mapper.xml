@@ -4,8 +4,7 @@
 
 	<resultMap id="documentResult" type="Document">
 		<result column="document_no" property="documentNo" />
-		<result column="user_no" property="userNo" />
-		<result column="document_category" property="documentCategory" />
+		<result column="user_name" property="userNo" />
 		<result column="document_form" property="documentForm" />
 		<result column="document_title" property="documentTitle" />
 		<result column="create_date" property="createDate" />
@@ -13,32 +12,72 @@
 		<result column="progress" property="progress" />
 		<result column="status" property="status" />
 		<result column="message" property="message" />
-		<result column="originName" property="originName" />
-		<result column="changeName" property="changeName" />
+		<result column="origin_name" property="originName" />
+		<result column="change_name" property="changeName" />
 		<result column="file_path" property="filePath" />
-		<result column="approvalCount" property="approvalCount" />
+		<result column="approval_count" property="approvalCount" />
 	</resultMap>
 
 	<select id="selectApprovalCount" resultType="_int">
-		select count(*)
+		select count(*) as "count"
 		  from document
+		 where user_no = #{userNo}
+		   and status = 1
+		 <choose>
+		 	<when test='viewPage == "2"'>
+			   and progress = 1
+		 	</when>
+		 	<when test='viewPage == "3"'>
+			   and progress = 2
+		 	</when>
+		 	<when test='viewPage == "4"'>
+			   and progress = 3
+		 	</when>
+		 	<when test='viewPage == "5"'>
+			   and progress = 0
+		 	</when>
+		 </choose>
 	</select>
 	
 	<select id="selectApprovalList" resultMap="documentResult">
 		select document_no
-		     , user_no
+		     , user_name
 		     , document_form
 		     , document_title
-		     , create_date
+		     , d.create_date
 		     , document_content
 		     , progress
-		     , status
+		     , d.status
 		     , message
 		     , origin_name
 		     , change_name
 		     , file_path
 		     , approval_count
+		  from document d
+          join member m using(user_no)
+         where d.status = 1
+           and user_no = #{userNo}
+		 <choose>
+		 	<when test='viewPage == "2"'>
+			   and progress = 1
+		 	</when>
+		 	<when test='viewPage == "3"'>
+			   and progress = 2
+		 	</when>
+		 	<when test='viewPage == "4"'>
+			   and progress = 3
+		 	</when>
+		 	<when test='viewPage == "5"'>
+			   and progress = 0
+		 	</when>
+		 </choose>
+		 order by document_no desc
+	</select>
+	
+	<select id="selectReferenceCount" resultType="_int">
+		select count(*)
 		  from document
-		 order by create_date desc
+		 where user_no = #{userNo}
+		   and status = 1
 	</select>
 </mapper>
