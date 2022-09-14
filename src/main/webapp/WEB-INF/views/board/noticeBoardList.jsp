@@ -81,7 +81,7 @@
                     
                     <c:if test="${ loginUser.jobName eq '부장' or loginUser.jobName eq '팀장' }">
 	                    <div class="write-button">
-	                      <button type="button" class="btn btn-sm btn-primary">글쓰기</button>
+	                      <button type="button" class="btn btn-sm btn-primary" onclick="location.href='enrollForm.bo?no=1'">글쓰기</button>
 	                    </div>
                     </c:if>
                     

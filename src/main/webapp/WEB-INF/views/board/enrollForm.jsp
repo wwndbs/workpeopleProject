@@ -230,12 +230,12 @@
                       <br>
       
                       <div class="content-title">
-                          <h5>익명 게시판 글쓰기</h5>
+                          <h5>${ boardType } 게시판 글쓰기</h5>
                       </div>
       
                       <br>
 
-                      <form action="" class="enrollForm">
+                      <form action="insert.bo" method="post" class="enrollForm" enctype="multipart/form-data">
                         <fieldset>
                             <table class="form-type">
                                 <colgroup>
@@ -243,12 +243,15 @@
                                     <col width="*">
                                 </colgroup>
                                 <tbody>
+                                	<input type="hidden" name="userNo" value="${ loginUser.userNo }">
+                                	<input type="hidden" name="boardType" value="${ typeNo }">
+                                	<input type="hidden" name="depName" value="${ loginUser.depName }">
                                     <tr>
                                         <th>
                                             <span class="title">제목</span>
                                         </th>
                                         <td>
-                                            <input type="text" class="txt">
+                                            <input type="text" class="txt" name="boardTitle">
                                         </td>
                                     </tr>
                                     <tr id="attachPart">
@@ -258,7 +261,7 @@
                                                 <!-- <i data-feather="help-circle" stroke="#888"></i>  -->
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle"><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="17" x2="12" y2="17"></line></svg>
                                                 <span class="tool-tip top" style="width:210px;">
-                                                    첨부파일 1개의 최대 용량은 100 MB 이며 최대 2 개 까지 등록 가능합니다
+                                                    첨부파일 1개만 등록 가능합니다
                                                 </span>
 
                                                 <script>
@@ -308,31 +311,29 @@
                             <div class="editor" style="border:0px">
                               <button type="button" class="btn btn-sm btn-light" style="position:absolute; right:0; top:-20px">임시 저장된 글(0)</button>
                               <div class="go-editor" style="width:100%; padding-bottom:10px; padding-top:20px">
-                                <textarea id="summernote" rows="10" style="resize: none;"></textarea>
+                                <textarea id="summernote" name="boardContent" rows="10" style="resize: none;"></textarea>
 
                                 <script>
                                   // summernote
-                                  $(document).ready(function() {
-                                    $('#summernote').summernote({
-                                      height: 300,                 
-                                      //width: 1230,
-                                      minHeight: 400,  // 최소 높이
-                                      maxHeight: null,  // 최대 높이
-                                      focus: false,       // 에디터 로딩후 포커스를 맞출지 여부
-                                      lang: "ko-KR",      // 한글 설정
-                                      tabsize: 2,
-                                      height: 100,
-                                      toolbar: [
-                                      ['style', ['style']],
-                                      ['font', ['bold', 'underline', 'clear']],
-                                      ['color', ['color']],
-                                      ['para', ['ul', 'ol', 'paragraph']],
-                                      ['table', ['table']],
-                                      ['insert', ['link', 'picture', 'video']],
-                                      ['view', ['fullscreen', 'codeview', 'help']]
-                                      ]
-                                  });
-                                  });
+				                  $(document).ready(function() {
+				                    $('#summernote').summernote({
+				                      minHeight: 390,  // 최소 높이
+				                      maxHeight: 800,  // 최대 높이
+				                      focus: false,    // 에디터 로딩후 포커스를 맞출지 여부
+				                      lang: "ko-KR",   // 한글 설정
+				                      tabsize: 2,
+				                      height: 120,
+				                      toolbar: [
+				                      ['fontsize', ['fontsize']],    // 글자 크기 설정
+				                      ['style', ['style']],
+				                      ['font', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],
+				                      ['color', ['color']],
+				                      ['para', ['ul', 'ol', 'paragraph']],
+				                      ['table', ['table']],
+				                      ['view', ['fullscreen', 'codeview', 'help']]
+				                      ]
+				                     });
+				                  });
                                 </script>
                               </div>
                             </div>

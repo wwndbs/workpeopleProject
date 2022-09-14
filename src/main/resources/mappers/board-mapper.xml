@@ -88,5 +88,11 @@
 		 where b.status = 'Y'
 		   and b.dep_name = #{depName}
 	</select>
+	
+	<!-- 게시글 삽입 -->
+	<insert id="insertBoard">
+		insert
+		  into board
+	</insert>
 
 </mapper>

@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.gd.workpp.board.model.vo.Board;
+import com.gd.workpp.common.model.vo.Attachment;
 import com.gd.workpp.common.model.vo.PageInfo;
 
 @Repository
@@ -34,6 +35,10 @@ public class BoardDao {
 			return (ArrayList)sqlSession.selectList("boardMapper.selectList", no, rowBound);
 		}
 		
+	}
+	
+	public int insertBoard(SqlSessionTemplate sqlSession, Board b) {
+		return 0;
 	}
 
 }

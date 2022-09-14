@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.gd.workpp.board.model.dao.BoardDao;
 import com.gd.workpp.board.model.vo.Board;
+import com.gd.workpp.common.model.vo.Attachment;
 import com.gd.workpp.common.model.vo.PageInfo;
 
 @Service
@@ -27,6 +28,16 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public ArrayList<Board> selectList(PageInfo pi, int no, String depName) {
 		return bDao.selectList(sqlSession, pi, no, depName);
+	}
+
+	@Override
+	public int insertBoard(Board b, Attachment at) {
+		
+		int result1 = bDao.insertBoard(sqlSession, b);
+		
+		
+		
+		return 0;
 	}
 
 }
