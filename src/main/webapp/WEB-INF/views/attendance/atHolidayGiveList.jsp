@@ -67,7 +67,7 @@
                             <option value="default" class="op2">직급전체</option>
                             <option class="text-secondary" value="secondary"><label class="se-la">부장</label></option>
                             <option class="text-secondary" value="secondary"><label class="se-la">팀장</label></option>
-                            <option class="text-secondary" value="secondary"><label class="se-la">과정</label></option>
+                            <option class="text-secondary" value="secondary"><label class="se-la">과장</label></option>
                             <option class="text-secondary" value="secondary"><label class="se-la">대리</label></option>
                             <option class="text-secondary" value="secondary"><label class="se-la">사원</label></option>
                           </select>

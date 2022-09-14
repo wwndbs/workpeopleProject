@@ -66,6 +66,76 @@ public class HolidayController {
 		return "holiday/schedulePersonalList";
 	}
 	
+	/*
+	@RequestMapping(value="", produces="application/json; charset=utf-8")
+	public ModelAndView selectSchedule(String userNo) {
+		ArrayList<Schedule> list = hService.selectList(userNo);
+		return new Gson().toJson(list);
+	}
+	
+	@RequestMapping("")
+	public String enrollSheduleForm() {
+		return "holiday/";
+	}
+	
+	@RequestMapping("")
+	public String insertSchedule(Schedule sc, HttpSession session, Model model) {
+		
+		int result = hService.insertShedule(sc);
+		
+		if(result > 0) { // 등록 성공
+			session.setAttribute("alertMsg", "일정이 등록되었습니다.");
+			return "redirect:";
+		}else { // 등록 실패
+			model.addAttribute("errorMsg", "일정 등록 실패");
+			return "common/errorPage";			
+		}
+		
+	}
+	
+	@RequestMapping("")
+	public ModelAndView selectSchedule(int scheduleNo, ModelAndView mv) {
+		Schedule sc = hService.selectShedule(scheduleNo);
+		mv.addObject("sc", sc).setViewName("holiday/");
+		return mv;
+	}
+	
+	@RequestMapping("")
+	public String deleteSchedule(int scheduleNo, Model model, HttpSession session) {
+		
+		int result = hService.deleteSchedule(scheduleNo);
+		
+		if(result > 0) { // 삭제 성공
+			session.setAttribute("alertMsg", "일정이 삭제되었습니다.");
+			return "redirect:";
+		}else { // 삭제 실패 
+			model.addAttribute("errorMsg", "일정 삭제 실패");
+			return "common/errorPage";
+		}
+		
+	}
+	
+	@RequestMapping("")
+	public String updateScheduleForm(int scheduleNo, Model model) {
+		model.addAttribute("sc", hService.selectSchedule(scheduleNo));
+		return "holiday/";
+	}
+	
+	@RequestMapping("")
+	public String updateSchedule(Schedule sc, HttpSession session, Model model) {
+		int result = hService.updateSchedule(sc);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "일정이 수정되었습니다.");
+			return "redirect:"			
+		}else {
+			model.addAttribute("errorMsg", "일정 수정 실패");
+			return "common/errorPage";
+		}
+	}
+	
+	*/
+	
 	
 	
 	

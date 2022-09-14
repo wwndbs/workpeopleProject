@@ -10,6 +10,21 @@
 		<result column="modify_date" property="modifyDate" />
 		<result column="status" property="status" />
 	</resultMap>
+	
+	<resultMap id="schedule" type="Schedule">
+		<result column="schedule_no" property="scheduleNo" />
+		<result column="schedule_title" property="scheduleTitle" />
+		<result column="schedule_content" property="scheduleContent" />
+		<result column="schedule_start" property="scheduleStart" />
+		<result column="schedule_end" property="scheduleEnd" />
+		<result column="schedule_timestart" property="scheduleTimeStart" />
+		<result column="schedule_timeend" property="scheduleTimeEnd" />
+		<result column="schedule_category" property="scheduleCategory" />
+		<result column="schedule_status" property="scheduleStatus" />
+		<result column="schedule_allday" property="scheduleAllday" />
+		<result column="schedule_color" property="scheduleColor" />
+		<result column="user_no" property="userNo" />
+	</resultMap>
 
 	<select id="todoListView" resultMap="todoResult">
 		select todo_no
@@ -43,4 +58,8 @@
 		  from todo
 		 where todo_no = #{todoNo}
 	</delete>
+	
+	
+	
+	
 </mapper>
