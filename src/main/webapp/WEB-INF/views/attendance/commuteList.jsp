@@ -78,8 +78,8 @@
                     </tr>
                     <tr height="60px">
                       <td colspan="2" style="padding-bottom:20px;">
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#commute-start-modal" data-backdrop="static" style="width:75px; margin-right:10px;">출근</button>
-                        <button class="btn btn-danger" data-toggle="modal" data-target="#commute-end-modal" data-backdrop="static" style="width:75px; margin-left:10px;">퇴근</button>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#commute-start-modal" data-backdrop="static" style="width:35%; margin-right:10px;">출근</button>
+                        <button class="btn btn-danger" data-toggle="modal" data-target="#commute-end-modal" data-backdrop="static" style="width:35%; margin-left:10px;">퇴근</button>
                       </td>
                     </tr>
                   </table>

@@ -13,6 +13,7 @@
     }
 
   </style>
+   
 </head>
 <body>
 
@@ -225,8 +226,7 @@
 	        </div>
 	    </div>
     </form>
-    
-		
+ 
 		
 		<jsp:include page="../common/footer.jsp" />
 	</div>
