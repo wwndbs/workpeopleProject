@@ -25,5 +25,7 @@ public class Board {
 	private String depName;
 	private String jobName;
 	private String userName;
+	private int like;
+	private int reply;
 
 }

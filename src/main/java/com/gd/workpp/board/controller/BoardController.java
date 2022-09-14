@@ -50,13 +50,8 @@ public class BoardController {
 			
 		}else if(no == 2) { // 부서게시판
 			
-			if(dept.equals(depName)) { // 같은 부서에 접속했을 경우
-				
-				return "board/deptBoardList";
-				
-			}else { // 다른 부서에 접속했을 경우
-				return "board/deptBoardList"; // 에러페이지를 띄울 지 고민
-			}
+			model.addAttribute("depName", depName);
+			return "board/deptBoardList";
 			
 		}else { // 익명게시판
 			
