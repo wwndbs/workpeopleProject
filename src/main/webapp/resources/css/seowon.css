@@ -132,7 +132,10 @@
     margin: 0 auto;
   }
 
-/*  */
+/* 풀캘린더 */
+	.fc .fc-button-primary {
+		background-color:#007bff !important;
+	}
 
 
 
