@@ -47,13 +47,20 @@
 	          <div class="container-fluid">
 	
 	            <!-- 상단 카테고리명 -->
-	            <div class="pb-3">
+	            <div class="pb-3" style="margin: -11px 0px 0px 0px">
 	              <h5 style="font-weight: 400">
 	              	<b>프로젝트명</b>
 	              		<input type="hidden" name="projectNo" value="${ pb.projectNo }">
-	              		<button type="submit" onclick="location.href='enrollBoard.pr'" class="btn btn-primary btn1" style="width: 7%; height: 40px;">게시물 등록</button>
+	              		<button type="submit" class="btn btn-primary btn1" id="insert" style="width: 7%; height: 40px;">게시물 등록</button>
 	              </h5>	              	
 	            </div>
+	            <script>
+	            	$(function(){
+	            		$("#insert").click(function(){
+	            			location.href = 'enrollBoard.pr?no=' + $('input[name=projectNo]').val();
+	            		})
+	            	})
+            	</script>
 	
 	            <!--메인페이지 컨텐츠-->
 	            <h5 style="font-weight: 400; font-size: 16px;"><b>프로젝트 관리자</b></h2>
@@ -167,18 +174,28 @@
 	                <br>
 	                <!-- 페이징처리 -->
 	                <div class="card-footer d-flex justify-content-end page1">
-	                  <ul class="pagination pagination-clean pagination-sm mb-0">
-	                    <li class="page-item disabled">
-	                      <a class="page-link" href="#" tabindex="-1">‹</a>
-	                    </li>
-	                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-	                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-	                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-	                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-	                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-	                    <li class="page-item">
-	                      <a class="page-link" href="#">›</a>
-	                    </li>
+	                  <ul class="pagination pagination-clean pagination-sm mb-0">		                    
+                    	<c:choose>
+	                    	<c:when test="${ pi.currentPage eq 1 }">
+								<li class="page-item disabled"><a class="page-link"><</a></li>
+							</c:when>
+							<c:otherwise>
+								<li class="page-item"><a class="page-link" href="proList.pr?no=8?cpage=${ pi.currentPage-1 }"><</a></li>
+							</c:otherwise>	
+	                    </c:choose>
+	                    
+	                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+	                    	<li class="page-item"><a class="page-link" href="proList.pr?no=8?cpage=${ p }">${ p }</a></li>
+	                    </c:forEach>
+	                    
+	                    <c:choose>
+	                    	<c:when test="${ pi.currentPage eq pi.maxPage }">
+	                    		<li class="page-item disabled"><a class="page-link">></a></li>
+	                    	</c:when>
+	                    	<c:otherwise>
+	                    		<li class="page-item"><a class="page-link" href="proList.pr?no=8?cpage=${ pi.currentPage+1 }">></a></li>
+	                    	</c:otherwise>	
+	                    </c:choose>       
 	                  </ul>
 	                </div>
 	              </div>

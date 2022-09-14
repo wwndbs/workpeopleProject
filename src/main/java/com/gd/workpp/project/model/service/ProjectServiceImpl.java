@@ -6,8 +6,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gd.workpp.common.model.vo.PageInfo;
 import com.gd.workpp.project.model.dao.ProjectDao;
 import com.gd.workpp.project.model.vo.ProBoard;
+import com.gd.workpp.project.model.vo.ProReply;
 import com.gd.workpp.project.model.vo.Project;
 
 @Service
@@ -29,8 +31,13 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 	
 	@Override
-	public ArrayList<ProBoard> selectProBoardList(int projectNo) {
-		return pDao.selectProBoardList(sqlSession, projectNo);
+	public int selectListCount() {
+		return pDao.selectListCount(sqlSession);
+	}
+	
+	@Override
+	public ArrayList<ProBoard> selectProBoardList(int projectNo, PageInfo pi) {
+		return pDao.selectProBoardList(sqlSession, projectNo, pi);
 	}
 
 	@Override
@@ -51,6 +58,11 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public int insertProBoard(ProBoard pb) {
 		return pDao.insertProBoard(sqlSession, pb);
+	}
+
+	@Override
+	public ArrayList<ProReply> ajaxSelectReplyList(int proBoardNo) {
+		return pDao.ajaxSelectReplyList(sqlSession, proBoardNo);
 	}
 
 }

@@ -2,7 +2,9 @@ package com.gd.workpp.project.model.service;
 
 import java.util.ArrayList;
 
+import com.gd.workpp.common.model.vo.PageInfo;
 import com.gd.workpp.project.model.vo.ProBoard;
+import com.gd.workpp.project.model.vo.ProReply;
 import com.gd.workpp.project.model.vo.Project;
 
 public interface ProjectService {
@@ -14,7 +16,8 @@ public interface ProjectService {
 	int insertProject(Project p);
 	
 	// 3. 프로젝트 게시물 리스트조회
-	ArrayList<ProBoard> selectProBoardList(int projectNo);
+	int selectListCount();
+	ArrayList<ProBoard> selectProBoardList(int projectNo, PageInfo pi);
 	
 	// 4. 프로젝트 삭제
 	int deleteProject(int projectNo);
@@ -25,5 +28,8 @@ public interface ProjectService {
 	
 	// 6. 프로젝트 게시물 작성하기
 	int insertProBoard(ProBoard pb);
+	
+	// 7. 프로젝트 게시물 댓글조회 (ajax)
+	ArrayList<ProReply> ajaxSelectReplyList(int proBoardNo);
 
 }
