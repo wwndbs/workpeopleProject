@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.gd.workpp.common.template.FileUpload;
+import com.gd.workpp.common.model.vo.PageInfo;
+import com.gd.workpp.common.template.Pagination;
 import com.gd.workpp.project.model.service.ProjectService;
 import com.gd.workpp.project.model.vo.ProBoard;
 import com.gd.workpp.project.model.vo.Project;
@@ -36,13 +38,19 @@ public class ProjectController {
 		return mv;
 	}
 	
-	// 프로젝트 상세리스트 화면
+	// 프로젝트 게시물리스트 화면
 	@ResponseBody
 	@RequestMapping("proList.pr")
-	public ModelAndView projectList(int no, ModelAndView mv) {
-		ArrayList<ProBoard> list = pService.selectProBoardList(no);
+	public ModelAndView projectList(@RequestParam(value="cpage", defaultValue="1") int currentPage, int no, ModelAndView mv) {
+		int listCount = pService.selectListCount();
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);		
+		ArrayList<ProBoard> list = pService.selectProBoardList(no, pi);
+		
 		mv.addObject("list", list)
+		  .addObject("pi", pi)
 		  .setViewName("project/projectDetailList");
+		
 		return mv;
 	}
 		
@@ -50,9 +58,9 @@ public class ProjectController {
 	@RequestMapping("enrollBoard.pr")
 	public String proBoardEnrollForm(ProBoard pb, Model model) {
 		return "project/proBoardEnrollForm";
-		//?no=" + pb.getProjectNo();
+		//
 	}
-	
+		
 	// 프로젝트 게시물 등록
 	@RequestMapping("insertBoard.pr")
 	public String insertProBoard(ProBoard pb, MultipartFile upfile, HttpSession session, Model model) {

@@ -46,7 +46,7 @@
                             <!--프로필 부분-->
                             <div class="profile-alert-wrapper">
                                 <div class="profile-area">
-                                <img src="resources/profile_images/defaultProfile.jpg" alt="프로필이미지"><br>
+                                <img src="resources/profile_images/defaultProfile.jpg" alt="프로필이미지" id="profileImg" ><br>
                                 <span id="profile-name"></span><br>
                                 <span id="department-name"></span>
                                 </div>

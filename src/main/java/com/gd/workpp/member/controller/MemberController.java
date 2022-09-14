@@ -35,6 +35,12 @@ public class MemberController {
 		return mv;
 	}
 	
+	@RequestMapping("modifyList.me")
+	public ModelAndView documentListView2(ModelAndView mv) {
+		mv.setViewName("member/modifyMemberList");
+		return mv;
+	}
+	
 	
 	@RequestMapping("login.me")
 	public ModelAndView loginMember(Member m, HttpSession session, ModelAndView mv) {

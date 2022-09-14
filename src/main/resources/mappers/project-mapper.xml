@@ -45,7 +45,15 @@
 		<result column="user_no" property="userNo"/>
 	</resultMap>
 	
-	<!-- [김은지] 내프로젝트 리스트 조회 -->
+	<resultMap type="ProReply" id="proReplyResult">
+		<result column="pro_reply_no" property="proReplyNo"/>
+		<result column="user_no" property="replyWriter"/>
+		<result column="pro_reply" property="proReply"/>
+		<result column="create_date" property="rCreateDate"/>
+		<result column="modify_date" property="rModifyDate"/>
+	</resultMap>
+	
+	<!-- 내프로젝트 리스트 조회 -->
 	<select id="selectList" resultMap="projectResult">
 		select
 		       project_title p
@@ -56,7 +64,15 @@
 		 where pm.user_no = #{userMemNo}
 	</select>
 	
-	<!-- [김은지] 프로젝트 상세리스트 조회 -->
+	<!-- 프로젝트게시물리스트 페이징처리 -->
+	<select id="selectListCount" resultType="_int">
+		select
+			   count(*)
+		  from pro_board
+		 where status = 'Y' 	   
+	</select>
+	
+	<!-- 프로젝트 상세리스트 조회 -->
 	<select id="selectProBoardList" resultMap="proBoardResult">
 		select
 		       pb.pro_board_no
@@ -76,7 +92,7 @@
 		    by pb.pro_board_no desc
 	</select>
 	
-	<!-- [김은지] 프로젝트게시물 조회수증가 -->
+	<!-- 프로젝트게시물 조회수증가 -->
 	<update id="increaseCount">
 		update
 		       pro_board
@@ -85,7 +101,7 @@
 		   and status = 'Y'
 	</update>
 	
-	<!-- [김은지] 프로젝트게시물 상세조회 -->
+	<!-- 프로젝트게시물 상세조회 -->
 	<select id="selectDetailProBoard" resultMap="proBoardResult">
 		select
 			   pb.pro_board_no
@@ -104,7 +120,7 @@
 		 where pb.pro_board_no = #{proBoardNo}
 	</select>
 	
-	<!-- [김은지] 프로젝트게시물 등록 -->
+	<!-- 프로젝트게시물 등록 -->
 	<insert id="insertProBoard">
 		insert
 		  into pro_board
@@ -144,6 +160,23 @@
           , #{proContent}  
 		  )
 	</insert>
+	
+	<!-- ajax 프로젝트 게시물 댓글조회 -->
+	<select id="ajaxSelectReplyList" resultMap="proReplyResult">
+		select
+		       pr.pro_reply_no
+		     , m.user_name
+		     , m.job_name
+		     , to_char(pr.create_date, 'YYYY-MM-DD') as "rCreateDate"
+		     , to_char(pr.modify_date, 'YYYY-MM-DD') as "rModifyDate"
+		     , pr.pro_reply
+		  from pro_reply pr
+		  join member m on (pr.user_no = m.user_no)
+		  join pro_board pb on (pr.pro_board_no = pb.pro_board_no)
+		 where pb.pro_board_no = #{proBoardNo}
+		 order
+		    by pro_reply_no desc
+	</select>
 
 </mapper>
 

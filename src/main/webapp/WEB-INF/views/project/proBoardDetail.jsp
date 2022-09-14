@@ -77,8 +77,8 @@
 	              <div class="card mb-grid div3" style="color:rgb(79, 79, 79);">
 	                <form class="form1">
 	                  <!-- 제목쪽 div -->
-	                  <div class="h5div">	                  	
-			            <input type="hidden" name="no" value="${ pb.proBoardNo }">	                  	
+	                  <div class="h5div">
+				        <input type="hidden" name="no" value="${ pb.proBoardNo }">         
 	                    <h5 class="h5-1" style="font-weight: 400;"><b>${ pb.proTitle }</b></h5>
 	                    <!-- 수정|삭제|목록가기 -->
 	                    <div class="ssm">	                    	                    
@@ -87,7 +87,7 @@
 	                      <button type="button" onclick="location.href='proList.pr?no=8'" class="btn btn-sm btn-secondary btn2">목록으로</button>
 	                    </div>
 	                  </div>
-	                  <hr width="850px">
+	                  <hr width="850px" style="margin: 13px 10px 0px 10px">
 	                  
 			        <!-- 게시물 수정 모달 -->
 			        <form action="" method="POST">
@@ -137,7 +137,7 @@
 				        </div>
 			        </form>	                  
 	                  
-                      <input type="hidden" name="no" value="${ pb.proBoardNo }">		                  	
+                      <input type="hidden" name="no" value="${ pb.proBoardNo }">	                  	
 	                  <!-- 게시글 간략정보 -->
 	                  <div class="demo-icon-display">
 	                    <!-- 진행|완료|보류 -->
@@ -172,9 +172,9 @@
 	                          ${ pb.startDate } 부터
 	                        </span>
 	                      </div>
-	                      <div class="demo-icon-display" style="margin: 11px 0px 0px 0px;">
+	                      <div class="demo-icon-display" style="margin: 11px 0px 0px 3px;">
 	                        <i data-feather="calendar"></i>
-	                        <span style="font-size: 15px">&nbsp;
+	                        <span style="font-size: 15px">&nbsp;&nbsp;
 	                          ${ pb.endDate } 까지
 	                        </span>
 	                      </div>
@@ -227,6 +227,26 @@
 	
 	                  <!-- 댓글창 -->
 	                  <div action="" class="rep-div">
+	                  	<!-- ajax 댓글 -->
+	                  	<script>
+	                  		/* 
+	                  		$(function(){
+	                  			ajaxSelectReplyList();
+	                  		})
+	                  		function ajaxSelectReplyList(){ // 댓글조회용 ajax
+	                  			$.ajax({
+	                  				url: "rlist.pr",
+	                  				data: {no:${pb.proBoardNo}},
+	                  				success:function(list){
+	                  					console.log(list);
+	                  				},error:function(){
+	                  					console.log("댓글리스트조회용 ajax통신 실패");
+	                  				}
+	                  			})
+	                  		}
+	                  		 */
+	                  	</script>
+	                  
 	                    <!-- 댓글하나 -->
 	                    <div class="reply1" style="display: inline-block;" >
 	                      <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px; float: left; margin: 3px 0px 0px 0px;">
@@ -329,9 +349,18 @@
 	
 	                    <!-- 댓글 입력창 -->
 	                    <div class="reply-insert" style="display: flex; margin: 0px 0px 0px 10px;">
-	                      <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px; height: 40px; float: left; margin: 8px 0px 0px 5px;">
-	                      <input class="form-control mb-2 search1" type="text" placeholder="내용을 입력해주세요" style="height:40px;">
-	                      <button type="submit" class="btn btn-sm btn-primary btn3" style="height:40px;">등록</button>
+	                    	<c:choose>
+	                    		<c:when test="${ empty loginUser }">
+	                    		  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px; height: 40px; float: left; margin: 8px 0px 0px 5px;">
+			                      <input class="form-control mb-2 search1" type="text" placeholder="로그인한 사용자만 이용 가능합니다." style="height:40px;" readonly>
+			                      <button type="submit" class="btn btn-sm btn-primary btn3" style="height:40px;" disabled>등록</button>
+	                    		</c:when>
+	                    		<c:otherwise>
+			                      <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px; height: 40px; float: left; margin: 8px 0px 0px 5px;">
+			                      <input class="form-control mb-2 search1" type="text" placeholder="내용을 입력해주세요" style="height:40px;">
+			                      <button type="submit" class="btn btn-sm btn-primary btn3" style="height:40px;">등록</button>
+		                      	</c:otherwise>
+	                      	</c:choose>
 	                    </div>
 	                    <div style="height:10px"><span hidden>bb</span></div>
 	                  </div>
