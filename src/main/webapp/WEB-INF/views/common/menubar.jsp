@@ -38,7 +38,7 @@
 					</li>
 
 					<li class="sidebar-nav-item">
-						<a href="./layouts/charts_morris.html" class="sidebar-nav-link">
+						<a href="modifyList.me" class="sidebar-nav-link">
 							<span class="sidebar-nav-abbr"> Mo </span> <span class="sidebar-nav-name"> 사원정보수정 </span>
 						</a>
 					</li>
