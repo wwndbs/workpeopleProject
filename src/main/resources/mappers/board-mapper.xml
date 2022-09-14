@@ -10,6 +10,8 @@
 		<result column="count" property="count"/>
 		<result column="job_name" property="jobName"/>
 		<result column="user_name" property="userName"/>
+		<result column="like" property="like"/>
+		<result column="reply" property="reply"/>
 	</resultMap>
 
 	<!-- 게시판(공지, 익명) 글 개수 조회 -->
@@ -40,6 +42,18 @@
 			 , count
 			 , job_name
 			 , user_name
+			 , (
+			 	select
+			 		   count(*)
+			 	  from b_like bl
+			 	 where bl.board_no = b.board_no
+			 ) as "LIKE"
+			 , (
+			 	select
+			 		   count(*)
+			 	  from reply
+			 	 where ref_bno = board_no
+			 ) as "REPLY"
 		  from board b
 		  join member using(user_no)
 		 where b.status = 'Y'
@@ -56,10 +70,23 @@
 			 , count
 			 , job_name
 			 , user_name
+			 , b.dep_name
+			 , (
+			 	select
+			 		   count(*)
+			 	  from b_like bl
+			 	 where bl.board_no = b.board_no
+			 ) as "LIKE"
+			 , (
+			 	select
+			 		   count(*)
+			 	  from reply
+			 	 where ref_bno = board_no
+			 ) as "REPLY"
 		  from board b
 		  join member using(user_no)
 		 where b.status = 'Y'
-		   and dep_name = #{depName}
+		   and b.dep_name = #{depName}
 	</select>
 
 </mapper>

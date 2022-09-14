@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>공지 게시판</title>
+<title>익명 게시판</title>
 </head>
 <body>
 
@@ -29,14 +29,13 @@
                 <br>
 
                 <div class="board-title">
-                    <h5>공지 게시판</h5>
+                    <h5>익명 게시판</h5>
 
                     <div class="board-search">
                         <select name="" id="" style="height: 27px;">
                             <option value="">제목+내용</option>
                             <option value="">제목</option>
                             <option value="">내용</option>
-                            <option value="">작성자</option>
                         </select>
                         <input type="text">
                         <button type="button" class="btn btn-sm btn-primary">search</button>
@@ -50,10 +49,10 @@
                         <thead>
                             <tr>
                                 <th width="10px">번호</th>
-                                <th width="230px">제목</th>
-                                <th width="30px">작성자</th>
+                                <th width="260px">제목</th>
                                 <th width="30px">작성일</th>
                                 <th width="10px">조회</th>
+                                <th width="10px">좋아요</th>
                             </tr>
                         </thead>
                         <tbody> <!-- 시간 다르게 표현하기 도전 -->
@@ -68,10 +67,19 @@
 			                            <tr>
 			                            	<input type="hidden" value="${ list.boardNo }">
 			                                <td>${ list.length() - i }</td>
-			                                <td>${ list.boardTitle }</td>
-			                                <td>${ list.userName } ${ list.jobName }</td>
+			                                <td>
+		                                		${ list.boardTitle }
+		                                		<!-- 댓글이 존재할 경우에만 보여짐 -->
+		                                		<c:if test="${ list.reply ne 0 }">
+			                                		<span class="i-reply">
+			                                			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-circle"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+			                                			[${ list.reply }]
+			                                		</span>
+		                                		</c:if>
+		                                	</td>
 			                                <td>${ list.createDate }</td>
 			                                <td>${ list.count }</td>
+			                                <td>${ list.like }</td>
 			                            </tr>
 		                            </c:forEach>
 		                        </c:otherwise>
@@ -79,7 +87,7 @@
                         </tbody>
                     </table>
                     
-                    <c:if test="${ loginUser.jobName eq '부장' or loginUser.jobName eq '팀장' }">
+                    <c:if test="${ not empty loginUser }">
 	                    <div class="write-button">
 	                      <button type="button" class="btn btn-sm btn-primary">글쓰기</button>
 	                    </div>

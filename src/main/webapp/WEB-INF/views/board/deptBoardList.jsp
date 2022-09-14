@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>공지 게시판</title>
+<title>부서 게시판</title>
 </head>
 <body>
 
@@ -29,7 +29,7 @@
                 <br>
 
                 <div class="board-title">
-                    <h5>공지 게시판</h5>
+                    <h5>${ depName } 게시판</h5>
 
                     <div class="board-search">
                         <select name="" id="" style="height: 27px;">
@@ -49,72 +49,87 @@
                     <table class="table table-hover" align="center">
                         <thead>
                             <tr>
-                                <th width="10%">번호</th>
-                                <th width="50%">제목</th>
-                                <th width="15%">작성자</th>
-                                <th width="15%">작성일</th>
-                                <th width="10%">조회</th>
+                                <th width="10px">번호</th>
+                                <th width="230px">제목</th>
+                                <th width="30px">작성자</th>
+                                <th width="30px">작성일</th>
+                                <th width="10px">조회</th>
+                                <th width="10px">좋아요</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>55</td>
-                                <td>공지사항</td>
-                                <td>김재현 부장</td>
-                                <td>11:30</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>55</td>
-                                <td>공지사항</td>
-                                <td>김재현 부장</td>
-                                <td>11:30</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>55</td>
-                                <td>공지사항</td>
-                                <td>김재현 부장</td>
-                                <td>11:30</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>55</td>
-                                <td>공지사항</td>
-                                <td>김재현 부장</td>
-                                <td>11:30</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <td>55</td>
-                                <td>공지사항</td>
-                                <td>김재현 부장</td>
-                                <td>11:30</td>
-                                <td>5</td>
-                            </tr>
+                        <tbody> <!-- 시간 다르게 표현하기 도전 -->
+                        	<c:choose>
+                        		<c:when test="${ empty list }">
+                        			<tr>
+                        				<td colspan="6">현재 게시글이 없습니다.</td>
+                        			</tr>
+                        		</c:when>
+                        		<c:otherwise> 
+                        			<c:forEach var="i" items="${ list }">
+			                            <tr>
+			                            	<input type="hidden" value="${ list.boardNo }">
+			                                <td>${ list.length() - i }</td>
+			                                <td>
+		                                		${ list.boardTitle }
+		                                		<!-- 댓글이 존재할 경우에만 보여짐 -->
+		                                		<c:if test="${ list.reply ne 0 }">
+			                                		<span class="i-reply">
+			                                			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-circle"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+			                                			[${ list.reply }]
+			                                		</span>
+		                                		</c:if>
+		                                	</td>
+			                                <td>${ list.userName } ${ list.jobName }</td>
+			                                <td>${ list.createDate }</td>
+			                                <td>${ list.count }</td>
+			                                <td>${ list.like }</td>
+			                            </tr>
+		                            </c:forEach>
+		                        </c:otherwise>
+		                    </c:choose>
                         </tbody>
                     </table>
+                    
+                    <c:if test="${ not empty loginUser }">
+	                    <div class="write-button">
+	                      <button type="button" class="btn btn-sm btn-primary">글쓰기</button>
+	                    </div>
+                    </c:if>
+                    
+                    <c:if test="${ not empty list }">
 
-                    <div class="write-button">
-                      <button type="button" class="btn btn-sm btn-primary">글쓰기</button>
-                    </div>
-
-                    <!-- 페이징 -->
-                    <div class="card-footer d-flex justify-content-end">
-                      <ul class="pagination pagination-clean pagination-sm mb-0">
-                        <li class="page-item disabled">
-                          <a class="page-link" href="#" tabindex="-1">‹</a>
-                        </li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">4</a></li>
-                        <li class="page-item"><a class="page-link" href="#">5</a></li>
-                        <li class="page-item">
-                          <a class="page-link" href="#">›</a>
-                        </li>
-                      </ul>
-                    </div>
+	                    <!-- 페이징 -->
+	                    <div class="card-footer d-flex justify-content-end">
+	                      <ul class="pagination pagination-clean pagination-sm mb-0">
+	                      	<c:if test="${ pi.currentPage ne 1 }">
+		                        <li class="page-item">
+		                          <a class="page-link" href="list.bo?no=1&cpage=${ pi.currentPage - 1 }">‹</a>
+		                        </li>
+	                      	</c:if>
+	                      	
+	                      	<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+	                      		
+	                      		<c:choose>
+	                      			<c:when test="${ p eq pi.currentPage }">
+	                      				<li class="page-item active"><a class="page-link" href="list.bo?no=1&cpage=${ p }">${ p }</a></li>
+	                      			</c:when>
+	                      			<c:otherwise>
+	                      				<li class="page-item"><a class="page-link" href="list.bo?no=1&cpage=${ p }">${ p }</a></li>
+	                      			</c:otherwise>
+	                      		</c:choose>
+	                      		
+	                      	</c:forEach>
+	                      	
+	                      	<c:if test="${ pi.currentPage ne pi.maxPage }">
+	                      		<li class="page-item">
+		                          <a class="page-link" href="list.bo?no=1?cpage=${ pi.currentPage + 1 }">›</a>
+		                        </li>
+	                      	</c:if>
+	                        
+	                      </ul>
+	                    </div>
+	                    
+                    </c:if>
                 </div>
 
 
