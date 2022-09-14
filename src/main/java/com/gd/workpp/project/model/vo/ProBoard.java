@@ -14,7 +14,7 @@ import lombok.ToString;
 public class ProBoard {
 	
 	private String proBoardNo;
-	private String projectNo;
+	private int projectNo;
 	private String boardWriterNo;
 	private int proBoardStatus;
 	private Date createDate;
@@ -25,7 +25,7 @@ public class ProBoard {
 	private String status;
 	private int count;
 	private String attachPath;
-	private String attchOrigin;
+	private String attachOrigin;
 	private String attachModify;
 	private String proTitle;
 	private String proContent;
