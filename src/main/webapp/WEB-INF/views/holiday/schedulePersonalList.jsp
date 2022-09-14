@@ -77,9 +77,10 @@
 				editable : true,
 				selectable: true,
 				dateClick: function(info) {
-					document.querySelector('#schedule-enroll-modal').style.display ='block';
+					//document.querySelector('#schedule-enroll-modal').style.display ='block';
+					$("#schedule-enroll-modal").fadeIn();
 					
-			    },
+			    },			    
 				
 				
 				});
