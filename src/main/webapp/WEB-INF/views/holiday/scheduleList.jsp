@@ -80,14 +80,13 @@
 	
 	
     <!-- 일정 등록 모달 -->
-	<form action="" method="POST">
 		<div class="modal" id="schedule-enroll-modal">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
 					<!-- Modal Header -->
 					<div class="modal-header">
 						<h6 class="modal-title">일정등록</h6>
-						<button type="button" class="modal_close" id="schedule-cancle-btn1" data-dismiss="modal">&times;</button>
+						<button type="button" class="modal_close" id="schedule-cancle-btn1" onclick='$("#schedule-enroll-modal").modal("hide");'>&times;</button>
 					</div>
 					<!-- Modal body -->
 					<div class="modal-body">
@@ -138,13 +137,13 @@
                                 	<select class="inputModal" name="scheduleColor" id="scheduleColor">
                                 		<option value="#495057" style="background:#495057; color:white;">검정색</option>
                                 		<option value="#FFC0CB" style="background:#FFC0CB;">분홍색</option>
-	                                    <option value="#D25565" style="background:#D25565;">빨간색</option>
+	                                    <option value="#D25565" style="background:#DC143C;">빨간색</option>
 	                                    <option value="#ffa94d" style="background:#ffa94d;">주황색</option>
-	                                    <option value="#FFFF00" style="background:#FFFF00;">노란색</option>
-	                                    <option value="#63e6be" style="background:#63e6be;">연두색</option>
-	                                    <option value="#a9e34b" style="background:#a9e34b;">초록색</option>	                                                                       
-	                                    <option value="#74c0fc" style="background:#74c0fc;">파란색</option>                                                        
-	                                    <option value="#4d638c" style="background:#4d638c;">남색</option>
+	                                    <option value="#FFFF00" style="background:#FFD700;">노란색</option>
+	                                    <option value="#63e6be" style="background:#9ACD32;">연두색</option>
+	                                    <option value="#a9e34b" style="background:#2E8B57;">초록색</option>	                                                                       
+	                                    <option value="#74c0fc" style="background:#0000CD;">파란색</option>                                                        
+	                                    <option value="#4d638c" style="background:#000080;">남색</option>
 	                                    <option value="#9775fa" style="background:#9775fa;">보라색</option> 
                                		</select>
 								</td>
@@ -163,16 +162,16 @@
 					
 					<!-- Modal footer -->
 					<div class="modal-footer modalBtnContainer-addEvent">
-						<button type="button" class="btn btn-jycancle" id="schedule-cancle-btn2" data-dismiss="modal">취소</button>
-		                <button type="submit" class="btn btn-jyok" id="schedule-enroll-modal-btn">등록</button>	                            
+						<button type="button" class="btn btn-jycancle" id="schedule-cancle-btn2" onclick='$("#schedule-enroll-modal").modal("hide");'>취소</button>
+		                <button type="button" class="btn btn-jyok" id="schedule-enroll-modal-btn" onclick=>등록</button>	                            
 	                </div>
                     
 				</div>
 			</div>
 		</div>
-	</form>
+
 	
-	<!-- 풀캘린더 스크립트 -->
+	<!-- 풀캘린더 불러오는 스크립트 -->
 	<script>
 			
 		var draggedEventIsAllDay;
@@ -191,17 +190,19 @@
 			$.ajax({
     			type: "GET",
     			url: "scheduleList.sc",
-    			data: {userNo:'00052'},
+    			data: {userNo:'${loginUser.userNo}'},
     			success: function(response){
     				
     				console.log(response); // [{}, {}, ..]
     				
     				let data = [];
+    				
     				for(let i=0; i<response.length; i++) {
     					let obj = {
 	    						title: response[i].scheduleTitle,
 	    						start: response[i].scheduleStart,
-	    						end: response[i].scheduleEnd
+	    						end: response[i].scheduleEnd,
+	    				    	color : response[i].scheduleColor				
 	    					};
     					
     					data.push(obj);
@@ -228,9 +229,9 @@
 								right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
 						},
 					    titleFormat : function(date){
-					    	return date.date.year + '년 ' + (parseInt(date.date.month) + 1) + '월';
+					    	return date.date.year + '년 ' + (date.date.month + 1) + '월';
 					    },
-					    //locale: 'ko',
+					    locale: 'ko',
 						editable : true, // 수정 가능여부
 						selectable : true, // 달력 일자 드래그 가능
 						droppable : true,
@@ -238,9 +239,89 @@
 						dayMaxEvents : true, // 이벤트가 오버되면 높이 제한
 						dayPopoverFormat: { year: 'numeric', month: 'long', day: 'numeric' },
 						dateClick: function(info) {
-							//document.querySelector('#schedule-enroll-modal').style.display ='block';
-							$("#schedule-enroll-modal").fadeIn(10);
-							//$('#schedule-cancle-btn').attr('click', $('#schedule-enroll-modal').modal('hide'));				
+							$("#schedule-enroll-modal").modal("show");			
+					    },	
+					    events: data
+
+					});
+					
+					calendar.render();
+					
+    			}
+    		})
+						
+		}
+	</script>
+
+	<!-- 풀캘린더 일정 추가 스크립트 
+	<script>
+			
+		var draggedEventIsAllDay;
+		var activeInactiveWeekends = true;
+		var calendarEl = document.getElementById('holiday-personal-calendar');
+		
+		document.addEventListener('DOMContentLoaded', function() {
+			calendarAddevents();
+		});
+		
+		
+		function calendarAddevents(){
+			
+			console.log("calendarAddevents 실행");
+			
+			$.ajax({
+    			type: "GET",
+    			url: "scheduleEnrollForm.sc",
+    			data: {userNo:'${loginUser.userNo}'},
+    			success: function(response){
+    				
+    				console.log(response); // [{}, {}, ..]
+    				
+    				let data = [];
+    				
+    				for(let i=0; i<response.length; i++) {
+    					let obj = {
+	    						title: response[i].scheduleTitle,
+	    						start: response[i].scheduleStart,
+	    						end: response[i].scheduleEnd,
+	    				    	color : response[i].scheduleColor				
+	    					};
+    					
+    					data.push(obj);
+    				}
+    				
+    				
+					var calendar = new FullCalendar.Calendar(calendarEl, {
+						height: '850px;',
+						expandRows: true,
+						initialView : 'dayGridMonth', // 기본으로 보여지는 화면 => '이번달'
+						googleCalendarApiKey: 'AIzaSyAjhvoWANExZ7MjlAGJm4VvKEC_Z-EgulE', // 구글캘린더 API키
+						eventSources: [
+							{
+								googleCalendarId: 'blffot637do35g8hc1hf9a046s@group.calendar.google.com', // 구글캘린더 ID
+								className: '대한민국빨간날',
+								color: '#e65245', // 테두리배경색 지정
+								textColor: 'white', // 글자색 지정					
+								editable : false // 공휴일은 수정할 수 없도록 함
+							}
+						],
+						headerToolbar: { // 상단에 보여지는 버튼 순서 지정
+								left: 'prev,next today',
+								center: 'title',
+								right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth'
+						},
+					    titleFormat : function(date){
+					    	return date.date.year + '년 ' + (date.date.month + 1) + '월';
+					    },
+					    locale: 'ko',
+						editable : true, // 수정 가능여부
+						selectable : true, // 달력 일자 드래그 가능
+						droppable : true,
+						nowIndicator : true, // 현재 시간 마크
+						dayMaxEvents : true, // 이벤트가 오버되면 높이 제한
+						dayPopoverFormat: { year: 'numeric', month: 'long', day: 'numeric' },
+						dateClick: function(info) {
+							$("#schedule-enroll-modal").modal("show");			
 					    },	
 					    events: data
 					    
@@ -249,21 +330,11 @@
 					
     			}
     		})
-			
-			
-			
+						
 		}
 	</script>
-	
-	<!-- 모달창 닫기위한 스크립트 -->
-	<script>
-		$("#schedule-cancle-btn1").on('click', function(){
-			$('.modal').fadeOut(10);
-		});
-		$("#schedule-cancle-btn2").on('click', function(){
-			$('.modal').fadeOut(10);
-		})
-	</script>
+	-->
+
 	
 	
 

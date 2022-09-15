@@ -91,7 +91,7 @@
                             <input type="date" id="start-date" style="height:40px;">&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;<input type="date" id="end-date" style="height:40px;">
                           </td>
                           <td colspan="3"><button type="submit" class="btn btn-sm btn-secondary" style="width:50px; height:40px;">조회</button></td>
-                          <td colspan="3"><button type="button" class="btn btn-sm btn-primary" style="margin-left:15px; height:40px;">연장근무신청</button></td>
+                          <td colspan="3"><button type="button" class="btn btn-sm btn-primary" style="margin-left:15px; height:40px;" onclick="location.href='overtime.ap'">연장근무신청</button></td>
                         </tr>
                       </table>
                     </form>

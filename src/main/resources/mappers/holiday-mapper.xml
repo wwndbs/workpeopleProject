@@ -69,7 +69,7 @@
 		      , schedule_title
 		      , schedule_content
 		      , schedule_start || nvl2(schedule_timestart, 'T' || schedule_timestart, '') as "schedule_start"     
-       		  , schedule_end || nvl2(schedule_timeend, 'T' || schedule_timeend, '') as "schedule_end"
+       		  , schedule_end || nvl2(schedule_timeend, 'T' || schedule_timeend, '') as "schedule_end"  
 		      , schedule_category
 		      , schedule_status
 		      , schedule_allday
@@ -82,6 +82,46 @@
 		 join member using(user_no)
 		where user_no = #{userNo}
 	</select>
+	
+	<!-- 장서원 / 일정 등록 -->
+	<insert id="insertSchedule">
+		insert 
+		  into schedule
+		  (
+		    schedule_no
+		  , schedule_title
+		  , schedule_content
+		  , schedule_start
+		  , schedule_end
+		  , schedule_timestart
+		  , schedule_timeend
+		  , schedule_category
+		  , schedule_status
+		  , schedule_allday
+		  , schedule_color
+		  , user_no
+		  )
+		  values
+		  (
+		    seq_schedule.nextval
+		  , #{scheduleTitle}
+		  , #{scheduleContent}
+		  , #{scheduleStart}
+		  , #{scheduleEnd}
+		  , #{scheduleTimeStart}
+		  , #{scheduleTimeEnd}
+		  , #{scheduleCategory}
+		  , #{scheduleStatus}
+		  , #{scheduleAllday}
+		  , #{scheduleColor}
+		  , #{userNo}
+		  )
+	</insert>
+	
+	<!-- 장서원 / 일정 수정 -->
+	
+	
+	<!-- 장서원 / 일정 삭제  -->
 	
 	
 </mapper>

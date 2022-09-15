@@ -163,8 +163,8 @@
 
                 <div class="commute-5">
                   <button type="button" class="btn btn-outline-danger" id="commute-btn01" onclick="location.href='commuteUpdate.at'">출퇴근기록 수정요청</button><br>
-                  <button type="button" class="btn btn-outline-primary" id="commute-btn02" onclick="location.href=''">휴가 신청</button><br>
-                  <button type="button" class="btn btn-outline-primary" id="commute-btn03" onclick="location.href=''">연장근무 신청</button>
+                  <button type="button" class="btn btn-outline-primary" id="commute-btn02" onclick="location.href='vacation.ap'">휴가 신청</button><br>
+                  <button type="button" class="btn btn-outline-primary" id="commute-btn03" onclick="location.href='overtime.ap'">연장근무 신청</button>
                 </div>
 
               </div>  

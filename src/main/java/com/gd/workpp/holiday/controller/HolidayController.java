@@ -90,15 +90,13 @@ public class HolidayController {
 	public String selectScheduleList(String userNo) {
 		ArrayList<Schedule> list = hService.selectScheduleList(userNo);
 		return new Gson().toJson(list);
-	}
+	}	
 	
+	@RequestMapping("scheduleEnrollForm.sc")
+	public String enrollScheduleForm() {
+		return "holiday/scheduleList";
+	}
 	/*
-	
-	@RequestMapping("")
-	public String enrollSheduleForm() {
-		return "holiday/";
-	}
-	
 	@RequestMapping("")
 	public String insertSchedule(Schedule sc, HttpSession session, Model model) {
 		
