@@ -20,6 +20,11 @@ public class MailController {
 
 	@Autowired
 	private MailServiceImpl mService;
+	
+	@RequestMapping("main.wp")
+	public String mainPage() {
+		return "main";
+	}
 
 	@RequestMapping("inbox.ma")
 	public String selectInbox() {

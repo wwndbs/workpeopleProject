@@ -55,7 +55,7 @@
 	</c:if>
 
 	<nav class="navbar navbar-expand justify-content-between fixed-top">
-		<a class="navbar-brand mb-0 h1 d-none d-md-block" href="index.html">
+		<a class="navbar-brand mb-0 h1 d-none d-md-block" href="main.wp">
 			<img src="resources/images/workpeople-logo-blue02.png" height="30" alt="">
 		</a>
 
