@@ -456,3 +456,57 @@
     overflow: visible;
     line-height: 0;
 }
+
+.board-content .file-wrap li{
+    display: table;
+    table-layout: fixed;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.board-content .file-wrap .item-file{
+    display: block;
+    padding: 4px 10px;
+    box-sizing: border-box;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.board-content span.btn-wrap{
+    cursor: pointer;
+    display: inline-block;
+}
+
+.board-content span.item-file span{
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.board-content span.item-file span.btn-wrap{
+    margin-left: 5px;
+}
+
+.board-content span.btn-wrap svg{
+    width: 16px;
+    height: 16px;
+}
+
+.board-content span.ic-file svg{
+    width: 20px;
+    height: 20px;
+}
+
+.board-content .file-wrap .item-file .name{
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 16px;
+    line-height: 16px;
+    vertical-align: middle;
+    cursor: pointer;
+    max-width: 70%;
+    font-size: 13px;
+    margin-left: 3px;
+}

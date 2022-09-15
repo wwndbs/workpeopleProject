@@ -93,6 +93,46 @@
 	<insert id="insertBoard">
 		insert
 		  into board
+		  (
+		    board_no
+		  , user_no
+		  , board_type
+		  , board_title
+		  , board_content
+		  , top_exp
+		  , dep_name
+		  )
+		  values
+		  (
+		    seq_board.nextval
+		  , #{userNo}
+		  , #{boardType}
+		  , #{boardTitle}
+		  , #{boardContent}
+		  , #{topExp}
+		  , #{depName}
+		  )
+	</insert>
+	
+	<!-- 첨부파일 삽입 -->
+	<insert id="insertAttachment">
+		insert
+		  into attachment
+		  (
+		    file_no
+		  , ref_type
+		  , ref_no
+		  , origin_name
+		  , change_name
+		  )
+		  values
+		  (
+		    seq_file.nextval
+		  , #{refType}
+		  , seq_board.currval
+		  , #{originName}
+		  , #{changeName}
+		  )
 	</insert>
 
 </mapper>

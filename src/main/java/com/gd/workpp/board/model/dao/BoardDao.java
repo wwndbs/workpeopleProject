@@ -38,7 +38,11 @@ public class BoardDao {
 	}
 	
 	public int insertBoard(SqlSessionTemplate sqlSession, Board b) {
-		return 0;
+		return sqlSession.insert("boardMapper.insertBoard", b);
+	}
+	
+	public int insertAttachment(SqlSessionTemplate sqlSession, Attachment at) {
+		return sqlSession.insert("boardMapper.insertAttachment", at);
 	}
 
 }

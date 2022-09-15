@@ -35,9 +35,12 @@ public class BoardServiceImpl implements BoardService {
 		
 		int result1 = bDao.insertBoard(sqlSession, b);
 		
+		int result2 = 1;
+		if(at != null) {
+			result2 = bDao.insertAttachment(sqlSession, at);
+		}
 		
-		
-		return 0;
+		return result1 * result2;
 	}
 
 }

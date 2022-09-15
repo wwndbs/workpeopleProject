@@ -53,7 +53,7 @@
                 
                   <a href=""><h6>내 게시글 조회</h6></a>
                   
-                  <a href="enrollForm.bo"><h6>글쓰기</h6></a>
+                  <a href="enrollForm.bo?no=1"><h6>글쓰기</h6></a>
                 </div>
 
               </div>

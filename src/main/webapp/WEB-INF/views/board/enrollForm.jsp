@@ -6,15 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<!-- include summernote css/js -->
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-<script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
-
-<!--author : YoungheonChoi / summernote lite version-->
-<script src="dist/summernote/summernote-lite.js"></script>
-<script src="dist/summernote/lang/summernote-ko-KR.js"></script>
-<link rel="stylesheet" href="dist/summernote/summernote-lite.css">
 </head>
 <style>
 	.board-content .content-title{
@@ -268,7 +259,7 @@
                                             </c:if>
                                         </th>
                                         <td>
-                                            <input type="text" class="txt" name="boardTitle">
+                                            <input type="text" class="txt" name="boardTitle" required>
                                         </td>
                                     </tr>
                                     <tr id="attachPart">
@@ -329,16 +320,12 @@
                                                 		
                                                 		let fileInput = $(".input-file")[0]; // input타입 객체 담기
                                             			
-                                            			console.log(fileInput);
-                                            			
                                             			let file = fileInput.files; // file 리스트에 각각 담기 (한 개여도 리스트로 취급)
-                                            			
-                                            			console.log(file);
                                             			
                                             			let value = '<li>'
                                             						+	'<span class="item-file">'
                                             						+		'<span class="btn-wrap" title="삭제">'
-                                            						+			'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>'
+                                            						+			'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="deleteBtn" onclick="deleteLi();" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>'
                                             						+		'</span>'
                                             						+		'<span class="ic-file">'
                                             						+			'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="rgb(0, 135, 239)" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-slack"><path d="M22.08 9C19.81 1.41 16.54-.35 9 1.92S-.35 7.46 1.92 15 7.46 24.35 15 22.08 24.35 16.54 22.08 9z"></path><line x1="12.57" y1="5.99" x2="16.15" y2="16.39"></line><line x1="7.85" y1="7.61" x2="11.43" y2="18.01"></line><line x1="16.39" y1="7.85" x2="5.99" y2="11.43"></line><line x1="18.01" y1="12.57" x2="7.61" y2="16.15"></line></svg>'
@@ -382,6 +369,16 @@
                                                 		})
                                                 		
                                                 	})
+                                                	
+                                                	function deleteLi(){
+                                                		
+                                                		// input타입 file 객체 비워주기
+                                                		$(".input-file").val('');
+                                                		
+                                                		// li요소 지워주기
+                                                		$(".item-file").parent().remove();
+                                                		
+                                                	}
                                                 </script>
                                             </div>
                                         </td>
@@ -426,11 +423,31 @@
                         </fieldset>
                         
                         <div class="sub-btn">
-                        	<button type="button" class="btn btn-sm btn-primary">등록</button>
-	                        <button type="button" class="btn btn-sm btn-light">임시저장</button>
-	                        <button type="button" class="btn btn-sm btn-light">취소</button>
+                        	<button type="submit" class="btn btn-sm btn-primary">등록</button>
+	                        <button type="submit" class="btn btn-sm btn-light" onclick="form.action='save.bo'">임시저장</button>
+	                        <button type="button" class="btn btn-sm btn-light">취소</button> <!-- 바로 전 목록으로 돌아가기 -->
                         </div>
                       </form>
+                      
+                      <script>
+                      	$(function(){
+                      		
+                      		Board b = new Board();
+                      		
+                      		$.ajax(function(){
+                      			url: "save.bo",
+                      			data: {
+                      				userNo: ${ loginUser.userNo },
+                      				boardType: ${ typeNo },
+                      				boardTitle: $(".txt").val(),
+                      				boardContent: $("#summernote").val(),
+                      				topExp: $("#chkButton").val(),
+                      				depName: "${ loginUser.depName }"
+                      			}
+                      		});
+                      		
+                      	})
+                      </script>
                     
                     
                 </div>
