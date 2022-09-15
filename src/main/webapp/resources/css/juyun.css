@@ -50,6 +50,7 @@
     background-color: white;
     border : 1px solid rgb(41, 128, 185);
     border-radius: 5px;
+    cursor: pointer;
 }
 
 .mail-btn-sidebar{
@@ -59,6 +60,7 @@
     border : 1px solid rgb(41, 128, 185);
     border-radius: 3px;
     font-size: 11px;
+    cursor: pointer;
 }
 
 .mail-btn-enroll:hover,
@@ -228,6 +230,7 @@
     border : 1px solid rgb(41, 128, 185);
     border-radius: 3px;
     font-size: 14px;
+    cursor: pointer;
 }
 
 .mail-btn-file{
@@ -236,6 +239,7 @@
     background-color: white;
     border : 1px solid rgb(41, 128, 185);
     font-size: 12px;
+    cursor: pointer;
 }
 
 .mail-filebox{
@@ -243,11 +247,27 @@
     height: 90px;
     border: 1px dashed rgb(41, 128, 185);
     background-color: #fff;
-    line-height: 90px;
+    font-size: 13px;
+    padding: 10px;
+    overflow: auto;
 }
 
-.mail-filebox span{
+.mail-filebox .file-empty{
+    line-height: 65px;
+    display: block;
+}
+
+.mail-filebox .each-file{
+    text-align: left;
     font-size: 13px;
+    line-height: 22px;
+}
+
+.each-file .btn-file-remove{
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: -2px;
+    margin-right: 3px;
 }
 
 /*여기부터 받는사람*/
@@ -302,7 +322,7 @@
     height: 29px;
 }
 
-#ccAddrWrap .mail-addr-out{
+#refAddrWrap .mail-addr-out{
     margin-left: 5px;
     float: left;
     padding: 0px 5px 0px 5px;
@@ -345,6 +365,12 @@
 
 .mail-addr-out .btn-addr-remove ion-icon{
     vertical-align: -2px;
+}
+
+#btn-filebox {
+	cursor: pointer;
+	margin-left: 30px;
+	vertical-align: -3px;
 }
 
 /*메일함*/

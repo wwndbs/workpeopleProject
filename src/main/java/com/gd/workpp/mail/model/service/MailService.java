@@ -2,6 +2,7 @@ package com.gd.workpp.mail.model.service;
 
 import java.util.ArrayList;
 
+import com.gd.workpp.common.model.vo.Attachment;
 import com.gd.workpp.common.model.vo.PageInfo;
 import com.gd.workpp.mail.model.vo.Mail;
 
@@ -15,7 +16,7 @@ public interface MailService {
 	ArrayList<Mail> selectInboxList(PageInfo pi);
 	
 	// 메일 작성하기 서비스
-	int insertMail(Mail m);
+	int insertMail(Mail m, ArrayList<Attachment> atList);
 	
 	// 메일 상세조회 서비스
 	
