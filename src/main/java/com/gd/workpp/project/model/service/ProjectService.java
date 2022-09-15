@@ -35,7 +35,8 @@ public interface ProjectService {
 	// 8. 프로젝트 게시물 댓글작성 (ajax)
 	int ajaxInsertReply(ProReply pr);
 	
-	// 9. 프로젝스 게시물 수정화면 띄우기
+	// 9. 프로젝트 게시물 수정화면 띄우고 업데이트요청까지
 	ProBoard selectModifyProBoard(int proBoardNo);
+	int updateProBoard(ProBoard pb);
 
 }

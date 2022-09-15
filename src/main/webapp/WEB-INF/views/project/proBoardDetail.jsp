@@ -195,19 +195,19 @@
 	                    </div>
 	                    <!-- 중요도 -->
 	                    <div class="important1">
-	                      <c:if test="${ pb.proBoardLevel == 1}">
+	                      <c:if test="${ pb.proBoardLevel == 6}">
 		                    <div class="demo-icon-display">
 		                        <i data-feather="flag"></i>
 		                        &nbsp;&nbsp;<i data-feather="arrow-down" style="width: 20px; color:rgb(90, 90, 255); font-size: 15px"></i>&nbsp;낮음
 	                      	</div>
 	                      </c:if>
-	                      <c:if test="${ pb.proBoardLevel == 2}">
+	                      <c:if test="${ pb.proBoardLevel == 5}">
 		                      <div class="demo-icon-display">
 		                        <i data-feather="flag"></i>
 		                        &nbsp;&nbsp;&nbsp;<span><b>-</b></span>&nbsp;&nbsp;&nbsp;보통
 		                      </div>
 	                      </c:if>
-	                      <c:if test="${ pb.proBoardLevel == 3}">
+	                      <c:if test="${ pb.proBoardLevel == 4}">
 		                      <div class="demo-icon-display">
 		                        <i data-feather="flag"></i>
 		                        &nbsp;&nbsp;<i data-feather="arrow-up" style="width: 20px; color:rgb(255, 94, 94); font-size: 15px"></i>&nbsp;높음

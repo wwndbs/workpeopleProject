@@ -1,5 +1,6 @@
 package com.gd.workpp.project.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
@@ -43,7 +44,7 @@ public class ProjectController {
 	// 프로젝트 게시물리스트
 	@ResponseBody
 	@RequestMapping("proList.pr")
-	public ModelAndView projectList(@RequestParam(value="cpage", defaultValue="1") int currentPage, int no, ModelAndView mv) {
+	public ModelAndView projectList(@RequestParam(value="cpage", defaultValue="1") int currentPage, int no, ModelAndView mv, Model model) {
 		int listCount = pService.selectListCount();
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);		
@@ -52,9 +53,8 @@ public class ProjectController {
 		mv.addObject("list", list)
 		  .addObject("pi", pi)
 		  .addObject("no", no)
+		  .addObject(list)
 		  .setViewName("project/projectDetailList");
-		
-		System.out.println(list);
 		
 		return mv;
 	}
@@ -130,13 +130,37 @@ public class ProjectController {
 
 	}	
 	
-	/*
 	// 프로젝트 게시물 수정
 	@RequestMapping("updateBoard.pr")
-	public String updateProBoard{
+	public String updateProBoard(ProBoard pb, MultipartFile reupfile, HttpSession session, Model model) {
+		
+		// 새로 넘어온 첨부파일이 있을 경우
+		if(!reupfile.getOriginalFilename().equals("")) {
+			
+			// 기존에 첨부파일이 있을 경우
+			if(pb.getAttachOrigin() != null) {
+				new File( session.getServletContext().getRealPath(pb.getAttachModify()) ).delete();
+			}
+			
+			// 새로 넘어온 첨부파일 업로드시키기
+			String saveFilePath = FileUpload.saveFile(reupfile, session, "resources/project_upfiles/");
+			
+			pb.setAttachOrigin(reupfile.getOriginalFilename());
+			pb.setAttachModify(saveFilePath);
+		}
+		
+		int result = pService.updateProBoard(pb);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다.");
+			return "redirect:boardDetail.pr?no" + pb.getProBoardNo();
+		}else {
+			model.addAttribute("errorMsg", "게시물 수정 실패");
+			return "common/errorPage";
+		}
 		
 	}
-	*/
+	
 	// 프로젝트 등록 폼
 	@RequestMapping("enrollPro.pr")
 	public String projectEnrollForm() {

@@ -48,6 +48,11 @@ public class ProjectDao {
 		return sqlSession.selectOne("projectMapper.selectDetailProBoard", proBoardNo);
 	}
 	
+	// 프로젝트게시물 업데이트요청
+	public int updateProBoard(SqlSessionTemplate sqlSession, ProBoard pb) {
+		return sqlSession.update("projectMapper.updateProBoard", pb);
+	}
+	
 	// 프로젝트게시물 등록
 	public int insertProBoard(SqlSessionTemplate sqlSession, ProBoard pb) {
 		return sqlSession.insert("projectMapper.insertProBoard", pb);

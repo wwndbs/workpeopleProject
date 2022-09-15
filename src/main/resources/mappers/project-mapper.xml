@@ -97,6 +97,7 @@
 		     , pb.pro_board_status
 		     , pb.pro_board_level
 		     , pb.pro_title
+		     , pb.project_no
 		     , pb.user_no as "boardWriterNo"		     
 		     , m.user_name as "pbUserName"
 		     , m.job_name as "pbJobName"
@@ -104,6 +105,8 @@
 		     , pb.modify_date
 		     , pb.start_date
 		     , pb.end_date 
+		     , pb.attach_origin
+		     , pb.attach_modify
 		  from pro_board pb
 		  join member m on (m.user_no = pb.user_no)
 		 where pb.project_no = 8
@@ -132,6 +135,7 @@
 		     , pb.start_date
 		     , pb.end_date 
 		     , pb.pro_board_level
+		     , pb.attach_origin
 		     , pb.attach_modify
 		     , pb.pro_content
 		     , count
@@ -139,6 +143,23 @@
 		  join member m on (m.user_no = pb.user_no)
 		 where pb.pro_board_no = #{proBoardNo}
 	</select>
+	
+	<!-- 프로젝트게시물 수정 -->
+	<update id="updateProBoard">
+		update
+			   pro_board
+		   set pro_title = #{proTitle}	   	   
+		     , pro_content = #{proContent}
+             , pro_board_status = #{proBoardStatus}
+             , modify_date = sysdate
+             , start_date = #{startDate}
+             , end_date = #{endDate}
+             , pro_board_level = #{proBoardLevel}
+		     , attach_origin = #{attachOrigin}
+		     , attach_modify = #{attachModify}
+		 where pro_board_no = #{proBoardNo}
+	</update>
+	
 	
 	<!-- 프로젝트게시물 등록 -->
 	<insert id="insertProBoard">

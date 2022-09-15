@@ -75,6 +75,11 @@ public class ProjectServiceImpl implements ProjectService {
 		return pDao.selectModifyProBoard(sqlSession, proBoardNo);
 	}
 
+	@Override
+	public int updateProBoard(ProBoard pb) {
+		return pDao.updateProBoard(sqlSession, pb);
+	}
+
 }
 
 

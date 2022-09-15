@@ -143,13 +143,13 @@
 	                    <label class="form-check-label pro1">
 	                      <label for=""><b>중요도</b></label>
 	                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	                      <input class="form-check-input" type="radio" name="proBoardLevel" id="high" value="3" required>
+	                      <input class="form-check-input" type="radio" name="proBoardLevel" id="high" value="4" required>
 	                      높음
 	                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	                      <input class="form-check-input" type="radio" name="proBoardLevel" id="average" value="2" required>
+	                      <input class="form-check-input" type="radio" name="proBoardLevel" id="average" value="5" required>
 	                      보통
 	                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	                      <input class="form-check-input" type="radio" name="proBoardLevel" id="low" value="1" required>
+	                      <input class="form-check-input" type="radio" name="proBoardLevel" id="low" value="6" required>
 	                      낮음           
 	                    </label>
 	                  </div>

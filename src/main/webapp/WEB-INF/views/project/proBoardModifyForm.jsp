@@ -100,12 +100,13 @@
 	                <form class="form1" id="enrollForm" method="post" action="insertBoard.pr" enctype="multipart/form-data">
                
 			          <input type="hidden" name="projectNo" value="${ no }">
+			          <input type="hidden" name="proBoardNo" value="${ pb.proBoardNo }">
 			          <input type="hidden" name="boardWriterNo" value="${ loginUser.userNo }">
 			          
 	                  <!-- 제목쪽 div -->
 	                  <div class="form-div">
 	                    <!-- 게시물 제목 입력 -->
-	                    <input class="form-control mb-2" type="text" name="proTitle" value="proTitle" required> <!--  placeholder="${ pb.proTitle }" -->
+	                    <input class="form-control mb-2" type="text" name="proTitle" value="${ pb.proTitle }" required> <!--  placeholder="${ pb.proTitle }" -->
 	                    <hr width="850px">
 	                  </div>
 	
@@ -121,12 +122,16 @@
 	                      완료
 	                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	                      <input class="form-check-input" type="radio" name="proBoardStatus" id="postpone" value="3" required>
-	                      보류           
+	                      보류        
 	                    </label>
 	                  </div>
 	                  <br>
 	                  <c:if test="${ not empty pb.proBoardStatus }">
-	                  
+	                  	<script>
+	                  		$(function(){
+	                  			$("input[value=${pb.proBoardStatus}]").attr("checked", true);
+	                  		})
+	                  	</script>
 	                  </c:if>
 	
 	                  <!-- 게시물 마감기한 -->
@@ -134,9 +139,9 @@
 	                    <label for="" style="width: 110px; margin: 7px 0px 0px 0px;"><b>마감기한</b></label>
 	                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	                    <!-- 시작시 기본 날짜 설정은 value를 이용 -->
-	                    <input type="date" name="startDate" id="datePicker" class="form-control date1" value="" required/>
+	                    <input type="date" name="startDate" id="datePicker" class="form-control date1" value="${ pb.startDate }" required/>
 	                    &nbsp;~&nbsp;
-	                    <input type="date" name="endDate" id="datePicker" class="form-control date1" value="" required/>
+	                    <input type="date" name="endDate" id="datePicker" class="form-control date1" value="${ pb.endDate }" required/>
 	                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	                  </div>
@@ -146,35 +151,50 @@
 	                    <label class="form-check-label pro1">
 	                      <label for=""><b>중요도</b></label>
 	                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	                      <input class="form-check-input" type="radio" name="proBoardLevel" id="high" value="3" required>
+	                      <input class="form-check-input" type="radio" name="proBoardLevel" id="high" value="4" required>
 	                      높음
 	                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	                      <input class="form-check-input" type="radio" name="proBoardLevel" id="average" value="2" required>
+	                      <input class="form-check-input" type="radio" name="proBoardLevel" id="average" value="5" required>
 	                      보통
 	                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	                      <input class="form-check-input" type="radio" name="proBoardLevel" id="low" value="1" required>
+	                      <input class="form-check-input" type="radio" name="proBoardLevel" id="low" value="6" required>
 	                      낮음           
 	                    </label>
 	                  </div>
+	                  <c:if test="${ not empty pb.proBoardLevel }">
+	                  	<script>
+	                  		$(function(){
+	                  			$("input[value=${pb.proBoardLevel}]").attr("checked", true);
+	                  		})
+	                  	</script>
+	                  </c:if>
 	
 	                  <hr style="width:855px; margin: 105px 20px 0px 20px">
 	                  
 	                  <!-- 게시물 내용 입력 -->
 	                  <div class="form-group" style="margin: 0px 20px 0px 20px;">
 	                    <br>
-	                    <textarea class="form-control" id="exampleFormControlTextarea1" name="proContent" style="resize: none"  placeholder="내용을 입력하세요." required></textarea>
+	                    <textarea class="form-control" id="exampleFormControlTextarea1" name="proContent" style="resize: none" required>${ pb.proContent }</textarea>
 	                  </div>
 	                  <br>
 	
 	                  <!-- 파일첨부 -->
 	                  <div class="file1" style="text-align:left">
-	                    <label for="upfile" style="float: left"><b></b></label>
-                        <td><input type="file" id="upfile" class="form-control-file border" name="upfile"></td>
+	                  	<c:if test="${ not empty pb.attachOrigin }">
+		                    <label for="upfile" style="float: left"><b></b></label>	
+	                        <td><input type="file" id="upfile" class="form-control-file border" name="reupfile" value="">	                        	
+	                        	<label style="margin: 5px 0px 15px 83px; font-size:14px">${ pb.attachOrigin }</label>
+	                        </td>
+                        </c:if>
+                        <c:if test="${ empty pb.attachOrigin }">
+                        	<label for="upfile" style="float: left"><b></b></label>
+	                        <td><input type="file" id="upfile" class="form-control-file border" name="upfile"></td>
+                        </c:if>
 	                  </div>
-	                  <br><br> 
+	                  <br>
 	                  
 	                  <!-- 버튼 -->
-	                  <button type="button" onclick="location.href='proList.pr'" class="btn btn-secondary btn4" style="width: 14%;">목록으로</button>
+	                  <button type="button" onclick="javascript:history.go(-1);" class="btn btn-secondary btn4" style="width: 14%;">목록으로</button>
 	                  <button type="submit" class="btn btn-primary btn4" style="width: 14%;">게시물 등록</button>
 	                  
 	                </form>

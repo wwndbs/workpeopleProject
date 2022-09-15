@@ -51,7 +51,7 @@
 	              <h5 style="font-weight: 400">
 	              	<b>프로젝트명</b>
 	              		<input type="hidden" name="projectNo" value="${ pb.projectNo }">
-				        <input type="hidden" name="boardWriterNo" value="${ pb.boardWriterNo }"> 	              		
+				        <input type="hidden" name="boardWriterNo" value="111"> <!-- ${ pb.boardWriterNo } -->	
 	              		<button type="submit" class="btn btn-primary btn1" id="insert" style="width: 7%; height: 40px;">게시물 등록</button>
 	              </h5>	              	
 	            </div>
@@ -158,7 +158,7 @@
 			                      </c:if>
 			                      <td>${ pb.proTitle }</td>
 			                      <td>${ pb.pbUserName }${ pb.pbJobName }</td>
-			                      <td>${ pb.boardWriterNo }</td>
+			                      <td>${ pb.userNo }</td>
 			                      <td>${ pb.createDate }</td>
 			                      <td>${ pb.modifyDate }</td>
 			                      <td>${ pb.startDate } ~ ${ pb.endDate }</td>
