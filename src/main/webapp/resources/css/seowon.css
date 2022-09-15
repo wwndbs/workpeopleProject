@@ -127,15 +127,21 @@
     }
     
 /* 개인일정조회 schedulePersonalList.jsp */
-  #holiday-personal-calendar {
-    max-width: 1100px;
-    margin: 0 auto;
-  }
+	#holiday-personal-calendar {
+	  max-width: 1100px;
+	  margin: 0 auto;
+	}
 
-/* 풀캘린더 */
 	.fc .fc-button-primary {
 		background-color:#007bff !important;
+		border:0.5px solid #F8F8FF !important;
 	}
+	
+	.fc-daygrid-dot-event .fc-event-title {
+		white-space: normal;
+	}
+	
+/*  */
 
 
 

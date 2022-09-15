@@ -36,8 +36,7 @@ public class HolidayServiceImpl implements HolidayService {
 
 	@Override
 	public ArrayList<Schedule> selectScheduleList(String userNo) {
-		// return hDao.selectScheduleList(sqlSession, userNo);
-		return null;
+		return hDao.selectScheduleList(sqlSession, userNo);
 	}
 
 	@Override

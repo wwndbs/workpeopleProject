@@ -28,11 +28,11 @@ public class HolidayDao {
 		return sqlSession.delete("holidayMapper.deleteTodo", no);
 	}
 	
-	/*
-	public ArrayList<Schedule> selectScheduleList(SqlSessionTemplate sqlSession, String userNo){
-		return (ArrayList)sqlSession.selectScheduleList("holidayMapper.selectScheduleList");
-	}
 	
+	public ArrayList<Schedule> selectScheduleList(SqlSessionTemplate sqlSession, String userNo){
+		return (ArrayList)sqlSession.selectList("holidayMapper.selectScheduleList", userNo);
+	}
+	/*
 	public int insertSchedule(SqlSessionTemplate sqlSession, Schedule sc) {
 		return sqlSession.insert("holidayMapper.insertSchedule", sc);
 	}

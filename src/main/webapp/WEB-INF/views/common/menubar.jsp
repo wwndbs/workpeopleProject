@@ -217,7 +217,7 @@
 
 				<ul class="sidebar-sub-nav collapse" id="navExtra3">
 					<li class="sidebar-nav-item">
-						<a href="schedulePersonal.sc" class="sidebar-nav-link">
+						<a href="schedule.sc" class="sidebar-nav-link">
 							<span class="sidebar-nav-abbr"> Ad </span> <span class="sidebar-nav-name"> 개인 일정 </span>
 						</a>
 					</li>

@@ -14,5 +14,8 @@ public class Schedule {
 	private String scheduleAllday;
 	private String scheduleColor;
 	private String userNo;
+	private String userName;
+	private String depName;
+	private String jobName;
 
 }

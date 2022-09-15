@@ -1,14 +1,19 @@
 package com.gd.workpp.holiday.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gd.workpp.holiday.model.service.HolidayService;
+import com.gd.workpp.holiday.model.vo.Schedule;
+import com.google.gson.Gson;
 
 @Controller
 public class HolidayController {
@@ -60,18 +65,34 @@ public class HolidayController {
 		}
 	}
 	
-	// author : 장서원 / 개인일정조회 페이지
-	@RequestMapping("schedulePersonal.sc")
-	public String schedulePersonalList() {
-		return "holiday/schedulePersonalList";
+	// 장서원 / 일정조회 페이지
+	/*
+	@RequestMapping("schedule.sc")
+	public ModelAndView selectScheduleList(ModelAndView mv, String userNo) {
+		ArrayList<Schedule> list = hService.selectScheduleList(userNo);
+		
+		mv.addObject("list", list)
+		  .setViewName("holiday/scheduleList");
+		
+		System.out.println(list);
+		
+		return mv;
+	}
+	*/
+	
+	@RequestMapping("schedule.sc")
+	public String ScheduleList() {
+		return "holiday/scheduleList";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="scheduleList.sc", produces="application/json; charset=utf-8")
+	public String selectScheduleList(String userNo) {
+		ArrayList<Schedule> list = hService.selectScheduleList(userNo);
+		return new Gson().toJson(list);
 	}
 	
 	/*
-	@RequestMapping(value="", produces="application/json; charset=utf-8")
-	public ModelAndView selectSchedule(String userNo) {
-		ArrayList<Schedule> list = hService.selectList(userNo);
-		return new Gson().toJson(list);
-	}
 	
 	@RequestMapping("")
 	public String enrollSheduleForm() {
