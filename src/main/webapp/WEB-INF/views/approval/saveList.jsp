@@ -34,7 +34,7 @@
 							<thead>
 								<tr>
 									<th width="10">
-										<input type="checkbox">
+										<input type="checkbox" id="all-check">
 									</th>
 									<th width="100">번호 <a href="#"><strong>⇅</strong></a></th>
 									<th width="200">결재양식</th>
@@ -45,157 +45,77 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td>
-										<input type="checkbox">
-									</td>
-									<td>1</td>
-									<td>차량배차 신청서</td>
-									<td>차량배차 신청합니다.</td>
-									<td>홍길동</td>
-									<td>2022-22-22</td>
-									<td>
-										<div class="tag-gray">임시저장</div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<input type="checkbox">
-									</td>
-									<td>1</td>
-									<td>차량배차 신청서</td>
-									<td>차량배차 신청합니다.</td>
-									<td>홍길동</td>
-									<td>2022-22-22</td>
-									<td>
-										<div class="tag-gray">임시저장</div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<input type="checkbox">
-									</td>
-									<td>1</td>
-									<td>차량배차 신청서</td>
-									<td>차량배차 신청합니다.</td>
-									<td>홍길동</td>
-									<td>2022-22-22</td>
-									<td>
-										<div class="tag-gray">임시저장</div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<input type="checkbox">
-									</td>
-									<td>1</td>
-									<td>차량배차 신청서</td>
-									<td>차량배차 신청합니다.</td>
-									<td>홍길동</td>
-									<td>2022-22-22</td>
-									<td>
-										<div class="tag-gray">임시저장</div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<input type="checkbox">
-									</td>
-									<td>1</td>
-									<td>차량배차 신청서</td>
-									<td>차량배차 신청합니다.</td>
-									<td>홍길동</td>
-									<td>2022-22-22</td>
-									<td>
-										<div class="tag-gray">임시저장</div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<input type="checkbox">
-									</td>
-									<td>1</td>
-									<td>차량배차 신청서</td>
-									<td>차량배차 신청합니다.</td>
-									<td>홍길동</td>
-									<td>2022-22-22</td>
-									<td>
-										<div class="tag-gray">임시저장</div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<input type="checkbox">
-									</td>
-									<td>1</td>
-									<td>차량배차 신청서</td>
-									<td>차량배차 신청합니다.</td>
-									<td>홍길동</td>
-									<td>2022-22-22</td>
-									<td>
-										<div class="tag-gray">임시저장</div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<input type="checkbox">
-									</td>
-									<td>1</td>
-									<td>차량배차 신청서</td>
-									<td>차량배차 신청합니다.</td>
-									<td>홍길동</td>
-									<td>2022-22-22</td>
-									<td>
-										<div class="tag-gray">임시저장</div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<input type="checkbox">
-									</td>
-									<td>1</td>
-									<td>차량배차 신청서</td>
-									<td>차량배차 신청합니다.</td>
-									<td>홍길동</td>
-									<td>2022-22-22</td>
-									<td>
-										<div class="tag-gray">임시저장</div>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<input type="checkbox">
-									</td>
-									<td>1</td>
-									<td>차량배차 신청서</td>
-									<td>차량배차 신청합니다.</td>
-									<td>홍길동</td>
-									<td>2022-22-22</td>
-									<td>
-										<div class="tag-gray">임시저장</div>
-									</td>
-								</tr>
+								<c:forEach var="list" items="${ list }">
+									<tr>
+										<td>
+											<input type="checkbox">
+										</td>
+										<td>${ list.documentNo }</td>
+										<td>${ list.documentForm }</td>
+										<td>${ list.documentTitle }</td>
+										<td>${ list.userNo }</td>
+										<td>${ list.createDate }</td>
+										<td>
+											<div class="tag-gray">임시저장</div>
+										</td>
+									</tr>
+								</c:forEach>
 							</tbody>
 						</table>
-						<div class="bottom-btn">
-							<ul class="pagination justify-content-center">
-								<li class="page-item"><a class="page-link" href="javascript:void(0);">«</a></li>
-								<li class="page-item"><a class="page-link" href="javascript:void(0);">‹</a></li>
-								<li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
-								<li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-								<li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
-								<li class="page-item"><a class="page-link" href="javascript:void(0);">4</a></li>
-								<li class="page-item"><a class="page-link" href="javascript:void(0);">5</a></li>
-								<li class="page-item"><a class="page-link" href="javascript:void(0);">›</a></li>
-								<li class="page-item"><a class="page-link" href="javascript:void(0);">»</a></li>
-							</ul>
-							<button class="btn btn-danger">삭제</button>
-						</div>
+						<c:if test="${ not empty list }">
+							<div class="bottom-btn">
+								<ul class="pagination justify-content-center">
+									<c:if test="${ pi.currentPage != 1 }">
+										<li class="page-item"><a class="page-link" href="saveList?cpage=${ pi.startPage }">«</a></li>
+										<li class="page-item"><a class="page-link" href="saveList?cpage=${ pi.currentPage - 1 }">‹</a></li>
+									</c:if>
+									<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.maxPage }">
+										<li class="page-item"><a class="page-link" href="saveList?cpage=${ p }">${ p }</a></li>
+									</c:forEach>
+									<c:if test="${ pi.currentPage != pi.endPage }">
+										<li class="page-item"><a class="page-link" href="saveList?cpage=${ pi.currentPage + 1 }">›</a></li>
+										<li class="page-item"><a class="page-link" href="saveList?cpage=${ pi.endPage }">»</a></li>
+									</c:if>
+								</ul>
+								<button class="btn btn-danger">삭제</button>
+							</div>
+						</c:if>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<jsp:include page="../common/footer.jsp" />
+	
+	<script>
+		/*
+			체크박스 관련 script
+			- all-check 체크박스 클릭시 하위 모든 체크박스 체크상태 전환
+			- all-check 체크박스 클릭 후 하위 체크박스 중 하나라도 check상태가 false면 all-check 체크박스 check상태 false전환
+			- 하위 체크박스가 모두 체크된 상태면 all-check 체크박스 체크상태 전환
+			- 
+		*/
+		$(function(){
+			$("#all-check").click(function(){
+				if($("#all-check").is(":checked")){
+					$(".list-wrapper>table>tbody input").prop("checked", true);
+				}else{
+					$(".list-wrapper>table>tbody input").prop("checked", false);
+				}
+			})
+			
+			$(".list-wrapper>table>tbody input").click(function(){
+				let count = $(".list-wrapper>table>tbody input").length; // 체크박스 수
+				let check =  $(".list-wrapper>table>tbody input:checked").length; // 체크된 체크박스 수
+
+				// 체크박스 수와 체크된 체크박스 수 일치하면 all-check 체크박스 check상태 true 일치하지 않으면 false
+				if(count == check){
+					$("#all-check").prop("checked", true);
+				}else{
+					$("#all-check").prop("checked", false);
+				}
+			})
+		})
+	</script>
 </body>
 </html>

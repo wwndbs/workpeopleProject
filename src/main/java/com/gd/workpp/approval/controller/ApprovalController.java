@@ -69,8 +69,19 @@ public class ApprovalController {
 	 * 임시저장문서 페이지 이동, 조회 요청을 처리해주는 메소드
 	 */
 	@RequestMapping("saveList.ap")
-	public ModelAndView saveListView(ModelAndView mv) {
+	public ModelAndView saveListView(@RequestParam(value="cpage", defaultValue="1")int currentPate,
+			                         ModelAndView mv, HttpSession session) {
+		Member m = (Member)session.getAttribute("loginUser");
+		String userNo = m.getUserNo();
+		
+		int listCount = apService.selectSaveListCount(userNo);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPate, 5, 10);
+		ArrayList<Document> list = apService.selectSaveList(pi, userNo);
+		
+		mv.addObject("list", list);
+		mv.addObject("pi", pi);
 		mv.setViewName("approval/saveList");
+		
 		return mv;
 	}
 	

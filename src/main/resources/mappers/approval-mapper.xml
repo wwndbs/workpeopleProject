@@ -188,4 +188,51 @@
 		        , (case when job_name = '대리' then 4 end)
 		        , (case when job_name = '사원' then 5 end)
 	</select>
+	
+	
+	<select id="selectSaveListCount" resultType="_int">
+		select count(*) as "count"
+		  from document
+		 where user_no = #{userNo}
+		   and status = 2
+	</select>
+	
+	<select id="selectSaveList" resultMap="documentResult">
+		select distinct document_no
+		     , user_name
+		     , document_form
+		     , document_title
+		     , d.create_date
+		     , document_content
+		     , progress
+		     , d.status
+		     , message
+		     , origin_name
+		     , change_name
+		     , file_path
+		     , approval_count
+		  from document d
+		  left join member m on(d.user_no = m.user_no)
+		 where d.user_no = #{userNo}
+		   and d.status = 2
+		 order by document_no desc
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </mapper>

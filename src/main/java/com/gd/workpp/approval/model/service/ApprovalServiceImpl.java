@@ -44,6 +44,16 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public ArrayList<Member> selectMemberList(String dept) {
 		return apDao.selectMemberList(sqlSession, dept);
 	}
+
+	@Override
+	public int selectSaveListCount(String userNo) {
+		return apDao.selectSaveListCount(sqlSession, userNo);
+	}
+
+	@Override
+	public ArrayList<Document> selectSaveList(PageInfo pi, String userNo) {
+		return apDao.selectSaveList(sqlSession, pi, userNo);
+	}
 	
 	
 }

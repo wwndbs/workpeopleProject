@@ -22,4 +22,10 @@ public interface ApprovalService {
 	
 	// 부서별 멤버 조회
 	ArrayList<Member> selectMemberList(String dept);
+	
+	// 임시저장문서 갯수 조회
+	int selectSaveListCount(String userNo);
+	
+	// 임시저장문서 조회
+	ArrayList<Document> selectSaveList(PageInfo pi, String userNo);
 }

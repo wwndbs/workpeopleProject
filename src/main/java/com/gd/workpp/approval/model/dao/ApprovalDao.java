@@ -60,4 +60,17 @@ public class ApprovalDao {
 	public ArrayList<Member> selectMemberList(SqlSessionTemplate sqlSession, String dept){
 		return (ArrayList)sqlSession.selectList("approvalMapper.selectMemberList", dept);
 	}
+	
+	public int selectSaveListCount(SqlSessionTemplate sqlSession, String userNo) {
+		return sqlSession.selectOne("approvalMapper.selectSaveListCount", userNo);
+	}
+	
+	public ArrayList<Document> selectSaveList(SqlSessionTemplate sqlSession, PageInfo pi, String userNo){
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("approvalMapper.selectSaveList", userNo, rowBounds);
+	}
 }
