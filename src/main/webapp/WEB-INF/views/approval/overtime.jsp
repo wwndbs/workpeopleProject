@@ -26,7 +26,7 @@
 								<tr>
 									<th colspan="2">
 										<br><br>
-										<h1><strong>연장근무 신청서</strong></h1>
+										<h1><strong>${ form }</strong></h1>
 									</th>
 									<td colspan="4">
 										<table align="right">
@@ -56,22 +56,20 @@
 								<tr>
 									<th>제목</th>
 									<td colspan="5">
-										<input type="text" name="" class="form-control form-control-sm">
+										<input type="text" name="documentTitle" class="form-control form-control-sm">
 									</td>
 								</tr>
 								<tr>
 									<th>부서</th>
-									<td>개발팀</td>
+									<td>${ member.depName }</td>
 									<th>기안자</th>
-									<td>홍길동</td>
-									<th>기안일</th>
-									<td>2022-22-22</td>
+									<td>${ member.userName }</td>
 								</tr>
 								<tr>
 									<th>근무일</th>
 									<td colspan="5">
 										<div class="date-form" style="display: flex;">
-											<input type="date" class="form-control form-control-sm" style="width: 150px;">
+											<input type="date" name="workDate" class="form-control form-control-sm" style="width: 150px;">
 										</div>
 									</td>
 								</tr>
@@ -79,9 +77,9 @@
 									<th>근무시간</th>
 									<td colspan="5">
 										<div class="date-form" style="display: flex;">
-											<input type="time" class="form-control form-control-sm" style="width: 150px;">
+											<input type="time" name="workStart" class="form-control form-control-sm" style="width: 150px;">
 											<span>&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;</span>
-											<input type="time" class="form-control form-control-sm" style="width: 150px;">
+											<input type="time" name="workEnd" class="form-control form-control-sm" style="width: 150px;">
 										</div>
 									</td>
 								</tr>
@@ -94,7 +92,7 @@
 								<tr>
 									<th>첨부파일</th>
 									<td colspan="5">
-										<input type="file" class="form-control-file border">
+										<input type="file" name="originName" class="form-control-file border">
 									</td>
 								</tr>
 							</table>
@@ -105,7 +103,7 @@
 							</div>
 						</div>
 						<div class="approval-wrapper">
-							<button class="btn btn-primary btn-sm">결재선 설정</button>
+							<button class="btn btn-primary btn-sm" id="approval-line" type="button">결재선 설정</button>
 							<div class="approval-reference-area">
 								<p>결재선</p>
 								<ul>
@@ -159,36 +157,8 @@
 		</div>
 	</div>
 
-	<!--summernote-->
-	<script>
-	    $(document).ready(function() {
-	        $('#summernote').summernote({
-	          minHeight: 390,  // 최소 높이
-	          maxHeight: 800,  // 최대 높이
-	          focus: false,    // 에디터 로딩후 포커스를 맞출지 여부
-	          lang: "ko-KR",   // 한글 설정
-	          tabsize: 2,
-	          height: 120,
-	          toolbar: [
-	          ['fontsize', ['fontsize']],    // 글자 크기 설정
-	          ['style', ['style']],
-	          ['font', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],
-	          ['color', ['color']],
-	          ['para', ['ul', 'ol', 'paragraph']],
-	          ['table', ['table']],
-	          ['view', ['fullscreen', 'codeview', 'help']]
-	          ]
-	         });
-	      });
-    
-		$(function() {
-			$('#department-list').hide();
-		})
+	<jsp:include page="approvalModal.jsp" />
 
-		$('#department').click(function() {
-			$('#department-list').toggle();
-		});
-	</script>
 	<jsp:include page="../common/footer.jsp" />
 </body>
 </html>
