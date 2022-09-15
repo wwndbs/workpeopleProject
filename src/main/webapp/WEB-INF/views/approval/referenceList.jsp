@@ -87,7 +87,7 @@
 						<c:if test="${ not empty list }">
 							<ul class="pagination justify-content-center">
 								<c:if test="${ pi.currentPage != 1 }">
-									<li class="page-item"><a class="page-link" href="approvalList.ap?cpage=${ pi.currentPage }">«</a></li>
+									<li class="page-item"><a class="page-link" href="approvalList.ap?cpage=${ pi.startPage }">«</a></li>
 									<li class="page-item"><a class="page-link" href="approvalList.ap?cpage=${ pi.currentPage - 1 }">‹</a></li>								
 								</c:if>
 								
