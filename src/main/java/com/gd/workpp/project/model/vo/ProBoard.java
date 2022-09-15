@@ -34,5 +34,7 @@ public class ProBoard {
 	private String userNo;
 	private String pbUserName;
 	private String pbJobName;
+	
+	private String replyWriter;	
 
 }

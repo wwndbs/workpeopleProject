@@ -31,5 +31,11 @@ public interface ProjectService {
 	
 	// 7. 프로젝트 게시물 댓글조회 (ajax)
 	ArrayList<ProReply> ajaxSelectReplyList(int proBoardNo);
+	
+	// 8. 프로젝트 게시물 댓글작성 (ajax)
+	int ajaxInsertReply(ProReply pr);
+	
+	// 9. 프로젝스 게시물 수정화면 띄우기
+	ProBoard selectModifyProBoard(int proBoardNo);
 
 }

@@ -204,6 +204,17 @@
 	margin-top: 30px;
 	padding-botton: 20px;
 }
+
+.board-content .enrollForm .chkNotice{
+	display: inline-block;
+	float: right;
+	line-height: 30px;
+}
+
+.board-content .chkNotice span{
+	display: inline-block;
+	font-size: 8px;
+}
 </style>
 <body>
 
@@ -249,6 +260,12 @@
                                     <tr>
                                         <th>
                                             <span class="title">제목</span>
+                                            <c:if test="${ typeNo eq 2 and (loginUser.jobName eq '부장' or loginUser.jobName eq '팀장') }">
+	                                            <span class="chkNotice">
+	                                            	<input type="checkbox" id="chkButton" name="topExp" value="Y">
+	                                            	<span>공지로 등록</span>
+	                                            </span>
+                                            </c:if>
                                         </th>
                                         <td>
                                             <input type="text" class="txt" name="boardTitle">
@@ -288,7 +305,6 @@
                                                             <span class="file-txt">파일선택</span>
                                                             <input type="file" name="file" class="input-file" title="파일선택" multiple accept="undefined" style="display: inline-block; position: absolute; top: 0; left: 0; opacity: 0; cursor: pointer;">
                                                         </span>
-                                                        <span class="size">( 0MB)</span>
                                                     </span>
                                                 </div>
                                                 <div class="wrap-attach">
@@ -298,6 +314,75 @@
                                                   <ul class="img-wrap"></ul>
                                                   <!-- 파일 첨부 시 변형되는 건 다우오피스 참고 -->
                                                 </div>
+                                                
+                                                <script>
+                                                	$(function(){
+                                                		$(".input-file").change(function(){
+                                                			
+                                                			fileChange();
+                                                			
+                                                		})
+                                                	})
+                                                	
+                                                	function fileChange(){
+                                                		// 파일이름 li로 뽑아주는 함수
+                                                		
+                                                		let fileInput = $(".input-file")[0]; // input타입 객체 담기
+                                            			
+                                            			console.log(fileInput);
+                                            			
+                                            			let file = fileInput.files; // file 리스트에 각각 담기 (한 개여도 리스트로 취급)
+                                            			
+                                            			console.log(file);
+                                            			
+                                            			let value = '<li>'
+                                            						+	'<span class="item-file">'
+                                            						+		'<span class="btn-wrap" title="삭제">'
+                                            						+			'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>'
+                                            						+		'</span>'
+                                            						+		'<span class="ic-file">'
+                                            						+			'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="rgb(0, 135, 239)" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-slack"><path d="M22.08 9C19.81 1.41 16.54-.35 9 1.92S-.35 7.46 1.92 15 7.46 24.35 15 22.08 24.35 16.54 22.08 9z"></path><line x1="12.57" y1="5.99" x2="16.15" y2="16.39"></line><line x1="7.85" y1="7.61" x2="11.43" y2="18.01"></line><line x1="16.39" y1="7.85" x2="5.99" y2="11.43"></line><line x1="18.01" y1="12.57" x2="7.61" y2="16.15"></line></svg>'
+                                            						+		'</span>'
+                                            						+		'<span class="name">'
+                                            						+			file[0].name
+                                            						+		'</span>'
+                                            						+	'</span>'
+                                            						+ '</li>';
+                                            			
+                                            			$(".file-wrap").html(value);
+                                            			
+                                                	}
+                                                	
+                                                	$(function(){
+                                                		// 드래그 앤 드랍 함수
+                                                		
+                                                		$("#dropZone").on("dragenter", function(e){
+                                                	        e.preventDefault();
+                                                	        e.stopPropagation();
+                                                	    }).on("dragover", function(e){
+                                                	        e.preventDefault();
+                                                	        e.stopPropagation();
+                                                	        $(this).css("background-color", "#ddd");
+                                                	    }).on("dragleave", function(e){
+                                                	        e.preventDefault();
+                                                	        e.stopPropagation();
+                                                	        $(this).css("background-color", "white");
+                                                	    }).on('drop', function(e){
+                                                			e.preventDefault();
+                                                			$(this).css("background-color", "white");
+                                                			
+                                                			// 드랍된 파일을 뽑아서 담아주기
+                                                			var files = e.originalEvent.dataTransfer.files;
+                                                			
+                                                			// input타입 객체의 파일을 드랍된 파일로 바꿔치기
+                                                			$(".input-file")[0].files = files;
+                                                			
+                                                			// 바뀐 파일을 li로 다시 뽑아주기
+                                                			fileChange();
+                                                		})
+                                                		
+                                                	})
+                                                </script>
                                             </div>
                                         </td>
                                     </tr>
@@ -331,7 +416,8 @@
 				                      ['para', ['ul', 'ol', 'paragraph']],
 				                      ['table', ['table']],
 				                      ['view', ['fullscreen', 'codeview', 'help']]
-				                      ]
+				                      ],
+				                      disableDragAndDrop: true
 				                     });
 				                  });
                                 </script>

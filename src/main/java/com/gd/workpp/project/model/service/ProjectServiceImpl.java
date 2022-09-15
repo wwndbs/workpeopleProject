@@ -65,6 +65,16 @@ public class ProjectServiceImpl implements ProjectService {
 		return pDao.ajaxSelectReplyList(sqlSession, proBoardNo);
 	}
 
+	@Override
+	public int ajaxInsertReply(ProReply pr) {
+		return pDao.ajaxInsertReply(sqlSession, pr);
+	}
+
+	@Override
+	public ProBoard selectModifyProBoard(int proBoardNo) {
+		return pDao.selectModifyProBoard(sqlSession, proBoardNo);
+	}
+
 }
 
 

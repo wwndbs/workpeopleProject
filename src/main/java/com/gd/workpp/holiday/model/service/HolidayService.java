@@ -14,19 +14,19 @@ public interface HolidayService {
 	
 	int deleteTodo(int no);
 	
-	// 장서원 / 1. 개인일정 조회 서비스
+	// 장서원 / 일정 조회 서비스
 	ArrayList<Schedule> selectScheduleList(String userNo);
 	
-	// 장서원 / 2. 개인일정 등록 서비스
+	// 장서원 / 일정 등록 서비스
 	int insertSchedule(Schedule sc);
 	
-	// 장서원 / 3. 개인일정 상세조회 서비스
+	// 장서원 / 일정 상세조회 서비스
 	Schedule selectSchedule(int scheduleNo);
 	
-	// 장서원 / 4. 개인일정 삭제 서비스
+	// 장서원 / 일정 삭제 서비스
 	int deleteSchedule(int scheduleNo);
 	
-	// 장서원 / 5. 개인일정 수정 서비스
+	// 장서원 / 일정 수정 서비스
 	int updateSchedule(Schedule sc);
 	
 }

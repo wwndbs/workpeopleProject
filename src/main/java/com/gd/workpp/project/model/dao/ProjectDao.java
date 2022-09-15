@@ -43,6 +43,11 @@ public class ProjectDao {
 		return sqlSession.selectOne("projectMapper.selectDetailProBoard", proBoardNo);
 	}
 	
+	// 프로젝트게시물 업데이트페이지
+	public ProBoard selectModifyProBoard(SqlSessionTemplate sqlSession, int proBoardNo) {
+		return sqlSession.selectOne("projectMapper.selectDetailProBoard", proBoardNo);
+	}
+	
 	// 프로젝트게시물 등록
 	public int insertProBoard(SqlSessionTemplate sqlSession, ProBoard pb) {
 		return sqlSession.insert("projectMapper.insertProBoard", pb);
@@ -51,6 +56,11 @@ public class ProjectDao {
 	// 프로젝트게시물 댓글조회
 	public ArrayList<ProReply> ajaxSelectReplyList(SqlSessionTemplate sqlSession, int proBoardNo){
 		return (ArrayList)sqlSession.selectList("projectMapper.ajaxSelectReplyList", proBoardNo);
+	}
+	
+	// 프로젝트게시물 댓글등록
+	public int ajaxInsertReply(SqlSessionTemplate sqlSession, ProReply pr) {
+		return sqlSession.insert("projectMapper.ajaxInsertReply", pr);
 	}
 
 }

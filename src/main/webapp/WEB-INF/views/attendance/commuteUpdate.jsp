@@ -81,7 +81,7 @@
                                 <td>-</td>
                                 <td>-</td>
                                 <td>결근</td>
-                                <td><button class="btn btn-sm btn-danger" onclick="location.href=''">결근사유서 작성</button></td>
+                                <td><button class="btn btn-sm btn-danger" onclick="location.href='absence.ap'">결근사유서 작성</button></td>
                             </tr>
                             <tr>
                                 <td>2022-08-01</td>

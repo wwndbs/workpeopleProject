@@ -14,7 +14,7 @@ import lombok.ToString;
 public class Mail {
 	
 	private int mailNo;
-	private String mailTilte;
+	private String mailTitle;
 	private String mailContent;
 	private String sender;
 	private String receiver;

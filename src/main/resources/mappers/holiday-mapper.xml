@@ -11,7 +11,7 @@
 		<result column="status" property="status" />
 	</resultMap>
 	
-	<resultMap id="schedule" type="Schedule">
+	<resultMap id="scheduleResult" type="Schedule">
 		<result column="schedule_no" property="scheduleNo" />
 		<result column="schedule_title" property="scheduleTitle" />
 		<result column="schedule_content" property="scheduleContent" />
@@ -24,6 +24,9 @@
 		<result column="schedule_allday" property="scheduleAllday" />
 		<result column="schedule_color" property="scheduleColor" />
 		<result column="user_no" property="userNo" />
+		<result column="user_name" property="userName" />
+		<result column="dep_name" property="depName" />
+		<result column="job_name" property="jobName" />
 	</resultMap>
 
 	<select id="todoListView" resultMap="todoResult">
@@ -59,7 +62,66 @@
 		 where todo_no = #{todoNo}
 	</delete>
 	
+	<!-- 장서원 / 일정 조회 -->
+	<select id="selectScheduleList" resultMap="scheduleResult">
+		select
+		        schedule_no
+		      , schedule_title
+		      , schedule_content
+		      , schedule_start || nvl2(schedule_timestart, 'T' || schedule_timestart, '') as "schedule_start"     
+       		  , schedule_end || nvl2(schedule_timeend, 'T' || schedule_timeend, '') as "schedule_end"  
+		      , schedule_category
+		      , schedule_status
+		      , schedule_allday
+		      , schedule_color
+		      , user_no
+		      , user_name
+		      , dep_name
+		      , job_name
+		 from schedule
+		 join member using(user_no)
+		where user_no = #{userNo}
+	</select>
 	
+	<!-- 장서원 / 일정 등록 -->
+	<insert id="insertSchedule">
+		insert 
+		  into schedule
+		  (
+		    schedule_no
+		  , schedule_title
+		  , schedule_content
+		  , schedule_start
+		  , schedule_end
+		  , schedule_timestart
+		  , schedule_timeend
+		  , schedule_category
+		  , schedule_status
+		  , schedule_allday
+		  , schedule_color
+		  , user_no
+		  )
+		  values
+		  (
+		    seq_schedule.nextval
+		  , #{scheduleTitle}
+		  , #{scheduleContent}
+		  , #{scheduleStart}
+		  , #{scheduleEnd}
+		  , #{scheduleTimeStart}
+		  , #{scheduleTimeEnd}
+		  , #{scheduleCategory}
+		  , #{scheduleStatus}
+		  , #{scheduleAllday}
+		  , #{scheduleColor}
+		  , #{userNo}
+		  )
+	</insert>
+	
+	<!-- 장서원 / 일정 수정 -->
+	
+	
+	<!-- 장서원 / 일정 삭제  -->
 	
 	
 </mapper>
