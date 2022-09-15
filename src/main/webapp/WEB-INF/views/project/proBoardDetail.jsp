@@ -51,9 +51,9 @@
         margin: 18px 15px -20px 20px;
         font-size: 15px;
       }
-      .reply-insert{width: 98%; height: 20%;}
+      .reply-insert{width: 98%; height: 35%;}
       .btn3{width: 10%; margin: 10px 10px 0px -7px;}
-      .delete1, .modify1{cursor: pointer;}
+      .delete1, .modify1, .rModify, .rDelete{cursor: pointer;}
     </style>
 </head>
 <body>
@@ -78,12 +78,16 @@
 	                <form class="form1">
 	                  <!-- 제목쪽 div -->
 	                  <div class="h5div">
-				        <input type="hidden" name="no" value="${ pb.proBoardNo }">         
+				        <input type="hidden" name="no" value="${ pb.proBoardNo }">
+				        <input type="hidden" name="boardWriterNo" value="${ pb.boardWriterNo }">
+				        <input type="hidden" name="boardWriterNo" value="${ pb.boardWriterNo }">
 	                    <h5 class="h5-1" style="font-weight: 400;"><b>${ pb.proTitle }</b></h5>
 	                    <!-- 수정|삭제|목록가기 -->
-	                    <div class="ssm">	                    	                    
-	                      <span type="button" data-toggle="modal" data-target="#modify" data-backdrop="static" class="modify1" style="margin: 0px 0px 0px 0px;">수정</span>&nbsp;
-	                      <span type="button" data-toggle="modal" data-target="#delete" data-backdrop="static" class="delete1" style="margin: 0px 0px 0px 0px;">삭제</span>&nbsp;&nbsp;
+	                    <div class="ssm">
+	                      <c:if test="${ loginUser.userNo eq pb.boardWriterNo }">		                    	                    
+		                    <span type="button" data-toggle="modal" data-target="#modify" data-backdrop="static" class="modify1" style="margin: 0px 0px 0px 0px;">수정</span>&nbsp;
+		                    <span type="button" data-toggle="modal" data-target="#delete" data-backdrop="static" class="delete1" style="margin: 0px 0px 0px 0px;">삭제</span>&nbsp;&nbsp;
+	                      </c:if>	                      
 	                      <button type="button" onclick="location.href='proList.pr?no=8'" class="btn btn-sm btn-secondary btn2">목록으로</button>
 	                    </div>
 	                  </div>
@@ -208,9 +212,9 @@
 	                  <!-- 게시물내용 시작 -->
 	                  <div class="pro-content">
 	                    <!-- 이미지 -->
-	                    <c:if test="${ not empty pb.attachPath }">	                    
+	                    <c:if test="${ not empty pb.attachModify }">	                    
 		                    <div>
-		                      <img src="${ pb.attachPath }" alt="">
+		                      <img src="${ pb.attachModify }" alt="" width="70%">
 		                      <br><br>
 		                    </div>
 		                </c:if>    
@@ -219,17 +223,19 @@
 	
 	                  <!-- 조회수/댓글 -->
 	                  <div style="font-size:14px; text-align:right; margin: 10px 15px -0px 0px;">
-	                    <span>댓글 3</span>
+	                    <span>댓글 <span id="rcount">0</span></span>
 	                    &nbsp;
 	                    <span>조회수 ${ pb.count }</span>
 	                  </div>
 	                  <br>
 	
 	                  <!-- 댓글창 -->
-	                  <div action="" class="rep-div">
-	                  	<!-- ajax 댓글 -->
+	                  <div action="" class="rep-div" id="replyArea">                 
+	                    <!-- 댓글하나 -->
+	                    <div class="replyArea2">
+	                    	<!-- 댓글내용은 ajaxSelectReplyList(); -->
+	                    </div>	                   
 	                  	<script>
-	                  		/* 
 	                  		$(function(){
 	                  			ajaxSelectReplyList();
 	                  		})
@@ -239,112 +245,40 @@
 	                  				data: {no:${pb.proBoardNo}},
 	                  				success:function(list){
 	                  					console.log(list);
+	                  					
+	                  					let value = "";
+	                  					for(let i=0; i<list.length; i++){
+	                  						value += '<div class="reply1" style="display: inline-block;" >'
+		                  							+	 '<img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px; float: left; margin: 3px 0px 0px 0px;">'
+					              	                +    '<div style="margin: 0px 0px 0px 50px; text-align: left;">'
+					          	                    +      '<span style="float: left;"><b>' + list[i].pbUserName + list[i].pbJobName + '(' + list[i].pbDepName + ')&nbsp;</b></span>'
+					          	                    +      '<span style="float: left;">' + list[i].rCreateDate + '</span>'
+					          	                    +      '<div style="float: right; font-size: 13.5px; margin: -10px 0px 0px 0px">'
+	                  					/* 
+	                  					}
+					          	        if(loginUser == ${pb.replyWriter}){            
+					          	                    +        '<span class="rModify">수정</span>&nbsp;'
+					          	                    +        '<span class="rDelete">삭제</span>'
+					          	        }					          	                    
+					          	        for(let i=0; i<list.length; i++){
+					          	        	value
+					          	        	 */
+					          	        	        +      '</div>'
+					          	                    +      '<br>'
+					          	                    +      '<span>' + list[i].proReply + '</span>'
+					          	                    +    '</div>'
+					          	                    + '</div>'				          	        	
+					          	        }            
+					          	                    
+	                  					$(".replyArea2").html(value);
+	                  					$("#rcount").text(list.length);
+	                  						                    				 
 	                  				},error:function(){
 	                  					console.log("댓글리스트조회용 ajax통신 실패");
 	                  				}
 	                  			})
 	                  		}
-	                  		 */
-	                  	</script>
-	                  
-	                    <!-- 댓글하나 -->
-	                    <div class="reply1" style="display: inline-block;" >
-	                      <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px; float: left; margin: 3px 0px 0px 0px;">
-	                      <div style="margin: 0px 0px 0px 50px; text-align: left;">
-	                        <span style="float: left;"><b>강길똥 대리(인사팀)&nbsp;</b></span>
-	                        <span style="float: left;">2022-08-01</span>
-	                        <div style="float: right; font-size: 13.5px; margin: -10px 0px 0px 0px">
-	                          <span>수정</span>
-	                          <span>삭제</span>
-	                        </div>
-	                        <br>
-	                        <span>확인했습니다. 빠른 시일 내에 처리하도록 하겠습니다. 블라블라블라블라블라블라블라블라블라블</span>
-	                      </div>
-	                    </div>
-	                    <!-- 댓글하나 -->
-	                    <div class="reply1" style="display: inline-block;" >
-	                      <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px; float: left; margin: 3px 0px 0px 0px;">
-	                      <div style="margin: 0px 0px 0px 50px; text-align: left;">
-	                        <span style="float: left;"><b>강길똥 대리(인사팀)&nbsp;</b></span>
-	                        <span style="float: left;">2022-08-01</span>
-	                        <div style="float: right; font-size: 13.5px; margin: -10px 0px 0px 0px">
-	                          <span>수정</span>
-	                          <span>삭제</span>
-	                        </div>
-	                        <br>
-	                        <span>확인했습니다. 빠른 시일 내에 처리하도록 하겠습니다. 블라블라블라블라블라블라블라블라블라블</span>
-	                      </div>
-	                    </div>
-	                    <!-- 댓글하나 -->
-	                    <div class="reply1" style="display: inline-block;" >
-	                      <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px; float: left; margin: 3px 0px 0px 0px;">
-	                      <div style="margin: 0px 0px 0px 50px; text-align: left;">
-	                        <span style="float: left;"><b>강길똥 대리(인사팀)&nbsp;</b></span>
-	                        <span style="float: left;">2022-08-01</span>
-	                        <div style="float: right; font-size: 13.5px; margin: -10px 0px 0px 0px">
-	                          <span>수정</span>
-	                          <span>삭제</span>
-	                        </div>
-	                        <br>
-	                        <span>확인했습니다. 빠른 시일 내에 처리하도록 하겠습니다. 블라블라블라블라블라블라블라블라블라블</span>
-	                      </div>
-	                    </div>
-	                    <!-- 댓글하나 -->
-	                    <div class="reply1" style="display: inline-block;" >
-	                      <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px; float: left; margin: 3px 0px 0px 0px;">
-	                      <div style="margin: 0px 0px 0px 50px; text-align: left;">
-	                        <span style="float: left;"><b>강길똥 대리(인사팀)&nbsp;</b></span>
-	                        <span style="float: left;">2022-08-01</span>
-	                        <div style="float: right; font-size: 13.5px; margin: -10px 0px 0px 0px">
-	                          <span>수정</span>
-	                          <span>삭제</span>
-	                        </div>
-	                        <br>
-	                        <span>확인했습니다. 빠른 시일 내에 처리하도록 하겠습니다. 블라블라블라블라블라블라블라블라블라블</span>
-	                      </div>
-	                    </div>
-	                    <!-- 댓글하나 -->
-	                    <div class="reply1" style="display: inline-block;" >
-	                      <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px; float: left; margin: 3px 0px 0px 0px;">
-	                      <div style="margin: 0px 0px 0px 50px; text-align: left;">
-	                        <span style="float: left;"><b>강길똥 대리(인사팀)&nbsp;</b></span>
-	                        <span style="float: left;">2022-08-01</span>
-	                        <div style="float: right; font-size: 13.5px; margin: -10px 0px 0px 0px">
-	                          <span>수정</span>
-	                          <span>삭제</span>
-	                        </div>
-	                        <br>
-	                        <span>확인했습니다. 빠른 시일 내에 처리하도록 하겠습니다. 블라블라블라블라블라블라블라블라블라블</span>
-	                      </div>
-	                    </div>
-	                    <!-- 댓글하나 -->
-	                    <div class="reply1" style="display: inline-block;" >
-	                      <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px; float: left; margin: 3px 0px 0px 0px;">
-	                      <div style="margin: 0px 0px 0px 50px; text-align: left;">
-	                        <span style="float: left;"><b>강길똥 대리(인사팀)&nbsp;</b></span>
-	                        <span style="float: left;">2022-08-01</span>
-	                        <div style="float: right; font-size: 13.5px; margin: -10px 0px 0px 0px">
-	                          <span>수정</span>
-	                          <span>삭제</span>
-	                        </div>
-	                        <br>
-	                        <span>확인했습니다. 빠른 시일 내에 처리하도록 하겠습니다. 블라블라블라블라블라블라블라블라블라블</span>
-	                      </div>
-	                    </div>
-	                    <!-- 댓글하나 -->
-	                    <div class="reply1" style="display: inline-block;" >
-	                      <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px; float: left; margin: 3px 0px 0px 0px;">
-	                      <div style="margin: 0px 0px 0px 50px; text-align: left;">
-	                        <span style="float: left;"><b>강길똥 대리(인사팀)&nbsp;</b></span>
-	                        <span style="float: left;">2022-08-01</span>
-	                        <div style="float: right; font-size: 13.5px; margin: -10px 0px 0px 0px">
-	                          <span>수정</span>
-	                          <span>삭제</span>
-	                        </div>
-	                        <br>
-	                        <span>확인했습니다. 빠른 시일 내에 처리하도록 하겠습니다. 블라블라블라블라블라블라블라블라블라블</span>
-	                      </div>
-	                    </div>
+	                  	 </script>
 	                    
 	
 	                    <!-- 댓글 입력창 -->

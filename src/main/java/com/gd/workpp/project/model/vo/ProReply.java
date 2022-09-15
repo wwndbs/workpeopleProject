@@ -17,7 +17,11 @@ public class ProReply {
 	private int proBoardNo;
 	private String replyWriter;
 	private String proReply;
-	private Date rCreateDate;
-	private Date rModifyDate;
+	private String rCreateDate;
+	private String rModifyDate;
+	
+	private String pbUserName;
+	private String pbJobName;
+	private String pbDepName;
 
 }

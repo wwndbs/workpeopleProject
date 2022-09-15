@@ -4,7 +4,7 @@
 	
 	<resultMap id="projectResult" type="Project">
 		<result column="project_no" property="projectNo"/>
-		<result column="user_no" property="userNo"/>
+		<result column="user_no" property="proAdminNo"/>
 		<result column="project_title" property="projectTitle"/>
 		<result column="project_content" property="projectContent"/>
 		<result column="status" property="status"/>
@@ -42,6 +42,7 @@
 	<resultMap type="Member" id="memberResult">
 		<result column="user_name" property="pbUserName"/>
 		<result column="job_name" property="pbJobName"/>
+		<result column="dep_name" property="pbDepName"/>
 		<result column="user_no" property="userNo"/>
 	</resultMap>
 	
@@ -79,6 +80,7 @@
 		     , pb.pro_board_status
 		     , pb.pro_board_level
 		     , pb.pro_title
+		     , pb.user_no as "boardWriterNo"		     
 		     , m.user_name as "pbUserName"
 		     , m.job_name as "pbJobName"
 		     , pb.create_date
@@ -107,12 +109,13 @@
 			   pb.pro_board_no
 		     , pb.pro_title
 		     , pb.pro_board_status
+		     , pb.user_no as "boardWriterNo"
 		     , m.user_name as "pbUserName"
 		     , m.job_name as "pbJobName"
 		     , pb.start_date
 		     , pb.end_date 
 		     , pb.pro_board_level
-		     , pb.attach_path
+		     , pb.attach_modify
 		     , pb.pro_content
 		     , count
 		  from pro_board pb
@@ -165,8 +168,9 @@
 	<select id="ajaxSelectReplyList" resultMap="proReplyResult">
 		select
 		       pr.pro_reply_no
-		     , m.user_name
-		     , m.job_name
+		     , m.user_name as "pbUserName"
+		     , m.job_name as "pbJobName"
+		     , m.dep_name as "pbDepName"
 		     , to_char(pr.create_date, 'YYYY-MM-DD') as "rCreateDate"
 		     , to_char(pr.modify_date, 'YYYY-MM-DD') as "rModifyDate"
 		     , pr.pro_reply
@@ -175,7 +179,7 @@
 		  join pro_board pb on (pr.pro_board_no = pb.pro_board_no)
 		 where pb.pro_board_no = #{proBoardNo}
 		 order
-		    by pro_reply_no desc
+		    by pro_reply_no
 	</select>
 
 </mapper>
