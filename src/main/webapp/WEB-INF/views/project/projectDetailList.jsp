@@ -50,7 +50,7 @@
 	            <div class="pb-3" style="margin: -11px 0px 0px 0px">
 	              <h5 style="font-weight: 400">
 	              	<b>프로젝트명</b>
-	              		<input type="hidden" name="no" value="${ pb.projectNo }">
+	              		<input type="hidden" name="projectNo" value="${ pb.projectNo }">
 				        <input type="hidden" name="boardWriterNo" value="${ pb.boardWriterNo }"> 	              		
 	              		<button type="submit" class="btn btn-primary btn1" id="insert" style="width: 7%; height: 40px;">게시물 등록</button>
 	              </h5>	              	
@@ -120,6 +120,7 @@
 	                      <th>우선순위</th>
 	                      <th>제목</th>
 	                      <th>담당자</th>
+	                      <th>빨리좀나와라</th>
 	                      <th>작성일</th>
 	                      <th>수정일</th>
 	                      <th>마감기한</th>
@@ -157,6 +158,7 @@
 			                      </c:if>
 			                      <td>${ pb.proTitle }</td>
 			                      <td>${ pb.pbUserName }${ pb.pbJobName }</td>
+			                      <td>${ pb.boardWriterNo }</td>
 			                      <td>${ pb.createDate }</td>
 			                      <td>${ pb.modifyDate }</td>
 			                      <td>${ pb.startDate } ~ ${ pb.endDate }</td>
@@ -182,13 +184,13 @@
 								<li class="page-item disabled"><a class="page-link"><</a></li>
 							</c:when>
 							<c:otherwise>
-								<li class="page-item"><a class="page-link" href="proList.pr?cpage=${ pi.currentPage-1 }"><</a></li>
+								<li class="page-item"><a class="page-link" href="proList.pr?no=8&cpage=${ pi.currentPage-1 }"><</a></li>
 								<!-- <li class="page-item"><a class="page-link" href="proList.pr?no=8.cpage=${ pi.currentPage-1 }"><</a></li> -->
 							</c:otherwise>	
 	                    </c:choose>
 	                    
 	                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-	                    	<li class="page-item"><a class="page-link" href="proList.pr?no=8.cpage=${ p }">${ p }</a></li>
+	                    	<li class="page-item"><a class="page-link" href="proList.pr?no=8&cpage=${ p }">${ p }</a></li>
 	                    </c:forEach>
 	                    
 	                    <c:choose>
@@ -196,7 +198,7 @@
 	                    		<li class="page-item disabled"><a class="page-link">></a></li>
 	                    	</c:when>
 	                    	<c:otherwise>
-	                    		<li class="page-item"><a class="page-link" href="proList.pr?no=8.cpage=${ pi.currentPage+1 }">></a></li>
+	                    		<li class="page-item"><a class="page-link" href="proList.pr?no=8&cpage=${ pi.currentPage+1 }">></a></li>
 	                    	</c:otherwise>	
 	                    </c:choose>       
 	                  </ul>

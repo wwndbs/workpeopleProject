@@ -36,10 +36,11 @@ public class ProjectController {
 	@RequestMapping("myList.pr")
 	public ModelAndView selectList(ModelAndView mv) {
 		ArrayList<Project> list = pService.selectList();
-		return mv;
+
+		return mv;		
 	}
 	
-	// 프로젝트 게시물리스트 화면
+	// 프로젝트 게시물리스트
 	@ResponseBody
 	@RequestMapping("proList.pr")
 	public ModelAndView projectList(@RequestParam(value="cpage", defaultValue="1") int currentPage, int no, ModelAndView mv) {
@@ -53,6 +54,8 @@ public class ProjectController {
 		  .addObject("no", no)
 		  .setViewName("project/projectDetailList");
 		
+		System.out.println(list);
+		
 		return mv;
 	}
 		
@@ -63,7 +66,28 @@ public class ProjectController {
 		
 		return "project/proBoardEnrollForm";				
 	}
+	
+	// 프로젝트 게시물 수정화면
+	@RequestMapping("modifyBoard.pr")
+	public ModelAndView proBoardModifyForm(int no, ModelAndView mv) { 
 		
+		int result = pService.increaseCount(no);
+		
+		if(result > 0) {
+			ProBoard pb = pService.selectDetailProBoard(no);
+			mv.addObject("pb", pb)
+			  .addObject("no", no)
+			  .setViewName("project/proBoardModifyForm");
+			
+			//System.out.println(pb);
+		}else {
+			mv.addObject("errorMsg", "상세조회 실패").setViewName("common/errorPage");
+		}
+		
+		return mv;
+		//return "project/proBoardModifyForm";
+	}
+			
 	// 프로젝트 게시물 등록
 	@RequestMapping("insertBoard.pr")
 	public String insertProBoard(ProBoard pb, MultipartFile upfile, HttpSession session, Model model) {
@@ -95,16 +119,24 @@ public class ProjectController {
 					
 		if(result > 0) {
 			ProBoard pb = pService.selectDetailProBoard(no);
-			mv.addObject("pb", pb).setViewName("project/proBoardDetail");
+			mv.addObject("pb", pb)
+			  .addObject("no", no)
+			  .setViewName("project/proBoardDetail");			
 		}else {
 			mv.addObject("errorMsg", "상세조회 실패").setViewName("common/errorPage");	
 		}
 		
-		return mv;
-		
+		return mv;		
 
-	}
+	}	
 	
+	/*
+	// 프로젝트 게시물 수정
+	@RequestMapping("updateBoard.pr")
+	public String updateProBoard{
+		
+	}
+	*/
 	// 프로젝트 등록 폼
 	@RequestMapping("enrollPro.pr")
 	public String projectEnrollForm() {

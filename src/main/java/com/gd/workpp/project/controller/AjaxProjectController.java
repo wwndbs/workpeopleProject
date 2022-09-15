@@ -23,5 +23,12 @@ public class AjaxProjectController {
 		ArrayList<ProReply> list = pService.ajaxSelectReplyList(no);
 		return new Gson().toJson(list);		
 	}
+	
+	@ResponseBody
+	@RequestMapping("rinsert.pr")	
+	public String ajaxInsertReply(ProReply pr) {
+		int result = pService.ajaxInsertReply(pr);
+		return result > 0 ? "success" : "fail";
+	}
 
 }

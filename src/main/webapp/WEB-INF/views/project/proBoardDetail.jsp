@@ -80,14 +80,15 @@
 	                  <div class="h5div">
 				        <input type="hidden" name="no" value="${ pb.proBoardNo }">
 				        <input type="hidden" name="boardWriterNo" value="${ pb.boardWriterNo }">
-				        <input type="hidden" name="boardWriterNo" value="${ pb.boardWriterNo }">
 	                    <h5 class="h5-1" style="font-weight: 400;"><b>${ pb.proTitle }</b></h5>
 	                    <!-- 수정|삭제|목록가기 -->
 	                    <div class="ssm">
-	                      <c:if test="${ loginUser.userNo eq pb.boardWriterNo }">		                    	                    
+	                    
+	                      <%-- <c:if test="${ loginUser.userNo eq pb.boardWriterNo }"> --%>                    	                    
 		                    <span type="button" data-toggle="modal" data-target="#modify" data-backdrop="static" class="modify1" style="margin: 0px 0px 0px 0px;">수정</span>&nbsp;
 		                    <span type="button" data-toggle="modal" data-target="#delete" data-backdrop="static" class="delete1" style="margin: 0px 0px 0px 0px;">삭제</span>&nbsp;&nbsp;
-	                      </c:if>	                      
+	                      <%-- </c:if> --%>
+	                                     
 	                      <button type="button" onclick="location.href='proList.pr?no=8'" class="btn btn-sm btn-secondary btn2">목록으로</button>
 	                    </div>
 	                  </div>
@@ -109,13 +110,22 @@
 				                  </div>
 				                  <!-- Modal footer -->
 				                  <div class="modal-footer" style="justify-content:center;">
-					                <button type="submit" class="btn btn-jyok" id="holiday-give-btn">수정</button>	                
+					                <button type="button" class="btn btn-jyok" id="holiday-give-btn" onclick="location.href='modifyBoard.pr?no=${no}'">수정</button>	                
 					                <button type="button" class="btn btn-jycancle" data-dismiss="modal">취소</button>
 				                  </div>
 				              </div>
 				           </div>
 				        </div>
-			        </form>         
+				        <form id="postForm" action="" method="post">
+				        	<input type="hidden" name="no" value="${ pb.proBoardNo }">
+				        	<input type="hidden" name="attachModify" value="${ pb.attachModify }">
+				        </form>
+			        </form>			        			        
+			        <script>
+			        	function postFormSubmit(url){
+			        		$("#postForm").attr("action", url).submit();
+			        	}
+			        </script>       
 
 			        <!-- 게시물 삭제 모달 -->
 			        <form action="" method="POST">
@@ -234,53 +244,7 @@
 	                    <!-- 댓글하나 -->
 	                    <div class="replyArea2">
 	                    	<!-- 댓글내용은 ajaxSelectReplyList(); -->
-	                    </div>	                   
-	                  	<script>
-	                  		$(function(){
-	                  			ajaxSelectReplyList();
-	                  		})
-	                  		function ajaxSelectReplyList(){ // 댓글조회용 ajax
-	                  			$.ajax({
-	                  				url: "rlist.pr",
-	                  				data: {no:${pb.proBoardNo}},
-	                  				success:function(list){
-	                  					console.log(list);
-	                  					
-	                  					let value = "";
-	                  					for(let i=0; i<list.length; i++){
-	                  						value += '<div class="reply1" style="display: inline-block;" >'
-		                  							+	 '<img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px; float: left; margin: 3px 0px 0px 0px;">'
-					              	                +    '<div style="margin: 0px 0px 0px 50px; text-align: left;">'
-					          	                    +      '<span style="float: left;"><b>' + list[i].pbUserName + list[i].pbJobName + '(' + list[i].pbDepName + ')&nbsp;</b></span>'
-					          	                    +      '<span style="float: left;">' + list[i].rCreateDate + '</span>'
-					          	                    +      '<div style="float: right; font-size: 13.5px; margin: -10px 0px 0px 0px">'
-	                  					/* 
-	                  					}
-					          	        if(loginUser == ${pb.replyWriter}){            
-					          	                    +        '<span class="rModify">수정</span>&nbsp;'
-					          	                    +        '<span class="rDelete">삭제</span>'
-					          	        }					          	                    
-					          	        for(let i=0; i<list.length; i++){
-					          	        	value
-					          	        	 */
-					          	        	        +      '</div>'
-					          	                    +      '<br>'
-					          	                    +      '<span>' + list[i].proReply + '</span>'
-					          	                    +    '</div>'
-					          	                    + '</div>'				          	        	
-					          	        }            
-					          	                    
-	                  					$(".replyArea2").html(value);
-	                  					$("#rcount").text(list.length);
-	                  						                    				 
-	                  				},error:function(){
-	                  					console.log("댓글리스트조회용 ajax통신 실패");
-	                  				}
-	                  			})
-	                  		}
-	                  	 </script>
-	                    
-	
+	                    </div>	    
 	                    <!-- 댓글 입력창 -->
 	                    <div class="reply-insert" style="display: flex; margin: 0px 0px 0px 10px;">
 	                    	<c:choose>
@@ -291,13 +255,103 @@
 	                    		</c:when>
 	                    		<c:otherwise>
 			                      <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px; height: 40px; float: left; margin: 8px 0px 0px 5px;">
-			                      <input class="form-control mb-2 search1" type="text" placeholder="내용을 입력해주세요" style="height:40px;">
-			                      <button type="submit" class="btn btn-sm btn-primary btn3" style="height:40px;">등록</button>
+			                      <input class="form-control mb-2 search1" type="text" id="content" placeholder="내용을 입력해주세요" style="height:40px;">
+			                      <button class="btn btn-sm btn-primary btn3" style="height:40px;" onclick="addReply();">등록</button>
 		                      	</c:otherwise>
 	                      	</c:choose>
 	                    </div>
 	                    <div style="height:10px"><span hidden>bb</span></div>
 	                  </div>
+	                  
+	                  <script>
+	                  		$(function(){
+	                  			ajaxSelectReplyList();
+	                  		})
+	                  		function ajaxSelectReplyList(){ // 댓글조회용 ajax
+	                  			$.ajax({
+	                  				url: "rlist.pr",
+	                  				data: {no:${pb.proBoardNo}},
+	                  				success:function(list){
+	                  					console.log(list);
+	                  					let value = "";
+	                  					for(let i=0; i<list.length; i++){
+	                  						value += '<div class="reply1" style="display: inline-block;" >'
+		                  							+	 '<img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px; float: left; margin: 3px 0px 0px 0px;">'
+					              	                +    '<div style="margin: 0px 0px 0px 50px; text-align: left;">'
+					          	                    +      '<span style="float: left;"><b>' + list[i].pbUserName + list[i].pbJobName + '(' + list[i].pbDepName + ')&nbsp;</b></span>'
+					          	                    +      '<span style="float: left;">' + list[i].rCreateDate + '</span>'
+					          	                    +      '<div class="rMD" style="float: right; font-size: 13.5px; margin: -10px 0px 0px 0px">'  
+					          	                    +        '<span class="rModify">수정</span>&nbsp;'
+					          	                    +        '<span class="rDelete">삭제</span>'
+					          	                    +      '</div>'
+					          	                    +      '<br>'
+					          	                    +      '<span>' + list[i].proReply + '</span>'
+					          	                    +    '</div>'
+					          	                    + '</div>'
+					          	                    
+											//if(${loginUser.userNo} == ${pb.replyWriter}){
+												//console.log("가나다라");
+												//$(".rMD").html('<span class="rModify">수정</span>&nbsp;' + '<span class="rDelete">삭제</span>');
+											//}					          	                    
+					          	        }              
+					          	                    
+	                  					$(".replyArea2").html(value);
+	                  					$("#rcount").text(list.length);
+	                  					/* 
+	                  					for(let i=0; i<list.length; i++){
+	                  						value += '<div class="reply1" style="display: inline-block;" >'
+		                  							+	 '<img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px; float: left; margin: 3px 0px 0px 0px;">'
+					              	                +    '<div style="margin: 0px 0px 0px 50px; text-align: left;">'
+					          	                    +      '<span style="float: left;"><b>' + list[i].pbUserName + list[i].pbJobName + '(' + list[i].pbDepName + ')&nbsp;</b></span>'
+					          	                    +      '<span style="float: left;">' + list[i].rCreateDate + '</span>'
+					          	                    +      '<div style="float: right; font-size: 13.5px; margin: -10px 0px 0px 0px">'
+	                  					}
+	                  					if(${loginUser.userNo} == ${pb.replyWriter}){   
+					          	                            <span class="rModify">수정</span>&nbsp;
+					          	                            <span class="rDelete">삭제</span>
+	                  					}					          	                    
+				                  		for(let i=0; i<list.length; i++){					          	                    
+					          	            value +=       '</div>'
+					          	                    +      '<br>'
+					          	                    +      '<span>' + list[i].proReply + '</span>'
+					          	                    +    '</div>'
+					          	                    + '</div>'				          	        	
+					          	        }                   			
+	                  					  */
+	                  				},error:function(){
+	                  					console.log("댓글리스트조회용 ajax통신 실패");
+	                  				}
+	                  			})
+	                  		}
+	                  		
+	                  		function addReply(){ // 댓글 등록용 ajax
+	                  			
+	                  			if( $("#content").val().trim().length != 0 ){
+	                  				
+	                  				$.ajax({
+	                  					url: "rinsert.pr",
+	                  					data: {
+	                  						proBoardNo: ${pb.proBoardNo},
+	                  						replyWriter: '${loginUser.userNo}',
+	                  						proReply: $("#content").val()
+	                  					},
+	                  					success:function(result){
+	                  						if(result == "success"){
+	                  							$("#content").val("");
+	                  							ajaxSelectReplyList();
+	                  						}
+	                  					},error:function(){
+	                  						console.log("댓글등록용 ajax통신 실패");
+	                  					}
+	                  				})
+	                  				
+	                  			}else{
+	                  				alert("댓글 작성 후 등록해주세요.");
+	                  			}
+	                  		
+	                  		}
+	                  	 </script>
+	                    
 	                  
 	                </form>
 	              </div> 
