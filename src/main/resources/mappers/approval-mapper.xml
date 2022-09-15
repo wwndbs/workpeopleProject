@@ -17,26 +17,71 @@
 		<result column="file_path" property="filePath" />
 		<result column="approval_count" property="approvalCount" />
 	</resultMap>
+	
+	<resultMap id="memberResult" type="Member">
+		<result column="user_no" property="userNo"/>
+		<result column="dep_name" property="depName"/>
+		<result column="job_name" property="jobName"/>
+		<result column="user_name" property="userName"/>
+		<result column="email" property="email"/>
+		<result column="phone" property="phone"/>
+		<result column="create_date" property="createDate"/>
+		<result column="modify_date" property="modifyDate"/>
+		<result column="status" property="status"/>
+		<result column="prof_img" property="profImg"/>
+		<result column="user_email" property="userEmail"/>
+		<result column="user_pwd" property="userPwd"/>
+		<result column="birthday" property="birthday"/>
+	</resultMap>
 
+	<select id="selectApprovalCount_5" resultType="_int">
+		select count(*) as "count"
+		  from document d
+		  join approval a using(document_no)
+		 where a.user_no = #{userNo}
+		   and d.status = 1
+		   and progress = 0
+	</select>
+	
 	<select id="selectApprovalCount" resultType="_int">
 		select count(*) as "count"
 		  from document
 		 where user_no = #{userNo}
 		   and status = 1
 		 <choose>
-		 	<when test='viewPage == "2"'>
+		 	<when test='category == "2"'>
 			   and progress = 1
 		 	</when>
-		 	<when test='viewPage == "3"'>
+		 	<when test='category == "3"'>
 			   and progress = 2
 		 	</when>
-		 	<when test='viewPage == "4"'>
+		 	<when test='category == "4"'>
 			   and progress = 3
 		 	</when>
-		 	<when test='viewPage == "5"'>
-			   and progress = 0
-		 	</when>
 		 </choose>
+	</select>
+	
+	<select id="selectApprovalList_5" resultMap="documentResult">
+		select document_no
+		     , user_name
+		     , document_form
+		     , document_title
+		     , d.create_date
+		     , document_content
+		     , progress
+		     , d.status
+		     , message
+		     , origin_name
+		     , change_name
+		     , file_path
+		     , approval_count
+		  from document d
+		  join member m using(user_no)
+		  join approval a using(document_no)
+		 where a.user_no = '00014'
+		   and d.status = 1
+		   and progress = 0
+		 order by document_no desc
 	</select>
 	
 	<select id="selectApprovalList" resultMap="documentResult">
@@ -67,17 +112,80 @@
 		 	<when test='viewPage == "4"'>
 			   and progress = 3
 		 	</when>
-		 	<when test='viewPage == "5"'>
-			   and progress = 0
-		 	</when>
 		 </choose>
 		 order by document_no desc
 	</select>
 	
 	<select id="selectReferenceCount" resultType="_int">
-		select count(*)
-		  from document
-		 where user_no = #{userNo}
-		   and status = 1
+		select count(*) as "count"
+		  from (
+		    select distinct document_no
+		      from approval a
+		      join document d using(document_no)
+		     where d.user_no = #{userNo}
+		       and reference_status is not null
+		   )
+	</select>
+	
+	<select id="selectReferenceList" resultMap="documentResult">
+		select distinct document_no
+		     , user_name
+		     , document_form
+		     , document_title
+		     , d.create_date
+		     , document_content
+		     , progress
+		     , d.status
+		     , message
+		     , origin_name
+		     , change_name
+		     , file_path
+		     , approval_count
+		  from document d
+		  left join approval a using(document_no)
+		  left join member m on(d.user_no = m.user_no)
+		 where d.user_no = #{userNo}
+		   and d.status = 1
+		   and reference_status is not null
+		 order by document_no desc
+	</select>
+	
+	<select id="selectMemberList" resultMap="memberResult">
+		select user_no
+		     , dep_name
+		     , job_name
+		     , user_name
+		     , email
+		     , phone
+		     , create_date
+		     , modify_date
+		     , status
+		     , prof_img
+		     , user_email
+		     , user_pwd
+		     , birthday
+		  from member
+		 <choose>
+		 	<when test="dept == 1">
+				 where dep_name = '인사팀'
+		 	</when>
+		 	<when test="dept == 2">
+				 where dep_name = '개발팀'
+		 	</when>
+		 	<when test="dept == 3">
+				 where dep_name = '총무팀'
+		 	</when>
+		 	<when test="dept == 4">
+				 where dep_name = '회계팀'
+		 	</when>
+		 	<when test="dept == 5">
+				 where dep_name = '영업팀'
+		 	</when>
+		 </choose>
+		 order by (case when job_name = '부장' then 1 end)
+		        , (case when job_name = '팀장' then 2 end)
+		        , (case when job_name = '과장' then 3 end)
+		        , (case when job_name = '대리' then 4 end)
+		        , (case when job_name = '사원' then 5 end)
 	</select>
 </mapper>
