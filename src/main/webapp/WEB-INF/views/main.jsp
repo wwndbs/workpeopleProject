@@ -154,10 +154,10 @@
                         </li>
                      </ul>
                      <div id="time">
-	                     <div id="clock-div">
-	                        <div id="Clockday">00/00/00</div>
+	                    <div id="clock-div">
+	                    	<div id="Clockday">00/00/00</div>
 	        				<div id="Clock">00:00</div>
-	                     </div>
+	                    </div>
                         <span><strong>출근시간</strong></span>
                         &nbsp;&nbsp;
                         <span><strong style="color: gray;">09:16</strong></span>
@@ -167,8 +167,8 @@
                         <span><strong style="color: gray;">미확인</strong></span>
                      </div>
                      <div id="btn">
-                        <button class="btn btn-primary">출근</button>
-                        <button class="btn btn-secondary">퇴근</button>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#commute-start-modal" data-backdrop="static">출근</button>
+                        <button class="btn btn-danger" data-toggle="modal" data-target="#commute-end-modal" data-backdrop="static">퇴근</button>
                      </div>
                   </div>
    
@@ -253,7 +253,7 @@
    </script>
    
 	<script>
-	// 근태 부분 시계 구현
+	// 장서원 / 근태 부분 시계 구현
 		function Clock() {
 		    var date = new Date();
 		    var YYYY = String(date.getFullYear());
@@ -290,6 +290,52 @@
 		setInterval(Clock, 1000); //1초(1000)마다 Clock함수 재실행
 		
 	</script>
+	
+	<!-- 장서원 / 출근 등록 모달 -->
+	<form action="" method="POST">
+		<div class="modal" id="commute-start-modal">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<button type="button" class="modal_close" data-dismiss="modal" style="margin-left: 95%;">&times;</button>
+					</div>
+					<!-- Modal body -->
+					<div class="modal-body" style="text-align:center;">
+					    출근등록 하시겠습니까?
+					</div>
+					<!-- Modal footer -->
+					<div class="modal-footer" style="justify-content:center;">
+						<button type="submit" class="btn btn-jyok" id="commute-start-btn">등록</button>
+						<button type="button" class="btn btn-jycancle" data-dismiss="modal">취소</button>					
+					</div>
+				</div>
+			</div>
+		</div>
+    </form>
+    
+    <!-- 장서원 / 퇴근 등록 모달 -->
+	<form action="" method="POST">
+		<div class="modal" id="commute-end-modal">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<button type="button" class="modal_close" data-dismiss="modal" style="margin-left: 95%;">&times;</button>
+					</div>
+					<!-- Modal body -->
+					<div class="modal-body" style="text-align:center;">
+					    퇴근등록 하시겠습니까?
+					</div>
+					<!-- Modal footer -->
+					<div class="modal-footer" style="justify-content:center;">
+						<button type="submit" class="btn btn-jyok" id="commute-end-btn">등록</button>
+						<button type="button" class="btn btn-jycancle" data-dismiss="modal">취소</button>
+					</div>
+				</div>
+			</div>
+		</div>
+    </form>
    
    
    <jsp:include page="common/footer.jsp"/>
