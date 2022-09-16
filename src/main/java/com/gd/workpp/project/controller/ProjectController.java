@@ -27,19 +27,16 @@ public class ProjectController {
 	@Autowired
 	private ProjectService pService;
 	
-	// 내프로젝트 화면띄우기
-	@RequestMapping("myProject.pr")
-	public String myProjectList() {
-		return "project/myProjectList";
-	}
-	
 	// 내프로젝트 리스트
-	@RequestMapping("myList.pr")
-	public ModelAndView selectList(ModelAndView mv) {
+	@RequestMapping("myProject.pr")
+	public ModelAndView myProjectList(ModelAndView mv) {
 		ArrayList<Project> list = pService.selectList();
-
-		return mv;		
-	}
+		
+		mv.addObject("list", list)
+		  .setViewName("project/myProjectList");
+		
+		return mv;
+	}	
 	
 	// 프로젝트 게시물리스트
 	@ResponseBody

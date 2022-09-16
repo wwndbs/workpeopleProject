@@ -67,111 +67,45 @@
 	              </h5>
 	            </div>
 	            
+                <input type="hidden" name="projectNo" value="${ pb.projectNo }">
+                <input type="hidden" name="no" value="${ p.proBoardNo }">
+                
 	            <!--프로젝트 박스-->
 	            <div class="row">
 	              <!-- 내가 참여한 프로젝트만  -->
-	              <div class="col-md-6 col-lg-3 d-flex">
-	                <div class="color"></div>
-	                <div class="card mb-grid project w-100 box1" onclick="location.href='proList.pr?no=8'">
-	                <input type="hidden" name="projectNo" value="${ pb.projectNo }">
-	                <input type="hidden" name="no" value="${ p.proBoardNo }">
-	                  <div class="card-body d-flex flex-column">                                            
-	                    <div class="d-flex justify-content-between mb-3">
-	                      <h5 class="card-title mb-0">
-	                        <div style="float:right; font-size: 80%; margin: 0px -270px 0px 0px;">
-	                          <label for="">수정</label>
-	                          <label for="">삭제</label>
-	                        </div>
-	                        <br>
-	                        <label class="font1">&nbsp;&nbsp;프로젝트명</label><br>                        
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font3" style="margin: 10px 0px 0px 0px;">&nbsp;&nbsp;기획중</label>
-	                      </h5>
-	                      <i data-feather="user" style="margin: 230px -17px -20px 200px; float: right;"></i>
-	                      <label for="" style="margin: 230px 0px -20px 0px;">23</label>
-	                    </div>
-	                  </div>
-	                </div>
-	              </div>
-	              <div class="col-md-6 col-lg-3 d-flex">
-	                <div class="color2"></div>
-	                <div class="card mb-grid w-100 box1">
-	                  <div class="card-body d-flex flex-column">                                            
-	                    <div class="d-flex justify-content-between mb-3">
-	                      <h5 class="card-title mb-0">
-	                        <div style="float:right; font-size: 80%; margin: 0px -270px 0px 0px;">
-	                          <label for="">수정</label>
-	                          <label for="">삭제</label>
-	                        </div>
-	                        <br>
-	                        <label class="font1">&nbsp;&nbsp;프로젝트명</label><br>                        
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font3" style="margin: 10px 0px 0px 0px;">&nbsp;&nbsp;기획중</label>
-	                      </h5>
-	                      <i data-feather="user" style="margin: 230px -17px -20px 200px; float: right;"></i>
-	                      <label for="" style="margin: 230px 0px -20px 0px;">23</label>
-	                    </div>
-	                  </div>
-	                </div>
-	              </div>
-	              <div class="col-md-6 col-lg-3 d-flex">
-	                <div class="color"></div>
-	                <div class="card mb-grid w-100 box1">
-	                  <div class="card-body d-flex flex-column">                                            
-	                    <div class="d-flex justify-content-between mb-3">
-	                      <h5 class="card-title mb-0">
-	                        <div style="float:right; font-size: 80%; margin: 0px -270px 0px 0px;">
-	                          <label for="">수정</label>
-	                          <label for="">삭제</label>
-	                        </div>
-	                        <br>
-	                        <label class="font1">&nbsp;&nbsp;프로젝트명</label><br>                        
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font3" style="margin: 10px 0px 0px 0px;">&nbsp;&nbsp;기획중</label>
-	                      </h5>
-	                      <i data-feather="user" style="margin: 230px -17px -20px 200px; float: right;"></i>
-	                      <label for="" style="margin: 230px 0px -20px 0px;">23</label>
-	                    </div>
-	                  </div>
-	                </div>
-	              </div>
-	              <div class="col-md-6 col-lg-3 d-flex">
-	                <div class="color"></div>
-	                <div class="card mb-grid w-100 box1">
-	                  <div class="card-body d-flex flex-column">                                            
-	                    <div class="d-flex justify-content-between mb-3">
-	                      <h5 class="card-title mb-0">
-	                        <div style="float:right; font-size: 80%; margin: 0px -270px 0px 0px;">
-	                          <label for="">수정</label>
-	                          <label for="">삭제</label>
-	                        </div>
-	                        <br>
-	                        <label class="font1">&nbsp;&nbsp;프로젝트명</label><br>                        
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font3" style="margin: 10px 0px 0px 0px;">&nbsp;&nbsp;기획중</label>
-	                      </h5>
-	                      <i data-feather="user" style="margin: 230px -17px -20px 200px; float: right;"></i>
-	                      <label for="" style="margin: 230px 0px -20px 0px;">23</label>
-	                    </div>
-	                  </div>
-	                </div>
-	              </div>
+	              <c:choose>
+	              	<c:when test="${ empty list }">
+	              		<span style="margin: 0px 0px 0px 730px"><br><br><br><br><br>현재 팀에서 진행하고 있는 프로젝트가 없습니다.</span>
+	              	</c:when>	
+	              	<c:otherwise>
+		              <div class="col-md-6 col-lg-3 d-flex">
+		                <div class="color"></div>
+		                <div class="card mb-grid project w-100 box1" onclick="location.href='proList.pr?no=8'">
+		                  <div class="card-body d-flex flex-column">                                            
+		                    <div class="d-flex justify-content-between mb-3">
+		                      <h5 class="card-title mb-0">
+		                        <div style="float:right; font-size: 80%; margin: 0px -270px 0px 0px;">
+		                          <label for="">수정</label>
+		                          <label for="">삭제</label>
+		                        </div>
+		                        <br>
+		                        <label class="font1">&nbsp;&nbsp;프로젝트명</label><br>                        
+		                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
+		                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
+		                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
+		                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
+		                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
+		                        <label class="font3" style="margin: 10px 0px 0px 0px;">&nbsp;&nbsp;기획중</label>
+		                      </h5>
+		                      <i data-feather="user" style="margin: 230px -17px -20px 200px; float: right;"></i>
+		                      <label for="" style="margin: 230px 0px -20px 0px;">23</label>
+		                    </div>
+		                  </div>
+		                </div>
+		              </div>
+		            </c:otherwise>
+	              </c:choose>
+	              	              
 	            </div>
 	
 	            <hr>
