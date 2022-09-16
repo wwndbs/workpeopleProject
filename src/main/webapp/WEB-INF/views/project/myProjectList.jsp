@@ -5,6 +5,9 @@
 <html>
 <head>
 	<title>워크피플</title>
+	<!-- favicon 설정 -->
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="resources/images/favicon.ico" type="image/x-icon">
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">	
     <style>
