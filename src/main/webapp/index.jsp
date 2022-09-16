@@ -72,6 +72,9 @@
     }
     
     </style>
+<!-- favicon 설정 -->
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" href="resources/images/favicon.ico" type="image/x-icon">
 </head>
 <body>
 
