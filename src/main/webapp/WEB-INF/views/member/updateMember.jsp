@@ -53,7 +53,7 @@
                             <br>
                             <!--프로필 부분-->
                             <div class="profile-alert-wrapper">
-                                <div class="profile-area">
+                                <div class="sanprofile-area">
                                 <img id="profileImg" src="<c:out value='${loginUser.profImg}' default='resources/profile_images/defaultProfile.jpg' />" onclick="$('#profileImgFile').click();">
                 				<input type="file" id="profileImgFile" style="display:none;"><br>                                
                                 <span id="profile-name"></span><br>

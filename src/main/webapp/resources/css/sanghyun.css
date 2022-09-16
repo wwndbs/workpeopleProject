@@ -113,10 +113,13 @@ height: 100%;
 #tel_2>ul>li{float:left; height:50px; line-height: 55px; text-align:center;}
 #tel_2>ul>li a{text-decoration: none; color:black; font-size: 18px; font-weight: 900;}
 #telsearchForm{text-decoration: none; color:black; font-size: 18px; font-weight: 900; padding:20px;}
+#telsearchForm>div{
+	display:inline-block;
+}
 .tel_area2 div{
-	float: right;
+	float:left;
     width:450px;
-    height: 200px;
+    height:200px;
     padding: 10px;
 }
 .tel_area2{
@@ -146,7 +149,7 @@ height: 100%;
 
 #memTable>tbody>tr:hover{cursor:pointer;}
 
-.profile-area{
+.sanprofile-area{
 	padding:50px;
 	margin: 50px;
 }

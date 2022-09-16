@@ -28,7 +28,7 @@
 		
 		<div class="adminx-content">
 	        <div class="adminx-main-content">
-	            <div class="container-fluid" style="width:1500px">
+	            <div class="container-fluid" style="width:2000px">
 	
 	                <!--메인페이지 컨텐츠-->
 	                <div class="top-wrapper">
@@ -47,10 +47,14 @@
 		                        </ul>
 		                    </form>
 		                    <hr>
-		                    <form id="telsearchForm">
-		                        <i class="fa-regular fa-s"></i>
-		                        <input type="text" placeholder="이름검색">
-		                    </form>
+		                    <form id="telsearchForm" action="" method="Get">
+				                <div class="telsearchdiv">
+				                    <input style="height:42px;" type="text" class="telsearchForm" name="keyword" placeholder="이름검색">
+				                </div>
+				                <div>
+				                	<button type="submit" class="searchBtn btn btn-secondary">검색</button>
+				                </div>
+				            </form>
 							<br>
 							
 		                    <div class="tel_area2">
@@ -62,17 +66,16 @@
 			                		<c:otherwise>
 			                			<c:forEach var="m" items="${ list }">
 			                				<div>
-							                    <table border="1">
+							                    <table style="border: 1px solid #444444;">
 						                            <tr style="height:50px">
-						                                <td rowspan="3" style="width:100px">
-						                                    <img alt="image" class="img-fluid rounded" src="${m.profImg}">
+						                                <td rowspan="3" style="width:130px">
+						                                	<img style="width:115px;"id="profileImg" src="<c:out value='${loginUser.profImg}' default='resources/profile_images/defaultProfile.jpg' />">
 						                                </td>
-						
 						                                <td colspan="2" style="width:300px">
 						                                    <h4>${m.userName }</h4>
 						                                </td>
 						                            </tr>
-						                            <tr style="height:50px">
+						                            <tr style="height:30px">
 						                                <td colspan="2">${m.email}</td>
 						                            </tr>
 						
@@ -87,7 +90,6 @@
 								</c:choose>
 							
 		                    </div>
-							<br>
 		                    <div id="pagingArea">
 				                <ul class="pagination">
 				                	
@@ -114,7 +116,7 @@
 				                    </c:choose>
 				                </ul>
 				            </div>
-							
+							<br><br>
 		                </div>
 		            </div>
 		        </div>

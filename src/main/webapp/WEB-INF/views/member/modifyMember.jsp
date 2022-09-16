@@ -48,8 +48,8 @@
                             <br>
                             <!--프로필 부분-->
                             <div class="profile-alert-wrapper">
-                                <div class="profile-area">
-                                <img src="${ m.profImg }" alt="프로필이미지" id="profileImg" ><br>
+                                <div class="sanprofile-area">
+                                <img id="profileImg" src="<c:out value='${loginUser.profImg}' default='resources/profile_images/defaultProfile.jpg' />"><br>
                                 <span id="profile-name"></span><br>
                                 <span id="department-name"></span>
                                 </div>

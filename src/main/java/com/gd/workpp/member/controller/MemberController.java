@@ -45,7 +45,7 @@ public class MemberController {
 		
 		int listCount = mService.telListCount();
 		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 9);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 12);
 		ArrayList<Member> list = mService.telList(pi);
 		
 
