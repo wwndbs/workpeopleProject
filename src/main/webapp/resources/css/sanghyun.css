@@ -113,11 +113,14 @@ height: 100%;
 #tel_2>ul>li{float:left; height:50px; line-height: 55px; text-align:center;}
 #tel_2>ul>li a{text-decoration: none; color:black; font-size: 18px; font-weight: 900;}
 #telsearchForm{text-decoration: none; color:black; font-size: 18px; font-weight: 900; padding:20px;}
-.tel_area div{
-    float:left;
+.tel_area2 div{
+	float: right;
     width:450px;
     height: 200px;
-    padding: 20px;
+    padding: 10px;
+}
+.tel_area2{
+	height:620px;
 }
 .tel_area h1{
     padding: 20px;

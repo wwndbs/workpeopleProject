@@ -50,39 +50,41 @@
 		                    </form>
 							<br>
 							
-		                    <div>
+		                    <div class="tel_area2">
 		                        
-	                        <c:choose>
-		                		<c:when test="${ empty list }">
-	                				<h1>조회된 데이터가 없습니다.<h1>
-		                		</c:when>
-		                		<c:otherwise>
-		                			<c:forEach var="m" items="${ list }">
-					                    <table border="1">
-				                            <tr style="height:50px">
-				                                <td rowspan="3" style="width:100px">
-				                                    <img alt="image" class="img-fluid rounded" src="${m.profImg}">
-				                                </td>
-				
-				                                <td colspan="2" style="width:300px">
-				                                    <h4>${m.userName }</h4>
-				                                </td>
-				                            </tr>
-				                            <tr style="height:50px">
-				                                <td colspan="2">${m.email}</td>
-				                            </tr>
-				
-				                            <tr style="height:40px">
-				                                <td style="width:100px">${m.depName }/${m.jobName }</td>
-				                                <td style="width:200px">${m.phone}</td>
-				                            </tr>
-				                        </table>
-		                    		</c:forEach>
-		                    	</c:otherwise>
-							</c:choose>
+		                        <c:choose>
+			                		<c:when test="${ empty list }">
+		                				<h1>조회된 데이터가 없습니다.<h1>
+			                		</c:when>
+			                		<c:otherwise>
+			                			<c:forEach var="m" items="${ list }">
+			                				<div>
+							                    <table border="1">
+						                            <tr style="height:50px">
+						                                <td rowspan="3" style="width:100px">
+						                                    <img alt="image" class="img-fluid rounded" src="${m.profImg}">
+						                                </td>
+						
+						                                <td colspan="2" style="width:300px">
+						                                    <h4>${m.userName }</h4>
+						                                </td>
+						                            </tr>
+						                            <tr style="height:50px">
+						                                <td colspan="2">${m.email}</td>
+						                            </tr>
+						
+						                            <tr style="height:40px">
+						                                <td style="width:100px">${m.depName }/${m.jobName }</td>
+						                                <td style="width:200px">${m.phone}</td>
+						                            </tr>
+						                        </table>
+					                        </div>
+			                    		</c:forEach>
+			                    	</c:otherwise>
+								</c:choose>
 							
 		                    </div>
-
+							<br>
 		                    <div id="pagingArea">
 				                <ul class="pagination">
 				                	
