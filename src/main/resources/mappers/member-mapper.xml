@@ -150,6 +150,28 @@
 		set status = 'Y'
 		where user_no=#{userNo}
 	</update>
+	
+	<select id="telListCount" resultType="_int">
+			select 
+				   count(*)
+			  from member
+			 where status = 'N'
+	</select>
+		
+	<select id="telList" resultMap="memberResult">
+			select
+				   user_no
+				 , user_name
+				 , email
+				 , dep_name
+				 , job_name
+				 , prof_img
+				 , phone
+			  from member
+			 where status = 'N'
+			 order 
+			    by user_no desc
+	</select>
 
 	
 </mapper>	  

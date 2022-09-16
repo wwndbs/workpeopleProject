@@ -35,5 +35,9 @@ public interface MemberService {
 	// 사원정보 삭제 서비스
 	int deleteMember(int userNo);
 	
+	// 주소록 리스트 페이지 서비스 (페이징)
+	int telListCount();
+	ArrayList<Member> telList(PageInfo pi);
+	
 	
 }

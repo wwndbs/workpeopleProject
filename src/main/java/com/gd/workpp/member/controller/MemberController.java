@@ -39,6 +39,24 @@ public class MemberController {
 		return mv;
 	}
 	
+	
+	@RequestMapping("tel.me")
+	public ModelAndView tel(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv) {
+		
+		int listCount = mService.telListCount();
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 9);
+		ArrayList<Member> list = mService.telList(pi);
+		
+
+		mv.addObject("pi", pi)
+		  .addObject("list", list)
+		  .setViewName("member/telListView");
+		
+		return mv;
+	}
+	
+	
 	@RequestMapping("modifyList.me")
 	public ModelAndView modifyList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv) {
 		

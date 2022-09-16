@@ -80,6 +80,18 @@ public class MebmerServiceImpl implements MemberService{
 		return mDao.deleteMember(sqlSession,userNo);
 	}
 
+
+	@Override
+	public int telListCount() {
+		return mDao.telListCount(sqlSession);
+	}
+
+
+	@Override
+	public ArrayList<Member> telList(PageInfo pi) {
+		return mDao.telList(sqlSession, pi);
+	}
+
 	
 
 

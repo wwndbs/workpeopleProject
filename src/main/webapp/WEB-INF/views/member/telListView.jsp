@@ -52,75 +52,63 @@
 							
 		                    <div>
 		                        
-		                        <table border="1">
-		                            <tr style="height:50px">
-		                                <td rowspan="3" style="width:100px">
-		                                    <img alt="image" class="img-fluid rounded" src="./imgs/people/7.jpg">
-		                                </td>
-		
-		                                <td colspan="2" style="width:300px">
-		                                    <h4>사원명</h4>
-		                                </td>
-		                            </tr>
-		                            <tr style="height:50px">
-		                                <td colspan="2">사내이메일</td>
-		                            </tr>
-		
-		                            <tr style="height:40px">
-		                                <td style="width:100px">부서/직책</td>
-		                                <td style="width:200px">개인번호</td>
-		                            </tr>
-		                        </table>
-		
+	                        <c:choose>
+		                		<c:when test="${ empty list }">
+	                				<h1>조회된 데이터가 없습니다.<h1>
+		                		</c:when>
+		                		<c:otherwise>
+		                			<c:forEach var="m" items="${ list }">
+					                    <table border="1">
+				                            <tr style="height:50px">
+				                                <td rowspan="3" style="width:100px">
+				                                    <img alt="image" class="img-fluid rounded" src="${m.profImg}">
+				                                </td>
+				
+				                                <td colspan="2" style="width:300px">
+				                                    <h4>${m.userName }</h4>
+				                                </td>
+				                            </tr>
+				                            <tr style="height:50px">
+				                                <td colspan="2">${m.email}</td>
+				                            </tr>
+				
+				                            <tr style="height:40px">
+				                                <td style="width:100px">${m.depName }/${m.jobName }</td>
+				                                <td style="width:200px">${m.phone}</td>
+				                            </tr>
+				                        </table>
+		                    		</c:forEach>
+		                    	</c:otherwise>
+							</c:choose>
+							
 		                    </div>
-		                    
-		                    <div>
-		                        
-		                        <table border="1">
-		                            <tr style="height:50px">
-		                                <td rowspan="3" style="width:100px">
-		                                    <img alt="image" class="img-fluid rounded" src="./imgs/people/7.jpg">
-		                                </td>
-		
-		                                <td colspan="2" style="width:300px">
-		                                    <h4>사원명</h4>
-		                                </td>
-		                            </tr>
-		                            <tr style="height:50px">
-		                                <td colspan="2">사내이메일</td>
-		                            </tr>
-		
-		                            <tr style="height:40px">
-		                                <td style="width:100px">부서/직책</td>
-		                                <td style="width:200px">개인번호</td>
-		                            </tr>
-		                        </table>
-		                        
-		                    </div>
-		
-		                    <div>
-		                        
-		                        <table border="1">
-		                            <tr style="height:50px">
-		                                <td rowspan="3" style="width:100px">
-		                                    <img alt="image" class="img-fluid rounded" src="./imgs/people/7.jpg">
-		                                </td>
-		
-		                                <td colspan="2" style="width:300px">
-		                                    <h4>사원명</h4>
-		                                </td>
-		                            </tr>
-		                            <tr style="height:50px">
-		                                <td colspan="2">사내이메일</td>
-		                            </tr>
-		
-		                            <tr style="height:40px">
-		                                <td style="width:100px">부서/직책</td>
-		                                <td style="width:200px">개인번호</td>
-		                            </tr>
-		                        </table>
-		                        
-		                    </div>
+
+		                    <div id="pagingArea">
+				                <ul class="pagination">
+				                	
+				                	<c:choose>
+				                		<c:when test="${ pi.currentPage eq 1 }">
+				                    		<li class="page-item disabled"><a class="page-link">Previous</a></li>
+				                    	</c:when>
+				                    	<c:otherwise>
+				                    		<li class="page-item"><a class="page-link" href="tel.me?cpage=${ pi.currentPage-1 }">Previous</a></li>
+				                    	</c:otherwise>
+				                    </c:choose>
+				                    
+				                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+				                    	<li class="page-item"><a class="page-link" href="tel.me?cpage=${ p }">${ p }</a></li>
+				                    </c:forEach>
+				                    
+				                    <c:choose>
+				                    	<c:when test="${ pi.currentPage eq pi.maxPage }">
+				                    		<li class="page-item disabled"><a class="page-link">Next</a></li>
+				                    	</c:when>
+				                    	<c:otherwise>
+				                    		<li class="page-item"><a class="page-link" href="modifyList.me?cpage=${ pi.currentPage+1 }">Next</a></li>
+				                    	</c:otherwise>
+				                    </c:choose>
+				                </ul>
+				            </div>
 							
 		                </div>
 		            </div>

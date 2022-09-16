@@ -57,5 +57,17 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.deleteMember",userNo);
 	}
 	
+	public int telListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("memberMapper.telListCount");
+	}
+	
+	public ArrayList<Member> telList(SqlSessionTemplate sqlSession, PageInfo pi){
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.telList", null, rowBounds);
+	}
 	
 }
