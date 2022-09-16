@@ -80,6 +80,11 @@ public class ProjectServiceImpl implements ProjectService {
 		return pDao.updateProBoard(sqlSession, pb);
 	}
 
+	@Override
+	public int deleteProBoard(int proBoardNo) {
+		return pDao.deleteProBoard(sqlSession, proBoardNo);
+	}
+
 }
 
 

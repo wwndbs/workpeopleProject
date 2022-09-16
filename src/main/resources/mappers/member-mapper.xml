@@ -94,6 +94,84 @@
 	  			,sysdate
 	  		)
   </insert>
+  
+  <select id="modifyListCount" resultType="_int">
+		select 
+			   count(*)
+		  from member
+		 where status = 'N'
+  </select>
 	
+  <select id="modifyList" resultMap="memberResult">
+		select
+			   user_no
+			 , user_name
+			 , dep_name
+			 , job_name
+			 , create_date
+			 , status
+		  from member
+		 where status = 'N'
+		 order 
+		    by user_no desc
+  </select>
+
+  <select id="selectmodifyMember" resultMap="memberResult">
+		select
+				 user_no
+				,email
+				,user_name
+				,phone
+				,user_email
+				,birthday
+				,create_date
+				,prof_img
+				,dep_name
+				,job_name
+			from Member
+			where user_no =#{userNo}
+	</select>
+	
+	<update id="modifyMember">
+		update
+				Member
+			set  user_name = #{userName}
+				,phone=#{phone}
+				,user_email=#{userEmail}
+				,birthday=#{birthday}
+				,dep_name=#{depName}
+				,job_name=#{jobName}
+			where user_no = #{userNo}
+	</update>
+	
+	<update id="deleteMember">
+		update
+			member
+		set status = 'Y'
+		where user_no=#{userNo}
+	</update>
+	
+	<select id="telListCount" resultType="_int">
+			select 
+				   count(*)
+			  from member
+			 where status = 'N'
+	</select>
+		
+	<select id="telList" resultMap="memberResult">
+			select
+				   user_no
+				 , user_name
+				 , email
+				 , dep_name
+				 , job_name
+				 , prof_img
+				 , phone
+			  from member
+			 where status = 'N'
+			 order 
+			    by user_no desc
+	</select>
+
 	
 </mapper>	  

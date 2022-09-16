@@ -28,4 +28,7 @@ public interface ApprovalService {
 	
 	// 임시저장문서 조회
 	ArrayList<Document> selectSaveList(PageInfo pi, String userNo);
+	
+	// 임시저장문서 삭제
+	int deleteSaveList(String[] noArr);
 }

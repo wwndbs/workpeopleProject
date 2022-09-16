@@ -5,6 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>워크피플</title>
+<!-- favicon 설정 -->
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" href="resources/images/favicon.ico" type="image/x-icon">
 <!-- 
 	author : 박상현
 	
@@ -33,7 +36,7 @@
             <div class="container-fluid">
 
                 <!--메인페이지 컨텐츠-->
-                <div class="top-wrapper">
+                <div class="top-wrapper" id="san-wrapper">
 
                     <!--게시판 부분-->
                     <div id="upm-area" class="upm-area">
@@ -46,7 +49,7 @@
                             <!--프로필 부분-->
                             <div class="profile-alert-wrapper">
                                 <div class="profile-area">
-                                <img src="resources/profile_images/defaultProfile.jpg" alt="프로필이미지" id="profileImg" ><br>
+                                <img src="${ m.profImg }" alt="프로필이미지" id="profileImg" ><br>
                                 <span id="profile-name"></span><br>
                                 <span id="department-name"></span>
                                 </div>
@@ -54,31 +57,31 @@
                         </div>
                         <div id="upm2">
                             
-                            <form id="upmForm" method="post" action="" enctype="multipart/form-data">
+                            <form id="upmForm" method="post" action="modifyMember.me" enctype="multipart/form-data">
                                 <table id="upmTable" align="center">
 
                                     <tr>
-                                        <td style="font-weight:800;">사내이메일</td>
+                                        <td style="font-weight:800; height:50px;">사내이메일</td>
                                     </tr>
 
                                     <tr>
-                                        <td colspan="2" align="center"><input type="text" id="" class="form-control" name="" style="height:30px;" placeholder="사내이메일" required readonly></td>
+                                        <td colspan="2" align="center"><input type="text" id="email" class="form-control" name="email" style="height:40px;" placeholder="${m.email }" required readonly></td>
                                     </tr>
 
                                     <tr>
-                                        <td style="font-weight:800;">이름</td>
+                                        <td style="font-weight:800; height:50px;">이름</td>
                                     </tr>
 
                                     <tr>
-                                        <td colspan="2" align="center"><input type="text" id="" class="form-control" name="" style="height:30px;" placeholder="사원명" required></td>
+                                        <td colspan="2" align="center"><input type="text" id="userName" class="form-control" name="userName" style="height:40px;" value="${m.userName }"></td>
                                     </tr>
 
                                     <tr>
-                                        <td style="font-weight:800;">휴대폰</td>
+                                        <td style="font-weight:800; height:50px;">휴대폰 (010-0000-0000)</td>
                                     </tr>
 
                                     <tr>
-                                        <td colspan="2" align="center"><input type="text" id="" class="form-control" name="" style="height:30px;" placeholder="010-0000-0000" required></td>
+                                        <td colspan="2" align="center"><input type="text" id="phone" class="form-control" name="phone" style="height:40px;" placeholder="${m.phone }" ></td>
                                     </tr>
                                     
                                     <tr>
@@ -86,38 +89,66 @@
                                     </tr>
 
                                     <tr>
-                                        <td colspan="2" align="center"><input type="text" id="" class="form-control" name="" style="height:30px;" placeholder="이메일" required></td>
+                                        <td colspan="2" align="center"><input type="text" id="userEmail" class="form-control" name="userEmail" style="height:40px;" placeholder="${m.userEmail }" ></td>
                                     </tr>
                                     
                                     <tr>
-                                        <td style="font-weight:800;">생년월일</td>
+                                        <td style="font-weight:800; height:50px;">생년월일 (YY-MM-DD)</td>
                                     </tr>
 
                                     <tr>
-                                        <td align="center"><input type="text" id="" class="form-control" name="" style="height:30px;" placeholder="생년월일" required></td>
+                                        <td colspan="2" align="center"><input type="text" id="birthday" class="form-control" name="birthday" style="height:40px;" placeholder="${m.birthday }" ></td>
                                     </tr>
                                     
                                     <tr>
-                                        <td style="font-weight:800;">사원번호</td>
+                                        <td style="font-weight:800; height:50px;">부서/직책</td>
+                                    </tr>
+
+									<tr>
+                                        <td>
+                                            <select id="depName" class="form-control" name="depName" style="height:40px; width:100%" required>
+                                                <option value="${m.depName}">${m.depName}</option>
+                                                <option value="인사팀">인사팀</option>
+                                                <option value="총무팀">총무팀</option>
+                                                <option value="영업팀">영업팀</option>
+                                                <option value="회계팀">회계팀</option>
+                                                <option value="개발팀">개발팀</option>
+                                            </select>
+                                        </td>
+                                        
+                                        <td>
+                                            <select id="jobName" class="form-control" name="jobName" style="height:40px; width:100%" required>
+                                                <option value="${m.jobName}">${m.jobName}</option>
+                                                <option value="사원">사원</option>
+                                                <option value="대리">대리</option>
+                                                <option value="과장">과장</option>
+                                                <option value="팀장">팀장</option>
+                                                <option value="부장">부장</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+
+									<tr>
+                                        <td style="font-weight:800; height:50px;">사원번호</td>
                                     </tr>
 
                                     <tr>
-                                        <td colspan="2" align="center"><input type="text" id="" class="form-control" name="" style="height:30px;" placeholder="사원번호" required readonly></td>
+                                        <td colspan="2" align="center"><input type="text" id="userNo" class="form-control" name="userNo" style="height:40px;" value="${m.userNo }" required readonly></td>
                                     </tr>
                                     
                                     <tr>
-                                        <td style="font-weight:800;">입사일</td>
+                                        <td style="font-weight:800; height:50px;">입사일</td>
                                     </tr>
 
                                     <tr>
-                                        <td colspan="2" align="center"><input type="text" id="" class="form-control" name="" style="height:30px;" placeholder="YYYY-MM-DD" required readonly></td>
+                                        <td colspan="2" align="center"><input type="text" id="createDate" class="form-control" name="createDate" style="height:40px;" placeholder="${m.createDate }" required readonly></td>
                                     </tr>
                                 </table>
                                 <br>
                                 <div align="center">
-                                    <button type="" id="loginbtn">삭제하기</button>
-                                    <button type="submit" id="loginbtn" >저장하기</button>
-                                    <button type="reset" id="loginbtn" >취소하기</button>
+                                    <a style="color:white;" class="btn btn-secondary" href="delete.me?no=${m.userNo}">삭제하기</a>
+                                    <button type="submit" class="btn btn-secondary">수정하기</button>
+                                    <button type="reset"class="btn btn-secondary" >취소하기</button>
                                 </div>
                             </form>
                         </div>

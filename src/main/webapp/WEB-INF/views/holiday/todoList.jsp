@@ -6,6 +6,9 @@
 <meta charset="UTF-8">
 
 <title>Insert title here</title>
+<!-- favicon 설정 -->
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" href="resources/images/favicon.ico" type="image/x-icon">
 </head>
 <body>
 	<div class="adminx-container">
@@ -118,15 +121,15 @@
 			});
 
 			// 리스트 드래그
-			$(".todo-list>ul>li").draggable({
-				start : function() {
+ 			$(".todo-list>ul>li").draggable({
+/* 				start : function() {
 					console.log("start");
-				},
+				}, */
 				connectToSortable : ".todo-list>ul",
 				scroll : false,
-				helper : "clone",
 				revert : "invalid"
 			});
+			
 
 			// 텍스트 선택 불가능
 			$(".todo-list>ul, .todo-list>ul>li").disableSelection();
@@ -140,6 +143,18 @@
 			$("#run").droppable({
 				drop : function() {
 					console.log("run-end");
+					$.ajax({
+						url : "",
+						data : {
+							
+						},
+						success : function(){
+							
+						},
+						error : function(){
+							// TODO Gson말고 Json사용법 질문 후 적용하기
+						}
+					})
 				}
 			})
 			$("#success").droppable({

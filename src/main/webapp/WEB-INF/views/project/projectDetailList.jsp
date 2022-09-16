@@ -6,6 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- favicon 설정 -->
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" href="resources/images/favicon.ico" type="image/x-icon">
 <style>
   .div1{
     width: 98%;
@@ -50,8 +53,7 @@
 	            <div class="pb-3" style="margin: -11px 0px 0px 0px">
 	              <h5 style="font-weight: 400">
 	              	<b>프로젝트명</b>
-	              		<input type="hidden" name="projectNo" value="${ pb.projectNo }">
-				        <input type="hidden" name="boardWriterNo" value="111"> <!-- ${ pb.boardWriterNo } -->	
+	              		<input type="hidden" name="projectNo" value="${ no }">
 	              		<button type="submit" class="btn btn-primary btn1" id="insert" style="width: 7%; height: 40px;">게시물 등록</button>
 	              </h5>	              	
 	            </div>
@@ -120,7 +122,6 @@
 	                      <th>우선순위</th>
 	                      <th>제목</th>
 	                      <th>담당자</th>
-	                      <th>빨리좀나와라</th>
 	                      <th>작성일</th>
 	                      <th>수정일</th>
 	                      <th>마감기한</th>
@@ -147,18 +148,17 @@
 			                      <c:if test="${ pb.proBoardStatus == 2}">
 			                      	<td><div class="btn btn-sm btn-primary btn2">완료</div></td>
 			                      </c:if>
-			                      <c:if test="${ pb.proBoardLevel == 1}">
+			                      <c:if test="${ pb.proBoardLevel == 6}">
 				                      <td>낮음</td>		                      
 			                      </c:if>
-			                      <c:if test="${ pb.proBoardLevel == 2}">
+			                      <c:if test="${ pb.proBoardLevel == 5}">
 				                      <td>보통</td>		                      
 			                      </c:if>
-			                      <c:if test="${ pb.proBoardLevel == 3}">
+			                      <c:if test="${ pb.proBoardLevel == 4}">
 				                      <td>높음</td>		                      
 			                      </c:if>
 			                      <td>${ pb.proTitle }</td>
 			                      <td>${ pb.pbUserName }${ pb.pbJobName }</td>
-			                      <td>${ pb.userNo }</td>
 			                      <td>${ pb.createDate }</td>
 			                      <td>${ pb.modifyDate }</td>
 			                      <td>${ pb.startDate } ~ ${ pb.endDate }</td>

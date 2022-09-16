@@ -189,7 +189,7 @@
 					</li>
 
 					<li class="sidebar-nav-item">
-						<a href="./layouts/signup.html" class="sidebar-nav-link">
+						<a href="tel.me" class="sidebar-nav-link">
 							<span class="sidebar-nav-abbr"> Vi </span> <span class="sidebar-nav-name"> 주소록 조회 </span>
 						</a>
 					</li>
