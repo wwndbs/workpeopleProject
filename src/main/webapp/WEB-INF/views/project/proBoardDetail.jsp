@@ -84,10 +84,10 @@
 	                    <!-- 수정|삭제|목록가기 -->
 	                    <div class="ssm">
 	                    
-	                      <%-- <c:if test="${ loginUser.userNo eq pb.boardWriterNo }"> --%>                    	                    
+	                      <c:if test="${ loginUser.userNo eq pb.boardWriterNo }">                   	                    
 		                    <span type="button" data-toggle="modal" data-target="#modify" data-backdrop="static" class="modify1" style="margin: 0px 0px 0px 0px;">수정</span>&nbsp;
 		                    <span type="button" data-toggle="modal" data-target="#delete" data-backdrop="static" class="delete1" style="margin: 0px 0px 0px 0px;">삭제</span>&nbsp;&nbsp;
-	                      <%-- </c:if> --%>
+	                      </c:if>
 	                                     
 	                      <button type="button" onclick="location.href='proList.pr?no=8'" class="btn btn-sm btn-secondary btn2">목록으로</button>
 	                    </div>
@@ -95,7 +95,7 @@
 	                  <hr width="850px" style="margin: 13px 10px 0px 10px">
 	                  
 			        <!-- 게시물 수정 모달 -->
-			        <form action="" method="POST">
+			        <form action="" method="post">
 				       <div class="modal" id="modify">
 				           <div class="modal-dialog modal-dialog-centered">
 				               <div class="modal-content">
@@ -110,22 +110,16 @@
 				                  </div>
 				                  <!-- Modal footer -->
 				                  <div class="modal-footer" style="justify-content:center;">
-					                <button type="button" class="btn btn-jyok" id="holiday-give-btn" onclick="location.href='modifyBoard.pr?no=${no}'">수정</button>	                
+					                <button class="btn btn-jyok" id="holiday-give-btn" onclick="location.href='modifyBoard.pr?no=${no}'">수정</button>	                
 					                <button type="button" class="btn btn-jycancle" data-dismiss="modal">취소</button>
 				                  </div>
 				              </div>
 				           </div>
 				        </div>
 				        <form id="postForm" action="" method="post">
-				        	<input type="hidden" name="no" value="${ pb.proBoardNo }">
 				        	<input type="hidden" name="attachModify" value="${ pb.attachModify }">
 				        </form>
-			        </form>			        			        
-			        <script>
-			        	function postFormSubmit(url){
-			        		$("#postForm").attr("action", url).submit();
-			        	}
-			        </script>       
+			        </form>	   
 
 			        <!-- 게시물 삭제 모달 -->
 			        <form action="" method="POST">
@@ -143,15 +137,19 @@
 				                  </div>
 				                  <!-- Modal footer -->
 				                  <div class="modal-footer" style="justify-content:center;">
-					                <button type="submit" class="btn btn-jyok" id="holiday-give-btn">지급</button>	                
+					                <button type="button" class="btn btn-jyok" id="holiday-give-btn" onclick="location.href='deleteBoard.pr?no=${no}'">삭제</button>	                
 					                <button type="button" class="btn btn-jycancle" data-dismiss="modal">취소</button>
 				                  </div>
 				              </div>
 				           </div>
 				        </div>
-			        </form>	                  
-	                  
-                      <input type="hidden" name="no" value="${ pb.proBoardNo }">	                  	
+			        </form>	   		        			        
+			        <script>
+			        	function postFormSubmit(url){
+			        		$("#postForm").attr("action", url).submit();
+			        	}
+			        </script>                   
+	                  	                  	
 	                  <!-- 게시글 간략정보 -->
 	                  <div class="demo-icon-display">
 	                    <!-- 진행|완료|보류 -->
