@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,6 +25,7 @@
       .font1{
         font-weight: bold;
         font-size: 90%;
+        width:200%
       }
       .font2{font-size: 75%;}
       .font3{font-size: 90%; font-weight: bold; color:rgb(244, 217, 14)}
@@ -70,7 +72,7 @@
 	              </h5>
 	            </div>
 	            
-                <input type="hidden" name="projectNo" value="${ pb.projectNo }">
+                <input type="hidden" name="projectNo" value="11111"> <%-- ${ pb.projectNo } --%>
                 <input type="hidden" name="no" value="${ p.proBoardNo }">
                 
 	            <!--프로젝트 박스-->
@@ -81,31 +83,34 @@
 	              		<span style="margin: 0px 0px 0px 730px"><br><br><br><br><br>현재 팀에서 진행하고 있는 프로젝트가 없습니다.</span>
 	              	</c:when>	
 	              	<c:otherwise>
-		              <div class="col-md-6 col-lg-3 d-flex">
-		                <div class="color"></div>
-		                <div class="card mb-grid project w-100 box1" onclick="location.href='proList.pr?no=8'">
-		                  <div class="card-body d-flex flex-column">                                            
-		                    <div class="d-flex justify-content-between mb-3">
-		                      <h5 class="card-title mb-0">
-		                        <div style="float:right; font-size: 80%; margin: 0px -270px 0px 0px;">
-		                          <label for="">수정</label>
-		                          <label for="">삭제</label>
-		                        </div>
-		                        <br>
-		                        <label class="font1">&nbsp;&nbsp;프로젝트명</label><br>                        
-		                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-		                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-		                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-		                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-		                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-		                        <label class="font3" style="margin: 10px 0px 0px 0px;">&nbsp;&nbsp;기획중</label>
-		                      </h5>
-		                      <i data-feather="user" style="margin: 230px -17px -20px 200px; float: right;"></i>
-		                      <label for="" style="margin: 230px 0px -20px 0px;">23</label>
-		                    </div>
-		                  </div>
-		                </div>
-		              </div>
+                   	<c:set var="depName" value="${ p.depName }"/>    	
+	                  <c:forEach var="pp" items="${ list }">	              
+	                  	<!-- <c:if test="${ loginUser.depName eq pp.depName }"> 이거없애야됨 -->
+	                  	
+			              <div class="col-md-6 col-lg-3 d-flex">
+			                <div class="color"></div>
+			                <div class="card mb-grid project w-100 box1" onclick="location.href='proList.pr?no=8'">
+			                  <div class="card-body d-flex flex-column">                                            
+			                    <div class="d-flex justify-content-between mb-3">
+			                      <h5 class="card-title mb-0">
+			                        <div style="float:right; font-size: 80%; margin: 0px -250px 0px 0px;">
+			                          <label for="">수정</label>
+			                          <label for="">삭제</label>
+			                        </div>
+			                        <br>
+			                        <label class="font1">&nbsp;&nbsp;${ pp.projectTitle }</label><br>                    
+									<label class="font2">&nbsp;&nbsp;${ pp.depName }</label><br>
+			                        <label class="font3" style="vertical-align: bottom;">&nbsp;&nbsp;${ pp.category }</label>
+			                      </h5>
+			                      <i data-feather="user" style="margin: 230px -17px -20px 200px; float: right;"></i>
+			                      <label for="" style="margin: 230px 0px -20px 21px;">23</label>
+			                    </div>
+			                  </div>
+			                </div>
+			              </div>
+			              
+			              
+		              </c:forEach>
 		            </c:otherwise>
 	              </c:choose>
 	              	              

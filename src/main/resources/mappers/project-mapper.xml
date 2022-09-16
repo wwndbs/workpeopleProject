@@ -4,7 +4,7 @@
 	
 	<resultMap id="projectResult" type="Project">
 		<result column="project_no" property="projectNo"/>
-		<result column="user_no" property="proAdminNo"/>
+		<result column="proAdminNo" property="proAdminNo"/>
 		<result column="project_title" property="projectTitle"/>
 		<result column="project_content" property="projectContent"/>
 		<result column="status" property="status"/>
@@ -67,20 +67,25 @@
           join pro_member pm on (p.project_no = pm.project_no)
           join pro_board pb on (p.project_no = pb.project_no)
          where pm.user_no = #{userNo}
-           and p.dep_name like '%${depName}%'
-            -->
-		select
+           and p.dep_name like '%${depName}%' -->            
+        select
                p.project_no
 		     , p.project_title
-             , pb.user_no as "boardWriterNo"
+             , p.user_no as "proAdminNo"
 		     , p.category
              , p.dep_name
-		  from project p
-          join pro_member pm on (p.project_no = pm.project_no)
-          join pro_board pb on (p.project_no = pb.project_no)          
-         where pb.user_no = #{userNo}
-           and p.dep_name like '%${depName}%'          
+  		  from project p             
+         where p.dep_name like '%'||#{depName}||'%'        
 	</select>
+	
+	<!-- 내팀 프로젝트 부서만 조회 
+	<select id="selectMyProList">
+        select
+               project_no
+             , dep_name
+          from project
+         where dep_name like '%#{depName}%'
+	</select> -->
 	
 	<!-- 프로젝트게시물리스트 페이징처리 -->
 	<select id="selectListCount" resultType="_int">

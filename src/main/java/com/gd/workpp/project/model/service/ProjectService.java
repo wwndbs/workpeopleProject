@@ -11,6 +11,7 @@ public interface ProjectService {
 	
 	// 1. 내 프로젝트 리스트 조회
 	ArrayList<Project> selectList();
+	ArrayList<Project> selectMyProList(int projectNo);
 	
 	// 2. 프로젝트 작성하기
 	int insertProject(Project p);
