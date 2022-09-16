@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>워크피플</title>
   <style>
 
     .adminx-main-content {

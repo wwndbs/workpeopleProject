@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>워크피플</title>
 
 <!-- jquery CDN -->  
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>  
@@ -33,7 +33,7 @@
 </head>
 <body>
 
-<!-- 장서원 / 일정관리_개인일정관리 -->
+	<!-- 장서원 / 일정관리_개인일정관리 -->
 
 	<div class="adminx-container">
 		<!-- 상단 메뉴 바 -->
@@ -251,6 +251,9 @@
     		})
 						
 		}
+		
+		// 등록 함수 여기에다 쓰고(이안에 모달 띄우고 닫고 해야됨) 마지막에 위에 달력 보여지는 함수 쓰면 됨
+		
 	</script>
 
 	<!-- 풀캘린더 일정 추가 스크립트 
