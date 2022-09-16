@@ -36,8 +36,6 @@ public class BoardController {
 
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
 		ArrayList<Board> list = bService.selectList(pi, no, depName);
-		
-		System.out.println(list);
 
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
@@ -121,9 +119,22 @@ public class BoardController {
 	public void ajaxSaveBoard(Board b, MultipartFile file, HttpSession session) {
 		
 		/*
+		 * * 임시저장 여부는 boardNo이 빈칸이면 새글, 채워져있으면 임시저장글
+		 *   첨부파일은 계속 누를 때마다 삭제하고 다시 삽입
 		 * 
+		 * == 임시저장 ==
+		 * - 새로 임시저장 : saveBoard
+		 * - 임시저장 갱신 : updateSave
+		 * 
+		 * == 등록 ==
+		 * - 새로 등록 : insertBoard
+		 * - 임시저장 불러와서 등록 : insert
 		 */
-
+		
+		if(!b.getTopExp().equals("Y")) {
+			b.setTopExp("N");
+		}
+		
 		Attachment at = new Attachment();
 		  
 		// 첨부파일이 있을 경우 FileUpload클래스로 파일 변환 후 Board 객체에 담기
@@ -136,8 +147,23 @@ public class BoardController {
 			at.setRefType(2);
 		  
 		}
-		  
-		int result = bService.insertBoard(b, at);
+		
+		if(b.getBoardNo().equals("")) { // 새로 임시저장
+			
+			int result = bService.saveBoard(b, at);
+			//String boardNo = bService.selectBoardNo();
+			
+			if(result > 0) {
+				
+				
+				
+			}else {
+				
+			}
+			
+		}else { // 임시저장 업데이트
+			
+		}
 		  
 		
 
