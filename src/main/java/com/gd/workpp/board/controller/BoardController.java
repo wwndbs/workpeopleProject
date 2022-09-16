@@ -116,11 +116,12 @@ public class BoardController {
 
 	// 게시글 임시저장
 	@RequestMapping("save.bo")
-	public String saveBoard(Board b, MultipartFile file, HttpSession session, Model model) {
+	public String ajaxSaveBoard(Board b, MultipartFile file, HttpSession session) {
 
-		Attachment at = new Attachment();
+		//Attachment at = new Attachment();
 		
 		System.out.println(b);
+		System.out.println(file);
 		  
 		// 첨부파일이 있을 경우 FileUpload클래스로 파일 변환 후 Board 객체에 담기
 		/*
@@ -148,7 +149,6 @@ public class BoardController {
 		  
 		}
 		*/
-		
 		return null;
 
 	}

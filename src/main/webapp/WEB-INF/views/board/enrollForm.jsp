@@ -237,7 +237,7 @@
       
                       <br>
 
-                      <form action="insert.bo" method="post" class="enrollForm" enctype="multipart/form-data">
+                      <form action="insert.bo" method="post" id="enrollForm" class="enrollForm" enctype="multipart/form-data">
                         <fieldset>
                             <table class="form-type">
                                 <colgroup>
@@ -245,9 +245,12 @@
                                     <col width="*">
                                 </colgroup>
                                 <tbody>
+                                	<input type="hidden" name="boardNo">
                                 	<input type="hidden" name="userNo" value="${ loginUser.userNo }">
                                 	<input type="hidden" name="boardType" value="${ typeNo }">
                                 	<input type="hidden" name="depName" value="${ loginUser.depName }">
+                                	<input type="hidden" name="saveStatus">
+                                	<input type="hidden" name="changeName">
                                     <tr>
                                         <th>
                                             <span class="title">제목</span>
@@ -424,29 +427,62 @@
                         
                         <div class="sub-btn">
                         	<button type="submit" class="btn btn-sm btn-primary">등록</button>
-	                        <button type="submit" class="btn btn-sm btn-light" onclick="form.action='save.bo'">임시저장</button>
+	                        <button type="button" class="btn btn-sm btn-light" onclick="save();">임시저장</button>
 	                        <button type="button" class="btn btn-sm btn-light">취소</button> <!-- 바로 전 목록으로 돌아가기 -->
                         </div>
                       </form>
                       
                       <script>
-                      	$(function(){
+                      	/* $(function(){
                       		
-                      		Board b = new Board();
-                      		
+                      		// boardNo, changeName, 임시저장여부 도 넘겨줘야 함 (임시저장을 반복할 경우)
                       		$.ajax(function(){
                       			url: "save.bo",
                       			data: {
+                      				boardNo: 
                       				userNo: ${ loginUser.userNo },
                       				boardType: ${ typeNo },
                       				boardTitle: $(".txt").val(),
                       				boardContent: $("#summernote").val(),
                       				topExp: $("#chkButton").val(),
-                      				depName: "${ loginUser.depName }"
+                      				depName: "${ loginUser.depName }",
+                      				formData
+                      			},
+                      			type: "POST",
+                      			enctype: "multipart/form-data",
+                      			processData: false,
+                      			contentType: false,
+                      			success: function(){
+                      				
+                      			},error: function(){
+                      				
                       			}
                       		});
                       		
-                      	})
+                      	}) */
+                      	
+                      	function save(){
+                      		
+                      		let formData = new FormData(document.getElementById("enrollForm"));
+                      		
+                      		let files = $("input[name=file]")[0].files;
+                      		
+                      		formData.append("file", files[0]);
+                      		
+                      		$.ajax({
+                      			url: "save.bo",
+                      			data: formData,
+                      			type: "POST",
+                      			processData: false,
+                      			contentType: false,
+                      			success: function(){
+                      				console.log('성공');
+                      			},error: function(){
+                      				console.log('실패');
+                      			}
+                      		});
+                      		
+                      	}
                       </script>
                     
                     

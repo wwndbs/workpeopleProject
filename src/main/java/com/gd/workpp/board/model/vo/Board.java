@@ -22,6 +22,7 @@ public class Board {
 	private String topExp;
 	private int count;
 	private String status;
+	private String saveStatus;
 	private String depName;
 	private String jobName;
 	private String userName;
