@@ -79,7 +79,6 @@ public class ProjectController {
 			  .addObject("no", no)
 			  .setViewName("project/proBoardModifyForm");
 			
-			//System.out.println(pb);
 		}else {
 			mv.addObject("errorMsg", "상세조회 실패").setViewName("common/errorPage");
 		}
@@ -96,7 +95,7 @@ public class ProjectController {
 			String saveFilePath = FileUpload.saveFile(upfile, session, "resources/project_upfiles/");
 			
 			pb.setAttachOrigin(upfile.getOriginalFilename());
-			pb.setAttachModify(saveFilePath);
+			pb.setAttachModify(saveFilePath);			
 		}
 		
 		int result = pService.insertProBoard(pb);
@@ -121,7 +120,7 @@ public class ProjectController {
 			ProBoard pb = pService.selectDetailProBoard(no);
 			mv.addObject("pb", pb)
 			  .addObject("no", no)
-			  .setViewName("project/proBoardDetail");			
+			  .setViewName("project/proBoardDetail");		
 		}else {
 			mv.addObject("errorMsg", "상세조회 실패").setViewName("common/errorPage");	
 		}
@@ -153,12 +152,26 @@ public class ProjectController {
 		
 		if(result > 0) {
 			session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다.");
-			return "redirect:boardDetail.pr?no" + pb.getProBoardNo();
+			return "redirect:boardDetail.pr?no=" + pb.getProBoardNo();
 		}else {
 			model.addAttribute("errorMsg", "게시물 수정 실패");
 			return "common/errorPage";
 		}
 		
+	}
+	
+	// 프로젝트 게시물 삭제요청
+	@RequestMapping("deleteBoard.pr")
+	public String deleteProBoard(int no, String filePath, Model model, HttpSession session) {
+		int result = pService.deleteProBoard(no);
+		
+		if(result > 0) { // 삭제 성공시			
+			session.setAttribute("alertMsg", "성공적으로 삭제되었습니다.");
+			return "redirect:proList.pr?no=8";
+		}else {
+			model.addAttribute("errorMsg", "게시글 삭제 실패");
+			return "common/errorPage";
+		}
 	}
 	
 	// 프로젝트 등록 폼

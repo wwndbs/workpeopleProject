@@ -22,7 +22,7 @@
 	<resultMap type="ProBoard" id="proBoardResult">
 		<result column="pro_board_no" property="proBoardNo"/>
 		<result column="project_no" property="projectNo"/>
-		<result column="user_no" property="boardWriterNo"/>
+		<result column="boardWriterNo" property="boardWriterNo"/>
 		<result column="pro_board_status" property="proBoardStatus"/>
 		<result column="create_date" property="createDate"/>
 		<result column="modify_date" property="modifyDate"/>
@@ -110,6 +110,7 @@
 		  from pro_board pb
 		  join member m on (m.user_no = pb.user_no)
 		 where pb.project_no = 8
+		   and pb.status = 'Y'
 		 order
 		    by pb.pro_board_no desc
 	</select>
@@ -160,6 +161,13 @@
 		 where pro_board_no = #{proBoardNo}
 	</update>
 	
+	<!-- 프로젝트게시물 삭제 -->
+	<update id="deleteProBoard">
+		update
+			   pro_board
+		   set status = 'N'
+		 where pro_board_no = #{proBoardNo}  	   
+	</update>
 	
 	<!-- 프로젝트게시물 등록 -->
 	<insert id="insertProBoard">

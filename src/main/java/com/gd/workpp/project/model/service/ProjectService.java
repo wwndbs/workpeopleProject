@@ -38,5 +38,8 @@ public interface ProjectService {
 	// 9. 프로젝트 게시물 수정화면 띄우고 업데이트요청까지
 	ProBoard selectModifyProBoard(int proBoardNo);
 	int updateProBoard(ProBoard pb);
+	
+	// 10. 프로젝트 게시물 삭제
+	int deleteProBoard(int proBoardNo);
 
 }
