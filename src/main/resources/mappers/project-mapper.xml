@@ -67,7 +67,7 @@
           join pro_member pm on (p.project_no = pm.project_no)
           join pro_board pb on (p.project_no = pb.project_no)
          where pm.user_no = #{userNo}
-           and p.dep_name like '%${depName}%' -->            
+           and p.dep_name like '%'||#{depName}||'%'  -->            
         select
                p.project_no
 		     , p.project_title
@@ -75,7 +75,7 @@
 		     , p.category
              , p.dep_name
   		  from project p             
-         where p.dep_name like '%'||#{depName}||'%'        
+         where p.dep_name like '%'||#{depName}||'%'      
 	</select>
 	
 	<!-- 내팀 프로젝트 부서만 조회 

@@ -25,10 +25,10 @@
       .font1{
         font-weight: bold;
         font-size: 90%;
-        width:200%
+        width:300%
       }
       .font2{font-size: 75%;}
-      .font3{font-size: 90%; font-weight: bold; color:rgb(244, 217, 14)}
+      .font3{font-size: 90%; font-weight: bold; color:rgb(244, 217, 14); width:300%}
       .approval1{width: 98.5% !important; font-weight: bold; font-size: 15px;}
       .btn1{margin: 10px -1500px 0px 1500px; width: 70%;}
       .box1{cursor : pointer; margin: 0px -5px 0px 0px;} 
@@ -83,9 +83,9 @@
 	              		<span style="margin: 0px 0px 0px 730px"><br><br><br><br><br>현재 팀에서 진행하고 있는 프로젝트가 없습니다.</span>
 	              	</c:when>	
 	              	<c:otherwise>
-                   	<c:set var="depName" value="${ p.depName }"/>    	
+                   	<c:set var="depName" value="${ loginUser.depName }"/>	
 	                  <c:forEach var="pp" items="${ list }">	              
-	                  	<!-- <c:if test="${ loginUser.depName eq pp.depName }"> 이거없애야됨 -->
+	                  	<%-- <c:if test="${ loginUser.depName eq pp.depName }"> 이거없애야됨 --%>
 	                  	
 			              <div class="col-md-6 col-lg-3 d-flex">
 			                <div class="color"></div>
@@ -93,7 +93,7 @@
 			                  <div class="card-body d-flex flex-column">                                            
 			                    <div class="d-flex justify-content-between mb-3">
 			                      <h5 class="card-title mb-0">
-			                        <div style="float:right; font-size: 80%; margin: 0px -250px 0px 0px;">
+			                        <div style="float:right; font-size: 80%; margin: 0px -240px 0px 0px;">	
 			                          <label for="">수정</label>
 			                          <label for="">삭제</label>
 			                        </div>

@@ -17,25 +17,29 @@ import org.springframework.web.servlet.ModelAndView;
 import com.gd.workpp.common.model.vo.PageInfo;
 import com.gd.workpp.common.template.FileUpload;
 import com.gd.workpp.common.template.Pagination;
+import com.gd.workpp.member.model.vo.Member;
 import com.gd.workpp.project.model.service.ProjectService;
 import com.gd.workpp.project.model.vo.ProBoard;
 import com.gd.workpp.project.model.vo.Project;
 
 @Controller
 public class ProjectController {
-	
+		
 	@Autowired
 	private ProjectService pService;
 	
 	// 내프로젝트 리스트
+	// 로그인한 회원의 부서명 전달받기 , sql에도 전달하고
+	// 컨트롤러서부터 계속 부서명을 전달해야됨 (jsp는 조건문x)
 	@RequestMapping("myProject.pr")
-	public ModelAndView myProjectList(ModelAndView mv, String[] args) {
+	public ModelAndView myProjectList(ModelAndView mv, HttpSession session) {
 		ArrayList<Project> list = pService.selectList();
 		
-		
-		//String[] splited = str.split(",");
-		
+		Member m = (Member)session.getAttribute("loginUser");
+		String depName = m.getDepName();
+				
 		mv.addObject("list", list)
+		  .addObject("depName", depName)
 		  .setViewName("project/myProjectList");
 		
 		System.out.println(list);
