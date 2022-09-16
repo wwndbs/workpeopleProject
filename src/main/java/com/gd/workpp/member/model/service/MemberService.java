@@ -1,5 +1,8 @@
 package com.gd.workpp.member.model.service;
 
+import java.util.ArrayList;
+
+import com.gd.workpp.common.model.vo.PageInfo;
 import com.gd.workpp.member.model.vo.Member;
 
 public interface MemberService {
@@ -18,5 +21,19 @@ public interface MemberService {
 	
 	// 회원생성 서비스 (insert)
 	int createMember(Member m);
+	
+	// 사원 정보 수정 리스트 페이지 서비스 (페이징)
+	int modifyListCount();
+	ArrayList<Member> modifyList(PageInfo pi);
+	
+	// 사원수정 상세조회 서비스
+	Member selectmodifyMember(int userNo);
+	
+	// 사원 정보 수정 서비스
+	int modifyMember(Member m);
+	
+	// 사원정보 삭제 서비스
+	int deleteMember(int userNo);
+	
 	
 }

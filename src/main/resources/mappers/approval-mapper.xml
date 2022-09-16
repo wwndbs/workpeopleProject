@@ -218,7 +218,15 @@
 		 order by document_no desc
 	</select>
 	
-	
+	<delete id="deleteSaveList">
+		delete
+		  from document
+		 where document_no in	
+	     <foreach collection="noArr" item='no' index='i' open="(" close=")" separator=",">
+           #{no}
+         </foreach>
+           and status = 2
+	</delete>
 	
 	
 	

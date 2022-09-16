@@ -41,7 +41,7 @@
             <div class="container-fluid" >
 
                 <!--메인페이지 컨텐츠-->
-                <div class="top-wrapper"  >
+                <div class="top-wrapper" id="member-wrapper" >
 
                     <!--게시판 부분-->
                     <div id="upm-area" class="upm-area">
@@ -116,51 +116,51 @@
                                 <table id="upmTable" align="center">
 
                                     <tr>
-                                        <td style="font-weight:800;">사내이메일</td>
+                                        <td style="font-weight:800; height:50px;">사내이메일</td>
                                     </tr>
 
                                     <tr>
-                                        <td colspan="2" align="center"><input type="text" id="email" name="email" class="form-control" style="height:30px;" value="${loginUser.email}" readonly></td>
+                                        <td colspan="2" align="center"><input type="text" id="email" name="email" class="form-control" style="height:40px;" value="${loginUser.email}" readonly></td>
                                     </tr>
 					
                                     <tr>
-                                        <td style="font-weight:800;">이름</td>
+                                        <td style="font-weight:800; height:50px;">이름</td>
                                     </tr>
 
                                     <tr>
-                                        <td colspan="2" align="center"><input type="text" id="userName" name="userName" class="form-control" style="height:30px;" placeholder="${loginUser.userName}" required readonly></td>
+                                        <td colspan="2" align="center"><input type="text" id="userName" name="userName" class="form-control" style="height:40px;" placeholder="${loginUser.userName}" required readonly></td>
                                     </tr>
 
                                     <tr>
-                                        <td style="font-weight:800;">휴대폰</td>
+                                        <td style="font-weight:800; height:50px;">휴대폰</td>
                                     </tr>
 
                                     <tr>
-                                        <td colspan="2" align="center"><input type="text" id="phone" name="phone" class="form-control" style="height:30px;" placeholder="${loginUser.phone}" required></td>
+                                        <td colspan="2" align="center"><input type="text" id="phone" name="phone" class="form-control" style="height:40px;" placeholder="${loginUser.phone}" required></td>
                                     </tr>
                                     
                                     <tr>
-                                        <td style="font-weight:800;">개인이메일</td>
+                                        <td style="font-weight:800; height:50px;">개인이메일</td>
                                     </tr>
 
                                     <tr>
-                                        <td colspan="2" align="center"><input type="text" id="userEmail" name="userEmail" class="form-control" style="height:30px;" placeholder="${loginUser.userEmail }"></td>
+                                        <td colspan="2" align="center"><input type="text" id="userEmail" name="userEmail" class="form-control" style="height:40px;" placeholder="${loginUser.userEmail }"></td>
                                     </tr>
                                     
                                     <tr>
-                                        <td style="font-weight:800;">생년월일</td>
+                                        <td style="font-weight:800; height:50px;">생년월일</td>
                                     </tr>
 
                                     <tr>
-                                        <td align="center"><input type="text" id="birthday" name="birthday" class="form-control" style="height:30px;" placeholder="${loginUser.birthday }"></td>
+                                        <td align="center"><input type="text" id="birthday" name="birthday" class="form-control" style="height:40px;" placeholder="${loginUser.birthday }"></td>
                                     </tr>
                                     
                                     <tr>
-                                        <td style="font-weight:800;">입사일</td>
+                                        <td style="font-weight:800; height:50px;">입사일</td>
                                     </tr>
 
                                     <tr>
-                                        <td colspan="2" align="center"><input type="text" id="createDate" class="form-control" name="createDate" style="height:30px;" placeholder="${loginUser.createDate }" required readonly></td>
+                                        <td colspan="2" align="center"><input type="text" id="createDate" class="form-control" name="createDate" style="height:40px;" placeholder="${loginUser.createDate }" required readonly></td>
                                     </tr>
                                 </table>
                                 <br>
