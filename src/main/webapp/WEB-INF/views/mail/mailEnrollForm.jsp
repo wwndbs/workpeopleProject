@@ -70,7 +70,7 @@
 	              <span class="mail-h">메일 쓰기</span>
 	              <br>
 	              
-	              <form action="insert.ma" method="post" enctype="multipart/form-data">
+	              <form action="insert.ma" id="mailForm" method="post" enctype="multipart/form-data">
 	              	<input type="text" name="sender" value="${ loginUser.email }" hidden>
 	                <!-- 상단 버튼 박스 시작 -->
 	                <div class="mail-btn-content">
@@ -79,12 +79,12 @@
 	                    &nbsp;&nbsp;보내기
 	                  </button>
 	
-	                  <button type="submit" class="mail-btn2" onclick="form.action='save.ma';">
+	                  <button type="button" class="mail-btn2" onclick="saveMail();">
 	                    <ion-icon name="cloud-download-outline" style="margin-top:8px; font-size: 19px;"></ion-icon>
 	                    <span style="margin-top: 0px;">&nbsp;&nbsp;임시저장</span>
 	                  </button>
 	
-	                  <button ty[e="button" class="mail-btn3">
+	                  <button type="button" class="mail-btn3" onclick="toast('토스트 알림 예시입니다.');">
 	                    <ion-icon name="eye-outline" style="margin-top:5px; font-size: 23px;"></ion-icon>
 	                    <span style="margin-top: 0px;">&nbsp;&nbsp;미리보기</span>
 	                  </button>
@@ -178,7 +178,7 @@
 	                  			
 	                  			// 주소 li요소로 추가
 	                  			let value="";
-	                            value +='<li class="mail-addr-out toMe">'
+	                            value +='<li class="mail-addr-out toMe to-li">'
 	                                   + '<span class="addr-block">' 
 	                                   + '${ loginUser.email }'
 	                                   + '</span>'
@@ -214,16 +214,21 @@
 	                  	
 		                // enter , (받는사람)
 			  	        function toBlock() {
-		               	   
+
 			              	if(window.event.keyCode==13){
 			              		var $addr = $("#to").val().replace("\n", "");
 			              	}else if(window.event.keyCode==188){
 			                	var $addr = $("#to").val().replace(/,$/, "");
 		                    }
+			              	
+							if(!addrCheck($addr)){ // 유효성 검사 결과 false일 경우
+								$("#to").val("");
+								return;
+							}
 	                      
 			              	// 주소 li요소로 추가
 		                    let value = "";
-		                    value +='<li class="mail-addr-out">'
+		                    value +='<li class="mail-addr-out to-li">'
 		                          + '<span class="addr-block">' 
 		                          + $addr
 		                          + '</span>'
@@ -248,19 +253,28 @@
 			              		$("#receiver").val(currTo + "," + $addr);
 			              	}
 			              	
-		                    console.log($addr);
-		                    console.log($("#receiver").val());
+			              	// 받는 사람 최대 명수 제한
+			              	if(document.querySelectorAll('.to-li').length == 3){
+			              		console.log("3개끝");
+			              		$("#to").attr("readonly", true);
+			              	}
+			              	
 		                }
 		                  
 						// enter , (참조)
 						function refBlock() {
 											  	  
 						    if(window.event.keyCode==13){
-						      var $addr = $("#ref").val();
+						      var $addr = $("#ref").val().replace("\n", "");
 						    }else if(window.event.keyCode==188){
 						      var $addr = $("#ref").val().replace(/,$/, '');
 						    }
-						      
+
+							if(!addrCheck($addr)){ // 유효성 검사 결과 false일 경우
+								$("#ref").val("");
+								return;
+							}
+							
 						  	// 주소 li요소로 추가
 						    let value = "";
 						    value +='<li class="mail-addr-out">'
@@ -297,7 +311,7 @@
 			              	let deleteTo = $(this).parent().prev().text().replace("\n", ""); // "bbb.com"
 			              	
 			              	currToArr.splice(currToArr.indexOf(deleteTo), 1);
-		                    
+		                     
 							if(deleteTo == "${loginUser.email}"){ // 내 주소를 버튼으로 삭제시 나에게 체크박스 해제
 								$("#toMe").prop("checked", false);
 							}
@@ -324,6 +338,20 @@
 			              	$("#mailRef").val(currRefArr.join()); // "aaa.com, ccc.com"
 			              	
 		                })
+		                
+		                // 주소 유효성 검사
+			            function addrCheck($addr){
+			            	
+	                        let regExp = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
+	                        
+	                        if(regExp.test($addr)){
+	                        	return true;
+	                        }else{
+	                        	console.log("유효성 검사 실패");
+	                        	return false;
+	                        }
+	                       
+	                    }
 		                
 	                  </script>
 	                    
@@ -509,6 +537,56 @@
 					    </div>
 					</div>
 		   			<!-- 모달 끝 -->
+		   			
+		   			<!-- 토스트 메시지 -->
+		   			<div id="toast" class="">
+					    
+					</div>
+					
+					<script>
+						function saveMail(){
+							
+							let formData = new FormData(document.getElementById("mailForm"));
+							
+							let files = $("input[name=upfile]")[0].files;
+							
+							for(let i=0; i<files.length; i++){
+								formData.append("upfile", files[i]);
+							}
+							
+				    		$.ajax({
+				    			url: "save.ma",
+			    			 	processData: false,
+			    			 	contentType: false,
+			    				type: "POST",
+			    			 	data: formData,
+								success:function(){
+									console.log("메일 임시저장 ajax통신 성공");
+									
+								},
+								error:function(){
+									console.log("메일 임시저장 ajax통신 실패");
+								}
+				    		})
+							
+						}
+					
+						let removeToast;
+	
+						function toast(string) {
+						    const toast = document.getElementById("toast");
+	
+						    toast.classList.contains("reveal") ?
+						        (clearTimeout(removeToast), removeToast = setTimeout(function () {
+						            document.getElementById("toast").classList.remove("reveal")
+						        }, 1000)) :
+						        removeToast = setTimeout(function () {
+						            document.getElementById("toast").classList.remove("reveal")
+						        }, 1500)
+						    toast.classList.add("reveal"),
+						        toast.innerText = string
+						}
+					</script>
 	                  
 	              </form>
 	            </div>
@@ -537,6 +615,7 @@
 		            	});
 		            });
 	                
+		            
 		           /*
 		           $('html').click(function(e) {   
 		             if(!$(e.target).hasClass("mailarea")) {
