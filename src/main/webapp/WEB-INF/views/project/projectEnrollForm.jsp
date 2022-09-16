@@ -6,6 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- favicon 설정 -->
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" href="resources/images/favicon.ico" type="image/x-icon">
 <style>
   .row{width:100%; height: 100px; margin: 0px 0px -5px -13px;}
   .color{background-color:rgb(118, 194, 252); width: 5%; height: 90.7%;}
