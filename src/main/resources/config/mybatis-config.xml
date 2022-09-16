@@ -19,6 +19,10 @@
 		<typeAlias type="com.gd.workpp.attendance.model.vo.Attendance" alias="Attendance" />
 		<typeAlias type="com.gd.workpp.board.model.vo.Board" alias="Board" />
 		<typeAlias type="com.gd.workpp.holiday.model.vo.Schedule" alias="Schedule" />
+		<typeAlias type="com.gd.workpp.approval.model.vo.Vacation" alias="Vacation" />
+		<typeAlias type="com.gd.workpp.approval.model.vo.Overtime" alias="Overtime" />
+		<typeAlias type="com.gd.workpp.approval.model.vo.Absence" alias="Absence" />
+		<typeAlias type="com.gd.workpp.approval.model.vo.Plan" alias="Plan" />
 	</typeAliases>
 	
 	 <mappers>
