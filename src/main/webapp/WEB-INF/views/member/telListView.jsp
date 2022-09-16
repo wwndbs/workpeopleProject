@@ -47,7 +47,7 @@
 		                        </ul>
 		                    </form>
 		                    <hr>
-		                    <form id="telsearchForm" action="" method="Get">
+		                    <form id="telsearchForm" action="searchTel.me" method="Get">
 				                <div class="telsearchdiv">
 				                    <input style="height:42px;" type="text" class="telsearchForm" name="keyword" placeholder="이름검색">
 				                </div>
@@ -90,6 +90,7 @@
 								</c:choose>
 							
 		                    </div>
+		                    
 		                    <div id="pagingArea">
 				                <ul class="pagination">
 				                	
@@ -116,6 +117,7 @@
 				                    </c:choose>
 				                </ul>
 				            </div>
+				            
 							<br><br>
 		                </div>
 		            </div>

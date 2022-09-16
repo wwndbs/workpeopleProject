@@ -61,6 +61,10 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.telListCount");
 	}
 	
+	public int searchTelListCount(SqlSessionTemplate sqlSession, String keyword) {
+		return sqlSession.selectOne("memberMapper.searchTelListCount");
+	}
+	
 	public ArrayList<Member> telList(SqlSessionTemplate sqlSession, PageInfo pi){
 		
 		int limit = pi.getBoardLimit();
@@ -68,6 +72,15 @@ public class MemberDao {
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
 		return (ArrayList)sqlSession.selectList("memberMapper.telList", null, rowBounds);
+	}
+	
+	public ArrayList<Member> searchTelList(SqlSessionTemplate sqlSession, PageInfo pi,String keyword){
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.searchTelList", keyword, rowBounds);
 	}
 	
 }

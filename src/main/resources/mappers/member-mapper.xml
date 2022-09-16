@@ -157,6 +157,14 @@
 			  from member
 			 where status = 'N'
 	</select>
+	
+	<select id="searchTelListCount" resultType="_int">
+			select 
+				   count(*)
+			  from member
+			 where status = 'N'
+			 and user_name LIKE '%'||#{keyword}||'%'
+	</select>
 		
 	<select id="telList" resultMap="memberResult">
 			select
@@ -173,5 +181,20 @@
 			    by user_no desc
 	</select>
 
+	<select id="searchTelList" resultMap="memberResult">
+			select
+				   user_no
+				 , user_name
+				 , email
+				 , dep_name
+				 , job_name
+				 , prof_img
+				 , phone
+			  from member
+			 where status = 'N'
+			 and user_name LIKE '%'||#{keyword}||'%'
+			 order 
+			    by user_no desc
+	</select>
 	
 </mapper>	  

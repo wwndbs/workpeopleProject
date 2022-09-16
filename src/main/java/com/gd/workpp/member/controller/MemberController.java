@@ -43,6 +43,7 @@ public class MemberController {
 	@RequestMapping("tel.me")
 	public ModelAndView tel(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv) {
 		
+		
 		int listCount = mService.telListCount();
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 12);
@@ -54,8 +55,25 @@ public class MemberController {
 		  .setViewName("member/telListView");
 		
 		return mv;
+		
 	}
 	
+	@RequestMapping("searchTel.me")
+	public ModelAndView searchTel(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv,String keyword) {
+		
+		int listCount = mService.searchTelListCount(keyword);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 12);
+		ArrayList<Member> list = mService.searchTelList(pi,keyword);
+		
+
+		mv.addObject("pi", pi)
+		  .addObject("list", list)
+		  .setViewName("member/telListView");
+		
+		return mv;
+		
+	}
 	
 	@RequestMapping("modifyList.me")
 	public ModelAndView modifyList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv) {
@@ -256,5 +274,6 @@ public class MemberController {
 		}
 		
 	}
+	
 	
 }

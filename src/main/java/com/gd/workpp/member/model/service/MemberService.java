@@ -36,8 +36,9 @@ public interface MemberService {
 	int deleteMember(int userNo);
 	
 	// 주소록 리스트 페이지 서비스 (페이징)
+	int searchTelListCount(String keyword);
 	int telListCount();
 	ArrayList<Member> telList(PageInfo pi);
-	
+	ArrayList<Member> searchTelList(PageInfo pi,String keyword);
 	
 }
