@@ -54,6 +54,11 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public ArrayList<Document> selectSaveList(PageInfo pi, String userNo) {
 		return apDao.selectSaveList(sqlSession, pi, userNo);
 	}
+
+	@Override
+	public int deleteSaveList(String[] noArr) {
+		return apDao.deleteSaveList(sqlSession, noArr);
+	}
 	
 	
 }

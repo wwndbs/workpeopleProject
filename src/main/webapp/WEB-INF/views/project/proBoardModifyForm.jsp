@@ -6,6 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- favicon 설정 -->
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" href="resources/images/favicon.ico" type="image/x-icon">
 <style>
   .adminx-content{height: 85vh;}
   .adminx-main-content{height: 85vh;}
@@ -97,7 +100,7 @@
 	            </div>	            
 	            
 	              <div class="card mb-grid div3" style="color:rgb(79, 79, 79);">
-	                <form class="form1" id="enrollForm" method="post" action="insertBoard.pr" enctype="multipart/form-data">
+	                <form class="form1" id="enrollForm" method="post" action="updateBoard.pr" enctype="multipart/form-data">
                
 			          <input type="hidden" name="projectNo" value="${ no }">
 			          <input type="hidden" name="proBoardNo" value="${ pb.proBoardNo }">

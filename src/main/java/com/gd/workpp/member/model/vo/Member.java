@@ -10,8 +10,8 @@ import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Setter
 @Getter
+@Setter
 @ToString
 public class Member {	
 	private String userNo;
@@ -26,5 +26,5 @@ public class Member {
 	private String profImg;
 	private String userEmail;
 	private String userPwd;
-	private Date birthday;
+	private String birthday;
 }

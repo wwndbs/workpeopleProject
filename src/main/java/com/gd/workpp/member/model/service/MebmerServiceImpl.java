@@ -1,9 +1,12 @@
 package com.gd.workpp.member.model.service;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gd.workpp.common.model.vo.PageInfo;
 import com.gd.workpp.member.model.dao.MemberDao;
 import com.gd.workpp.member.model.vo.Member;
 
@@ -46,5 +49,38 @@ public class MebmerServiceImpl implements MemberService{
 	public int createMember(Member m) {
 		return mDao.createMember(sqlSession,m);
 	}
+
+
+	@Override
+	public int modifyListCount() {
+		return mDao.modifyListCount(sqlSession);
+	}
+
+
+	@Override
+	public ArrayList<Member> modifyList(PageInfo pi) {
+		return mDao.modifyList(sqlSession, pi);
+	}
+
+
+	@Override
+	public Member selectmodifyMember(int userNo) {
+		return mDao.selectmodifyMember(sqlSession,userNo);
+	}
+
+
+	@Override
+	public int modifyMember(Member m) {
+		return mDao.modifyMember(sqlSession,m);
+	}
+
+
+	@Override
+	public int deleteMember(int userNo) {
+		return mDao.deleteMember(sqlSession,userNo);
+	}
+
+	
+
 
 }

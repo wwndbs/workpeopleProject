@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.gd.workpp.approval.model.service.ApprovalServiceImpl;
 import com.gd.workpp.approval.model.vo.Document;
@@ -58,5 +59,48 @@ public class AjaxApprovalController {
 	public String memberList(String dept) {
 		ArrayList<Member> list = apService.selectMemberList(dept);
 		return new Gson().toJson(list);
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value="saveListView.ap", produces="application/json; charset=UTF-8")
+	public String saveListView(@RequestParam(value="cpage", defaultValue="1")int currentPate,
+                                     ModelAndView mv, HttpSession session) {
+		Member m = (Member)session.getAttribute("loginUser");
+		String userNo = m.getUserNo();
+		
+		int listCount = apService.selectSaveListCount(userNo);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPate, 5, 10);
+		ArrayList<Document> list = apService.selectSaveList(pi, userNo);
+		
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("list", list);
+		map.put("pi", pi);
+		
+		return new Gson().toJson(map);
+		}
+	
+	/**
+	 * Author : 최영헌
+	 * 임시저장문서 삭제 요청을 처리해주는 메소드
+	 * @param no : 삭제 하고자 하는 문서번호
+	 */
+	@ResponseBody
+	@RequestMapping(value="deleteSaveList.ap", produces="application/json; charset=UTF-8")
+	public String deleteSaveList(String no) {
+		
+		String[] noArr = no.split(",");
+		
+		int result = apService.deleteSaveList(noArr);
+		
+		String msg = "";
+		
+		if(result > 0) {
+			msg = "임시저장문서를 삭제 했습니다.";
+			return new Gson().toJson(msg);
+		}else {
+			msg = "임시저장문서 삭제에 실패했습니다.";
+			return new Gson().toJson(msg);
+		}
 	}
 }

@@ -73,4 +73,21 @@ public class ApprovalDao {
 		
 		return (ArrayList)sqlSession.selectList("approvalMapper.selectSaveList", userNo, rowBounds);
 	}
+	
+	public int deleteSaveList(SqlSessionTemplate sqlSession, String[] noArr) {
+		HashMap<String, String[]> no = new HashMap<>();
+		no.put("noArr", noArr);
+		return sqlSession.delete("approvalMapper.deleteSaveList", no);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
