@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>워크피플</title>
 <!-- 
-	author : 최영헌
+	author : 박상현
 	
 	경로는 servlet-context.xml파일에 <resources mapping="/resources/**" location="/resources/" /> 로 명시되어있어
 	resources로 경로를 시작하면됨
@@ -59,53 +59,72 @@
 	                                    <thead>
 	                                      <tr>
 	                                        <th style="width: 10px;"></th>
-	                                        <th style="width: 50px;">번호</th>
+	                                        <th style="width: 50px;">사원번호</th>
 	                                        <th style="width: 80px;">사원명</th>
 	                                        <th style="width: 80px;">부서명</th>
 	                                        <th style="width: 80px;">직책</th>
 	                                        <th style="width: 100px;">입사일</th>
 	                                        <th style="width: 80px;">퇴사여부</th>
-	                                        <th style="width: 120px;">부서/직급 수정</th>
 	                                      </tr>
 	                                    </thead>
 	                                    <tbody>
-	                                        <tr>
-	                                            <td><input type="checkbox" name=""></td>
-	                                            <td>1</td>
-	                                            <td>박상현</td>
-	                                            <td>개발부</td>
-	                                            <td>사원</td>
-	                                            <td>2020-09-01</td>
-	                                            <td>N</td>
-	                                            <td><button style="width:100%" data-toggle="modal" data-target="#loginModal">수정하기</button></td>
-	                                        </tr>
-	
-	                                        <tr>
-	                                            <td><input type="checkbox"></td>
-	                                            <td>2</td>
-	                                            <td>이상현</td>
-	                                            <td>개발부</td>
-	                                            <td>사원</td>
-	                                            <td>2020-09-01</td>
-	                                            <td>N</td>
-	                                            <td><button style="width:100%" data-toggle="modal" data-target="#loginModal">수정하기</button></td>
-	                                        </tr>
-	
-	
-	                                        <tr>
-	                                            <td><input type="checkbox"></td>
-	                                            <td>3</td>
-	                                            <td>김상현</td>
-	                                            <td>개발부</td>
-	                                            <td>사원</td>
-	                                            <td>2020-09-01</td>
-	                                            <td>N</td>
-	                                            <td><button style="width:100%" data-toggle="modal" data-target="#loginModal">수정하기</button></td>
-	                                        </tr>
-	
+	                                        <c:choose>
+						                		<c:when test="${ empty list }">
+						                			<tr>
+						                				<td colspan="6">현재 게시글이 없습니다.</td>
+						                			</tr>
+						                		</c:when>
+						                		<c:otherwise>
+						                			<c:forEach var="m" items="${ list }">
+								                    <tr>
+								                    	<td><input type="checkbox" name=""></td>
+								                        <td class="no">${ m.userNo }</td>
+								                        <td>${ m.userName }</td>
+								                        <td>${ m.depName }</td>
+								                        <td>${ m.jobName }</td>
+								                        <td>${ m.createDate }</td>
+								                        <td>${ m.status }</td>
+								                    </tr>
+						                    		</c:forEach>
+						                    	</c:otherwise>
+											</c:choose>
 	                                    </tbody>
 	                                </table>
+	                                <script>
+						               $(function(){
+						                  $("#listTable>tbody>tr").click(function(){
+						                     location.href='modify.me?no=' + $(this).children(".no").text();
+						                  })
+						               })
+						            </script>
+	                                
 	                                <br>
+	                                <div id="pagingArea">
+						                <ul class="pagination">
+						                	
+						                	<c:choose>
+						                		<c:when test="${ pi.currentPage eq 1 }">
+						                    		<li class="page-item disabled"><a class="page-link">Previous</a></li>
+						                    	</c:when>
+						                    	<c:otherwise>
+						                    		<li class="page-item"><a class="page-link" href="modifyList.me?cpage=${ pi.currentPage-1 }">Previous</a></li>
+						                    	</c:otherwise>
+						                    </c:choose>
+						                    
+						                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+						                    	<li class="page-item"><a class="page-link" href="modifyList.me?cpage=${ p }">${ p }</a></li>
+						                    </c:forEach>
+						                    
+						                    <c:choose>
+						                    	<c:when test="${ pi.currentPage eq pi.maxPage }">
+						                    		<li class="page-item disabled"><a class="page-link">Next</a></li>
+						                    	</c:when>
+						                    	<c:otherwise>
+						                    		<li class="page-item"><a class="page-link" href="modifyList.me?cpage=${ pi.currentPage+1 }">Next</a></li>
+						                    	</c:otherwise>
+						                    </c:choose>
+						                </ul>
+						            </div>
 	                                <div align="right">
 	                                    <button type="submit" id="loginbtn" >선택 회원 삭제</button>
 	                                </div>
@@ -119,55 +138,7 @@
 	
 	                </div>
 	
-	                <div class="modal fade" id="loginModal">
-	                    <div class="modal-dialog modal-sm">
-	                        <div class="modal-content">
-	            
-	                            <form action="login.me" method="post">
-	                                <!-- Modal Body -->
-	                                <table>
-	                                    <tr><h3>부서/직책 변경</h3></tr>
-	                                    <tr>
-	                                        <td><h4>사원명</h4></td>
-	                                    </tr>
-	                                    <tr>
-	                                        <td>부서 변경 : </td>
-	                                        <td>
-	                                            <select id="" class="form-control" name="" style="height:30px; width:100px" required>
-	                                                <option value="">부서선택</option>
-	                                                <option value="">인사부</option>
-	                                                <option value="">총무부</option>
-	                                                <option value="">영업부</option>
-	                                                <option value="">회계부</option>
-	                                                <option value="">개발부</option>
-	                                            </select>
-	                                        </td>
-	                                    </tr>
-	                                    <br><br>
-	                                    <tr> 
-	                                        <td> 직급변경 : </td>
-	                                        <td>
-	                                            <select id="" class="form-control" name="" style="height:30px; width:100px" required>
-	                                                <option value="">직책선택</option>
-	                                                <option value="">사원</option>
-	                                                <option value="">대리</option>
-	                                                <option value="">과장</option>
-	                                                <option value="">팀장</option>
-	                                                <option value="">부장</option>
-	                                            </select>
-	                                        </td>
-	                                    </tr>
-	                                </table>
-	                                <br>
-	                                <!-- Modal footer -->
-	                                <div class="modal-footer">
-	                                    <button type="submit" class="btn btn-primary">변경</button>
-	                                    <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
-	                                </div>
-	                            </form>
-	                        </div>
-	                    </div>
-	                </div>
+	                
 	
 	
 	            </div>

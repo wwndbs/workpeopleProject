@@ -39,7 +39,7 @@
             <div class="container-fluid">
 
                 <!--메인페이지 컨텐츠-->
-                <div class="top-wrapper">
+                <div class="top-wrapper" id="member-wrapper">
 
                     <!--게시판 부분-->
                     <div id="upm-area" class="upm-area">
@@ -63,39 +63,39 @@
                             <form id="upmForm" method="post" action="create.me" enctype="multipart/form-data">
                                 <table id="upmTable" align="center">
 
-                                    <tr>
+                                    <tr style="height:50px;">
                                         <td style="font-weight:800;">사내이메일</td>
                                     </tr>
 
                                     <tr>
-                                        <td colspan="2" align="center"><input type="text" id="email" class="form-control" name="email" style="height:30px;" placeholder="사내이메일" required></td>
+                                        <td colspan="2" align="center"><input style="height:40px;" type="text" id="email" class="form-control" name="email" style="height:30px;" placeholder="사내이메일" required></td>
                                     </tr>
 
-                                    <tr>
+                                    <tr style="height:50px;">
                                         <td style="font-weight:800;">이름</td>
                                     </tr>
 
                                     <tr>
-                                        <td colspan="2" align="center"><input type="text" id="userName" class="form-control" name="userName" style="height:30px;" placeholder="사원명" required></td>
+                                        <td colspan="2" align="center"><input style="height:40px;" type="text" id="userName" class="form-control" name="userName" style="height:30px;" placeholder="사원명" required></td>
                                     </tr>
 
-                                    <tr>
+                                    <tr style="height:50px;">
                                         <td style="font-weight:800;">휴대폰</td>
                                     </tr>
 
                                     <tr>
-                                        <td colspan="2" align="center"><input type="text" id="phone" class="form-control" name="phone" style="height:30px;" placeholder="010-0000-0000" ></td>
+                                        <td colspan="2" align="center"><input style="height:40px;" type="text" id="phone" class="form-control" name="phone" style="height:30px;" placeholder="010-0000-0000" ></td>
                                     </tr>
                                     
-                                    <tr>
+                                    <tr style="height:50px;">
                                         <td style="font-weight:800;">개인이메일</td>
                                     </tr>
 
                                     <tr>
-                                        <td colspan="2" align="center"><input type="text" id="userEmail" class="form-control" name="userEmail" style="height:30px;" placeholder="사원 개인 이메일" ></td>
+                                        <td colspan="2" align="center"><input style="height:40px;" type="text" id="userEmail" class="form-control" name="userEmail" style="height:30px;" placeholder="사원 개인 이메일" ></td>
                                     </tr>
                                     
-                                    <tr>
+                                    <tr style="height:50px;">
                                         <td style="font-weight:800;">부서/직책 선택</td>
                                     </tr>
 
@@ -123,20 +123,20 @@
                                         </td>
                                     </tr>
                                     
-                                    <tr>
+                                    <tr style="height:50px;">
                                         <td style="font-weight:800;">임시비밀번호</td>
                                     </tr>
 
                                     <tr>
-                                        <td colspan="2" align="center"><input type="text" id="userPwd" class="form-control" name="userPwd" style="height:30px;" placeholder="임시비밀번호" required></td>
+                                        <td colspan="2" align="center"><input style="height:40px;" type="text" id="userPwd" class="form-control" name="userPwd" style="height:30px;" placeholder="임시비밀번호" required></td>
                                     </tr>
                                     
                                     
                                 </table>
                                 <br>
                                 <div align="center">
-                                    <button type="submit" id="loginbtn">생성하기</button>
-                                    <button type="reset" id="loginbtn">취소하기</button>
+                                    <button type="submit" id="loginbtn" class="btn btn-secondary">생성하기</button>
+                                    <button type="reset" id="loginbtn" class="btn btn-secondary">취소하기</button>
                                 </div>
                             </form>
                         </div>
