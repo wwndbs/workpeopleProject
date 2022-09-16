@@ -26,6 +26,13 @@ public class MemberController {
 	@Autowired 
 	private MemberService mService;
 	
+	@RequestMapping("logout.me")
+	public String logoutMember(HttpSession session) {
+		// 세션 만료
+		session.invalidate();
+		// 메인페이지  url 재요청
+		return "redirect:/";
+	}
 	
 	@RequestMapping("updateForm.me")
 	public ModelAndView documentListView(ModelAndView mv) {
@@ -114,7 +121,6 @@ public class MemberController {
 		
 		if(result>0) { // 수정성공
 			session.setAttribute("loginUser",mService.loginMember(m));
-			session.setAttribute("alertMsg", "성공적으로 개인정보 변경되었습니다");
 			
 			// 마이페이지 url재요청
 			return "redirect:updateForm.me";
@@ -275,5 +281,20 @@ public class MemberController {
 		
 	}
 	
-	
+	@RequestMapping("selectTel.me")
+	public ModelAndView selectTel(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv,String dep) {
+		
+		int listCount = mService.selectTelListCount(dep);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 12);
+		ArrayList<Member> list = mService.selectTelList(pi,dep);
+		
+
+		mv.addObject("pi", pi)
+		  .addObject("list", list)
+		  .setViewName("member/telListView");
+		
+		return mv;
+		
+	}
 }

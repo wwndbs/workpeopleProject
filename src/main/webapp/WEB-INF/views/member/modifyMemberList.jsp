@@ -129,7 +129,7 @@
 						                </ul>
 						            </div>
 	                                <div align="right">
-	                                    <button type="submit" id="loginbtn" >선택 회원 삭제</button>
+	                                    <button type="submit" id="loginbtn" class="btn btn-secondary" >선택 회원 삭제</button>
 	                                </div>
 	                            </form>
 	                        </div>

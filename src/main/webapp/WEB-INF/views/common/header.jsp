@@ -128,8 +128,8 @@
 					<img src="resources/images/profile.jpg" alt=""><!--프로필이미지-->
 				</a>
 				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-					<a class="dropdown-item" href="#">정보수정</a>
-					<a class="dropdown-item text-danger" href="#">로그아웃</a>
+					<a class="dropdown-item" href="updateForm.me">정보수정</a>
+					<a class="dropdown-item text-danger" href="logout.me">로그아웃</a>
 				</div>
 			</li>
 		</ul>

@@ -46,30 +46,25 @@
 	                           google.charts.setOnLoadCallback(drawChart);
 	                       
 	                           function drawChart() {
-	                               var data = new google.visualization.DataTable();
-	                               data.addColumn('string', 'Name');
+                               	   var data = new google.visualization.DataTable();
+	                        	   data.addColumn('string', 'Name');
 	                               data.addColumn('string', 'Manager');
 	                               data.addColumn('string', 'ToolTip');
 	                       
 	                               data.addRows([
 	                               [{v:'이사장', f:'이사장<div style="color:blue; ">홍길동</div>'},
-	                               '', '연락처 : 010-1111-1111'],
-	                               [{v:'부이사장', f:'부이사장<div style="color:blue;">홍일동</div>'},
-	                               '이사장', '연락처 : 010-1111-0001'],
-	                               [{v:'총괄팀장', f:'총괄팀장<div style="color:blue;">홍삼동</div>'},
-	                               '이사장', '연락처 : 010-1111-0003'],
-	                           
-	                               [{v:'총괄본부장', f:'총괄본부장<div style="color:blue;">홍이동</div>'},
-	                               '이사장', '010-1111-0002'],
-	                           
-	                               ['사업팀', '총괄팀장', '010-2222-0001'],
-	                               ['관리팀', '총괄팀장', '010-3333-0001'],
-	                               ['영업팀', '총괄팀장', '010-4444-0001'],
-	                               ['안전팀', '총괄팀장', '010-5555-0001'],
-	                               ['전산실', '총괄팀장', '010-6666-0001'],
+	                               '', '연락처 : '],
 	                               
-	                               ['팀장', '사업팀', '010-2222-0001'],
-	                               ['대리', '팀장', '010-2222-0001']
+	                           	   ['부이사장','이사장',''],
+	                           	   ['총괄팀장','이사장',''],
+	                           	   ['총괄본부장','이사장',''],
+	                               ['사업팀', '총괄팀장', ''],
+	                               ['관리팀', '총괄팀장', ''],
+	                               ['영업팀', '총괄팀장', ''],
+	                               ['안전팀', '총괄팀장', ''],
+	                               ['전산실', '총괄팀장', ''],
+	                               ['팀장', '사업팀', ''],
+	                               ['대리', '팀장', '']
 	                               ]);
 	                       
 	                               var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));

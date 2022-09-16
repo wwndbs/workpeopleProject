@@ -38,12 +38,12 @@
 		                    <h1> 주소록 </h1>
 		                    <form id="tel_2">
 		                        <ul>
-		                            <li style="width: 80px;"><a href="">전체</a></li>
-		                            <li style="width: 80px;"><a href="">인사부</a></li>
-		                            <li style="width: 80px;"><a href="">총무부</a></li>
-		                            <li style="width: 80px;"><a href="">개발부</a></li>
-		                            <li style="width: 80px;"><a href="">영업부</a></li>
-		                            <li style="width: 80px;"><a href="">회계부</a></li>
+		                            <li style="width: 80px;"><a href="tel.me">전체</a></li>
+		                            <li style="width: 80px;"><a href="selectTel.me?dep=인사팀">인사팀</a></li>
+		                            <li style="width: 80px;"><a href="selectTel.me?dep=총무팀">총무팀</a></li>
+		                            <li style="width: 80px;"><a href="selectTel.me?dep=개발팀">개발팀</a></li>
+		                            <li style="width: 80px;"><a href="selectTel.me?dep=영업팀">영업팀</a></li>
+		                            <li style="width: 80px;"><a href="selectTel.me?dep=회계팀">회계팀</a></li>
 		                        </ul>
 		                    </form>
 		                    <hr>

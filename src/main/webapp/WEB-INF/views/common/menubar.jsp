@@ -183,7 +183,7 @@
 
 				<ul class="sidebar-sub-nav collapse" id="navExtra2">
 					<li class="sidebar-nav-item">
-						<a href="./layouts/login.html" class="sidebar-nav-link">
+						<a href="orgchart.co" class="sidebar-nav-link">
 							<span class="sidebar-nav-abbr"> Vi </span> <span class="sidebar-nav-name"> 조직도 조회 </span>
 						</a>
 					</li>

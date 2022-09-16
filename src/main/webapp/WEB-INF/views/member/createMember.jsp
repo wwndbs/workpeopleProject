@@ -138,7 +138,7 @@
                                 </table>
                                 <br>
                                 <div align="center">
-                                    <button type="submit" id="loginbtn" class="btn btn-secondary">생성하기</button>
+                                    <button type="submit" id="loginbtn" class="btn btn-primary btn4">생성하기</button>
                                     <button type="reset" id="loginbtn" class="btn btn-secondary">취소하기</button>
                                 </div>
                             </form>

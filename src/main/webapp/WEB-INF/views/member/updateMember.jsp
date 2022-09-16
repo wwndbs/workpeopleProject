@@ -128,7 +128,7 @@
                                     </tr>
 
                                     <tr>
-                                        <td colspan="2" align="center"><input type="text" id="userName" name="userName" class="form-control" style="height:40px;" placeholder="${loginUser.userName}" required readonly></td>
+                                        <td colspan="2" align="center"><input type="text" id="userName" name="userName" class="form-control" style="height:40px;" value="${loginUser.userName}" required readonly></td>
                                     </tr>
 
                                     <tr>
@@ -136,7 +136,7 @@
                                     </tr>
 
                                     <tr>
-                                        <td colspan="2" align="center"><input type="text" id="phone" name="phone" class="form-control" style="height:40px;" placeholder="${loginUser.phone}" required></td>
+                                        <td colspan="2" align="center"><input type="text" id="phone" name="phone" class="form-control" style="height:40px;" value="${loginUser.phone}" required></td>
                                     </tr>
                                     
                                     <tr>
@@ -144,7 +144,7 @@
                                     </tr>
 
                                     <tr>
-                                        <td colspan="2" align="center"><input type="text" id="userEmail" name="userEmail" class="form-control" style="height:40px;" placeholder="${loginUser.userEmail }"></td>
+                                        <td colspan="2" align="center"><input type="text" id="userEmail" name="userEmail" class="form-control" style="height:40px;" value="${loginUser.userEmail }"></td>
                                     </tr>
                                     
                                     <tr>
@@ -152,7 +152,7 @@
                                     </tr>
 
                                     <tr>
-                                        <td align="center"><input type="text" id="birthday" name="birthday" class="form-control" style="height:40px;" placeholder="${loginUser.birthday }"></td>
+                                        <td align="center"><input type="text" id="birthday" name="birthday" class="form-control" style="height:40px;" value="${loginUser.birthday }"></td>
                                     </tr>
                                     
                                     <tr>
@@ -160,13 +160,13 @@
                                     </tr>
 
                                     <tr>
-                                        <td colspan="2" align="center"><input type="text" id="createDate" class="form-control" name="createDate" style="height:40px;" placeholder="${loginUser.createDate }" required readonly></td>
+                                        <td colspan="2" align="center"><input type="text" id="createDate" class="form-control" name="createDate" style="height:40px;" value="${loginUser.createDate }" required readonly></td>
                                     </tr>
                                 </table>
                                 <br>
                                 <div align="center">
                                     <a data-toggle="modal" class="btn btn-secondary" data-target="#passwordModal" style="color:white;" >비밀번호 변경</a> 
-                                    <button type="submit" class="btn btn-secondary" >저장하기</button>
+                                    <button type="submit" class="btn btn-primary btn4" >저장하기</button>
                                     <button type="reset" class="btn btn-secondary" >취소하기</button>
                                 </div>
                             </form>

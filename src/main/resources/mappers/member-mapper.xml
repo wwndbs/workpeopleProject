@@ -197,4 +197,31 @@
 			    by user_no desc
 	</select>
 	
+	
+	<select id="selectTelListCount" resultType="_int">
+			select 
+				   count(*)
+			  from member
+			 where status = 'N'
+			 and dep_name LIKE '%'||#{dep}||'%'
+	</select>
+	
+	
+	<select id="selectTelList" resultMap="memberResult">
+			select
+				   user_no
+				 , user_name
+				 , email
+				 , dep_name
+				 , job_name
+				 , prof_img
+				 , phone
+			  from member
+			 where status = 'N'
+			 and dep_name LIKE '%'||#{dep}||'%'
+			 order 
+			    by user_no desc
+	</select>
+	
+	
 </mapper>	  
