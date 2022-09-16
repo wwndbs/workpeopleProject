@@ -29,7 +29,7 @@
 	
 	#holiday-personal-calendar {
 		height:850px;
-	}
+	}	
 
 </style>
 
