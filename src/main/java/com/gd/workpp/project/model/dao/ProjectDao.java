@@ -14,9 +14,16 @@ import com.gd.workpp.project.model.vo.Project;
 @Repository
 public class ProjectDao {
 	
-	// 내프로젝트조회 리스트
+	// 내프로젝트조회 리스트 
+	// 로그인한 회원의 부서명 전달받기 , sql에도 전달하고
+	// 컨트롤러서부터 계속 부서명을 전달해야됨 (jsp는 조건문x)
 	public ArrayList<Project> selectList(SqlSessionTemplate sqlSession){
 		return (ArrayList)sqlSession.selectList("projectMapper.selectList");
+	}
+	
+	// 내프로젝트 부서리스트 조회
+	public ArrayList<Project> selectMyProList(SqlSessionTemplate sqlSession, int projectNo){
+		return (ArrayList)sqlSession.selectList("projectMapper.selectMyProList", projectNo);
 	}
 	
 	// 프로젝트게시물리스트 페이징

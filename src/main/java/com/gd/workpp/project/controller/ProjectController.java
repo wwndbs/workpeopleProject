@@ -29,11 +29,16 @@ public class ProjectController {
 	
 	// 내프로젝트 리스트
 	@RequestMapping("myProject.pr")
-	public ModelAndView myProjectList(ModelAndView mv) {
+	public ModelAndView myProjectList(ModelAndView mv, String[] args) {
 		ArrayList<Project> list = pService.selectList();
+		
+		
+		//String[] splited = str.split(",");
 		
 		mv.addObject("list", list)
 		  .setViewName("project/myProjectList");
+		
+		System.out.println(list);
 		
 		return mv;
 	}	
