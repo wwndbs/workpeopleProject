@@ -23,7 +23,7 @@
 					<div class="search-wrapper">
 						<span>결재조회</span>
 						<form class="search-area" action="">
-							<input type="text" placeholder="결재검색" class="form-control">
+							<input type="text" placeholder="결재검색" class="form-control" id="search">
 							<button class="btn btn-primary">검색</button>
 						</form>
 					</div>
@@ -208,6 +208,15 @@
 				}
 			})
 		}
+	</script>
+	
+	<script>
+		$(function(){
+			$("#search").keydown(function(){
+				let keyword = $("#search").val();
+				console.log(keyword);
+			})
+		})
 	</script>
 	
 	<jsp:include page="../common/footer.jsp"/>

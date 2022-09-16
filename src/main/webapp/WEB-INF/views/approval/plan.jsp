@@ -149,36 +149,7 @@
 		</div>
 	</div>
 
-	<!--summernote-->
-	<script>
-	    $(document).ready(function() {
-	        $('#summernote').summernote({
-	          minHeight: 390,  // 최소 높이
-	          maxHeight: 800,  // 최대 높이
-	          focus: false,    // 에디터 로딩후 포커스를 맞출지 여부
-	          lang: "ko-KR",   // 한글 설정
-	          tabsize: 2,
-	          height: 120,
-	          toolbar: [
-	          ['fontsize', ['fontsize']],    // 글자 크기 설정
-	          ['style', ['style']],
-	          ['font', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],
-	          ['color', ['color']],
-	          ['para', ['ul', 'ol', 'paragraph']],
-	          ['table', ['table']],
-	          ['view', ['fullscreen', 'codeview', 'help']]
-	          ]
-	         });
-	      });
-
-		$(function() {
-			$('#department-list').hide();
-		})
-
-		$('#department').click(function() {
-			$('#department-list').toggle();
-		});
-	</script>
+	<jsp:include page="approvalModal.jsp" />
 
 	<jsp:include page="../common/footer.jsp" />
 </body>
