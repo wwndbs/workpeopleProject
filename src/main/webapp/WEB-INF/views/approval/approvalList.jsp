@@ -6,6 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- favicon 설정 -->
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" href="resources/images/favicon.ico" type="image/x-icon">
 </head>
 <body>
 	<div class="adminx-container">
@@ -23,7 +26,7 @@
 					<div class="search-wrapper">
 						<span>결재조회</span>
 						<form class="search-area" action="">
-							<input type="text" placeholder="결재검색" class="form-control">
+							<input type="text" placeholder="결재검색" class="form-control" id="search">
 							<button class="btn btn-primary">검색</button>
 						</form>
 					</div>
@@ -208,6 +211,15 @@
 				}
 			})
 		}
+	</script>
+	
+	<script>
+		$(function(){
+			$("#search").keydown(function(){
+				let keyword = $("#search").val();
+				console.log(keyword);
+			})
+		})
 	</script>
 	
 	<jsp:include page="../common/footer.jsp"/>

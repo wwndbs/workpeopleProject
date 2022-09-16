@@ -6,6 +6,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- favicon 설정 -->
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" href="resources/images/favicon.ico" type="image/x-icon">
 <style>
       .adminx-content{height: 100vh;}
       .div3{width: 50%; margin: 0 auto; border-radius: 5px; text-align: center;}
@@ -271,30 +274,31 @@
 	                  				data: {no:${pb.proBoardNo}},
 	                  				success:function(list){
 	                  					console.log(list);
-	                  					let value = "";
+	                  					
+	                  					let value = "";	
 	                  					for(let i=0; i<list.length; i++){
 	                  						value += '<div class="reply1" style="display: inline-block;" >'
 		                  							+	 '<img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px; float: left; margin: 3px 0px 0px 0px;">'
 					              	                +    '<div style="margin: 0px 0px 0px 50px; text-align: left;">'
 					          	                    +      '<span style="float: left;"><b>' + list[i].pbUserName + list[i].pbJobName + '(' + list[i].pbDepName + ')&nbsp;</b></span>'
 					          	                    +      '<span style="float: left;">' + list[i].rCreateDate + '</span>'
-					          	                    +      '<div class="rMD" style="float: right; font-size: 13.5px; margin: -10px 0px 0px 0px">'  
-					          	                    +        '<span class="rModify">수정</span>&nbsp;'
-					          	                    +        '<span class="rDelete">삭제</span>'
-					          	                    +      '</div>'
+					          	                    +      '<div style="float: right; font-size: 13.5px; margin: -10px 0px 0px 0px">';
+		                  					
+					          	          // if(${loginUser.userNo} == ${pb.replyWriter}){   
+					          	        	//value +=       '<span class="rModify">수정</span>&nbsp'
+		          	                       //         +      '<span class="rDelete">삭제</span>';
+					          	          // }	
+					          	           
+					          	            value +=       '</div>'
 					          	                    +      '<br>'
 					          	                    +      '<span>' + list[i].proReply + '</span>'
 					          	                    +    '</div>'
-					          	                    + '</div>'
-					          	                    
-											//if(${loginUser.userNo} == ${pb.replyWriter}){
-												//console.log("가나다라");
-												//$(".rMD").html('<span class="rModify">수정</span>&nbsp;' + '<span class="rDelete">삭제</span>');
-											//}					          	                    
-					          	        }              
+					          	                    + '</div>';				
+	                  					}     
 					          	                    
 	                  					$(".replyArea2").html(value);
 	                  					$("#rcount").text(list.length);
+	                  					
 	                  					/* 
 	                  					for(let i=0; i<list.length; i++){
 	                  						value += '<div class="reply1" style="display: inline-block;" >'
@@ -316,6 +320,29 @@
 					          	                    + '</div>'				          	        	
 					          	        }                   			
 	                  					  */
+	                  					  
+	                  					/*
+	                  					for(let i=0; i<list.length; i++){
+                  						value += '<div class="reply1" style="display: inline-block;" >'
+	                  							+	 '<img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px; float: left; margin: 3px 0px 0px 0px;">'
+				              	                +    '<div style="margin: 0px 0px 0px 50px; text-align: left;">'
+				          	                    +      '<span style="float: left;"><b>' + list[i].pbUserName + list[i].pbJobName + '(' + list[i].pbDepName + ')&nbsp;</b></span>'
+				          	                    +      '<span style="float: left;">' + list[i].rCreateDate + '</span>'
+				          	                    +      '<div class="rMD" style="float: right; font-size: 13.5px; margin: -10px 0px 0px 0px">'  
+				          	                    +        '<span class="rModify">수정</span>&nbsp;'
+				          	                    +        '<span class="rDelete">삭제</span>'
+				          	                    +      '</div>'
+				          	                    +      '<br>'
+				          	                    +      '<span>' + list[i].proReply + '</span>'
+				          	                    +    '</div>'
+				          	                    + '</div>';
+				      	                         
+										if(${loginUser.userNo} == ${pb.replyWriter}){
+											console.log("가나다라");
+											$(".rMD").html('<span class="rModify">수정</span>&nbsp;' + '<span class="rDelete">삭제</span>');
+										}					          	                    
+				          	        }  
+	                  					*/  
 	                  				},error:function(){
 	                  					console.log("댓글리스트조회용 ajax통신 실패");
 	                  				}

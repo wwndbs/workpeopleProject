@@ -5,6 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- favicon 설정 -->
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="icon" href="resources/images/favicon.ico" type="image/x-icon">
 </head>
 <body>
 	<div class="adminx-container">
@@ -61,10 +64,10 @@
 	<script>
 		function insertPage(num){
 			switch(num){
-				case 1 : location.href="overtime.ap"; break;
-				case 2 : location.href="vacation.ap"; break;
-				case 3 : location.href="absence.ap"; break;
-				case 4 : location.href="plan.ap"; break;
+				case 1 : location.href="overtime.ap?form=연장근무신청서"; break;
+				case 2 : location.href="vacation.ap?form=휴가신청서"; break;
+				case 3 : location.href="absence.ap?form=결근사유서"; break;
+				case 4 : location.href="plan.ap?form=업무기안서"; break;
 			}
 		}
 	</script>

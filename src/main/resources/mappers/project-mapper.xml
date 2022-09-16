@@ -48,7 +48,7 @@
 	
 	<resultMap type="ProReply" id="proReplyResult">
 		<result column="pro_reply_no" property="proReplyNo"/>
-		<result column="user_no" property="replyWriter"/>
+		<result column="replyWriter" property="replyWriter"/>
 		<result column="pro_reply" property="proReply"/>
 		<result column="create_date" property="rCreateDate"/>
 		<result column="modify_date" property="rModifyDate"/>
@@ -219,6 +219,7 @@
 		     , m.dep_name as "pbDepName"
 		     , to_char(pr.create_date, 'YYYY-MM-DD') as "rCreateDate"
 		     , to_char(pr.modify_date, 'YYYY-MM-DD') as "rModifyDate"
+		     , pr.user_no as "replyWriter"
 		     , pr.pro_reply
 		  from pro_reply pr
 		  join member m on (pr.user_no = m.user_no)
