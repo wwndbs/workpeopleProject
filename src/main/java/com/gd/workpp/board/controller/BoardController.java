@@ -116,15 +116,28 @@ public class BoardController {
 
 	// 게시글 임시저장
 	@RequestMapping("save.bo")
-	public String ajaxSaveBoard(Board b, MultipartFile file, HttpSession session) {
-
-		//Attachment at = new Attachment();
+	public void ajaxSaveBoard(Board b, MultipartFile file, HttpSession session) {
 		
-		System.out.println(b);
-		System.out.println(file);
+		/*
+		 * * 임시저장 여부는 boardNo이 빈칸이면 새글, 채워져있으면 임시저장글
+		 *   첨부파일은 계속 누를 때마다 삭제하고 다시 삽입
+		 * 
+		 * == 임시저장 ==
+		 * - 새로 임시저장 : saveBoard
+		 * - 임시저장 갱신 : updateSave
+		 * 
+		 * == 등록 ==
+		 * - 새로 등록 : insertBoard
+		 * - 임시저장 불러와서 등록 : insert
+		 */
+		
+		if(!b.getTopExp().equals("Y")) {
+			b.setTopExp("N");
+		}
+		
+		Attachment at = new Attachment();
 		  
 		// 첨부파일이 있을 경우 FileUpload클래스로 파일 변환 후 Board 객체에 담기
-		/*
 		if(!file.getOriginalFilename().equals("")) {
 		  
 			String saveFilePath = FileUpload.saveFile(file, session,"resources/board_upfiles");
@@ -134,22 +147,25 @@ public class BoardController {
 			at.setRefType(2);
 		  
 		}
-		  
-		int result = bService.insertBoard(b, at);
-		  
-		if(result > 0) { // 등록 성공
-		  
-			session.setAttribute("modalMsg", "게시글이 임시저장되었습니다."); 
-			return "redirect:list.bo?no=" + b.getBoardType() + "&dept=" + b.getDepName();
-		  
-		}else { // 등록 실패
-		  
-			model.addAttribute("errorMsg", "게시글 등록에 실패했습니다."); 
-			return "common/errorPage";
-		  
+		
+		if(b.getBoardNo().equals("")) { // 새로 임시저장
+			
+			int result = bService.saveBoard(b, at);
+			//String boardNo = bService.selectBoardNo();
+			
+			if(result > 0) {
+				
+				
+				
+			}else {
+				
+			}
+			
+		}else { // 임시저장 업데이트
+			
 		}
-		*/
-		return null;
+		  
+		
 
 	}
 

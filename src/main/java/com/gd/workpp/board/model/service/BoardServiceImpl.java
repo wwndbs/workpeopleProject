@@ -31,6 +31,19 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
+	public int saveBoard(Board b, Attachment at) {
+		
+		int result1 = bDao.saveBoard(sqlSession, b);
+		
+		int result2 = 1;
+		if(at != null) {
+			result2 = bDao.saveAttachment(sqlSession, at);
+		}
+		
+		return result1 * result2;
+	}	
+	
+	@Override
 	public int insertBoard(Board b, Attachment at) {
 		
 		int result1 = bDao.insertBoard(sqlSession, b);

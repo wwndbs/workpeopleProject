@@ -12,6 +12,9 @@ public interface BoardService {
 	int selectListCount(int no, String depName);
 	ArrayList<Board> selectList(PageInfo pi, int no, String depName);
 	
+	// 게시글 임시저장
+	int saveBoard(Board b, Attachment at);
+	
 	// 게시글 작성
 	int insertBoard(Board b, Attachment at);
 	
