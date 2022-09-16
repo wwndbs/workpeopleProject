@@ -36,6 +36,8 @@ public class BoardController {
 
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
 		ArrayList<Board> list = bService.selectList(pi, no, depName);
+		
+		System.out.println(list);
 
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
@@ -116,15 +118,15 @@ public class BoardController {
 
 	// 게시글 임시저장
 	@RequestMapping("save.bo")
-	public String ajaxSaveBoard(Board b, MultipartFile file, HttpSession session) {
-
-		//Attachment at = new Attachment();
+	public void ajaxSaveBoard(Board b, MultipartFile file, HttpSession session) {
 		
-		System.out.println(b);
-		System.out.println(file);
+		/*
+		 * 
+		 */
+
+		Attachment at = new Attachment();
 		  
 		// 첨부파일이 있을 경우 FileUpload클래스로 파일 변환 후 Board 객체에 담기
-		/*
 		if(!file.getOriginalFilename().equals("")) {
 		  
 			String saveFilePath = FileUpload.saveFile(file, session,"resources/board_upfiles");
@@ -137,19 +139,7 @@ public class BoardController {
 		  
 		int result = bService.insertBoard(b, at);
 		  
-		if(result > 0) { // 등록 성공
-		  
-			session.setAttribute("modalMsg", "게시글이 임시저장되었습니다."); 
-			return "redirect:list.bo?no=" + b.getBoardType() + "&dept=" + b.getDepName();
-		  
-		}else { // 등록 실패
-		  
-			model.addAttribute("errorMsg", "게시글 등록에 실패했습니다."); 
-			return "common/errorPage";
-		  
-		}
-		*/
-		return null;
+		
 
 	}
 

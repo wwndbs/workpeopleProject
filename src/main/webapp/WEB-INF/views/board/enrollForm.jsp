@@ -252,8 +252,6 @@
                                 	<input type="hidden" name="userNo" value="${ loginUser.userNo }">
                                 	<input type="hidden" name="boardType" value="${ typeNo }">
                                 	<input type="hidden" name="depName" value="${ loginUser.depName }">
-                                	<input type="hidden" name="saveStatus">
-                                	<input type="hidden" name="changeName">
                                     <tr>
                                         <th>
                                             <span class="title">제목</span>
@@ -436,40 +434,16 @@
                       </form>
                       
                       <script>
-                      	/* $(function(){
-                      		
-                      		// boardNo, changeName, 임시저장여부 도 넘겨줘야 함 (임시저장을 반복할 경우)
-                      		$.ajax(function(){
-                      			url: "save.bo",
-                      			data: {
-                      				boardNo: 
-                      				userNo: ${ loginUser.userNo },
-                      				boardType: ${ typeNo },
-                      				boardTitle: $(".txt").val(),
-                      				boardContent: $("#summernote").val(),
-                      				topExp: $("#chkButton").val(),
-                      				depName: "${ loginUser.depName }",
-                      				formData
-                      			},
-                      			type: "POST",
-                      			enctype: "multipart/form-data",
-                      			processData: false,
-                      			contentType: false,
-                      			success: function(){
-                      				
-                      			},error: function(){
-                      				
-                      			}
-                      		});
-                      		
-                      	}) */
-                      	
+                      
                       	function save(){
                       		
+                      		// form 요소를 FormData로 만들기 (input 타입에 있는 값들 담김, 하지만 첨부파일은 담기지 않음)
                       		let formData = new FormData(document.getElementById("enrollForm"));
                       		
+                      		// 첨부파일 뽑아서 변수에 담기
                       		let files = $("input[name=file]")[0].files;
                       		
+                      		// FormData에 첨부파일도 더하기
                       		formData.append("file", files[0]);
                       		
                       		$.ajax({
