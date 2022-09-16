@@ -117,7 +117,12 @@
 								nowIndicator : true, // 현재 시간 마크
 								dayMaxEvents : true, // 이벤트가 오버되면 높이 제한
 								dayPopoverFormat: { year: 'numeric', month: 'long', day: 'numeric' },
-							    events: data
+							    events: data,
+							    eventClick: function(info){
+							    	   //클릭시 구글캘린더 url로 이동하는거 막는 함수
+							    	   info.jsEvent.stopPropagation();
+							    	   info.jsEvent.preventDefault();
+							    	 }
 		
 							});
 							
