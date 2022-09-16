@@ -150,14 +150,14 @@
                      <ul>
                         <li>근태</li>
                         <li>
-                           <a href=""><i class="fas fa-ellipsis-h"></i></a>
+                           <a href="commute.at"><i class="fas fa-ellipsis-h"></i></a>
                         </li>
                      </ul>
-                     <div id="clock">
-                        <span>2022년 12월 12일 (월)</span>
-                        <h3><strong>12:00:00</strong></h3>
-                     </div>
                      <div id="time">
+	                    <div id="clock-div">
+	                    	<div id="Clockday">00/00/00</div>
+	        				<div id="Clock">00:00</div>
+	                    </div>
                         <span><strong>출근시간</strong></span>
                         &nbsp;&nbsp;
                         <span><strong style="color: gray;">09:16</strong></span>
@@ -167,8 +167,8 @@
                         <span><strong style="color: gray;">미확인</strong></span>
                      </div>
                      <div id="btn">
-                        <button class="btn btn-primary">출근</button>
-                        <button class="btn btn-secondary">퇴근</button>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#commute-start-modal" data-backdrop="static">출근</button>
+                        <button class="btn btn-danger" data-toggle="modal" data-target="#commute-end-modal" data-backdrop="static">퇴근</button>
                      </div>
                   </div>
    
@@ -251,6 +251,93 @@
          })
       })
    </script>
+   
+	<script>
+	// 장서원 / 근태 부분 시계 구현
+		function Clock() {
+		    var date = new Date();
+		    var YYYY = String(date.getFullYear());
+		    var MM = String(date.getMonth() + 1);
+		    var DD = Zero(date.getDate());
+		    var hh = Zero(date.getHours());
+		    var mm = Zero(date.getMinutes());
+		    var ss = Zero(date.getSeconds());
+		    var Week = Weekday();
+		
+		    Write(YYYY, MM, DD, hh, mm, ss, Week);
+		   //시계 1의자리수가 나올때 0을 넣어주는 함수 (ex : 1초 -> 01초)
+		
+		    function Zero(num) {
+		        return (num < 10 ? '0' + num : '' + num);
+		    }
+		
+		   //요일을 추가해주는 함수
+		    function Weekday() {
+		        var Week = ['일', '월', '화', '수', '목', '금', '토'];
+		        var Weekday = date.getDay();
+		        return Week[Weekday];
+		    }
+		
+		   //시계부분을 써주는 함수
+		    function Write(YYYY, MM, DD, hh, mm, ss, Week) {
+		        var Clockday = document.getElementById("Clockday");
+		        var Clock = document.getElementById("Clock");
+		        Clockday.innerText = YYYY + '/' + MM + '/' + DD + '(' + Week + ')';
+		        Clock.innerText = hh + ':' + mm + ':' + ss;
+		    }
+		}
+		
+		setInterval(Clock, 1000); //1초(1000)마다 Clock함수 재실행
+		
+	</script>
+	
+	<!-- 장서원 / 출근 등록 모달 -->
+	<form action="" method="POST">
+		<div class="modal" id="commute-start-modal">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<button type="button" class="modal_close" data-dismiss="modal" style="margin-left: 95%;">&times;</button>
+					</div>
+					<!-- Modal body -->
+					<div class="modal-body" style="text-align:center;">
+					    출근등록 하시겠습니까?
+					</div>
+					<!-- Modal footer -->
+					<div class="modal-footer" style="justify-content:center;">
+						<button type="submit" class="btn btn-jyok" id="commute-start-btn">등록</button>
+						<button type="button" class="btn btn-jycancle" data-dismiss="modal">취소</button>					
+					</div>
+				</div>
+			</div>
+		</div>
+    </form>
+    
+    <!-- 장서원 / 퇴근 등록 모달 -->
+	<form action="" method="POST">
+		<div class="modal" id="commute-end-modal">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<button type="button" class="modal_close" data-dismiss="modal" style="margin-left: 95%;">&times;</button>
+					</div>
+					<!-- Modal body -->
+					<div class="modal-body" style="text-align:center;">
+					    퇴근등록 하시겠습니까?
+					</div>
+					<!-- Modal footer -->
+					<div class="modal-footer" style="justify-content:center;">
+						<button type="submit" class="btn btn-jyok" id="commute-end-btn">등록</button>
+						<button type="button" class="btn btn-jycancle" data-dismiss="modal">취소</button>
+					</div>
+				</div>
+			</div>
+		</div>
+    </form>
+   
+   
    <jsp:include page="common/footer.jsp"/>
 </body>
 </html>

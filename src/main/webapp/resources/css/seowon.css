@@ -141,5 +141,27 @@
 		white-space: normal;
 	}
 	
+/* 근태 부분 시계 구현 main.jsp */
+	/*CSS : 시계를 꾸미는 부분*/
+	
+	#clock-div {
+	     width: 100%;
+	     text-align: center;
+	     color: rgb(0, 135, 239);
+	     margin-bottom:30px;
+	 }
+	 
+ 	 #Clockday {
+	     color: rgb(0, 135, 239);
+	     font-size:18px;
+	 }
+	 
+	 #Clock {
+	     color: rgb(0, 135, 239);
+	     font-size:40px;
+	 }
+
 /*  */
+
+
 

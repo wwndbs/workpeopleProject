@@ -91,6 +91,20 @@ public class MebmerServiceImpl implements MemberService{
 	public ArrayList<Member> telList(PageInfo pi) {
 		return mDao.telList(sqlSession, pi);
 	}
+	
+
+	@Override
+	public int searchTelListCount(String keyword) {
+		return mDao.searchTelListCount(sqlSession,keyword);
+	}
+
+
+	@Override
+	public ArrayList<Member> searchTelList(PageInfo pi, String keyword) {
+		return mDao.searchTelList(sqlSession, pi, keyword);
+	}
+
+	
 
 	
 
