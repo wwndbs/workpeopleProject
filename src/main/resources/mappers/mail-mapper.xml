@@ -12,10 +12,22 @@
 		<result column="send_date" property="sendDate" />
 		<result column="send_status" property="sendStatus" />
 	</resultMap>
+	
+	<resultMap id="mailStatusResult" type="MailStatus">
+		<result column="mail_no" property="mailNo" />
+		<result column="user_mail" property="userMail" />
+		<result column="user_name" property="userName" />
+		<result column="mail_type" property="mailType" />
+		<result column="mail_read" property="mailRead" />
+		<result column="mail_delete" property="mailDelete" />
+		<result column="mail_spam" property="mailSpam" />
+		<result column="mail_important" property="mailImportant" />
+		<result column="tag_no" property="tagNo" />
+	</resultMap>
 
 	<insert id="insertMail">
 		insert
-		  into Mail
+		  into mail
 		     (
 		       mail_no
 		     , mail_title
@@ -37,7 +49,7 @@
 	
 	<insert id="insertAttachment">
 		insert
-		  into Attachment
+		  into attachment
 		     (
 		       file_no
 		     , ref_type
@@ -54,5 +66,85 @@
 			 , #{changeName}
 			 )
 	</insert>
+	
+ 	<insert id="insertMailStatus">
+		insert
+		  into mail_status
+		     (
+		       mail_no
+		     , user_mail
+		     , user_name
+		     , mail_type
+		     )
+		values
+			 (
+			   seq_mail.currval
+			 , #{userMail}
+			 , #{userName}
+			 , #{mailType}
+			 )
+	</insert>
+	
+	<select id="selectUserName" resultType="String">
+		select
+			   user_name
+		  from member
+		 where email = #{email}
+	</select>
+	
+	<insert id="saveMail">
+		insert
+		  into mail
+		     (
+		       mail_no
+		     , mail_title
+		     , mail_content
+		     , sender
+		     , receiver
+		     , mail_ref
+		     , send_status
+		     )
+		values
+			 (
+			   seq_mail.nextval
+			 , #{mailTitle}
+			 , #{mailContent}
+			 , #{sender}
+			 , #{receiver}
+			 , #{mailRef}
+			 , 'N'
+			 )
+	</insert>
+	
+	<select id="selectCurrMailNo" resultType="String">
+		select
+			   seq_mail.currval
+		  from dual
+	</select>
+	
+	<update id="updateSaveMail">
+		update
+			   mail
+		   set 
+		       mail_title = #{mailTitle}
+		     , mail_content = #{mailContent}
+		     , receiver = #{receiver}
+		     , mail_ref = #{mailRef}
+		 where mail_no = #{mailNo}
+		   and sent_status = 'N'
+	</update>
+	
+	<update id="sendSaveMail">
+		update
+			   mail
+		   set 
+		       mail_title = #{mailTitle}
+		     , mail_content = #{mailContent}
+		     , receiver = #{receiver}
+		     , mail_ref = #{mailRef}
+		     , send_status = 'Y'
+		 where mail_no = #{mailNo}
+		   and sent_status = 'N'
+	</update>
 
 </mapper>

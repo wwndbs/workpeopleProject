@@ -98,6 +98,8 @@
 	                  </button>
 	                </div>
 	                <!-- 상단 버튼 박스 끝 -->
+	                
+	                <input type="hidden" name="mailNo">
 	
 	                <table class="mail-table-write">
 	                  <tr>
@@ -177,7 +179,7 @@
 	                  	// 나에게 체크박스
 	                  	$("#toMe").change(function(){
 	                  		
-	                  		if($(this).is(':checked')){
+	                  		if($(this).is(':checked')){ // 체크 시
 	                  			
 	                  			// 주소 li요소로 추가
 	                  			let value="";
@@ -192,7 +194,7 @@
 	
 	                            $("#toAddrWrap .mail-addr-create").before(value);
 	                  		  		
-				                // input value에 입력한 주소 추가
+				                // input value에 주소값 추가
 					            let currTo = $("#receiver").val();
 					            if(currTo == ''){ // 처음 주소 추가 시
 					            	$("#receiver").val("${ loginUser.email }");
@@ -200,7 +202,7 @@
 					            	$("#receiver").val(currTo + "," + "${ loginUser.email }");
 					            }
 					            	
-	                  		}else{
+	                  		}else{ // 체크 해제 시
 	                  			
 	                  			// 주소 li요소 삭제
 	                  			$(".toMe").remove();
@@ -212,6 +214,8 @@
 			                    
 				              	$("#receiver").val(currToArr.join());
 	                  		}
+	                  		
+	                  		toLimit();
 	                  		
 	                  	})
 	                  	
@@ -256,11 +260,7 @@
 			              		$("#receiver").val(currTo + "," + $addr);
 			              	}
 			              	
-			              	// 받는 사람 최대 명수 제한
-			              	if(document.querySelectorAll('.to-li').length == 3){
-			              		console.log("3개끝");
-			              		$("#to").attr("readonly", true);
-			              	}
+			              	toLimit();
 			              	
 		                }
 		                  
@@ -280,7 +280,7 @@
 							
 						  	// 주소 li요소로 추가
 						    let value = "";
-						    value +='<li class="mail-addr-out">'
+						    value +='<li class="mail-addr-out ref-li">'
 						          + '<span class="addr-block">' 
 						          + $addr
 						          + '</span>'
@@ -299,6 +299,8 @@
 				            }else{
 				            	$("#mailRef").val(currRef + "," + $addr);
 				            }
+				            
+				            refLimit();
 							       
 		  	  	          }
 		  	            
@@ -322,6 +324,8 @@
 			              	$("#receiver").val(currToArr.join()); // "aaa.com, ccc.com"
 			              	
 			              	console.log($("#receiver").val());
+			              	
+			              	toLimit();
 		                
 		                })
 		                
@@ -331,14 +335,16 @@
 		                	$(this).parent().parent().remove();
 		                 	
 			              	// 현재 참조 input value값 => 배열
-		                    let currRefArr = $("#mailRef").val().split(","); // ["aaa.com", "bbb.com", "ccc.com"]
+		                    let currRefArr = $("#mailRef").val().split(",");
 		                    
 		                    // 삭제할 요소의 text값에서 엔터 제거
-			              	let deleteRef = $(this).parent().prev().text().replace("\n", ""); // "bbb.com"
+			              	let deleteRef = $(this).parent().prev().text().replace("\n", "");
 			              	
 			              	currRefArr.splice(currRefArr.indexOf(deleteRef), 1);
 		                    
-			              	$("#mailRef").val(currRefArr.join()); // "aaa.com, ccc.com"
+			              	$("#mailRef").val(currRefArr.join());
+			              	
+			              	refLimit();
 			              	
 		                })
 		                
@@ -351,10 +357,31 @@
 	                        	return true;
 	                        }else{
 	                        	console.log("유효성 검사 실패");
+	                        	toast("잘못된 주소 형식입니다.");
 	                        	return false;
 	                        }
 	                       
 	                    }
+		                
+		                // 받는 사람 최대 인원 제한
+		                function toLimit(){
+			              	if(document.querySelectorAll('.to-li').length == 3){
+			              		$("#to").attr("readonly", true);
+			              		toast("최대 5명까지 발송 가능합니다.");
+			              	}else{
+			              		$("#to").attr("readonly", false);
+			              	}
+		                }
+		                
+		                // 참조 최대 인원 제한
+		                function refLimit(){
+			              	if(document.querySelectorAll('.ref-li').length == 3){
+			              		$("#ref").attr("readonly", true);
+			              		toast("최대 5명까지 참조 가능합니다.");
+			              	}else{
+			              		$("#ref").attr("readonly", false);
+			              	}
+		                }
 		                
 	                  </script>
 	                    
@@ -382,7 +409,7 @@
 	                    <td></td>
 	                    <td></td>
 	                    <td>
-	                      <div class="mail-filebox open">
+	                      <div class="mail-filebox open" id="dropZone">
 	                        <a class="file-empty" >
 	                          <i class="material-icons-sharp" style="font-size: 16px; vertical-align: -3px;">
 	                            attach_file
@@ -404,6 +431,7 @@
 		                
 		                // 파일첨부 박스 접었다 폈다 기능
 		                $(document).on("click", "#btn-filebox", function(){
+		                	
 			                if($(".mail-filebox").hasClass("open")){
 			              	  
 				                $(".mail-filebox").addClass("hide").removeClass("open");
@@ -420,6 +448,7 @@
 				                $("#td-filebtn").append('<ion-icon id="btn-filebox" name="caret-up-circle-outline"></ion-icon>');
 				                
 				            }
+			                
 		                })
 	                    
 		                // mail-filebox div에 첨부한 파일 리스트 추가
@@ -437,6 +466,7 @@
 			                                    
 			               	$(".file-empty").css("display", "none");
 			               	$(".mail-filebox").append(value);
+			               	
 		                }
 		                
 		                // 파일 추가
@@ -449,7 +479,7 @@
 		                	
 	
 			                if(files.length > remainFile){
-			                    alert("첨부파일은 최대 " + maxFile + "개 까지 첨부 가능합니다.");
+			                    toast("첨부파일은 최대 " + maxFile + "개 까지 첨부 가능합니다.");
 			                    settingFile();
 			                }else{
 			                    let currFileArr = Array.from(files);
@@ -459,7 +489,7 @@
 			                    
 			                	settingFile();
 		
-					          $(".each-file").remove();
+					            $(".each-file").remove();
 			                	selectFileList(document.querySelector("input[name=upfile]"));
 			                }
 			                
@@ -467,37 +497,85 @@
 		                  
 		                // 파일 리스트에서 파일 개별 삭제
 		                $(document).on("click", ".btn-file-remove>ion-icon", function(){
+		                	
 				            $(this).parent().parent().remove();
 				              
-				              let files = $("input[name=upfile]")[0].files;  // FileList
-				              fileArr = Array.from(files); // FileList => Array
-				              
-				              fileArr.splice($(this).attr("index"), 1);
-				              
-				              settingFile();
-			              	  	 
-			              	// (다른 방법) 현재 이벤트가 발생한 요소의 상위요소들 중 클래스가 each-file인 요소 선택한 담에 
-			              	// 그 요소 뒤에있는 요소의 후손요소들 중 .btn-file-remove>ion-icon의 attr("index", 기존의 값에 -1)
+				            let files = $("input[name=upfile]")[0].files;  // FileList
+				            fileArr = Array.from(files); // FileList => Array
+				            
+				            fileArr.splice($(this).attr("index"), 1);
+				            
+				            settingFile();
 			              	
-					          $(".each-file").remove();
-					          if(fileArr.length == 0){
-			                  	 $(".file-empty").css("display", "block");
-					          }else{
-				                 	selectFileList(document.querySelector("input[name=upfile]"));				            	
-					          }
-		                  })
+					        $(".each-file").remove();
+					        if(fileArr.length == 0){
+			                	 $(".file-empty").css("display", "block");
+					        }else{
+				               selectFileList(document.querySelector("input[name=upfile]"));				            	
+					        }
+					        
+		                })
 		                  
 		                // 파일 전체 삭제
 		                function fileReset(){
+		                	
 		                    $("input[name=upfile]").val('');
 		                    fileArr = [];
 		
 					        $(".each-file").remove();
-		                	    $(".file-empty").css("display", "block");
+		                	$(".file-empty").css("display", "block");
+		                	
 		                }
 		                
-		                // 파일박스에 드래그 앤 드롭
-		                  
+                   		// 파일 드래그 앤 드랍
+		                $(function(){
+                    		
+                    		$("#dropZone").on("dragenter", function(e){
+                    	        e.preventDefault();
+                    	        e.stopPropagation();
+                    	    }).on("dragover", function(e){
+                    	        e.preventDefault();
+                    	        e.stopPropagation();
+                    	        $(this).css("background-color", "#ddd");
+                    	    }).on("dragleave", function(e){
+                    	        e.preventDefault();
+                    	        e.stopPropagation();
+                    	        $(this).css("background-color", "white");
+                    	    }).on('drop', function(e){
+                    			e.preventDefault();
+                    			$(this).css("background-color", "white");
+                    			
+	                            // 드랍된 파일을 뽑아서 담아주기
+	                            var dropFiles = e.originalEvent.dataTransfer.files;
+	                            
+	                            // input file value를 드랍된 파일로 변경
+	                            $("input[name=upfile]")[0].files = dropFiles;
+	                    	
+	    		                let maxFile = 10; // 첨부파일 최대 개수
+	    		                let attFile = document.querySelectorAll('.each-file').length; // 기존 추가된 첨부파일 개수
+	    		                let remainFile = maxFile - attFile; // 추가로 첨부가능한 개수
+	    		                let files = $("input[name=upfile]")[0].files;  // FileList (현재 선택된 첨부파일)
+	    		               
+	    			            if(files.length > remainFile){
+	    			                toast("첨부파일은 최대 " + maxFile + "개 까지 첨부 가능합니다.");
+	    			                settingFile();
+	    			            }else{
+	    			                let currFileArr = Array.from(files);
+	    			            	
+	    			             	// 최초로 파일첨부를 눌렀을 경우 & 다 삭제 되었을 경우
+	    			                fileArr = (fileArr.length == 0) ? currFileArr : fileArr.concat(currFileArr);
+	    			                
+	    			            	settingFile();
+	    					   		$(".each-file").remove();
+	    					   		
+		                    		// 바뀐 파일을 li로 다시 뽑아주기
+	    			            	selectFileList(document.querySelector("input[name=upfile]"));
+	    			            }
+	    		                	
+	    		                console.log($("input[name=upfile]")[0].files);
+                    		})
+                    		
+                    	})
 		                    
 		                function settingFile(){
 		                	
@@ -506,8 +584,8 @@
 				            	  dataTransfer.items.add(file);
 				            })
 			            	$("input[name=upfile]")[0].files = dataTransfer.files;
+				            
 		                }
-		                    
 	                  </script>
 	
 	                  <tr>
@@ -541,12 +619,13 @@
 					</div>
 		   			<!-- 모달 끝 -->
 		   			
-		   			<!-- 토스트 메시지 -->
+		   			<!-- 토스트 메시지 div -->
 		   			<div id="toast" class="">
 					    
 					</div>
 					
 					<script>
+						// 메일 임시저장
 						function saveMail(){
 							
 							let formData = new FormData(document.getElementById("mailForm"));
@@ -563,9 +642,15 @@
 			    			 	contentType: false,
 			    				type: "POST",
 			    			 	data: formData,
-								success:function(){
+								success:function(data){
+									if(data.result > 0){
+										toast("메일을 임시보관함에 저장하였습니다.");
+										$("input[name=mailNo]").val(data.mailNo);
+										
+									}else{
+										toast("메일 임시보관에 실패하였습니다.");
+									}
 									console.log("메일 임시저장 ajax통신 성공");
-									
 								},
 								error:function(){
 									console.log("메일 임시저장 ajax통신 실패");
@@ -574,6 +659,7 @@
 							
 						}
 					
+						// 토스트
 						let removeToast;
 	
 						function toast(string) {
@@ -626,7 +712,6 @@
 		             }
 		           });    
 		           */
-	              
 	            </script>
 	            
 	          </div>

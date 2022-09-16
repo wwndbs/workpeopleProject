@@ -13,7 +13,7 @@ import lombok.ToString;
 @ToString
 public class Mail {
 	
-	private int mailNo;
+	private String mailNo;
 	private String mailTitle;
 	private String mailContent;
 	private String sender;
