@@ -23,6 +23,7 @@
 		<typeAlias type="com.gd.workpp.approval.model.vo.Overtime" alias="Overtime" />
 		<typeAlias type="com.gd.workpp.approval.model.vo.Absence" alias="Absence" />
 		<typeAlias type="com.gd.workpp.approval.model.vo.Plan" alias="Plan" />
+		<typeAlias type="com.gd.workpp.approval.model.vo.Approval" alias="Approval" />
 	</typeAliases>
 	
 	 <mappers>
