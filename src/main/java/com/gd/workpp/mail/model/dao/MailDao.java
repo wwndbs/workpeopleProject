@@ -32,8 +32,24 @@ public class MailDao {
 		return sqlSession.insert("mailMapper.saveMail", m);
 	}
 	
-	public String selectCurrMailNo(SqlSessionTemplate sqlSession) {
+	public int selectCurrMailNo(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("mailMapper.selectCurrMailNo");
+	}
+	
+	public int updateSaveMail(SqlSessionTemplate sqlSession, Mail m) {
+		return sqlSession.insert("mailMapper.updateSaveMail", m);
+	}
+	
+	public ArrayList<Attachment> selectAttachment(SqlSessionTemplate sqlSession, int refNo){
+		return (ArrayList)sqlSession.selectList("mailMapper.selectAttachment", refNo);
+	}
+	
+	public int deleteAttachment(SqlSessionTemplate sqlSession, int refNo) {
+		return sqlSession.delete("mailMapper.deleteAttachment", refNo);
+	}	
+	
+	public int updateSaveMailAttachment(SqlSessionTemplate sqlSession, Attachment at) {
+		return sqlSession.insert("mailMapper.updateSaveMailAttachment", at);
 	}
 	
 }

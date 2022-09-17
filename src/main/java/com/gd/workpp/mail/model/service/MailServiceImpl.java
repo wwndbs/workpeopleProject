@@ -56,7 +56,6 @@ public class MailServiceImpl implements MailService {
 		int result1 = mDao.saveMail(sqlSession, m);
 		
 		int result2 = 1;
-		
 		if(!atList.isEmpty()) {
 			for(Attachment at : atList) {
 				result2 = mDao.insertAttachment(sqlSession, at);
@@ -66,8 +65,31 @@ public class MailServiceImpl implements MailService {
 	}
 	
 	@Override
-	public String selectCurrMailNo() {
+	public int selectCurrMailNo() {
 		return mDao.selectCurrMailNo(sqlSession);
+	}
+	
+	@Override
+	public ArrayList<Attachment> selectAttachment(int refNo) {
+		return mDao.selectAttachment(sqlSession, refNo);
+	}
+	
+	@Override
+	public int deleteAttachment(int refNo) {
+		return mDao.deleteAttachment(sqlSession, refNo);
+	}
+	
+	@Override
+	public int updateSaveMail(Mail m, ArrayList<Attachment> atList) {
+		int result1 = mDao.updateSaveMail(sqlSession, m);
+		
+		int result2 = 1;
+		if(!atList.isEmpty()) {
+			for(Attachment at : atList) {
+				result2 = mDao.updateSaveMailAttachment(sqlSession, at);
+			}
+		}
+		return result1 * result2;
 	}
 	
 	@Override
@@ -79,7 +101,5 @@ public class MailServiceImpl implements MailService {
 	public ArrayList<Mail> selectInboxList(PageInfo pi) {
 		return null;
 	}
-
-
 
 }

@@ -19,8 +19,17 @@ public interface MailService {
 	// 메일 임시저장 서비스
 	int saveMail(Mail m, ArrayList<Attachment> atList);
 	
-	// 메일 임시저장시 마지막 메일번호 조회
-	String selectCurrMailNo();
+	// 임시저장 후 해당 메일번호 조회
+	int selectCurrMailNo();
+
+	// 첨부파일 조회 서비스
+	ArrayList<Attachment> selectAttachment(int refNo);
+	
+	// 첨부파일 삭제 서비스
+	int deleteAttachment(int refNo);
+	
+	// 임시저장한 메일 수정 서비스
+	int updateSaveMail(Mail m, ArrayList<Attachment> atList);
 	
 	// 받은메일함 리스트 페이지 서비스 (페이징)
 	int selectListCount();

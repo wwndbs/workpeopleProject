@@ -26,5 +26,12 @@ public class Attachment {
 		this.originName = originName;
 		this.changeName = changeName;
 	}
+
+	public Attachment(int refNo, String originName, String changeName) {
+		super();
+		this.refNo = refNo;
+		this.originName = originName;
+		this.changeName = changeName;
+	}
 	
 }

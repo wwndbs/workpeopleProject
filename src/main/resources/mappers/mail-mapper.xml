@@ -24,6 +24,16 @@
 		<result column="mail_important" property="mailImportant" />
 		<result column="tag_no" property="tagNo" />
 	</resultMap>
+	
+	<resultMap id="attachmentResult" type="Attachment">
+		<result column="file_no" property="fileNo" />
+		<result column="ref_type" property="refType" />
+		<result column="ref_no" property="refNo" />
+		<result column="origin_name" property="originName" />
+		<result column="change_name" property="changeName" />
+		<result column="upload_date" property="uploadDate" />
+		<result column="file_status" property="fileStatus" />
+	</resultMap>
 
 	<insert id="insertMail">
 		insert
@@ -116,7 +126,7 @@
 			 )
 	</insert>
 	
-	<select id="selectCurrMailNo" resultType="String">
+	<select id="selectCurrMailNo" resultType="_int">
 		select
 			   seq_mail.currval
 		  from dual
@@ -131,8 +141,44 @@
 		     , receiver = #{receiver}
 		     , mail_ref = #{mailRef}
 		 where mail_no = #{mailNo}
-		   and sent_status = 'N'
+		   and send_status = 'N'
 	</update>
+	
+	<select id="selectAttachment" resultMap="attachmentResult">
+		select 
+		       file_no
+		     , change_name
+		  from attachment
+		 where ref_type = 1
+		   and ref_no = #{refNo}
+	</select>
+	
+	<delete id="deleteAttachment">
+		delete
+		  from attachment
+		 where ref_type = 1
+		   and ref_no = #{refNo}
+	</delete>
+	
+	<insert id="updateSaveMailAttachment">
+		insert
+		  into attachment
+		     (
+		       file_no
+		     , ref_type
+		     , ref_no
+		     , origin_name
+		     , change_name
+		     )
+		values
+			 (
+			   seq_file.nextval
+			 , 1
+			 , #{refNo}
+			 , #{originName}
+			 , #{changeName}
+			 )
+	</insert>
 	
 	<update id="sendSaveMail">
 		update
@@ -144,7 +190,7 @@
 		     , mail_ref = #{mailRef}
 		     , send_status = 'Y'
 		 where mail_no = #{mailNo}
-		   and sent_status = 'N'
+		   and send_status = 'N'
 	</update>
 
 </mapper>

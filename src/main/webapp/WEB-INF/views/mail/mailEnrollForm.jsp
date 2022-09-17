@@ -99,7 +99,7 @@
 	                </div>
 	                <!-- 상단 버튼 박스 끝 -->
 	                
-	                <input type="hidden" name="mailNo">
+	                <input type="hidden" name="mailNo"> <!-- 임시저장 여부 구분하기 위한 메일번호 -->
 	
 	                <table class="mail-table-write">
 	                  <tr>
@@ -323,8 +323,6 @@
 			              	
 			              	$("#receiver").val(currToArr.join()); // "aaa.com, ccc.com"
 			              	
-			              	console.log($("#receiver").val());
-			              	
 			              	toLimit();
 		                
 		                })
@@ -476,8 +474,7 @@
 		                  	let attFile = document.querySelectorAll('.each-file').length; // 기존 추가된 첨부파일 개수
 		                  	let remainFile = maxFile - attFile; // 추가로 첨부가능한 개수
 		                	let files = $("input[name=upfile]")[0].files;  // FileList (현재 선택된 첨부파일)
-		                	
-	
+
 			                if(files.length > remainFile){
 			                    toast("첨부파일은 최대 " + maxFile + "개 까지 첨부 가능합니다.");
 			                    settingFile();
@@ -486,7 +483,7 @@
 			                	
 			                 	// 최초로 파일첨부를 눌렀을 경우 & 다 삭제 되었을 경우
 			                    fileArr = (fileArr.length == 0) ? currFileArr : fileArr.concat(currFileArr);
-			                    
+
 			                	settingFile();
 		
 					            $(".each-file").remove();
@@ -572,7 +569,6 @@
 	    			            	selectFileList(document.querySelector("input[name=upfile]"));
 	    			            }
 	    		                	
-	    		                console.log($("input[name=upfile]")[0].files);
                     		})
                     		
                     	})
@@ -632,9 +628,13 @@
 							
 							let files = $("input[name=upfile]")[0].files;
 							
+							console.log(files.length);
+							
+							/* 
 							for(let i=0; i<files.length; i++){
 								formData.append("upfile", files[i]);
 							}
+							 */
 							
 				    		$.ajax({
 				    			url: "save.ma",
@@ -646,7 +646,6 @@
 									if(data.result > 0){
 										toast("메일을 임시보관함에 저장하였습니다.");
 										$("input[name=mailNo]").val(data.mailNo);
-										
 									}else{
 										toast("메일 임시보관에 실패하였습니다.");
 									}
