@@ -4,11 +4,13 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.gd.workpp.board.model.service.BoardService;
@@ -115,8 +117,9 @@ public class BoardController {
 	}
 
 	// 게시글 임시저장
-	@RequestMapping("save.bo")
-	public void ajaxSaveBoard(Board b, MultipartFile file, HttpSession session) {
+	@ResponseBody
+	@RequestMapping(value="save.bo", produces="application/json; charset=UTF-8")
+	public String ajaxSaveBoard(Board b, MultipartFile file, HttpSession session) {
 		
 		/*
 		 * * 임시저장 여부는 boardNo이 빈칸이면 새글, 채워져있으면 임시저장글
@@ -131,8 +134,10 @@ public class BoardController {
 		 * - 임시저장 불러와서 등록 : insert
 		 */
 		
-		if(!b.getTopExp().equals("Y")) {
-			b.setTopExp("N");
+		if(b.getBoardType() == 2) {
+			if(b.getTopExp() == null || !b.getTopExp().equals("Y")) {
+				b.setTopExp("N");
+			}
 		}
 		
 		Attachment at = new Attachment();
@@ -151,20 +156,32 @@ public class BoardController {
 		if(b.getBoardNo().equals("")) { // 새로 임시저장
 			
 			int result = bService.saveBoard(b, at);
-			//String boardNo = bService.selectBoardNo();
+			String boardNo = bService.selectBoardNo();
 			
-			if(result > 0) {
+			if(result > 0) { // 임시저장 성공
 				
+				JSONObject jObj = new JSONObject();
+				jObj.put("result", result);
+				jObj.put("boardNo", boardNo);
 				
+				return jObj.toJSONString();
 				
-			}else {
+			}else { // 임시저장 실패
+				
+				JSONObject jObj = new JSONObject();
+				jObj.put("result", result);
+				
+				return jObj.toJSONString();
 				
 			}
 			
 		}else { // 임시저장 업데이트
 			
+			// 여기부터 시작
+			
+			return "에러임";
+			
 		}
-		  
 		
 
 	}

@@ -36,12 +36,18 @@ public class BoardServiceImpl implements BoardService {
 		int result1 = bDao.saveBoard(sqlSession, b);
 		
 		int result2 = 1;
-		if(at != null) {
+		if(at.getRefNo() == 2) {
 			result2 = bDao.saveAttachment(sqlSession, at);
 		}
 		
 		return result1 * result2;
-	}	
+	}
+	
+	// 임시저장 후 넘길 글번호 조회
+	@Override
+	public String selectBoardNo() {
+		return bDao.selectBoardNo(sqlSession);
+	}
 	
 	@Override
 	public int insertBoard(Board b, Attachment at) {
@@ -55,5 +61,7 @@ public class BoardServiceImpl implements BoardService {
 		
 		return result1 * result2;
 	}
+
+	
 
 }

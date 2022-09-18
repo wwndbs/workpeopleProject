@@ -58,6 +58,8 @@
 		  join member using(user_no)
 		 where b.status = 'Y'
 		   and board_type = #{no}
+		 order
+		    by board_no desc
 	</select>
 	
 	<!-- 게시판(부서) 글 목록 조회 -->
@@ -87,6 +89,8 @@
 		  join member using(user_no)
 		 where b.status = 'Y'
 		   and b.dep_name = #{depName}
+		 order
+		    by board_no desc
 	</select>
 	
 	<!-- 게시글 임시저장 -->
@@ -136,6 +140,13 @@
 		  , #{changeName}
 		  )
 	</insert>
+	
+	<!-- 글번호 조회 -->
+	<select id="selectBoardNo" resultType="String">
+		select
+			   seq_board.currval
+		  from dual
+	</select>
 	
 	<!-- 게시글 삽입 -->
 	<insert id="insertBoard">

@@ -1,3 +1,4 @@
+
 package com.gd.workpp.board.model.dao;
 
 import java.util.ArrayList;
@@ -43,6 +44,10 @@ public class BoardDao {
 	
 	public int saveAttachment(SqlSessionTemplate sqlSession, Attachment at) {
 		return sqlSession.insert("boardMapper.saveAttachment", at);
+	}
+	
+	public String selectBoardNo(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("boardMapper.selectBoardNo");
 	}
 	
 	public int insertBoard(SqlSessionTemplate sqlSession, Board b) {

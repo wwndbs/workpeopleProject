@@ -114,7 +114,7 @@
 	                      	
 	                      	<c:if test="${ pi.currentPage ne pi.maxPage }">
 	                      		<li class="page-item">
-		                          <a class="page-link" href="list.bo?no=1?cpage=${ pi.currentPage + 1 }">›</a>
+		                          <a class="page-link" href="list.bo?no=1&cpage=${ pi.currentPage + 1 }">›</a>
 		                        </li>
 	                      	</c:if>
 	                        

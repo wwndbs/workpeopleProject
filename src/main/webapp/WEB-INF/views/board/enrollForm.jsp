@@ -5,7 +5,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
 <!-- favicon 설정 -->
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 <link rel="icon" href="resources/images/favicon.ico" type="image/x-icon">
@@ -433,6 +432,11 @@
                         </div>
                       </form>
                       
+                      <!-- 토스트 메시지 -->
+			   		  <div id="toast" class="">
+						    
+					  </div>
+                      
                       <script>
                       
                       	function save(){
@@ -452,7 +456,13 @@
                       			type: "POST",
                       			processData: false,
                       			contentType: false,
-                      			success: function(){
+                      			success: function(data){
+                      				if(data.result > 0){
+                      					toast("게시글이 임시저장되었습니다.");
+                      					$("input[name=boardNo]").val(data.boardNo);
+                      				}else{
+                      					toast("게시글 임시저장에 실패하였습니다");
+                      				}
                       				console.log('성공');
                       			},error: function(){
                       				console.log('실패');
@@ -460,6 +470,23 @@
                       		});
                       		
                       	}
+                      	
+                      	// 토스트
+                      	let removeToast;
+                    	
+						function toast(string) {
+						    const toast = document.getElementById("toast");
+	
+						    toast.classList.contains("reveal") ?
+						        (clearTimeout(removeToast), removeToast = setTimeout(function () {
+						            document.getElementById("toast").classList.remove("reveal")
+						        }, 1000)) :
+						        removeToast = setTimeout(function () {
+						            document.getElementById("toast").classList.remove("reveal")
+						        }, 1500)
+						    toast.classList.add("reveal"),
+						        toast.innerText = string
+						}
                       </script>
                     
                     

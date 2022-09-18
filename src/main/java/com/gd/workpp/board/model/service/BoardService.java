@@ -14,6 +14,7 @@ public interface BoardService {
 	
 	// 게시글 임시저장
 	int saveBoard(Board b, Attachment at);
+	String selectBoardNo();
 	
 	// 게시글 작성
 	int insertBoard(Board b, Attachment at);

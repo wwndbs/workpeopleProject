@@ -103,7 +103,7 @@
 	                      <ul class="pagination pagination-clean pagination-sm mb-0">
 	                      	<c:if test="${ pi.currentPage ne 1 }">
 		                        <li class="page-item">
-		                          <a class="page-link" href="list.bo?no=1&cpage=${ pi.currentPage - 1 }">‹</a>
+		                          <a class="page-link" href="list.bo?no=3&cpage=${ pi.currentPage - 1 }">‹</a>
 		                        </li>
 	                      	</c:if>
 	                      	
@@ -111,10 +111,10 @@
 	                      		
 	                      		<c:choose>
 	                      			<c:when test="${ p eq pi.currentPage }">
-	                      				<li class="page-item active"><a class="page-link" href="list.bo?no=1&cpage=${ p }">${ p }</a></li>
+	                      				<li class="page-item active"><a class="page-link" href="list.bo?no=3&cpage=${ p }">${ p }</a></li>
 	                      			</c:when>
 	                      			<c:otherwise>
-	                      				<li class="page-item"><a class="page-link" href="list.bo?no=1&cpage=${ p }">${ p }</a></li>
+	                      				<li class="page-item"><a class="page-link" href="list.bo?no=3&cpage=${ p }">${ p }</a></li>
 	                      			</c:otherwise>
 	                      		</c:choose>
 	                      		
@@ -122,7 +122,7 @@
 	                      	
 	                      	<c:if test="${ pi.currentPage ne pi.maxPage }">
 	                      		<li class="page-item">
-		                          <a class="page-link" href="list.bo?no=1?cpage=${ pi.currentPage + 1 }">›</a>
+		                          <a class="page-link" href="list.bo?no=3&cpage=${ pi.currentPage + 1 }">›</a>
 		                        </li>
 	                      	</c:if>
 	                        
