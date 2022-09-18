@@ -18,6 +18,18 @@
 		<result column="approval_count" property="approvalCount" />
 	</resultMap>
 	
+	<resultMap id="approvalResult" type="Approval">
+		<result column="document_no" property="documentNo" />
+		<result column="user_name" property="userNo" />
+		<result column="approval_order" property="approvalOrder" />
+		<result column="status" property="status" />
+		<result column="approval_date" property="approvalDate" />
+		<result column="reference_status" property="referenceStatus" />
+		<result column="dep_name" property="depName"/>
+		<result column="job_name" property="jobName"/>
+		<result column="prof_img" property="profImg"/>
+	</resultMap>
+	
 	<resultMap id="memberResult" type="Member">
 		<result column="user_no" property="userNo"/>
 		<result column="dep_name" property="depName"/>
@@ -78,7 +90,7 @@
 		  from document d
 		  join member m using(user_no)
 		  join approval a using(document_no)
-		 where a.user_no = '00014'
+		 where a.user_no = #{userNo}
 		   and d.status = 1
 		   and progress = 0
 		 order by document_no desc
@@ -116,14 +128,43 @@
 		 order by document_no desc
 	</select>
 	
+	<select id="searchApprovalCount" resultType="_int">
+		select count(*) as "count"
+		  from document 
+		 where user_no = #{userNo}
+		   and status = 1
+		   and document_title like '%'||#{keyword}||'%'
+	</select>
+	
+	<select id="searchApprovalList" resultMap="documentResult">
+		select document_no
+		     , user_name
+		     , document_form
+		     , document_title
+		     , d.create_date
+		     , document_content
+		     , progress
+		     , d.status
+		     , message
+		     , origin_name
+		     , change_name
+		     , file_path
+		     , approval_count
+		  from document d
+		  join member m using(user_no)
+		 where d.status = 1
+		   and user_no = #{userNo}
+		   and document_title like '%'||#{keyword}||'%'
+	</select>
+	
 	<select id="selectReferenceCount" resultType="_int">
 		select count(*) as "count"
 		  from (
 		    select distinct document_no
 		      from approval a
 		      join document d using(document_no)
-		     where d.user_no = #{userNo}
-		       and reference_status is not null
+		     where a.user_no = #{userNo}
+		       and reference_status = 1
 		   )
 	</select>
 	
@@ -142,11 +183,11 @@
 		     , file_path
 		     , approval_count
 		  from document d
-		  left join approval a using(document_no)
-		  left join member m on(d.user_no = m.user_no)
-		 where d.user_no = #{userNo}
+		  join approval a using(document_no)
+		  join member m on(d.user_no = m.user_no)
+		 where a.user_no = #{userNo}
 		   and d.status = 1
-		   and reference_status is not null
+		   and reference_status = 1
 		 order by document_no desc
 	</select>
 	
@@ -165,23 +206,7 @@
 		     , user_pwd
 		     , birthday
 		  from member
-		 <choose>
-		 	<when test="dept == 1">
-				 where dep_name = '인사팀'
-		 	</when>
-		 	<when test="dept == 2">
-				 where dep_name = '개발팀'
-		 	</when>
-		 	<when test="dept == 3">
-				 where dep_name = '총무팀'
-		 	</when>
-		 	<when test="dept == 4">
-				 where dep_name = '회계팀'
-		 	</when>
-		 	<when test="dept == 5">
-				 where dep_name = '영업팀'
-		 	</when>
-		 </choose>
+		 where dep_name = #{dept}
 		 order by (case when job_name = '부장' then 1 end)
 		        , (case when job_name = '팀장' then 2 end)
 		        , (case when job_name = '과장' then 3 end)
@@ -228,18 +253,223 @@
            and status = 2
 	</delete>
 	
+	<select id="searchSaveListCount" resultType="_int">
+		select count(*) as "count"
+		  from document
+		 where user_no = #{userNo}
+		   and status = 2
+		   and document_title like '%'||#{keyword}||'%'
+	</select>
 	
+	<select id="searchSaveList" resultMap="documentResult">
+	select distinct document_no
+	     , user_name
+	     , document_form
+	     , document_title
+	     , d.create_date
+	     , document_content
+	     , progress
+	     , d.status
+	     , message
+	     , origin_name
+	     , change_name
+	     , file_path
+	     , approval_count
+	  from document d
+	  left join member m on(d.user_no = m.user_no)
+	 where d.user_no = #{userNo}
+	   and d.status = 2
+       and document_title like '%'||#{keyword}||'%'
+	</select>
 	
+	<select id="searchReferenceCount" resultType="_int">
+		select count(*) as "count"
+		  from (
+		    select distinct document_no
+		      from approval a
+		      join document d using(document_no)
+		     where a.user_no = #{userNo}
+		       and reference_status = 1
+		       and document_title like '%'||#{keyword}||'%'
+		   )
+	</select>
 	
+	<select id="searchReferenceList" resultMap="documentResult">
+		select distinct document_no
+		     , user_name
+		     , document_form
+		     , document_title
+		     , d.create_date
+		     , document_content
+		     , progress
+		     , d.status
+		     , message
+		     , origin_name
+		     , change_name
+		     , file_path
+		     , approval_count
+		  from document d
+		  join approval a using(document_no)
+		  join member m on(d.user_no = m.user_no)
+		 where a.user_no = #{userNo}
+		   and d.status = 1
+		   and reference_status = 1
+           and document_title like '%'||#{keyword}||'%'
+	</select>
 	
+	<insert id="insertTemporaryApproval">
+		  insert into
+		document (
+		         document_no
+		       , user_no
+		       , document_form
+		       , create_date
+		         )
+		  values (
+		         seq_document.nextval
+		       , #{userNo}
+		       , #{form}
+		       , sysdate
+		         )
+	</insert>
 	
+	<select id="selectTemporaryApproval" resultMap="documentResult">
+		select document_no
+		     , user_no
+		     , document_form
+		     , create_date
+		  from document
+		 where user_no = #{userNo}
+		   and document_title is null
+	</select>
 	
+	<delete id="deleteTemporaryApproval">
+		delete
+		  from document
+		 where user_no = #{userNo}
+		   and document_title is null
+	</delete>
 	
+	<update id="seqIncrementSet">
+		    alter
+		 sequence seq_document
+		increment by -1
+	</update>
 	
+	<select id="seqRun" resultType="_int">
+		select seq_document.nextval
+		  from dual
+	</select>
 	
+	<update id="seqRollback">
+	        alter
+		 sequence seq_document
+		increment by 1
+	</update>
 	
+	<select id="approvalLineView" resultMap="approvalResult">
+		select document_no
+		     , user_name
+		     , dep_name
+		     , job_name
+		     , prof_img
+		     , approval_order
+		     , a.status
+		     , approval_date
+		     , reference_status
+		  from approval a
+		  join member m using(user_no)
+		 where document_no = #{documentNo}
+	</select>
 	
+	<delete id="deleteApprovalLine">
+		delete
+		  from approval
+		 where user_no = #{userNo}
+		   and document_no = #{documentNo}
+	</delete>
 	
+	<select id="insertCheck" resultMap="memberResult">
+		select user_no
+		     , dep_name
+		     , job_name
+		     , user_name
+		     , email
+		     , phone
+		     , create_date
+		     , modify_date
+		     , status
+		     , prof_img
+		     , user_email
+		     , user_pwd
+		     , birthday
+		  from member
+		 where user_no in	
+	     <foreach collection="userNoArr" item='no' index='i' open="(" close=")" separator=",">
+           #{no}
+         </foreach>
+		 order by (case when job_name = '사원' then 1 end)
+		        , (case when job_name = '대리' then 2 end)
+		        , (case when job_name = '과장' then 3 end)
+		        , (case when job_name = '팀장' then 4 end)
+		        , (case when job_name = '부장' then 5 end)
+	</select>
+	
+	<select id="excludeCheck" resultMap="memberResult">
+		select user_no
+		     , dep_name
+		     , job_name
+		     , user_name
+		     , email
+		     , phone
+		     , create_date
+		     , modify_date
+		     , status
+		     , prof_img
+		     , user_email
+		     , user_pwd
+		     , birthday
+		  from member
+		 where user_no in	
+	     <foreach collection="userNoArr" item='no' index='i' open="(" close=")" separator=",">
+           #{no}
+         </foreach>
+		 order by (case when job_name = '사원' then 1 end)
+		        , (case when job_name = '대리' then 2 end)
+		        , (case when job_name = '과장' then 3 end)
+		        , (case when job_name = '팀장' then 4 end)
+		        , (case when job_name = '부장' then 5 end)
+	</select>
+	
+	<insert id="insertApproval">
+		  insert into
+		approval (
+		         document_no
+		       , user_no
+		       , approval_order
+		         )
+		  values (
+		         #{documentNo}
+		       , #{approval}
+		       , #{order}
+		         )
+	</insert>
+	
+	<insert id="insertReference">
+		  insert into
+		approval (
+		         document_no
+		       , user_no
+		       , approval_order
+		       , reference_status
+		         )
+		  values (
+		         #{documentNo}
+		       , #{reference}
+		       , 0
+		       , 1
+		         )
+	</insert>
 	
 	
 	

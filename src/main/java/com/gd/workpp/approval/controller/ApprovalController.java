@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,31 +26,68 @@ public class ApprovalController {
 	/**
 	 * Author : 최영헌
 	 * 결재 내역 조회 페이지 이동요청을 처리해주는 메소드
+	 * @param currentPage : 사용자가 보고자 하는 페이지 번호
+	 * @param category : 사용자가 보고자 하는 카테고리
+	 * @return
 	 */
 	@RequestMapping("approvalList.ap")
-	public ModelAndView approvalList(ModelAndView mv) {
+	public ModelAndView approvalList(@RequestParam(value="cpage", defaultValue="1")int currentPage,
+                                     @RequestParam(value="category", defaultValue="1")int category,
+                                     HttpSession session,ModelAndView mv) {
+		Member m = (Member)session.getAttribute("loginUser");
+		String userNo = m.getUserNo();
+		
+		int listCount = apService.selectApprovalCount(category, userNo);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		ArrayList<Document> list = apService.selectApprovalList(pi, category, userNo);
+		
+		mv.addObject("list", list);
+		mv.addObject("pi", pi);
 		mv.setViewName("approval/approvalList");
+		
 		return mv;
 	}
 	
 	/**
 	 * Author : 최영헌
-	 * 참조 문서 조회 요청을 처리해주는 메소드
-	 * @param currentPage : 사용자가 이동하고자 하는 페이지 번호(기본값 1)
+	 * 참조 문서 조회 페이지 이동 요청을 처리하는 메소드
+	 * @param currentPage : 사용자가 보고자 하는 페이지 번호
 	 */
 	@RequestMapping("referenceList.ap")
 	public ModelAndView referenceListView(@RequestParam(value="cpage", defaultValue="1")int currentPage,
-			                              ModelAndView mv, HttpSession session) {
+                                          HttpSession session, ModelAndView mv) {
 		Member m = (Member)session.getAttribute("loginUser");
 		String userNo = m.getUserNo();
 		
 		int listCount = apService.selectReferenceCount(userNo);
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		ArrayList<Document> list = apService.selectReferenceList(pi, userNo);
-
+		
 		mv.addObject("list", list);
 		mv.addObject("pi", pi);
 		mv.setViewName("approval/referenceList");
+		
+		return mv;
+	}
+	
+	/**
+	 * Author : 최영헌
+	 * 임시저장문서 페이지 이동, 조회 요청을 처리해주는 메소드
+	 * @param currentPage : 사용자가 보고자 하는 페이지 번호
+	 */
+	@RequestMapping("saveList.ap")
+	public ModelAndView saveListView(@RequestParam(value="cpage", defaultValue="1")int currentPage,
+                                     HttpSession session, ModelAndView mv) {
+		Member m = (Member)session.getAttribute("loginUser");
+		String userNo = m.getUserNo();
+		
+		int listCount = apService.selectSaveListCount(userNo);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		ArrayList<Document> list = apService.selectSaveList(pi, userNo);
+		
+		mv.addObject("list", list);
+		mv.addObject("pi", pi);
+		mv.setViewName("approval/saveList");
 		
 		return mv;
 	}
@@ -66,26 +104,59 @@ public class ApprovalController {
 	
 	/**
 	 * Author : 최영헌
-	 * 임시저장문서 페이지 이동, 조회 요청을 처리해주는 메소드
+	 * 양식 작성페이지 이동 요청을 처리해주는 메소드
+	 * @param form : 사용자가 선택한 양식 명
 	 */
-	@RequestMapping("saveList.ap")
-	public ModelAndView saveListView(ModelAndView mv) {
-		mv.setViewName("approval/saveList");
-		return mv;
+	@RequestMapping("document.ap")
+	public String planView(String form, HttpSession session, Model model) {
+		Member m = (Member)session.getAttribute("loginUser");
+		String userNo = m.getUserNo();
+		
+		// 약식으로 작성된 결재문서 유무 확인
+		Document document = apService.selectTemporaryApproval(userNo);
+		
+		if(document != null) {
+			model.addAttribute("document", document);
+			model.addAttribute("member", m);
+			
+			if(form.equals("연장근무신청서")) {
+				return "approval/overtime";			
+			}else if(form.equals("휴가신청서")) {
+				return "approval/vacation";			
+			}else if(form.equals("결근사유서")) {
+				return "approval/absence";			
+			}else if(form.equals("업무기안서")) {
+				return "approval/plan";					
+			}
+		}else {
+			int result = apService.insertTemporaryApproval(userNo, form);	
+			Document newDocument = apService.selectTemporaryApproval(userNo);
+			if(result > 0) {
+				model.addAttribute("document", newDocument);
+				model.addAttribute("member", m);
+				
+				if(form.equals("연장근무신청서")) {
+					return "approval/overtime";			
+				}else if(form.equals("휴가신청서")) {
+					return "approval/vacation";			
+				}else if(form.equals("결근사유서")) {
+					return "approval/absence";			
+				}else if(form.equals("업무기안서")) {
+					return "approval/plan";					
+				}
+			}else {
+				model.addAttribute("errorMsg", "Approval Error");
+				return "common/errorPage";
+			}
+		}
+		
+		model.addAttribute("errorMsg", "Approval Error");
+		return "common/errorPage";
 	}
 	
-	/**
-	 * Author : 최영헌
-	 * 연장근무신청 결재 페이지 이동 요청을 처리해주는 메소드
-	 * @param form : 사용자가 작성하고자 하는 양식
-	 */
 	@RequestMapping("overtime.ap")
-	public ModelAndView overtimeView(ModelAndView mv, HttpSession session, String form) {
-		Member m = (Member)session.getAttribute("loginUser");
-		mv.addObject("member", m);
-		mv.addObject("form", form);
-		mv.setViewName("approval/overtime");
-		return mv;
+	public String overtimeView() {
+		return "approval/overtime";
 	}
 	
 	@RequestMapping("vacation.ap")
@@ -98,8 +169,29 @@ public class ApprovalController {
 		return "approval/absence";
 	}
 	
-	@RequestMapping("plan.ap")
-	public String planView() {
-		return "approval/plan";
-	}
+	/**
+	 * Author : 최영헌
+	 * 결재문서 작성 중 뒤로가기 요청을 처리하는 메소드
+	 */
+	@RequestMapping("backPage.ap")
+	public String backPage(HttpSession session, int documentNo) {
+		Member m = (Member)session.getAttribute("loginUser");
+		String userNo = m.getUserNo();
+		
+		apService.backPage(userNo, documentNo);
+
+		return "approval/documentList";
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
 }
