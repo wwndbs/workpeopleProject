@@ -25,22 +25,4 @@ public class Document {
 	private String changeName;
 	private String filePath;
 	private int approvalCount;
-	
-	// plan
-	private String planStart;
-	
-	// absence
-	private String absenceDate;
-	
-	// work
-	private String workStart;
-	private String workEnd;
-	private String workDate;
-	private String workUse;
-	
-	// vacation
-	private String vacationCategory;
-	private String vacationStart;
-	private String vacationEnd;
-	private int vacationCount;
 }

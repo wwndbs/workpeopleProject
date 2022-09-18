@@ -18,7 +18,4 @@ public class Approval {
 	private String status;
 	private String approvalDate;
 	private int referenceStatus;
-	private String depName;
-	private String jobName;
-	private String profImg;
 }
