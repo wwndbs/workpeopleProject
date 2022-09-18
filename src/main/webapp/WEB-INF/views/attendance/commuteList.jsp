@@ -5,7 +5,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>워크피플</title>
 <!-- favicon 설정 -->
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 <link rel="icon" href="resources/images/favicon.ico" type="image/x-icon">
@@ -79,27 +78,27 @@
 	                </div>
 	
 	                <div class="commute-2">
-	                  <table class="commute-table">
+	                  <table class="commute-table commute-table2">
 	                    <tr height="60px">
 	                      <td colspan="2" style="padding-top:15px;">
 	                        <i class="fa-regular fa-clock" style="font-size:25px; margin-right:15px;"></i>
-	                        <span><b>이번달 근무현황</b></span>
+	                        <span><b>근무현황</b></span>
 	                      </td>
 	                    </tr>
 	                    <tr height="10px">
 	                      <td colspan="2"><hr style="height:3px; color:black;"></td>
 	                    </tr>
 	                    <tr height="40px">
-	                      <td><span><b>근무일수</b></span></td>
-	                      <td>9일</td>
+	                      <td style="text-align:right; padding-right:100px;"><span><b>이번달 근무일수</b></span></td>
+	                      <td style="text-align:left; padding-right:60px;">9일</td>
 	                    </tr>
 	                    <tr height="40px">
-	                      <td><span><b>연장근무시간</b></span></td>
-	                      <td>9일</td>
+	                      <td style="text-align:right; padding-right:100px;"><span><b>이번달 연장근무시간</b></span></td>
+	                      <td style="text-align:left; padding-right:60px;">9일</td>
 	                    </tr>
 	                    <tr height="40px">
-	                      <td><span><b>총 근무시간</b></span></td>
-	                      <td>9일</td>
+	                      <td style="text-align:right; padding-right:100px;"><span><b>총 근무시간</b></span></td>
+	                      <td style="text-align:left; padding-right:60px;">9일</td>
 	                    </tr>
 	                  </table>
 	                </div>
@@ -108,7 +107,7 @@
 	                  <table class="commute-table">
 	                    <tr height="60px">
 	                      <td colspan="2" style="padding-top:15px;">
-	                        <i class="fa-regular fa-clock" style="font-size:25px; margin-right:15px;"></i>
+	                        <i class="fa-solid fa-briefcase" style="font-size:25px; margin-right:15px;"></i>
 	                        <span><b>이번달 근태현황</b></span>
 	                      </td>
 	                    </tr>
@@ -134,7 +133,7 @@
 	                  <table class="commute-table">
 	                    <tr height="60px">
 	                      <td colspan="2" style="padding-top:15px;">
-	                        <i class="fa-regular fa-clock" style="font-size:25px; margin-right:15px;"></i>
+	                        <i class="fa-solid fa-gift " style="font-size:25px; margin-right:15px;"></i>
 	                        <span><b>휴가현황</b></span>
 	                      </td>
 	                    </tr>

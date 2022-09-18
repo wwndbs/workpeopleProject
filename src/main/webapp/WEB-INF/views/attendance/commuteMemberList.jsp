@@ -94,7 +94,7 @@
                               <th scope="col">직급</th>
                               <th scope="col">출근시간</th>
                               <th scope="col">퇴근시간</th>
-                              <th scope="col">근무시간</th>
+                              <th scope="col">연장근무시간</th>
                               <th scope="col">비고</th>
                             </tr>
                           </thead>

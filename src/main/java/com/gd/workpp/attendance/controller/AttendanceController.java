@@ -12,11 +12,37 @@ public class AttendanceController {
 	@Autowired
 	private AttendanceServiceImpl atService;
 	
+	// 메인페이지 출근버튼 클릭시 insert
+	
+	
+	// 메인페이지 퇴근버튼 클릭시 update
+	
+	
 	// 출퇴근기록 페이지
 	@RequestMapping("commute.at")
-	public String commuteList() {
+	public String commute() {
 		return "attendance/commuteList";
 	}
+	
+	/* 출퇴근기록 페이지 조회
+	@RequestMapping("commuteList.at")
+	public String commuteList() {
+	
+		// 오늘 출근시간
+		
+		
+		// 이번달 근무일수
+		
+		
+		// 이번달 연장근무시간
+		
+				
+		// 총 근무시간
+		
+		
+		
+	}
+	*/
 	
 	// 출퇴근기록 수정요청 페이지
 	@RequestMapping("commuteUpdate.at")

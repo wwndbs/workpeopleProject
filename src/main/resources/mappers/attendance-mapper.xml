@@ -2,6 +2,49 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="attendanceMapper">
 
+	<resultMap id="attendanceResult" type="Attendance">
+		<result column="at_no" property="atNo" />
+		<result column="user_no" property="userNo" />
+		<result column="at_start" property="atStart" />
+		<result column="at_end" property="atEnd" />
+		<result column="at_overtime" property="atOvertime" />
+		<result column="at_totaltime" property="atTotaltime" />
+		<result column="at_date" property="atDate" />
+		<result column="at_status" property="atStatus" />
+		<result column="at_late" property="atLate" />
+		<result column="user_name" property="userName" />
+		<result column="at_modifystart" property="atModifyStart" />
+		<result column="at_modifyend" property="atModifyEnd" />
+		<result column="at_modifystatus" property="atModifyStatus" />
+		<result column="at_modifydate" property="atModifyDate" />
+	</resultMap>
 	
+	<!-- 
+	출퇴근기록 페이지 조회
+	<select id="commuteList" resultMap="attendanceResult">
+		select 
+		  from 
+		 where 
+		 order by 			 
+	</select>
+	
+	<insert id="">
+		insert into
+	           (
+	       	   
+	           )
+	    values (
+	    	   
+	           )
+	</insert>
+		
+	<update id="deleteBoard">
+		update 
+		       
+		   set 
+		 where 
+	</update>
+	
+	 -->
 
 </mapper>
