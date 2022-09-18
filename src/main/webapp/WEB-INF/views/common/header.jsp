@@ -43,8 +43,7 @@
 <link rel="stylesheet" href="resources/api/summernote/summernote-lite.css">
 
 
-
-<title>Insert title here</title>
+<title>워크피플</title>
 </head>
 <body>
 	<c:if test="${ not empty alertMsg }">
