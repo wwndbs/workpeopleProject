@@ -25,8 +25,7 @@
 					<div class="search-wrapper">
 						<span>임시저장 문서</span>
 						<form class="search-area">
-							<input type="text" placeholder="임시저장문서 검색" class="form-control">
-							<button class="btn btn-primary">검색</button>
+							<input type="text" placeholder="임시저장문서 제목 검색" class="form-control" id="search">
 						</form>
 					</div>
 
@@ -48,30 +47,84 @@
 								</tr>
 							</thead>
 							<tbody>
-								<!-- ajax조회 -->
+							<c:choose>
+								<c:when test="${ not empty list }">
+									<c:forEach var="list" items="${ list }">
+									    <tr>
+									        <td>
+									            <input type="checkbox" value="${ list.documentNo }" name="delete-check">
+									        </td>
+									        <td>${ list.documentNo }</td>
+									        <td>${ list.documentForm }</td>
+									        <td>${ list.documentTitle }</td>
+									        <td>${ list.userNo }</td>
+									        <td>${ list.createDate }</td>
+									        <td>
+									            <div class="tag-gray">임시저장</div>
+									        </td>
+									    </tr>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+								    <tr>
+								        <td colspan="7">임시저장 문서가 없습니다.</td>
+								    </tr>
+								</c:otherwise>
+							</c:choose>
 							</tbody>
 						</table>
 						<div class="bottom-btn">
-							<!-- ajax조회 -->
+							<c:if test="${ not empty list }">
+							    <ul class="pagination justify-content-center">
+							    
+							    	<c:if test="${ pi.currentPage != 1 }">
+								        <li class="page-item"><a class="page-link" href="saveList.ap?cpage=1">«</a></li>
+								        <li class="page-item"><a class="page-link" href="saveList.ap?cpage=${ pi.currentPage - 1 }">‹</a></li>
+							        </c:if>
+							        
+							        <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.maxPage }">
+							        	<c:choose>
+							        		<c:when test="${ pi.currentPage != p }">
+									        	<li class="page-item"><a class="page-link" href="saveList.ap?cpage=${ p }">${ p }</a></li>
+							        		</c:when>
+							        		<c:otherwise>
+							        			<li class="page-item"><a class="page-link" href="saveList.ap?cpage=${ p }"><strong>${ p }</strong></a></li>
+							        		</c:otherwise>
+							        	</c:choose>
+							        </c:forEach>
+							        
+							        <c:if test="${ pi.currentPage != pi.endPage }">
+								        <li class="page-item"><a class="page-link" href="saveList.ap?cpage=${ pi.currentPage + 1 }">›</a></li>
+								        <li class="page-item"><a class="page-link" href="saveList.ap?cpage=${ pi.endPage }">»</a></li>
+								    </c:if>
+							    </ul>
+						    </c:if>
+							<button class="btn btn-danger" id="delete-btn">삭제</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+
 	<jsp:include page="../common/footer.jsp" />
 	
 	<script>
-		// 페이지 로딩 시 데이터 조회
-		$(function(){
+	    // 임시저장 문서 검색
+		$("#search").keyup(function(){
+			let keyword = $("#search").val();
+			
 			$.ajax({
-				url : "saveListView.ap",
+				url : "searchSaveList.ap",
+				data : {
+					keyword : keyword
+				},
 				success : function(map){
 					let pi = map.pi;
 					let list = map.list;
 					value="";
 					page="";
-
+					
 					if(list.length != 0){
 						for(let i = 0; i < list.length; i++){
 							value += '<tr>'
@@ -91,10 +144,7 @@
 							$('.list-wrapper>table>tbody').html(value);
 						}
 					}else{
-						value += '<tr>'
-						      +  	'<td colspan="7">임시저장 문서가 없습니다.</td>'
-						      +  '</tr>'
-						$('.list-wrapper>table>tbody').html(value);
+						selectData(1);
 					}
 					
 					if(list.length != 0){
@@ -118,9 +168,10 @@
 						
 						$('.list-wrapper>div').html(page);
 					}
+					$('.bottom-btn ul').html("");
 				},
 				error : function(){
-					console.log("임시저장문서 조회 부분 ajax연결 실패");
+					console.log("임시저장문서 검색부분 ajax연결 실패");
 				}
 			})
 		})
@@ -158,34 +209,38 @@
 	</script>
 	
 	<script>
+	    // 임시저장문서 삭제
 		$(document).on("click", "#delete-btn", function(){
+
 			let checkCount = $("input[name='delete-check']:checked").length; // 체크된 체크박스 수
 			let checkList = $("input[name='delete-check']:checked"); // 체크된 체크박스 리스트
 
 			if(checkCount > 0){
-				let documentNo = "";
-				for(let i = 0; i < checkList.length; i++){
-					if(i == (checkList.length - 1)){
-						documentNo += checkList[i].value;
-					}else{
-						documentNo += checkList[i].value + ",";
+				if(confirm("정말 삭제 하시겠습니까?")){
+					let documentNo = "";
+					for(let i = 0; i < checkList.length; i++){
+						if(i == (checkList.length - 1)){
+							documentNo += checkList[i].value;
+						}else{
+							documentNo += checkList[i].value + ",";
+						}
 					}
+					
+					$.ajax({
+						url : "deleteSaveList.ap",
+						data : {
+							no : documentNo
+						},
+						success : function(msg){
+							location.reload();
+							alert(msg);
+							
+						},
+						error : function(){
+							console.log("임시저장문서 삭제 부분 ajax 연결 실패");
+						}
+					})
 				}
-				
-				$.ajax({
-					url : "deleteSaveList.ap",
-					data : {
-						no : documentNo
-					},
-					success : function(msg){
-						location.reload();
-						alert(msg);
-						
-					},
-					error : function(){
-						console.log("임시저장문서 삭제 부분 ajax 연결 실패");
-					}
-				})
 			}else{
 				alert("선택된 목록이 없습니다.");				
 			}

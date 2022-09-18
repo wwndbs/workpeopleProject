@@ -25,8 +25,7 @@
 					<div class="search-wrapper">
 						<span>참조문서</span>
 						<form class="search-area">
-							<input type="text" placeholder="참조문서 검색" class="form-control">
-							<button class="btn btn-primary">검색</button>
+							<input type="text" placeholder="참조문서 검색" class="form-control" id="search">
 						</form>
 					</div>
 
@@ -87,28 +86,100 @@
 								</c:choose>
 							</tbody>
 						</table>
-						<c:if test="${ not empty list }">
-							<ul class="pagination justify-content-center">
-								<c:if test="${ pi.currentPage != 1 }">
-									<li class="page-item"><a class="page-link" href="approvalList.ap?cpage=${ pi.startPage }">«</a></li>
-									<li class="page-item"><a class="page-link" href="approvalList.ap?cpage=${ pi.currentPage - 1 }">‹</a></li>								
-								</c:if>
-								
-								<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-									<li class="page-item"><a class="page-link" href="approvalList.ap?cpage=${ p }">${ p }</a></li>
-								</c:forEach>
-								
-								<c:if test="${ pi.currentPage != pi.endPage }">
-									<li class="page-item"><a class="page-link" href="approvalList.ap?cpage=${ pi.currentPage + 1 }">›</a></li>
-									<li class="page-item"><a class="page-link" href="approvalList.ap?cpage=${ pi.endPage }">»</a></li>
-								</c:if>
-							</ul>
-						</c:if>
+						<div>
+							<c:if test="${ not empty list }">
+							    <ul class="pagination justify-content-center">
+							    
+							    	<c:if test="${ pi.currentPage != 1 }">
+								        <li class="page-item"><a class="page-link" href="referenceList.ap?cpage=1">«</a></li>
+								        <li class="page-item"><a class="page-link" href="referenceList.ap?cpage=${ pi.currentPage - 1 }">‹</a></li>
+							        </c:if>
+							        
+							        <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.maxPage }">
+							        	<c:choose>
+							        		<c:when test="${ pi.currentPage != p }">
+									        	<li class="page-item"><a class="page-link" href="referenceList.ap?cpage=${ p }">${ p }</a></li>
+							        		</c:when>
+							        		<c:otherwise>
+							        			<li class="page-item"><a class="page-link" href="referenceList.ap?cpage=${ p }"><strong>${ p }</strong></a></li>
+							        		</c:otherwise>
+							        	</c:choose>
+							        </c:forEach>
+							        
+							        <c:if test="${ pi.currentPage != pi.endPage }">
+								        <li class="page-item"><a class="page-link" href="referenceList.ap?cpage=${ pi.currentPage + 1 }">›</a></li>
+								        <li class="page-item"><a class="page-link" href="referenceList.ap?cpage=${ pi.endPage }">»</a></li>
+								    </c:if>
+							    </ul>
+						    </c:if>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	
+	<script>
+	    // 참조문서 검색
+		$(function(){
+			$("#search").keyup(function(){
+				let keyword = $("#search").val();
+				
+				$.ajax({
+					url : "searchReference.ap",
+					data : {
+						keyword : keyword
+					},
+					success : function(map){
+						let pi = map.pi;
+						let list = map.list;
+						value="";
+						page="";
+
+						if(list.length != 0){
+							for(let i = 0; i < list.length; i++){
+								value += '<tr>'
+								      +  	'<td>' + list[i].documentNo + '</td>'
+								      +  	'<td>' + list[i].documentForm + '</td>'
+								      +  	'<td>' + list[i].documentTitle + '</td>'
+								      +  	'<td>' + list[i].userNo + '</td>'
+								      +  	'<td>' + list[i].createDate + '</td>';
+								if(list[i].progress == 0){
+									value += '<td>'
+									      +  	'<div class="tag-gray">대기</div>'
+									      +  '</td>';
+								}else if(list[i].progress == 1){
+									value += '<td>'
+									      +  	'<div class="tag-orange">진행중</div>'
+									      +  '</td>';	
+								}else if(list[i].progress == 2){
+									value += '<td>'
+									      +  	'<div class="tag-green">완료</div>'
+									      +  '</td>';							
+								}else if(list[i].progress == 3){
+									value += '<td>'
+									      +  	'<div class="tag-red">반려</div>'
+									      +  '</td>';						
+								}
+								
+								$('.list-wrapper>table>tbody').html(value);
+							}
+						}else{
+							value += '<tr>'
+							      +  	'<td colspan="6">검색결과가 없습니다.</td>'
+							      +  '</tr>'
+							$('.list-wrapper>table>tbody').html(value);
+						}
+						$('.list-wrapper>div').html("");
+					},
+					error : function(){
+						console.log("검색 부분 ajax연결 실패");
+					}
+				})
+			})
+		})
+	</script>
+	
 	<jsp:include page="../common/footer.jsp" />
 </body>
 </html>
