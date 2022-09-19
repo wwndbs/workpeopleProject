@@ -46,30 +46,8 @@
 
                   <div class="commute-table-area">
 
-                    <div style="padding-left:15px; width:100%;">
-                                                               
-                      <!-- 검색폼 -->
-                      <div style="display:flex; padding-top:15px; margin:0 auto;">
-
-                        <div class="form-group">
-                          <select class="form-control select1" id="select-dept" name="demoStyle" style="height:40px;">
-                            <option value="default" class="op1">전체</option>
-                            <option class="text-secondary" value="secondary"><label class="se-la">개발</label></option>
-                            <option class="text-secondary" value="secondary"><label class="se-la">영업</label></option>
-                            <option class="text-secondary" value="secondary"><label class="se-la">인사</label></option>
-                            <option class="text-secondary" value="secondary"><label class="se-la">총무</label></option>
-                            <option class="text-secondary" value="secondary"><label class="se-la">회계</label></option>
-                          </select>
-                        </div>
-                        <div class="search-div" style="width:20%; display:flex; ">
-                          <input class="form-control mb-2 search1" type="text" placeholder="사원명을 입력해주세요." style="height:40px;">
-                          <button type="submit" class="btn btn-sm btn-primary" style="height:40px;">검색</button>
-                        </div>
-
-                      </div>
-                      
-                    </div>
-                    
+                    <div style="padding-top:30px; padding-left:15px; padding-right:15px; width:100%;">                                                               
+                                         
                     <!-- Table Seamless -->
                       <div class="card mb-grid" style="margin-left:15px; margin-right:15px;">
                         

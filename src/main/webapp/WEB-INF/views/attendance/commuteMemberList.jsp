@@ -94,8 +94,7 @@
                               <th scope="col">직급</th>
                               <th scope="col">출근시간</th>
                               <th scope="col">퇴근시간</th>
-                              <th scope="col">연장근무시간</th>
-                              <th scope="col">비고</th>
+                              <th scope="col">근무상태</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -106,7 +105,6 @@
                               <td>대리</td>
                               <td>09:00</td>
                               <td>18:00</td>
-                              <td>08:00</td>
                               <td></td>
                             </tr>
                             <tr>
@@ -114,7 +112,6 @@
                               <td>개발</td>
                               <td>강개똥</td>
                               <td>사원</td>
-                              <td>-</td>
                               <td>-</td>
                               <td>-</td>
                               <td>연차</td>
@@ -126,7 +123,6 @@
                               <td>부장</td>
                               <td>09:00</td>
                               <td>18:00</td>
-                              <td>08:00</td>
                               <td></td>
                             </tr>
                             <tr>
@@ -136,7 +132,6 @@
                               <td>과장</td>
                               <td>09:00</td>
                               <td>18:00</td>
-                              <td>08:00</td>
                               <td></td>
                             </tr>
                             <tr>
@@ -146,7 +141,6 @@
                               <td>팀장</td>
                               <td>09:00</td>
                               <td>18:00</td>
-                              <td>08:00</td>
                               <td></td>
                             </tr>
                             <tr>
@@ -156,7 +150,6 @@
                               <td>대리</td>
                               <td>09:00</td>
                               <td>18:00</td>
-                              <td>08:00</td>
                               <td></td>
                             </tr>
                             <tr>
@@ -164,7 +157,6 @@
                               <td>개발</td>
                               <td>강개똥</td>
                               <td>사원</td>
-                              <td>-</td>
                               <td>-</td>
                               <td>-</td>
                               <td>연차</td>
@@ -176,7 +168,6 @@
                               <td>부장</td>
                               <td>09:00</td>
                               <td>18:00</td>
-                              <td>08:00</td>
                               <td></td>
                             </tr>
                             <tr>
@@ -186,7 +177,6 @@
                               <td>과장</td>
                               <td>09:00</td>
                               <td>18:00</td>
-                              <td>08:00</td>
                               <td></td>
                             </tr>
                             <tr>
@@ -196,7 +186,6 @@
                               <td>팀장</td>
                               <td>09:00</td>
                               <td>18:00</td>
-                              <td>08:00</td>
                               <td></td>
                             </tr>
                           </tbody>
