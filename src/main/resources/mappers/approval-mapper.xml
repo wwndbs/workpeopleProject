@@ -471,6 +471,77 @@
 		         )
 	</insert>
 	
+	<update id="insertDocument">
+		update document
+		   set document_title = #{document.documentTitle}
+		     , document_content = #{document.documentContent}
+		     , origin_name = #{document.originName}
+		     , change_name = #{document.changeName}
+		     , approval_count = (select count(*)
+		                           from approval
+		                          where document_no = #{document.documentNo}
+		                            and reference_status is null
+		                        )
+		     , progress = 1
+		     , status = 1
+		 where document_no = #{document.documentNo}
+	</update>
+	
+	<insert id="insertPlan">
+		insert into
+		  plan (
+		  	   document_no
+		  	 , plan_start
+		       )
+		values (
+		       #{document.documentNo}
+		     , #{plan.planStart}
+		       )
+	</insert>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 </mapper>

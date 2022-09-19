@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.gd.workpp.approval.model.vo.Approval;
 import com.gd.workpp.approval.model.vo.Document;
+import com.gd.workpp.approval.model.vo.Plan;
 import com.gd.workpp.common.model.vo.PageInfo;
 import com.gd.workpp.member.model.vo.Member;
 
@@ -80,4 +81,7 @@ public interface ApprovalService {
 	
 	// 뒤로가기(작성중인 결재문서, 결재선, 참조자 삭제)
 	void backPage(String userNo, int documentNo);
+	
+	// 결재 등록
+	int insertApprovalPlan(Document document, Plan plan);
 }

@@ -9,11 +9,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gd.workpp.approval.model.service.ApprovalServiceImpl;
 import com.gd.workpp.approval.model.vo.Document;
+import com.gd.workpp.approval.model.vo.Plan;
 import com.gd.workpp.common.model.vo.PageInfo;
+import com.gd.workpp.common.template.FileUpload;
 import com.gd.workpp.common.template.Pagination;
 import com.gd.workpp.member.model.vo.Member;
 
@@ -181,9 +184,40 @@ public class ApprovalController {
 		apService.backPage(userNo, documentNo);
 
 		return "approval/documentList";
+	}
+	
+	/**
+	 * Author : 최영헌
+	 * 업무기안 결재 등록 요청을 처리하는 메소드
+	 * @param document : 사용자가 입력한 결재문서 내용이 담겨있는 객체
+	 * @param planStart : 사용자가 입력한 시행일자
+	 * @param upfile : 사용자가 업로드한 파일
+	 */
+	@RequestMapping("insertApprovalPlan.ap")
+	public String insertApprovalPlan(Document document, Plan plan, MultipartFile upfile,
+			                   HttpSession session, Model model) {
+		Member m = (Member)session.getAttribute("loginUser");
+		String userNo = m.getUserNo();
+		
+		// 전달된 첨부파일 존재할 경우에 파일명 수정 후 업로드
+		if(!upfile.getOriginalFilename().equals("")) {
+			String changeName = FileUpload.saveFile(upfile, session, "resources/approval_upfiles/");
+			document.setOriginName(upfile.getOriginalFilename());
+			document.setChangeName(changeName);
 		}
 		
+		int result = apService.insertApprovalPlan(document, plan);
 		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "결재 상신 완료");
+			return "redirect:approvalList.ap";
+		}else {
+			model.addAttribute("errorMsg", "결재 상신 과정 중 오류 발생");
+			return "common/errorPage";
+		}
+	}
+		
+	
 		
 		
 		

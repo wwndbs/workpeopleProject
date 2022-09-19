@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.gd.workpp.approval.model.dao.ApprovalDao;
 import com.gd.workpp.approval.model.vo.Approval;
 import com.gd.workpp.approval.model.vo.Document;
+import com.gd.workpp.approval.model.vo.Plan;
 import com.gd.workpp.common.model.vo.PageInfo;
 import com.gd.workpp.member.model.vo.Member;
 
@@ -125,5 +126,10 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public int insertApprovalAndReference(String[] approvalArr, String[] referenceArr, int documentNo) {
 		return apDao.insertApprovalAndReference(sqlSession, approvalArr, referenceArr, documentNo);
+	}
+
+	@Override
+	public int insertApprovalPlan(Document document, Plan plan) {
+		return apDao.insertApprovalPlan(sqlSession, document, plan);
 	}
 }

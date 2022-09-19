@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.gd.workpp.approval.model.vo.Approval;
 import com.gd.workpp.approval.model.vo.Document;
+import com.gd.workpp.approval.model.vo.Plan;
 import com.gd.workpp.common.model.vo.PageInfo;
 import com.gd.workpp.member.model.vo.Member;
 
@@ -214,7 +215,16 @@ public class ApprovalDao {
 		return approvalResult + referenceResult;
 	}
 	
-	
+	public int insertApprovalPlan(SqlSessionTemplate sqlSession, Document document, Plan plan) {
+		HashMap<String, Object> data = new HashMap<>();
+		data.put("document", document);
+		data.put("plan", plan);
+		
+		int result1 = sqlSession.update("approvalMapper.insertDocument", data);
+		int result2 = sqlSession.insert("approvalMapper.insertPlan", data);
+		
+		return result1 * result2; // 1행 업데이트, 1행 추가 = 결과값1이 성공
+	}
 	
 	
 	

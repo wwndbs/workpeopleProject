@@ -23,13 +23,14 @@
 				<div class="container-fluid">
 
 					<!--메인페이지 컨텐츠-->
-					<form class="document-wrapper">
-						<div class="write-area" action="" method="POST">
+					<form class="document-wrapper" action="insertApprovalPlan.ap" method="post" enctype="multipart/form-data">
+						<div class="write-area">
 							<table class="table table-bordered">
 								<tr>
 									<th colspan="2">
 										<br><br>
 										<h1><strong>${ document.documentForm }</strong></h1>
+										<input type="hidden" name="documentNo" value="${ document.documentNo }">	
 									</th>
 									<td colspan="4" id="approval-section">
 									<!-- ajax 조회 -->
@@ -38,7 +39,7 @@
 								<tr>
 									<th>제목</th>
 									<td colspan="5">
-										<input type="text" name="" class="form-control form-control-sm" required>
+										<input type="text" name="documentTitle" class="form-control form-control-sm" required>
 									</td>
 								</tr>
 								<tr>
@@ -53,20 +54,20 @@
 									<th>시행일자</th>
 									<td colspan="5">
 										<div class="date-form" style="display: flex;">
-											<input type="date" class="form-control form-control-sm" style="width: 150px;" required>
+											<input type="date" name="planStart" class="form-control form-control-sm" style="width: 150px;">
 										</div>
 									</td>
 								</tr>
 								<tr>
 									<th>내용</th>
 									<td colspan="5" style="text-align: left;">
-										<textarea id="summernote" name="editordata" required></textarea>
+										<textarea id="summernote" name="documentContent"></textarea>
 									</td>
 								</tr>
 								<tr>
 									<th>첨부파일</th>
 									<td colspan="5">
-										<input type="file" class="form-control-file border">
+										<input type="file" name="upfile" class="form-control-file border">
 									</td>
 								</tr>
 							</table>

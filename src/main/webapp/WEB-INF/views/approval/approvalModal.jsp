@@ -379,7 +379,7 @@
 					success : function(){
 						alert("등록완료");
 						$('.modal-background').css("display", "none");
-						location.reload()
+						location.reload();
 					},
 					error : function(){
 						console.log("결재선, 참조 멤버 등록 부분 ajax연결실패");
