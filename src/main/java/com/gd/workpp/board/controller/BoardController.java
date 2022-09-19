@@ -1,5 +1,6 @@
 package com.gd.workpp.board.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
@@ -41,6 +42,7 @@ public class BoardController {
 
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
+		model.addAttribute("listCount", listCount);
 
 		if (no == 1) { // 공지게시판
 
@@ -92,7 +94,7 @@ public class BoardController {
 		// 첨부파일이 있을 경우 FileUpload클래스로 파일 변환 후 Board 객체에 담기
 		if(!file.getOriginalFilename().equals("")) {
 		  
-			String saveFilePath = FileUpload.saveFile(file, session,"resources/board_upfiles");
+			String saveFilePath = FileUpload.saveFile(file, session,"resources/board_upfiles/");
 			  
 			at.setOriginName(file.getOriginalFilename()); 
 			at.setChangeName(saveFilePath);
@@ -139,24 +141,28 @@ public class BoardController {
 				b.setTopExp("N");
 			}
 		}
-		
+		System.out.println("ㅇㅇ");
 		Attachment at = new Attachment();
-		  
-		// 첨부파일이 있을 경우 FileUpload클래스로 파일 변환 후 Board 객체에 담기
-		if(!file.getOriginalFilename().equals("")) {
-		  
-			String saveFilePath = FileUpload.saveFile(file, session,"resources/board_upfiles");
-			  
-			at.setOriginName(file.getOriginalFilename()); 
-			at.setChangeName(saveFilePath);
-			at.setRefType(2);
-		  
-		}
 		
 		if(b.getBoardNo().equals("")) { // 새로 임시저장
 			
+			
+			// 첨부파일이 있을 경우 FileUpload클래스로 파일 변환 후 Board 객체에 담기
+			if(!file.getOriginalFilename().equals("")) {
+			  System.out.println("첨부파일 등록");
+				String saveFilePath = FileUpload.saveFile(file, session,"resources/board_upfiles/");
+				  
+				at.setOriginName(file.getOriginalFilename()); 
+				at.setChangeName(saveFilePath);
+				at.setRefType(2);
+			  
+			}
+			
 			int result = bService.saveBoard(b, at);
 			String boardNo = bService.selectBoardNo();
+			
+			System.out.println("result : " + result);
+			System.out.println("boardNo : " + boardNo);
 			
 			if(result > 0) { // 임시저장 성공
 				
@@ -176,10 +182,42 @@ public class BoardController {
 			}
 			
 		}else { // 임시저장 업데이트
+			System.out.println("ㄴㄴ");
+			int boardNo = Integer.parseInt(b.getBoardNo());
 			
-			// 여기부터 시작
+			// 글번호로 등록된 첨부파일 삭제하기
+			// 해당하는 첨부파일 조회
+			Attachment att = bService.selectAttachment(boardNo);
 			
-			return "에러임";
+			if(att != null) {
+				// db에서 해당 첨부파일 삭제
+				int result = bService.deleteAttachment(boardNo);
+				
+				if(result > 0) {
+					// 서버에 저장된 파일 삭제
+					new File(session.getServletContext().getRealPath(att.getChangeName())).delete();
+				}
+			}
+			
+			// 첨부파일이 있을 경우 FileUpload클래스로 파일 변환 후 Board 객체에 담기
+			if(!file.getOriginalFilename().equals("")) {
+			  
+				String saveFilePath = FileUpload.saveFile(file, session,"resources/board_upfiles/");
+				  
+				at.setOriginName(file.getOriginalFilename()); 
+				at.setChangeName(saveFilePath);
+				at.setRefType(2);
+				at.setRefNo(boardNo);
+			  
+			}
+			
+			int result = bService.updateSaveBoard(b, at);
+			
+			JSONObject jObj = new JSONObject();
+			jObj.put("result", result);
+			jObj.put("boardNo", boardNo);
+			
+			return jObj.toJSONString();
 			
 		}
 		
