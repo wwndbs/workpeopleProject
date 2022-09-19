@@ -17,12 +17,18 @@ import org.springframework.web.servlet.ModelAndView;
 import com.gd.workpp.common.model.vo.PageInfo;
 import com.gd.workpp.common.template.FileUpload;
 import com.gd.workpp.common.template.Pagination;
+import com.gd.workpp.company.model.service.CompanyService;
+import com.gd.workpp.company.model.vo.Department;
+import com.gd.workpp.company.model.vo.Job;
 import com.gd.workpp.member.model.service.MemberService;
 import com.gd.workpp.member.model.vo.Member;
 
 @Controller
 public class MemberController {
 
+	@Autowired 
+	private CompanyService cService;
+	
 	@Autowired 
 	private MemberService mService;
 	
@@ -42,7 +48,13 @@ public class MemberController {
 	
 	@RequestMapping("createForm.me")
 	public ModelAndView documentListView1(ModelAndView mv) {
-		mv.setViewName("member/createMember");
+		
+		ArrayList<Department> deplist = cService.departmentList();
+		ArrayList<Job> joblist = cService.jobList();
+		
+		mv.addObject("deplist", deplist)
+		  .addObject("joblist", joblist)
+		  .setViewName("member/createMember");
 		return mv;
 	}
 	
@@ -89,6 +101,7 @@ public class MemberController {
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
 		ArrayList<Member> list = mService.modifyList(pi);
+		
 		
 
 		mv.addObject("pi", pi)
@@ -157,6 +170,7 @@ public class MemberController {
 		}
 	}
 	
+	
 	// 비밀번호 수정
 	@RequestMapping("updatePwd.me")
 	public String updatePwd(Member m,HttpSession session,String updatePwd,String userPwd) {
@@ -219,14 +233,10 @@ public class MemberController {
 	public String createMember(Member m ,HttpSession session, Model model) {
 		int result = mService.createMember(m);
 		
-		if(result>0) { // 회원가입 성공
-			// sessionScope 영역에 alertMsg라는 키값으로 "성공적으로 회원가입 되었습니다" 담아주기
-			session.setAttribute("alertMsg", "성공적으로 회원가입 되었습니다.");
-			// 메인페이지 url 재요청
+		if(result>0) { // 성공
 			return "redirect:/createForm.me";
-		}else { // 회원가입 실패
-			// requsetScope 영역에 에러문구 담고
-			model.addAttribute("errorMsg","회원가입 실패");
+		}else { // 실패
+
 			// 에러페이지 포워딩
 			return "common/errorPage";
 		}
@@ -237,9 +247,15 @@ public class MemberController {
 	@RequestMapping("modify.me")
 	public ModelAndView selectmodifyMember(int no, ModelAndView mv) {
 
+		ArrayList<Department> deplist = cService.departmentList();
+		ArrayList<Job> joblist = cService.jobList();
 		Member m = mService.selectmodifyMember(no);
-		mv.addObject("m",m).setViewName("member/modifyMember");
 		
+		mv.addObject("deplist", deplist)
+		  .addObject("joblist", joblist)
+		  .addObject("m",m)
+		  .setViewName("member/modifyMember");
+
 		return mv;
 	}
 	

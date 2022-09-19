@@ -13,18 +13,15 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Company {
-
-	private int modifyNo;
-	private String comName;
-	private String comNo;
-	private String ceo;
-	private int postNo;
-	private String phone;
-	private String fax;
-	private String address;
-	private Date modifyDate;
+public class Department {
+	
+	private String depName;
+	private String depContent;
+	private String status;
 	private Date createDate;
-	private String comImg;
+	private Date modifyDate;
+	private String userName;
+	private int userCount;
+	private String updateName;
 	
 }

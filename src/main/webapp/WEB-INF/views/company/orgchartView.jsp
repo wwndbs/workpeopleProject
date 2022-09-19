@@ -32,7 +32,7 @@
 	            <div class="container-fluid">
 	
 	                <!--메인페이지 컨텐츠-->
-	                <div class="top-wrapper">
+	                <div class="top-wrapper" style="width:2000px; height:700px;">
 	
 	                    <!--게시판 부분-->
 	                    <div class="contents">
@@ -49,22 +49,21 @@
                                	   var data = new google.visualization.DataTable();
 	                        	   data.addColumn('string', 'Name');
 	                               data.addColumn('string', 'Manager');
-	                               data.addColumn('string', 'ToolTip');
 	                       
 	                               data.addRows([
-	                               [{v:'이사장', f:'이사장<div style="color:blue; ">홍길동</div>'},
-	                               '', '연락처 : '],
-	                               
-	                           	   ['부이사장','이사장',''],
-	                           	   ['총괄팀장','이사장',''],
-	                           	   ['총괄본부장','이사장',''],
-	                               ['사업팀', '총괄팀장', ''],
-	                               ['관리팀', '총괄팀장', ''],
-	                               ['영업팀', '총괄팀장', ''],
-	                               ['안전팀', '총괄팀장', ''],
-	                               ['전산실', '총괄팀장', ''],
-	                               ['팀장', '사업팀', ''],
-	                               ['대리', '팀장', '']
+		                               [{v:'이사장', f:'이사장<div style="color:blue; ">홍길동</div>'},
+		                               ''],
+										
+		                               <c:choose>
+					                		<c:when test="${ empty list }">
+					                		</c:when>
+					                		<c:otherwise>
+					                			<c:forEach var="c" items="${ list }">
+													['${c.depName}','${c.parOb}'],
+					                    		</c:forEach>
+					                    	</c:otherwise>
+										</c:choose>
+		                               
 	                               ]);
 	                       
 	                               var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));

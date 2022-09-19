@@ -27,86 +27,128 @@
       <jsp:include page="../common/menubar.jsp" />
 		
 		<!-- 컨텐츠 부분 wrapper -->
-    <div class="adminx-content">
-        <div class="adminx-main-content">
-            <div class="container-fluid">
-
-                <!--메인페이지 컨텐츠-->
-                <div class="top-wrapper" style="width:1500px;">
-					<div class="chart_area">
-						<div align="right">
-                                <button type="submit" id="loginbtn" data-toggle="modal" data-target="#loginModal">등록하기</button>
-                                <button type="submit" id="loginbtn" data-toggle="modal" data-target="#loginModal">수정하기</button>
-                                <button type="reset" id="loginbtn" data-toggle="modal" data-target="#loginModal">삭제하기</button>
-                        </div>
-	                    <!--게시판 부분-->
-	                    <div id="chart_div"></div>
-	                        <form>
-	                            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-	                            
-	                            <script type="text/javascript">
-		                            google.charts.load('current', {packages:["orgchart"]});
-		                            google.charts.setOnLoadCallback(drawChart);
-		                        
-		                            function drawChart() {
-		                                var data = new google.visualization.DataTable();
-		                                data.addColumn('string', 'Name');
-		                                data.addColumn('string', 'Manager');
-		                                data.addColumn('string', 'ToolTip');
-		                        
-		                                data.addRows([
-		                                [{v:'이사장', f:'이사장<div style="color:blue; ">홍길동</div>'},
-		                                '', '연락처 : 010-1111-1111'],
-		                                [{v:'부이사장', f:'부이사장<div style="color:blue;">홍일동</div>'},
-		                                '이사장', '연락처 : 010-1111-0001'],
-		                                [{v:'총괄팀장', f:'총괄팀장<div style="color:blue;">홍삼동</div>'},
-		                                '이사장', '연락처 : 010-1111-0003'],
+	    <div class="adminx-content">
+	        <div class="adminx-main-content">
+	            <div class="container-fluid">
+	
+	                <!--메인페이지 컨텐츠-->
+	                <div class="top-wrapper" style="width:1500px;">
+						<div class="chart_area">
+							<div align="right">
+									<br>
+	                                <a data-toggle="modal" class="btn btn-secondary" data-target="#addOrgModal" style="color:white;" >등록하기</a>&nbsp;&nbsp;&nbsp;
+	                        </div>
+		                    <!--게시판 부분-->
+		                    <div id="chart_div"></div>
+		                        <form>
+		                            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 		                            
-		                                [{v:'총괄본부장', f:'총괄본부장<div style="color:blue;">홍이동</div>'},
-		                                '이사장', '010-1111-0002'],
-		                            
-		                                ['사업팀', '총괄팀장', '010-2222-0001'],
-		                                ['관리팀', '총괄팀장', '010-3333-0001'],
-		                                ['영업팀', '총괄팀장', '010-4444-0001'],
-		                                ['안전팀', '총괄팀장', '010-5555-0001'],
-		                                ['전산실', '총괄팀장', '010-6666-0001'],
-		                                
-		                                ['팀장', '사업팀', '010-2222-0001'],
-		                                ['대리', '팀장', '010-2222-0001']
-		                                ]);
-		                        
-		                                var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
-		                                chart.draw(data, {allowHtml:true});
-		                            	}
-		                        </script>        
-	                        </form>
-	                     </div>
-                   </div>
+		                            <script type="text/javascript">
+			                            google.charts.load('current', {packages:["orgchart"]});
+			                            google.charts.setOnLoadCallback(drawChart);
+			                        
+			                            function drawChart() {
+			                                var data = new google.visualization.DataTable();
+			                                data.addColumn('string', 'Name');
+			                                data.addColumn('string', 'Manager');
+			                        
+			                                data.addRows([
+					                               [{v:'이사장', f:'이사장<div style="color:blue; ">홍길동</div>'},
+					                               ''],
+													
+					                               <c:choose>
+								                		<c:when test="${ empty list }">
+								                		</c:when>
+								                		<c:otherwise>
+								                			<c:forEach var="c" items="${ list }">
+																['${c.depName}','${c.parOb}'],
+								                    		</c:forEach>
+								                    	</c:otherwise>
+													</c:choose>
+					                               
+				                               ]);
+			                        
+			                                var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
+			                                chart.draw(data, {allowHtml:true});
+			                                // 클릭시 실행
+			                                google.visualization.events.addListener(chart, 'select', function() {
+			                                    // grab a few details before redirecting
+												if(confirm(data.getValue(chart.getSelection()[0].row, 0)+" 을 삭제하시겠습니까?")){
+													console.log(data.getValue(chart.getSelection()[0].row, 0));
+													let orgName = data.getValue(chart.getSelection()[0].row, 0);
+													console.log(orgName);
+													$("#depName").val(orgName);
+													$("#deleteOrgChartModal").modal("show");
+													// 모달 div 영역에 data.getValue(chart.getSelection()[0].row, 0)를 뿌려준 후
+													// 모달이 뜨게끔 => $("모달요소선택자").modal("show");
+													// 모달이 뜨게끔 => $("모달요소선택자").modal("hide"); -> 모달창 취소버튼 클릭시 숨겨주기 (여기있는거아님)
+												}
+			                                    
 
-                    <div align="center"> <!-- 모델창 처리 해야됨 여기-->
-                        <h3>새로운 항목 등록</h3>
-                        
-                        <table style="padding: 10px;">
-                            <tr>
-                                <td>상위조직 :</td>
-                                <td><input type="text" style="height:30px;"></td>
-                            </tr>
-                            
-                            <tr>
-                                <td>생성부서 :</td>
-                                <td><input type="text" style="height:30px;"></td>
-                            </tr>
-                        </table>
-                        <div align="center">
-                            <button type="submit" id="loginbtn" data-toggle="modal" data-target="#loginModal">생성하기</button>
-                            <button type="reset" id="loginbtn" data-toggle="modal" data-target="#loginModal">취소하기</button>
-                        </div>
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
+			                                });
+			                            }	
+			                            
+			                        </script>
+			                            
+		                        </form>
+		                     </div>
+	                   </div>
+	                </div>
+	            </div>
+	      </div>
+	      
+	      <div class="modal fade" id="addOrgModal">
+	        <div class="modal-dialog modal-sm">
+	            <div class="modal-content">
+	            	<!-- Modal Header -->
+		            <div class="modal-header">
+		                <h4 class="modal-title">새로운 항목 추가</h4>
+		            </div>
+		            
+		            <form action="addOrgChart.co" method="post">
+		                <!-- Modal Body -->
+		                <div class="modal-body">
+		                    <label for="userPwd" class="mr-sm-2"></label>
+		                    <input type="text" class="form-control mb-2 mr-sm-2" placeholder="생성할 객체명" id="depName" name="depName" required>
+		                    <input type="text" class="form-control mb-2 mr-sm-2" placeholder="부모 객체명" id="parOb" name="parOb" required>
+		                </div>
+		                
+		                <!-- Modal footer -->
+		                <div class="modal-footer">
+		                    <button type="submit" class="btn btn-primary">추가</button>
+		                    <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+		                </div>
+		            </form>
+	            </div>
+	       	</div>
+    	</div>
+	    
+	    <div class="modal fade" id="deleteOrgChartModal">
+	        <div class="modal-dialog modal-sm">
+	            <div class="modal-content">
+	            	<!-- Modal Header -->
+		            <div class="modal-header">
+		                <h4 class="modal-title">조직도 객체 삭제</h4>
+		            </div>
+	
+		            <form action="deleteOrgChart.co" method="post">
+		                <!-- Modal Body -->
+		                <div class="modal-body">
+							정말로 삭제하시겠습니까?
+		                </div>
+		                
+		                <!-- Modal footer -->
+		                <div class="modal-footer">
+		                	<button type="submit" class="btn btn-danger">삭제하기</button>
+		                    <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+		                </div>
+		            </form>
+	            </div>
+	       	</div>
+    	</div>
+	    
+	    
+	      
     </div>
 
 	

@@ -36,18 +36,18 @@
                     <div id="dep-area" style="width: 1000px; padding:10px;">
                         <h2>부서 추가</h2>
                         <br>
-                        <form>
+                        <form id="depcreateForm" action="createDep.co">
                             <table style="width: 900px;">
 
                                 <tr>
                                     <td align="right">추가 부서명 :</td>
-                                    <td><input style="height:30px; width:100%" placeholder="부서명"  required></td>
+                                    <td><input style="height:30px; width:100%" placeholder="부서명" name="depName" id="depName" required></td>
                                     <td style="width:50px;"></td>
                                     <td style="width:150px;"></td>
                                 </tr>
                                 <tr>
                                     <td align="right">부서 설명 :</td>
-                                    <td rowspan="2"><input style="height:80px; width:100%" placeholder="내용을 입력해주세요"></td>
+                                    <td rowspan="2"><input style="height:80px; width:100%" name="depContent" id="depContent" placeholder="내용을 입력해주세요"></td>
                                     <td></td>
                                     <td></td>
                                 </tr>
@@ -56,7 +56,7 @@
                                     <td></td>
                                     <td id="depbtn">
                                         <button type="submit" class="btn btn-primary">추가</button>
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+                                        <button type="reset" class="btn btn-secondary">취소</button>
                                     </td>
                                 </tr>
 
@@ -72,74 +72,61 @@
                         <br>
                         <div id="dep2">
 
-                            <form id="createForm" method="post" action="" enctype="multipart/form-data">
-                                <table border="1px" id="createTable" class="table table-hover" align="center">
+                            <form id="deplistForm" method="post" action="" enctype="multipart/form-data">
+                                <table border="1px" id="createTable" class="table table-hover" text-align="center">
                                     <thead>
-                                      <tr>
-
-                                        <th style="width: 50px;">번호</th>
+                                      <tr style="text-align:center;">
                                         <th style="width: 80px;">부서명</th>
                                         <th style="width: 150px;">책임자</th>
-                                        <th style="width: 80px;">총 인원</th>
+                                        <th style="width: 60px">사원수</th>
                                         <th style="width: 100px;">부서등록일</th>
-                                        <th style="width: 80px;">폐지여부</th>
+                                        <th style="width: 80px;">활성화 여부</th>
                                         <th style="width: 120px;">수정/삭제 수정</th>
                                       </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>인사부</td>
-                                            <td>ㅇㅇㅇ부장</td>
-                                            <td>4</td>
-                                            <td>2020-09-01</td>
-                                            <td>N</td>
-                                            <td id="depbtn">
-                                                <button style="width:40%" data-toggle="modal" data-target="#modModal">수정하기</button>
-                                                <button style="width:40%" data-toggle="modal" data-target="#delModal">삭제하기</button>
-                                            </td>
-                                        </tr>
+                                        
+                                        <c:choose>
+					                		<c:when test="${ empty list }">
+					                			<tr>
+					                				<td colspan="6">선택할 부서가 존재하지 않습니다.</td>
+					                			</tr>
+					                		</c:when>
+					                		<c:otherwise>
+					                			<c:forEach var="d" items="${ list }">
+								                     <tr style="text-align:center;">
+								                     	<input type="hidden" value="${d.depName }">
+								                     	<input type="hidden" value="${d.userCount }">
+			                                            <td>${d.depName }</td>
+			                                            <td>${d.userName } 부장</td>
+			                                            <td>${d.userCount } 명</td>
+			                                            <td>${d.createDate }</td>
+			                                            <td>${d.status}</td>
+			                                            <td id="depbtn">
+			                                                <a style="color:white;" data-id="${d.depName}" id="updatebtn" class="btn btn-primary" style="width:45%" data-toggle="modal" data-target="#updatedepModal">수정하기</a>
+			                                                <a style="color:white;" data-id="${d.depName}" id="deletebtn" class="btn btn-danger" style="width:45%" data-toggle="modal" data-target="#delModal">삭제하기</a>
+			                                            </td>
+			                                            
+			                                        </tr>
+                                                    <script>
+											         	$(document).on("click", "#updatebtn", function () {
+														     var depName = $(this).data('id');
+														     $("#updepName").val( depName );
+														});
+											         	
+											         	$(document).on("click", "#deletebtn", function () {
+														     var depName = $(this).data('id');
+														     $("#deldepName").val( depName );
+														});
+			                       					</script>
+					                    		</c:forEach>
+					                    		
+					                    	</c:otherwise>
+										</c:choose>
 
-										<tr>
-                                            <td>1</td>
-                                            <td>인사부</td>
-                                            <td>ㅇㅇㅇ부장</td>
-                                            <td>4</td>
-                                            <td>2020-09-01</td>
-                                            <td>N</td>
-                                            <td id="depbtn">
-                                                <button style="width:40%" data-toggle="modal" data-target="#modModal">수정하기</button>
-                                                <button style="width:40%" data-toggle="modal" data-target="#delModal">삭제하기</button>
-                                            </td>
-                                        </tr>
-                                        
-                                        <tr>
-                                            <td>1</td>
-                                            <td>인사부</td>
-                                            <td>ㅇㅇㅇ부장</td>
-                                            <td>4</td>
-                                            <td>2020-09-01</td>
-                                            <td>N</td>
-                                            <td id="depbtn">
-                                                <button style="width:40%" data-toggle="modal" data-target="#modModal">수정하기</button>
-                                                <button style="width:40%" data-toggle="modal" data-target="#delModal">삭제하기</button>
-                                            </td>
-                                        </tr>
-                                        
-                                        <tr>
-                                            <td>1</td>
-                                            <td>인사부</td>
-                                            <td>ㅇㅇㅇ부장</td>
-                                            <td>4</td>
-                                            <td>2020-09-01</td>
-                                            <td>N</td>
-                                            <td id="depbtn">
-                                                <button style="width:40%" data-toggle="modal" data-target="#modModal">수정하기</button>
-                                                <button style="width:40%" data-toggle="modal" data-target="#delModal">삭제하기</button>
-                                            </td>
-                                        </tr>
                                     </tbody>
                                 </table>
+                                
                             </form>
                         </div>
 
@@ -151,28 +138,30 @@
                 </div>
 				<br>
 				
-                <div class="modal fade" id="modModal">
+                <div class="modal fade" id="updatedepModal">
                     <div class="modal-dialog modal-sm">
                         <div class="modal-content">
             
-                            <form action="login.me" method="post">
+                            <form action="updateDep.co" method="post" style="margin:5px; padding:5px;">
                                 <!-- Modal Body -->
                                 <table>
                                     <tr><h3>부서 수정</h3></tr>
                                     <tr>
-                                        <td><h4>부서명</h4></td>
+                                    	<td style="width:70px;">부서명 : </td>
+                                    	<td>
+                                    		<input type="text" id="updepName" name="depName" readonly style="width:150px; height:30px">
+                                    	</td>
                                     </tr>
                                     <tr>
-                                        <td>수정할 부서명 : </td>
+                                        <td>수정명 : </td>
                                         <td>
-                                            <input style="width:150px; height:30px" placeholder="기존 부서명" required>
+                                            <input style="width:150px; height:30px" name="updateName" placeholder="수정후 부서명" required>
                                         </td>
                                     </tr>
-                                    <br><br>
                                     <tr> 
-                                        <td>부서 설명 : </td>
+                                        <td>설명 : </td>
                                         <td>
-                                            <input style="width:150px; height:30px" placeholder="간단한 설명">
+                                            <input style="width:150px; height:30px" name="depContent" placeholder="부서 설명">
                                         </td>
                                     </tr>
                                 </table>
@@ -192,31 +181,26 @@
                     <div class="modal-dialog modal-sm">
                         <div class="modal-content">
             
-                            <form action="login.me" method="post">
+                            <form action="deleteDep.co" method="post" style="margin:10px; padding:10px;">
                                 <h3>부서 삭제</h3>
+                                
+								<table>
+									<tr>
+										<td>선태된 부서:</td>
+										<td><input type="text" id="deldepName" name="depName" readonly style="width:150px; height:30px;" ></td>
+									</tr>
+								</table>
                                 <!-- Modal Body -->
                                 <p>
+                                	<br>
                                     부서 삭제시 데이터를 되돌릴 수 없습니다. 정말로 삭제하시겠습니까?
                                 </p>
                                 <br>
                                 <!-- Modal footer -->
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary">삭제</button>
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+                                    <button type="submit" class="btn btn-danger">삭제</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
                                 </div>
-
-
-                                <!-- Modal Body -->
-                                <p>
-                                    부서 내부에 사원이 존재하여 부서를 삭제하지 못합니다.
-                                </p>
-                                <br>
-                                <!-- Modal footer -->
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary">삭제</button>
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
-                                </div>
-
 
                             </form>
                         </div>
