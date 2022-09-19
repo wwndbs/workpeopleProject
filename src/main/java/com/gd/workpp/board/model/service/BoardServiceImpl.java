@@ -74,8 +74,7 @@ public class BoardServiceImpl implements BoardService {
 		return result1 * result2;
 	}
 
-
-	
+	// 게시글 새로 등록
 	@Override
 	public int insertBoard(Board b, Attachment at) {
 		
