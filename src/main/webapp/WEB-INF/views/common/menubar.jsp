@@ -141,7 +141,7 @@
 			</li>
 			<!--메일-->
 			<li class="sidebar-nav-item">
-				<a class="sidebar-nav-link collapsed" href="inbox.ma" aria-expanded="false" aria-controls="navUI">
+				<a class="sidebar-nav-link collapsed" href="box.ma" aria-expanded="false" aria-controls="navUI">
 					<span class="sidebar-nav-icon"> <i class="fas fa-envelope"></i></span>
 					<span class="sidebar-nav-name"> 메일 </span>
 					<span class="sidebar-nav-end"> <i data-feather="chevron-right" class="nav-collapse-icon"></i></span>
