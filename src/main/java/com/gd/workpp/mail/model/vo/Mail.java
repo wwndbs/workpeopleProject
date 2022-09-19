@@ -17,6 +17,7 @@ public class Mail {
 	private String mailTitle;
 	private String mailContent;
 	private String sender;
+	private String senderName;
 	private String receiver;
 	private String mailRef;
 	private String sendDate;
