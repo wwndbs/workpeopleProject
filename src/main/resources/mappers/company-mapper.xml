@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="companyMapper">
+  
+ 	<resultMap id="companyResult" type="Company">
+	  	<result column="modify_no" property="modifyNo"/>
+	  	<result column="com_name" property="comName"/>
+	  	<result column="com_no" property="comNo"/>
+	  	<result column="ceo" property="ceo"/>
+	  	<result column="post_no" property="postNo"/>
+	  	<result column="phone" property="phone"/>
+	  	<result column="fax" property="fax"/>
+	  	<result column="address" property="address"/>
+	  	<result column="create_date" property="createDate"/>
+	  	<result column="modify_date" property="modifyDate"/>
+	  	<result column="com_img" property="comImg"/>
+	</resultMap>
+
+	<resultMap id="orgChartResult" type="OrgChart">
+	  	<result column="dep_name" property="depName"/>
+	  	<result column="par_ob" property="parOb"/>
+	  	<result column="status" property="status"/>
+	</resultMap>
+
+	<resultMap id="jobResult" type="Job">
+	  	<result column="job_name" property="jobName"/>
+	  	<result column="status" property="status"/>
+	</resultMap>
+
+
+	<resultMap id="departmentResult" type="Department">
+		<result column="dep_name" property="depName"/>
+		<result column="dep_content" property="depContent"/>
+		<result column="status" property="status"/>
+		<result column="create_date" property="createDate"/>
+		<result column="modify_date" property="modifyDate"/>
+		<result column="user_name" property="userName"/>
+	</resultMap>
+	
+	<select id="orgChartList" resultMap="orgChartResult">
+		select
+			   dep_name
+			 , par_ob
+			 , status
+		  from orgchart
+		 where status = 'Y'
+  	</select>
+	
+	
+	<select id="jobList" resultMap="jobResult">
+		select
+			job_name
+		from job
+		where status = 'Y'
+	</select>
+	
+	<select id="departmentList" resultMap="departmentResult">
+		select
+			dep_name
+		from department
+		where status= 'Y'
+	</select>
+	
+	<insert id="addOrgChart">
+		insert
+	  		into orgchart
+	  		(
+	  			dep_name
+	  			,par_ob
+	  		)
+	  		values
+	  		(
+	  			#{depName}
+	  			,#{parOb}
+	  		)
+	</insert>
+	
+	<update id="deleteOrgChart">
+		update
+				orgchart
+			set status= 'N'
+			where dep_name=#{depName}
+	</update>
+	
+	
+	<select id="updateDepList" resultMap="departmentResult">
+		select 
+			d.dep_name,user_name,d.create_date ,d.status,
+            (
+             select count(*)
+              from member
+             where dep_name = d.dep_name
+            ) as "userCount"
+		from department d
+		join member m on d.dep_name = m.dep_name
+		where job_name='부장'
+	</select>
+	
+	<insert id="createDepartment">
+		insert
+	  		into department
+	  		(
+	  			dep_name
+	  			,dep_content
+	  			,status
+	  			,create_date
+	  			,modify_date
+	  		)
+	  		values
+	  		(
+	  			#{depName}
+	  			,#{depContent}
+	  			,'Y'
+	  			,sysdate
+	  			,sysdate
+	  		)
+	</insert>
+	
+	<update id="updateDepartment">
+		update
+				department
+			set dep_name = #{updateName}
+			,	dep_content = #{depContent}
+			where dep_name=#{depName}
+	</update>
+</mapper>	  

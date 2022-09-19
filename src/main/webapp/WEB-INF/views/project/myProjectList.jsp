@@ -27,14 +27,15 @@
         font-size: 90%;
         width:300%
       }
-      .font2{font-size: 75%;}
+      .font2{font-size: 75%; width:200%}
       .font3{font-size: 90%; font-weight: bold; color:rgb(244, 217, 14); width:300%}
       .approval1{width: 98.5% !important; font-weight: bold; font-size: 15px;}
       .btn1{margin: 10px -1500px 0px 1500px; width: 70%;}
       .box1{cursor : pointer; margin: 0px -5px 0px 0px;} 
 	  .box1:hover{background-color : #f4f9fe;}
       .col-lg-3{max-width: 80%;}
-	  .container-fluid{margin-right: 0px !important;}	
+	  .container-fluid{margin-right: 0px !important;}
+	  .modifyPro, .deletePro{cursor : pointer}	
     </style>
 </head>
 <body>
@@ -74,6 +75,7 @@
 	            
 	            <input type="hidden" name="projectNo" value="${ pp.projectNo }">
                 <input type="hidden" name="no" value="${ p.proBoardNo }">
+                <input type="hidden" name="pmMember" value="${ pmMember }">
                 
 	            <!--프로젝트 박스-->
 	            <div class="row">
@@ -88,26 +90,56 @@
 	                  	
 			              <div class="col-md-6 col-lg-3 d-flex">
 			                <div class="color"></div>
-			                <div class="card mb-grid project w-100 box1" onclick="location.href='proList.pr?no=${no}'"> <!-- ${projectNo} -->
+			                <div class="card mb-grid project w-100 box1" onclick="location.href='proList.pr?no=${pp.projectNo}'">
 			                  <div class="card-body d-flex flex-column">                                            
 			                    <div class="d-flex justify-content-between mb-3">
 			                      <h5 class="card-title mb-0">
-			                        <div style="float:right; font-size: 80%; margin: 0px -240px 0px 0px;">	
-			                          <label for="">수정</label>
-			                          <label for="">삭제</label>
+			                        <div style="float:right; font-size: 80%; margin: 0px -240px 0px 100px">	
+			                          <label for="" class="modifyPro">수정</label>
+			                          <label for="" class="deletePro">삭제</label>&nbsp;&nbsp;&nbsp;
 			                        </div>
 			                        <br>
 			                        <label class="font1">&nbsp;&nbsp;${ pp.projectTitle }</label><br>                    
 									<label class="font2">&nbsp;&nbsp;${ pp.depName }</label><br>
-			                        <label class="font3" style="vertical-align: bottom;">&nbsp;&nbsp;${ pp.category }</label>
+									<div style="position:absolute;  bottom:30px !important">
+										<c:if test="${ pp.category == '기획중' }">
+					                        <label class="font3" style="">&nbsp;&nbsp;기획중</label>
+				                        </c:if>
+										<c:if test="${ pp.category == '기획완료' }">
+					                        <label class="font3" style="color:orange;">&nbsp;&nbsp;기획완료</label>
+				                        </c:if>
+										<c:if test="${ pp.category == '프로젝트 진행중' }">
+					                        <label class="font3" style="color:rgb(42, 187, 42)">&nbsp;&nbsp;프로젝트 진행중</label>
+				                        </c:if>
+										<c:if test="${ pp.category == '프로젝트 완료' }">
+					                        <label class="font3" style="color:rgb(113, 113, 255)">&nbsp;&nbsp;프로젝트 완료</label>
+				                        </c:if>
+										<c:if test="${ pp.category == '피드백' }">
+					                        <label class="font3" style="color:rgb(185, 101, 213)">&nbsp;&nbsp;피드백</label>
+				                        </c:if>	
+			                        </div>		                        			                        			                        
 			                      </h5>
 			                      <i data-feather="user" style="margin: 230px -17px -20px 200px; float: right; width:27px !important"></i>
-			                      <label for="" style="margin: 230px 0px -20px 21px;">23</label>
+			                      <span for="" style="margin: 230px 0px -20px 21px;" id="pcount">${ pp.pmMemberCount }</span]>
 			                    </div>
 			                  </div>
 			                </div>
 			              </div>
-			              
+			              <!-- 
+			              <script>
+			              	$(function(){
+			              		ajaxSelectList();
+			              	})
+			              	function ajaxSelectList(){ // 프로젝트 인원수조회용 ajax
+			              		$.ajax({
+			              			data:{no:{p.projectNo}},
+			              			success:function(list){
+			              				console.log("ddd");
+			              			}
+			              		})
+			              	}
+			              </script>
+			               -->
 			              
 		              </c:forEach>
 		            </c:otherwise>
@@ -139,7 +171,7 @@
 	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
 	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
 	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font3" style="margin: 10px 0px 0px 0px;">&nbsp;&nbsp;기획중</label>
+	                        <label class="font3" style="margin: 10px 0px 0px 0px; color:orange;">&nbsp;&nbsp;기획완료</label>
 	                      </h5>
 	                      <i data-feather="user" style="margin: 230px -17px -20px 200px; float: right;"></i>
 	                      <label for="" style="margin: 230px 0px -20px 0px;">23</label>

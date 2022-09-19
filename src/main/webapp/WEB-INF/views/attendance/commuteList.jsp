@@ -52,12 +52,12 @@
 	                  	</tr>
 	                    <tr height="10px">
 	                      <td colspan="2" style="padding-top:30px;">
-							<div id="Clockday" style="font-size:15px !important; font-weight:bold; color: #696969;">00/00/00</div>
+							<div id="Clockday" style="font-size:15px !important; font-weight:bold; color:  color: rgb(0, 135, 239);;">00/00/00</div>
 	                      </td>
 	                    </tr>
 	                    <tr height="30px">
 	                      <td colspan="2" style="padding-bottom:10px !important;">
-	                        <div id="Clock" style="font-size:35px !important; font-weight:bold; color: black;">00:00</div>
+	                        <div id="Clock" style="font-size:35px !important; font-weight:bold; color: color: rgb(0, 135, 239);">00:00</div>
 	                      </td>
 	                    </tr>
 	                    <tr height="50px">
@@ -82,18 +82,18 @@
 	                    <tr height="60px">
 	                      <td colspan="2" style="padding-top:15px;">
 	                        <i class="fa-regular fa-clock" style="font-size:25px; margin-right:15px;"></i>
-	                        <span><b>근무현황</b></span>
+	                        <span><b>이번달 근무현황</b></span>
 	                      </td>
 	                    </tr>
 	                    <tr height="10px">
 	                      <td colspan="2"><hr style="height:3px; color:black;"></td>
 	                    </tr>
 	                    <tr height="40px">
-	                      <td style="text-align:right; padding-right:100px;"><span><b>이번달 근무일수</b></span></td>
+	                      <td style="text-align:right; padding-right:100px;"><span><b>근무일수</b></span></td>
 	                      <td style="text-align:left; padding-right:60px;">9일</td>
 	                    </tr>
 	                    <tr height="40px">
-	                      <td style="text-align:right; padding-right:100px;"><span><b>이번달 연장근무시간</b></span></td>
+	                      <td style="text-align:right; padding-right:100px;"><span><b>연장근무시간</b></span></td>
 	                      <td style="text-align:left; padding-right:60px;">9일</td>
 	                    </tr>
 	                    <tr height="40px">
@@ -155,8 +155,8 @@
 	
 	                <div class="commute-5">
 	                  <button type="button" class="btn btn-outline-danger" id="commute-btn01" onclick="location.href='commuteUpdate.at'">출퇴근기록 수정요청</button><br>
-	                  <button type="button" class="btn btn-outline-primary" id="commute-btn02" onclick="location.href='vacation.ap'">휴가 신청</button><br>
-	                  <button type="button" class="btn btn-outline-primary" id="commute-btn03" onclick="location.href='overtime.ap'">연장근무 신청</button>
+	                  <button type="button" class="btn btn-outline-primary" id="commute-btn02" onclick="location.href='documentList.ap'">휴가 신청</button><br>
+	                  <button type="button" class="btn btn-outline-primary" id="commute-btn03" onclick="location.href='documentList.ap'">연장근무 신청</button>
 	                </div>
 	
 	              </div>  
@@ -212,7 +212,6 @@
 	                              <th scope="col">요일</th>
 	                              <th scope="col">출근시간</th>
 	                              <th scope="col">퇴근시간</th>
-	                              <th scope="col">총 근무시간</th>
 	                              <th scope="col">근무상태</th>
 	                            </tr>
 	                          </thead>
@@ -222,7 +221,6 @@
 	                              <td>월</td>
 	                              <td>08:50</td>
 	                              <td>18:00</td>
-	                              <td>08:00</td>
 	                              <td>정상</td>
 	                            </tr>
 	                            <tr>
@@ -230,7 +228,6 @@
 	                              <td>월</td>
 	                              <td>08:50</td>
 	                              <td>18:00</td>
-	                              <td>08:00</td>
 	                              <td>정상</td>
 	                            </tr>
 	                            <tr>
@@ -238,7 +235,6 @@
 	                              <td>월</td>
 	                              <td>08:50</td>
 	                              <td>18:00</td>
-	                              <td>08:00</td>
 	                              <td>정상</td>
 	                            </tr>
 	                            <tr>
@@ -246,7 +242,6 @@
 	                              <td>월</td>
 	                              <td>08:50</td>
 	                              <td>18:00</td>
-	                              <td>08:00</td>
 	                              <td>정상</td>
 	                            </tr>
 	                            <tr>
@@ -254,7 +249,6 @@
 	                              <td>월</td>
 	                              <td>08:50</td>
 	                              <td>18:00</td>
-	                              <td>08:00</td>
 	                              <td>정상</td>
 	                            </tr>
 	                          </tbody>

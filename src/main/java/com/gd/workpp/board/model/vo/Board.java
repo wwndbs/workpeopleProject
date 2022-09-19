@@ -28,5 +28,6 @@ public class Board {
 	private String userName;
 	private int like;
 	private int reply;
+	private int boardOrder;
 
 }

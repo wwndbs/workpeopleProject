@@ -69,7 +69,7 @@
 							                    <table style="border: 1px solid #444444;">
 						                            <tr style="height:50px">
 						                                <td rowspan="3" style="width:130px">
-						                                	<img style="width:115px;"id="profileImg" src="<c:out value='${loginUser.profImg}' default='resources/profile_images/defaultProfile.jpg' />">
+						                                	<img style="width:115px;"id="profileImg" src="<c:out value='${m.profImg}' default='resources/profile_images/defaultProfile.jpg' />">
 						                                </td>
 						                                <td colspan="2" style="width:300px">
 						                                    <h4>${m.userName }</h4>

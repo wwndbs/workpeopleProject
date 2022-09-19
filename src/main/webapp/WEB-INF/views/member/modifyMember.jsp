@@ -21,6 +21,13 @@
 	  	background-color: gainsboro;
 	  	text-align:center;   
 	}
+	#profileImg{
+	    width:150px;
+	    height:150px;
+	    border:1px solid lightgray;
+	    border-radius: 50%;
+	}
+
 </style>
 </head>
 <body>
@@ -49,7 +56,7 @@
                             <!--프로필 부분-->
                             <div class="profile-alert-wrapper">
                                 <div class="sanprofile-area">
-                                <img id="profileImg" src="<c:out value='${loginUser.profImg}' default='resources/profile_images/defaultProfile.jpg' />"><br>
+                                <img id="profileImg" src="<c:out value='${m.profImg}' default='resources/profile_images/defaultProfile.jpg' />"><br>
                                 <span id="profile-name"></span><br>
                                 <span id="department-name"></span>
                                 </div>
@@ -108,22 +115,36 @@
                                         <td>
                                             <select id="depName" class="form-control" name="depName" style="height:40px; width:100%" required>
                                                 <option value="${m.depName}">${m.depName}</option>
-                                                <option value="인사팀">인사팀</option>
-                                                <option value="총무팀">총무팀</option>
-                                                <option value="영업팀">영업팀</option>
-                                                <option value="회계팀">회계팀</option>
-                                                <option value="개발팀">개발팀</option>
+                                                <c:choose>
+							                		<c:when test="${ empty deplist }">
+							                			<tr>
+							                				<td colspan="6">선택할 부서가 존재하지 않습니다.</td>
+							                			</tr>
+							                		</c:when>
+							                		<c:otherwise>
+							                			<c:forEach var="d" items="${ deplist }">
+									                     <option value="${d.depName }">${d.depName}</option>
+							                    		</c:forEach>
+							                    	</c:otherwise>
+												</c:choose>
                                             </select>
                                         </td>
                                         
                                         <td>
                                             <select id="jobName" class="form-control" name="jobName" style="height:40px; width:100%" required>
                                                 <option value="${m.jobName}">${m.jobName}</option>
-                                                <option value="사원">사원</option>
-                                                <option value="대리">대리</option>
-                                                <option value="과장">과장</option>
-                                                <option value="팀장">팀장</option>
-                                                <option value="부장">부장</option>
+                                                <c:choose>
+							                		<c:when test="${ empty joblist }">
+							                			<tr>
+							                				<td colspan="6">선택할 직책이 존재하지 않습니다.</td>
+							                			</tr>
+							                		</c:when>
+							                		<c:otherwise>
+							                			<c:forEach var="j" items="${ joblist }">
+									                     <option value="${j.jobName }">${j.jobName }</option>
+							                    		</c:forEach>
+							                    	</c:otherwise>
+												</c:choose>
                                             </select>
                                         </td>
                                     </tr>

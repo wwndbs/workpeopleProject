@@ -15,8 +15,8 @@
 	</resultMap>
 	
 	<resultMap type="ProMember" id="proMemberResult">
-		<result column="project_no" property="proMemNo"/>
-		<result column="user_no" property="userMemNo"/>		
+		<result column="user_no" property="userMemNo"/>
+		<result column="pmMemberCount" property="pmMemberCount"/>
 	</resultMap>
 	
 	<resultMap type="ProBoard" id="proBoardResult">
@@ -40,9 +40,9 @@
 	</resultMap>
 	
 	<resultMap type="Member" id="memberResult">
-		<result column="user_name" property="pbUserName"/>
-		<result column="job_name" property="pbJobName"/>
-		<result column="dep_name" property="pbDepName"/>
+		<result column="pbUserName" property="pbUserName"/>
+		<result column="pbJobName" property="pbJobName"/>
+		<result column="pbDepName" property="pbDepName"/>
 		<result column="user_no" property="userNo"/>
 	</resultMap>
 	
@@ -64,6 +64,43 @@
              , p.dep_name
   		  from project p             
          where p.dep_name like '%'||#{depName}||'%'      
+         order
+            by p.project_no desc
+	</select>
+	
+	<!-- 프로젝트 참여자 수 조회 -->
+	<select id="countMember" resultMap="proMemberResult">
+		select
+               count(user_no) as "pmMemberCount"   
+          from pro_member
+         where project_no = #{projectNo}
+	</select>	
+	
+	<!-- 프로젝트게시물 관리자조회 -->
+	<select id="selectAdmin" resultMap="projectResult">
+	    select
+               p.project_no
+		     , p.user_no as "proAdminNo"		     
+		     , m.user_name as "pbUserName"
+		     , m.job_name as "pbJobName"
+             , m.dep_name as "pbDepName"
+          from project p    
+          join member m on (m.user_no = p.user_no) 
+         where p.project_no = #{projectNo}
+	</select>
+	
+	<!-- 프로젝트게시물 참여자 조회 -->
+	<select id="selectMember" resultMap="proMemberResult">
+		select
+               pm.user_no as "userMemNo"	
+             , pm.project_no 	     
+		     , m.user_name as "pbUserName"
+		     , m.job_name as "pbJobName"
+             , m.dep_name "pbDepName"
+          from project p    
+          join pro_member pm on (pm.project_no = p.project_no)
+          join member m on (m.user_no = pm.user_no) 
+         where pm.project_no = #{projectNo}
 	</select>
 		
 	<!-- 프로젝트게시물리스트 페이징처리 -->
@@ -72,6 +109,7 @@
 			   count(*)
 		  from pro_board
 		 where status = 'Y' 	   
+		   and project_no = #{projectNo}
 	</select>
 	
 	<!-- 프로젝트 상세리스트 조회 -->
@@ -95,6 +133,63 @@
 		  join member m on (m.user_no = pb.user_no)
 		 where pb.project_no = #{projectNo}
 		   and pb.status = 'Y'
+		 order
+		    by pb.pro_board_no desc
+	</select>
+	
+	<!-- 프로젝트게시물 검색 -->
+	<select id="selectSearchCount" resultType="_int">
+		select
+		       count(*)
+		  from pro_board pb
+		  join member m on (m.user_no = pb.user_no)
+		 where pb.project_no = #{projectNo}
+		   and pb.status = 'Y'
+	   	  <if test="condition == 'writer'">
+		   and m.user_name
+	   	  </if>		
+          <if test="condition == 'title'">
+           and pb.pro_title
+          </if>
+          <if test="condition == 'content'">
+           and pb.pro_content	   
+          </if>
+	   	  like '%'||#{keyword}||'%'
+	</select>
+	
+	<!-- 프로젝트게시물 검색 (제목|내용|작성자) -->
+	<select id="selectSearchList" resultMap="proBoardResult">
+		select
+		       pb.pro_board_no
+		     , pb.pro_board_status
+		     , pb.pro_board_level
+		     , pb.pro_title
+		     , pb.project_no
+		     , pb.user_no as "boardWriterNo"		     
+		     , m.user_name as "pbUserName"
+		     , m.job_name as "pbJobName"
+		     , pb.create_date
+		     , pb.modify_date
+		     , pb.start_date
+		     , pb.end_date 
+		     , pb.attach_origin
+		     , pb.attach_modify
+		  from pro_board pb
+		  join member m on (m.user_no = pb.user_no)
+		 where pb.project_no = #{projectNo}
+		   and pb.status = 'Y'
+		   <choose>
+		   	  <when test="condition == 'writer'">
+			   	 and m.user_name
+		   	  </when>		
+           	  <when test="condition == 'title'">
+                 and pb.pro_title
+           	  </when>
+           	  <otherwise>
+                 and pb.pro_content	   
+           	  </otherwise>
+		   </choose>
+		   		like '%'||#{keyword}||'%'
 		 order
 		    by pb.pro_board_no desc
 	</select>

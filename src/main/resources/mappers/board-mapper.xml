@@ -5,6 +5,7 @@
 	<resultMap id="boardResult" type="Board">
 		<result column="board_no" property="boardNo"/>
 		<result column="user_no" property="userNo"/>
+		<result column="b_no" property="boardOrder"/>
 		<result column="board_title" property="boardTitle"/>
 		<result column="create_date" property="createDate"/>
 		<result column="count" property="count"/>
@@ -12,6 +13,16 @@
 		<result column="user_name" property="userName"/>
 		<result column="like" property="like"/>
 		<result column="reply" property="reply"/>
+	</resultMap>
+	
+	<resultMap id="attachmentResult" type="Attachment">
+		<result column="file_no" property="fileNo"/>
+		<result column="ref_type" property="refType"/>
+		<result column="ref_no" property="refNo"/>
+		<result column="origin_name" property="originName"/>
+		<result column="change_name" property="changeName"/>
+		<result column="upload_date" property="uploadDate"/>
+		<result column="file_status" property="fileStatus"/>
 	</resultMap>
 
 	<!-- 게시판(공지, 익명) 글 개수 조회 -->
@@ -34,63 +45,72 @@
 	
 	<!-- 게시판(공지, 익명) 글 목록 조회 -->
 	<select id="selectList" resultMap="boardResult">
-		select
-			   board_no
-			 , user_no
-			 , board_title
-			 , b.create_date
-			 , count
-			 , job_name
-			 , user_name
-			 , (
-			 	select
-			 		   count(*)
-			 	  from b_like bl
-			 	 where bl.board_no = b.board_no
-			 ) as "LIKE"
-			 , (
-			 	select
-			 		   count(*)
-			 	  from reply
-			 	 where ref_bno = board_no
-			 ) as "REPLY"
-		  from board b
-		  join member using(user_no)
-		 where b.status = 'Y'
-		   and board_type = #{no}
+		select rownum b_no, A.*
+		  from (
+		         select
+					   board_no
+					 , user_no
+					 , board_title
+					 , b.create_date
+					 , count
+					 , job_name
+					 , user_name
+					 , (
+					 	select
+					 		   count(*)
+					 	  from b_like bl
+					 	 where bl.board_no = b.board_no
+					 ) as "LIKE"
+					 , (
+					 	select
+					 		   count(*)
+					 	  from reply
+					 	 where ref_bno = board_no
+					 ) as "REPLY"
+				  from board b
+				  join member using(user_no)
+				 where b.status = 'Y'
+				   and board_type = #{no}
+		  		) "A"
 		 order
-		    by board_no desc
+		    by b_no desc
 	</select>
 	
 	<!-- 게시판(부서) 글 목록 조회 -->
 	<select id="selectDeptList" resultMap="boardResult">
-		select
-			   board_no
-			 , user_no
-			 , board_title
-			 , b.create_date
-			 , count
-			 , job_name
-			 , user_name
-			 , b.dep_name
-			 , (
-			 	select
-			 		   count(*)
-			 	  from b_like bl
-			 	 where bl.board_no = b.board_no
-			 ) as "LIKE"
-			 , (
-			 	select
-			 		   count(*)
-			 	  from reply
-			 	 where ref_bno = board_no
-			 ) as "REPLY"
-		  from board b
-		  join member using(user_no)
-		 where b.status = 'Y'
-		   and b.dep_name = #{depName}
+		select 
+			   rownum b_no
+			 , A.*
+		  from
+		  	  (
+		  	    select
+					   board_no
+					 , user_no
+					 , board_title
+					 , b.create_date
+					 , count
+					 , job_name
+					 , user_name
+					 , b.dep_name
+					 , (
+					 	select
+					 		   count(*)
+					 	  from b_like bl
+					 	 where bl.board_no = b.board_no
+					 ) as "LIKE"
+					 , (
+					 	select
+					 		   count(*)
+					 	  from reply
+					 	 where ref_bno = board_no
+					 ) as "REPLY"
+				  from board b
+				  join member using(user_no)
+				 where b.status = 'Y'
+				   and b.dep_name = #{depName}
+		  	  ) "A"
 		 order
-		    by board_no desc
+		    by b_no desc
 	</select>
 	
 	<!-- 게시글 임시저장 -->
@@ -147,6 +167,61 @@
 			   seq_board.currval
 		  from dual
 	</select>
+	
+	<!-- 글번호에 해당하는 파일번호 조회 -->
+	<select id="selectAttachment" resultMap="attachmentResult">
+		select
+			   file_no
+			 , ref_type
+			 , ref_no
+			 , origin_name
+			 , change_name
+			 , upload_date
+			 , file_status
+		  from attachment
+		 where ref_type = 2
+		   and ref_no = #{boardNo}
+	</select>
+	
+	<!-- 글번호에 해당하는 첨부파일 삭제 -->
+	<delete id="deleteAttachment">
+		delete
+		  from attachment
+		 where ref_type = 2
+		   and ref_no = #{boardNo}
+	</delete>
+	
+	<!-- 게시글 임시저장 업데이트 -->
+	<update id="updateSaveBoard">
+		update
+			   board
+		   set board_title = #{boardTitle}
+		     , board_content = #{boardContent}
+		     , create_date = sysdate
+		     , top_exp = #{topExp}
+		 where board_no = #{boardNo}
+	</update>
+	
+	<!-- 첨부파일 임시저장 업데이트 -->
+	<insert id="updateSaveAttachment">
+		insert
+		  into attachment
+		  (
+		    file_no
+		  , ref_type
+		  , ref_no
+		  , origin_name
+		  , change_name
+		  )
+		  values
+		  (
+		    seq_file.nextval
+		  , #{refType}
+		  , #{refNo}
+		  , #{originName}
+		  , #{changeName}
+		  )
+	</insert>
 	
 	<!-- 게시글 삽입 -->
 	<insert id="insertBoard">

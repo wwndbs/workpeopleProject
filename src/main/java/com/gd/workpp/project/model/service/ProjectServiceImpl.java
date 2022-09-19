@@ -1,7 +1,10 @@
 package com.gd.workpp.project.model.service;
 
+import static com.gd.workpp.common.template.Template.getSqlSession;
+
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.gd.workpp.common.model.vo.PageInfo;
 import com.gd.workpp.project.model.dao.ProjectDao;
 import com.gd.workpp.project.model.vo.ProBoard;
+import com.gd.workpp.project.model.vo.ProMember;
 import com.gd.workpp.project.model.vo.ProReply;
 import com.gd.workpp.project.model.vo.Project;
 
@@ -25,19 +29,14 @@ public class ProjectServiceImpl implements ProjectService {
 		return pDao.selectList(sqlSession, depName);
 	}	
 	
-	//@Override
-	//public ArrayList<Project> selectMyProList(int projectNo) {
-	//	return pDao.selectMyProList(sqlSession, projectNo);
-	//}
-
 	@Override
 	public int insertProject(Project p) {
 		return 0;
 	}
 	
 	@Override
-	public int selectListCount() {
-		return pDao.selectListCount(sqlSession);
+	public int selectListCount(int projectNo) {
+		return pDao.selectListCount(sqlSession, projectNo);
 	}
 	
 	@Override
@@ -89,6 +88,37 @@ public class ProjectServiceImpl implements ProjectService {
 	public int deleteProBoard(int proBoardNo) {
 		return pDao.deleteProBoard(sqlSession, proBoardNo);
 	}
+
+	@Override
+	public ArrayList<Project> selectAdmin(int projectNo) {
+		return pDao.selectAdmin(sqlSession, projectNo);
+	}
+
+	@Override
+	public ArrayList<ProMember> selectMember(int projectNo) {
+		return pDao.selectMember(sqlSession, projectNo);
+	}
+	
+	@Override
+	public ArrayList<ProMember> countMember(int projectNo) {
+		return pDao.countMember(sqlSession, projectNo);
+	}
+
+	@Override
+	public int selectSearchCount(String condition, String keyword) {
+		SqlSession sqlSession = getSqlSession();
+		int searchCount = pDao.selectSearchCount(sqlSession, condition, keyword);
+		sqlSession.close();
+		return searchCount;
+	}
+
+	@Override
+	public ArrayList<ProBoard> selectSearchList(String condition, String keyword, PageInfo pi) {
+		SqlSession sqlSession = getSqlSession();
+		ArrayList<ProBoard> list = pDao.selectSearchList(sqlSession, condition, keyword, pi);
+		sqlSession.close();
+		return list;
+	}	
 
 }
 

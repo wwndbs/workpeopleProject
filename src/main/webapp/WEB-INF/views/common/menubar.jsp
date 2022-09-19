@@ -39,15 +39,16 @@
 
 					<li class="sidebar-nav-item">
 						<a href="modifyList.me" class="sidebar-nav-link">
-							<span class="sidebar-nav-abbr"> Mo </span> <span class="sidebar-nav-name"> 사원정보수정 </span>
+							<span class="sidebar-nav-abbr"> Mo </span> <span class="sidebar-nav-name"> 사원정보수정 및 삭제 </span>
+						</a>
+					</li>
+					
+					<li class="sidebar-nav-item">
+						<a href="updateDepForm.co" class="sidebar-nav-link">
+							<span class="sidebar-nav-abbr"> Mo </span> <span class="sidebar-nav-name"> 부서관리 </span>
 						</a>
 					</li>
 
-					<li class="sidebar-nav-item">
-						<a href="./layouts/charts_morris.html" class="sidebar-nav-link">
-							<span class="sidebar-nav-abbr"> De </span> <span class="sidebar-nav-name"> 사원삭제 </span>
-						</a>
-					</li>
 				</ul>
 			</li>
 			<!--근태관리-->
@@ -195,13 +196,7 @@
 					</li>
 
 					<li class="sidebar-nav-item">
-						<a href="./layouts/404.html" class="sidebar-nav-link">
-							<span class="sidebar-nav-abbr"> Ad </span> <span class="sidebar-nav-name"> 조직도 등록 </span>
-						</a>
-					</li>
-
-					<li class="sidebar-nav-item">
-						<a href="./layouts/500.html" class="sidebar-nav-link">
+						<a href="updateOrgChartForm.co" class="sidebar-nav-link">
 							<span class="sidebar-nav-abbr"> Mo </span> <span class="sidebar-nav-name"> 조직도 수정 및 삭제 </span>
 						</a>
 					</li>

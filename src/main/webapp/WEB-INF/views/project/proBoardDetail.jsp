@@ -5,7 +5,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
 <!-- favicon 설정 -->
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 <link rel="icon" href="resources/images/favicon.ico" type="image/x-icon">
@@ -151,7 +150,27 @@
 			        	function postFormSubmit(url){
 			        		$("#postForm").attr("action", url).submit();
 			        	}
-			        </script>                   
+			        	
+			        	// toast 스크립트
+			        	let removeToast;
+						
+						function toast(string) {
+						    const toast = document.getElementById("toast");
+						
+						    toast.classList.contains("reveal") ?
+						        (clearTimeout(removeToast), removeToast = setTimeout(function () {
+						            document.getElementById("toast").classList.remove("reveal")
+						        }, 1000)) :
+						        removeToast = setTimeout(function () {
+						            document.getElementById("toast").classList.remove("reveal")
+						        }, 1500)
+						    toast.classList.add("reveal"),
+						        toast.innerText = string
+						}   
+			        </script> 
+			        <!--toast div-->
+					<div id="toast">
+					</div>
 	                  	                  	
 	                  <!-- 게시글 간략정보 -->
 	                  <div class="demo-icon-display">

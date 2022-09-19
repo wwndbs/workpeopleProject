@@ -20,6 +20,7 @@ import com.gd.workpp.common.template.Pagination;
 import com.gd.workpp.member.model.vo.Member;
 import com.gd.workpp.project.model.service.ProjectService;
 import com.gd.workpp.project.model.vo.ProBoard;
+import com.gd.workpp.project.model.vo.ProMember;
 import com.gd.workpp.project.model.vo.Project;
 
 @Controller
@@ -28,22 +29,25 @@ public class ProjectController {
 	@Autowired
 	private ProjectService pService;
 	
-	// 내프로젝트 리스트
-	// 로그인한 회원의 부서명 전달받기 , sql에도 전달하고
-	// 컨트롤러서부터 계속 부서명을 전달해야됨 (jsp는 조건문x)
+	// 내프로젝트 리스트 (로그인한 회원의 부서명 전달받기, sql에도 전달하고 컨트롤러서부터 계속 부서명을 전달해야됨 (jsp는 조건문x))
 	@RequestMapping("myProject.pr")
-	public ModelAndView myProjectList(ModelAndView mv, HttpSession session, Project pp) {
+	public ModelAndView myProjectList(ModelAndView mv, HttpSession session, Project pp, ProMember pm) {
 		
 		Member m = (Member)session.getAttribute("loginUser");
 		String depName = m.getDepName();
+		int projectNo = pm.getProjectNo();
 				
 		ArrayList<Project> list = pService.selectList(depName);
+		ArrayList<ProMember> pmList = pService.countMember(projectNo);
 		
 		mv.addObject("list", list)
 		  .addObject("depName", depName)
 		  .addObject("pp", pp)
+		  .addObject("pmList", pmList)
 		  .addObject(list)
-		  .setViewName("project/myProjectList");		
+		  .setViewName("project/myProjectList");	
+		
+		//System.out.println(pmList);
 				
 		return mv;
 	}	
@@ -51,22 +55,30 @@ public class ProjectController {
 	// 프로젝트 게시물리스트
 	@ResponseBody
 	@RequestMapping("proList.pr")
-	public ModelAndView projectList(@RequestParam(value="cpage", defaultValue="1") int currentPage, int no, ModelAndView mv, Model model, Project p) {
-		int listCount = pService.selectListCount();
+	public ModelAndView projectList(@RequestParam(value="cpage", defaultValue="1") int currentPage, int no, ModelAndView mv, Model model, ProBoard pb) {
+		int listCount = pService.selectListCount(no);
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);		
 		ArrayList<ProBoard> list = pService.selectProBoardList(no, pi);
-		
+		ArrayList<Project> pList = pService.selectAdmin(no);
+		ArrayList<ProMember> pmList = pService.selectMember(no);
+				
 		mv.addObject("list", list)
 		  .addObject("pi", pi)
 		  .addObject("no", no)
+		  .addObject("pb", pb)
+		  .addObject("pList", pList)
+		  .addObject("pmList", pmList)
 		  .addObject(list)
-		  .setViewName("project/projectDetailList"); //no=" + p.getProjectNo());
+		  .setViewName("project/projectDetailList");
 		
-		System.out.println(list);
 		
 		return mv;
 	}
+	
+	// 프로젝트 검색기능
+	//@RequstMapping("search.pr")
+	//public ModelAndView selectSearchList
 		
 	// 프로젝트 게시물 등록화면
 	@RequestMapping("enrollBoard.pr")
@@ -160,7 +172,7 @@ public class ProjectController {
 		int result = pService.updateProBoard(pb);
 		
 		if(result > 0) {
-			session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다.");
+			//session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다.");
 			return "redirect:boardDetail.pr?no=" + pb.getProBoardNo();
 		}else {
 			model.addAttribute("errorMsg", "게시물 수정 실패");

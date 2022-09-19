@@ -28,6 +28,10 @@
 		<typeAlias type="com.gd.workpp.approval.model.vo.Absence" alias="Absence" />
 		<typeAlias type="com.gd.workpp.approval.model.vo.Plan" alias="Plan" />
 		<typeAlias type="com.gd.workpp.approval.model.vo.Approval" alias="Approval" />
+		<typeAlias type="com.gd.workpp.company.model.vo.Company" alias="Company" />
+		<typeAlias type="com.gd.workpp.company.model.vo.OrgChart" alias="OrgChart" />
+		<typeAlias type="com.gd.workpp.company.model.vo.Department" alias="Department" />
+		<typeAlias type="com.gd.workpp.company.model.vo.Job" alias="Job" />
 	</typeAliases>
 	
 	 <mappers>
@@ -38,6 +42,7 @@
 	 	<mapper resource="/mappers/mail-mapper.xml" />
 	 	<mapper resource="/mappers/attendance-mapper.xml" />
 	 	<mapper resource="/mappers/board-mapper.xml" />
+	 	<mapper resource="/mappers/company-mapper.xml" />
 	 </mappers>
 
 	
