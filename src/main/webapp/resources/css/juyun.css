@@ -10,7 +10,18 @@
     overflow: auto; 
     width: 100%; 
     height: 100%; 
-    padding: 25px 0px 0px 25px;
+    padding: 25px 25px 0px 25px;
+}
+
+.mail-main-form-list{
+	width: 100%;
+	height: 90%;
+}
+
+.mail-main-form-page{
+	border: 1px solid #f6f9fa; 
+	width: 100%;
+	height: 10%;
 }
 
 /*메일 사이드바*/
@@ -114,6 +125,7 @@
     color: #fff;
     display: flex;
     justify-content: center;
+    cursor:pointer;
 }
 
 
@@ -128,6 +140,7 @@
     color: #fff;
     display: flex;
     justify-content: center;
+    cursor:pointer;
 }
 
 .mail-btn3{
@@ -141,6 +154,7 @@
     color: #fff;
     display: flex;
     justify-content: center;
+    cursor:pointer;
 }
 
 .mail-btn4{
@@ -154,6 +168,7 @@
     color: black;
     display: flex;
     justify-content: center;
+    cursor:pointer;
 }
 
 .mail-btn5{
@@ -167,6 +182,7 @@
     color: black;
     display: flex;
     justify-content: center;
+    cursor:pointer;
 }
 
 .dropdown { /*공통 드롭다운*/
@@ -375,7 +391,7 @@
 
 /*메일함*/
 .mail-table-list{
-    width: 95%;
+    width: 98%;
 }
 
 .mail-table-list .d1,
@@ -385,18 +401,18 @@
 }
 
 .mail-table-list .d4{
-    width: 14%;
-    font-size: 15px;
+    width: 16%;
+    font-size: 14px;
 }
 
 .mail-table-list .d5{
-    width: 72%;
-    font-size: 15px;
+    width: 70%;
+    font-size: 14px;
 }
 
 .mail-table-list .d6{
     width: 8%;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .mail-table-list .d4 span{
@@ -423,16 +439,36 @@
     text-decoration: underline;
 }
 
+.mail-table-list .d5 i{
+	margin-right: 5px;
+}
+
 .mail-table-list tr{
-    height: 30px;
+    height: 35px;
 }
 
 .mail-table-list tr:hover{
     background: lightgray;
 }
 
+.mail-table-list .noList{
+	text-align: center;
+	font-size: 14px;
+}
+
 .mail-list-division td{
     font-size: 14px;
+}
+
+.mail-page-wrap{
+	position: fixed;
+	bottom: 0;
+	border:1px solid red;
+    padding: .75rem 1.25rem;
+    background-color: transparent;
+    border-top: 1px solid rgba(0, 0, 0, .125);
+    width: 100%;
+    margin:0;
 }
 
 /*메일 상세보기*/
@@ -442,8 +478,15 @@
     align-items: center;
 }
 
+.mail-btn-cntbox .mail-btn-content2{
+	height: 30px;
+	line-height: 50px !important;
+	padding-left: 25px;
+	font-size: 15px;
+}
+
 .mail-detail-content{
-    width: 95%;
+    width: 97%;
     height: 600px;
 }
 
@@ -451,18 +494,38 @@
     margin: 20px 0px 20px 0px;
 }
 
+.mail-detail-content .header ion-icon{
+	vertical-align: -3px;
+	font-size: 20px;
+}
+
+.mail-detail-content .header i{
+	margin-left: 6px;
+	font-size: 18px;
+}
+
+.mail-table-detail td{
+	padding-left: 20px;
+}
+
 .mail-table-detail tr{
     height: 33px;
     font-size: 14px;
 }
 
+.mail-table-detail th{
+	font-weight: 500 !important;
+}
+
 .mail-table-detail tr td span{
     margin-left: 5px;
+    font-size: 13px;
 }
- 
+
 .filelist>.filelist-header{
     background: white;
     border: 1px solid lightgray;
+    padding: 3px 0px 3px 0px;
 }
 
 .filelist>.filelist-header>span{
@@ -473,6 +536,7 @@
 .filelist>.filelist-wrap{
     background: white;
     border: 1px solid lightgray;
+    padding: 3px 0px 3px 0px;
 }
 
 .filelist>.filelist-wrap a{
@@ -484,21 +548,36 @@
     width: 100%;
     background-color: white;
     border : 1px solid rgb(224, 224, 224);
-    border-radius: 5px;
-    height: 70%;
-    padding: 15px;
+    border-radius: 10px;
+    height: 68%;
+    padding: 20px;
 }
 
-.mail-address-form{
-    background-color: rgb(206, 248, 255);
-    border : 1px solid rgb(206, 248, 255);
-    border-radius: 15px;
+.addr-sender{
     padding: 4px 10px;
-
+    background-color: rgb(206, 248, 255);
+    border : 1px solid rgb(206, 248, 300);
+    border-radius: 15px;
 }
+
+.addr-receiver{
+    padding: 4px 10px;
+    background-color: #fed5d5;
+    border: 1px solid #ffc3b4;
+    border-radius: 15px;
+}
+
+.addr-ref{
+    padding: 4px 10px;    
+    border: 1px solid #e4deaa;
+    background: #fefad5;
+    border-radius: 15px;
+}
+
+.mail-address-form
 
 /*modal*/
-.modal_close{
+.modal-header .modal_close{
     float: right;
     font-size: 1.5rem;
     font-weight: 700;

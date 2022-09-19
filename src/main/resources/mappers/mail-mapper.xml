@@ -7,10 +7,13 @@
 		<result column="mail_title" property="mailTitle" />
 		<result column="mail_content" property="mailContent" />
 		<result column="sender" property="sender" />
+		<result column="sender_name" property="senderName" />
 		<result column="receiver" property="receiver" />
 		<result column="mail_ref" property="mailRef" />
 		<result column="send_date" property="sendDate" />
 		<result column="send_status" property="sendStatus" />
+		<collection resultMap="mailStatusResult" property="mailStatus" />
+		<collection resultMap="tagResult" property="tag" />
 	</resultMap>
 	
 	<resultMap id="mailStatusResult" type="MailStatus">
@@ -27,14 +30,22 @@
 	
 	<resultMap id="attachmentResult" type="Attachment">
 		<result column="file_no" property="fileNo" />
-		<result column="ref_type" property="refType" />
-		<result column="ref_no" property="refNo" />
 		<result column="origin_name" property="originName" />
 		<result column="change_name" property="changeName" />
 		<result column="upload_date" property="uploadDate" />
-		<result column="file_status" property="fileStatus" />
 	</resultMap>
-
+	
+	<resultMap id="tagResult" type="Tag">
+		<result column="tag_no" property="tagNo" />
+		<result column="tag_name" property="tagName" />
+		<result column="tag_color" property="tagColor" />
+	</resultMap>
+	
+	<resultMap id="splitEmailResult" type="SplitEmail">
+		<result column="email" property="email" />
+		<result column="name" property="name" />
+	</resultMap>
+	
 	<insert id="insertMail">
 		insert
 		  into mail
@@ -147,6 +158,7 @@
 	<select id="selectAttachment" resultMap="attachmentResult">
 		select 
 		       file_no
+		     , origin_name
 		     , change_name
 		  from attachment
 		 where ref_type = 1
@@ -193,4 +205,175 @@
 		   and send_status = 'N'
 	</update>
 
+	<select id="selectListCount" resultType="_int">
+		select 
+		       count(*)
+		  from mail
+		  join mail_status using (mail_no)
+		 where user_mail = #{email}
+		   and mail_delete = 'N'
+		   and mail_spam = 'N'
+		 <choose>
+		 	<when test='boxType == "1"'>
+				and mail_type in (1, 3)
+			    and sender not in (
+			                       select spam_address
+			                         from mail_spam
+			                        where user_mail = #{email}
+			                     )		 	
+		 	</when>
+		 	<when test='boxType == "2"'>
+		 		and mail_type = 2
+		 	</when>
+		 </choose>
+	</select>
+	
+	<select id="selectNotReadCount" resultType="_int">
+		select 
+		       count(*)
+		  from mail
+		  join mail_status using (mail_no)
+		 where user_mail = #{email}
+		   and mail_delete = 'N'
+		   and mail_spam = 'N'
+		   and mail_read = 'N'
+		 <choose>
+		 	<when test='boxType == "1"'>
+				and mail_type in (1, 3)
+			    and sender not in (
+			                       select spam_address
+			                         from mail_spam
+			                        where user_mail = #{email}
+			                     )		 	
+		 	</when>
+		 	<when test='boxType == "2"'>
+		 		and mail_type = 2
+		 	</when>
+		 </choose>
+	</select>
+	
+	<select id="selectInbox" resultMap="mailResult">
+		select 
+		       mail_no
+		     , mail_title
+		     , to_char(send_date, 'yy-mm-dd hh24:mi') as "send_date"
+		     , sender
+		     , mem.user_name as "sender_name"
+		     , mail_read
+		     , mail_important
+		     , t.tag_no
+		     , t.tag_name
+		     , t.tag_color
+		  from mail m
+		  join mail_status s using (mail_no)
+		  left join member mem on (sender = email)
+		  left join mail_tag t on (s.tag_no = t.tag_no)
+		 where s.user_mail = #{email}
+		   and mail_type in (1, 3)
+		   and mail_delete = 'N'
+		   and mail_spam = 'N'
+		   and sender not in ( 
+		                       select spam_address
+		                         from mail_spam
+		                        where user_mail = #{email}
+		                     )
+		 order by mail_no desc
+	</select>
+	
+	<select id="selectMailDetail" resultMap="mailResult">
+		select 
+		       mail_no
+		     , mail_title
+		     , mail_content
+		     , sender
+    		 , m.user_name as "sender_name" 
+		     , receiver
+		     , mail_ref
+     		 , to_char(send_date, 'yyyy-mm-dd day hh24:mi:ss') as "send_date"
+		     , mail_important
+		     , tag_no
+		     , tag_name
+		     , tag_color
+		  from mail
+		  join mail_status s using (mail_no)
+		  left join member m on (sender = email)
+		  left join mail_tag using (tag_no)
+		 where mail_no = #{mailNo}
+		   and s.user_mail = #{email}
+ 		 <choose>
+		 	<when test='boxType == "1"'>
+				and mail_type in (1, 3)	 	
+		 	</when>
+		 	<when test='boxType == "2"'>
+		 		and mail_type = 2
+		 	</when>
+		 </choose>
+	</select>
+	
+	<select id="selectSplitEmail" resultMap="splitEmailResult">
+		select split_email as "email"        
+		     , user_name as "name"     
+		  from (            
+		        select substr(m.list, instr(m.list, ',', 1, level) + 1, instr(m.list, ',', 1, level + 1) - instr(m.list, ',', 1, level)-1 ) AS split_email              
+		          from (
+		                select ',' || ${type} || ',' AS list                       
+		                  from mail                     
+		                 where mail_no = #{mailNo}) m           
+     <![CDATA[ connect by level <= length(m.list) - length(replace(m.list, ',')) - 1 ]]>
+		       ) result     
+		  left join member mem on result.split_email = mem.email
+	</select>
+	
+	<update id="updateMailImportant">
+		update
+		       mail_status
+		   set mail_important = #{type}
+		 where mail_no = #{mailNo}
+		   and user_mail = #{email}
+	</update>
+	
+	<update id="updateMailRead">
+		update
+		       mail_status
+		   set mail_read = #{type}
+		 where mail_no = #{mailNo}
+		   and user_mail = #{email}
+	</update>
+	
+	<update id="updateMailStatus">
+		update
+		       mail_status
+		   set ${type} = 'Y'
+		 where mail_no in
+ 	     <foreach collection="noArr" item='no' index='i' open="(" close=")" separator=",">
+           #{no}
+         </foreach>
+		   and user_mail = #{email}
+	</update>
+	
+	<select id="selectSender" resultType="String">
+		select sender
+		  from mail
+		 where mail_no in
+		  <foreach collection="noArr" item='no' index='i' open="(" close=")" separator=",">
+           #{no}
+         </foreach>
+	</select>
+	
+	<insert id="insertSpam">
+		insert
+		  into mail_spam
+		     (
+		       spam_no
+		     , user_mail
+		     , spam_address
+		     )
+		values
+		     (
+		       seq_spam.nextval
+		     , #{email}
+		     , #{sender}
+		     )
+	</insert>
+	
 </mapper>

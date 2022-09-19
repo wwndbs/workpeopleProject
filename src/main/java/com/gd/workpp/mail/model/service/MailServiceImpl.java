@@ -1,6 +1,7 @@
 package com.gd.workpp.mail.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import com.gd.workpp.common.model.vo.PageInfo;
 import com.gd.workpp.mail.model.dao.MailDao;
 import com.gd.workpp.mail.model.vo.Mail;
 import com.gd.workpp.mail.model.vo.MailStatus;
+import com.gd.workpp.mail.model.vo.SplitEmail;
 
 @Service
 public class MailServiceImpl implements MailService {
@@ -93,13 +95,60 @@ public class MailServiceImpl implements MailService {
 	}
 	
 	@Override
-	public int selectListCount() {
-		return 0;
+	public int selectListCount(int boxType, String email) {
+		return mDao.selectListCount(sqlSession, boxType, email);
+	}
+	
+	@Override
+	public int selectNotReadCount(int boxType, String email) {
+		return mDao.selectNotReadCount(sqlSession, boxType, email);
 	}
 
 	@Override
-	public ArrayList<Mail> selectInboxList(PageInfo pi) {
-		return null;
+	public ArrayList<Mail> selectInbox(PageInfo pi, String email) {
+		return mDao.selectInbox(sqlSession, pi, email);
 	}
 
+	@Override
+	public Mail selectMailDetail(int mailNo, int boxType, String email) {
+		return mDao.selectMailDetail(sqlSession, mailNo, boxType, email);
+	}
+
+	@Override
+	public ArrayList<SplitEmail> selectSplitEmail(String type, int mailNo) {
+		return mDao.selectSplitEmail(sqlSession, type, mailNo);
+	}
+
+	@Override
+	public int updateMailImportant(String type, int mailNo, String email) {
+		return mDao.updateMailImportant(sqlSession, type, mailNo, email);
+	}
+
+	@Override
+	public int updateMailRead(String type, int mailNo, String email) {
+		return mDao.updateMailRead(sqlSession, type, mailNo, email);
+	}
+
+	@Override
+	public int updateMailStatus(String type, String checkMailNo, String email) {
+		return mDao.updateMailStatus(sqlSession, type, checkMailNo, email);
+	}
+
+	@Override
+	public List<String> selectSender(String checkMailNo) {
+		return mDao.selectSender(sqlSession, checkMailNo);
+	}
+
+	@Override
+	public int insertSpam(List<String> senderList, String email) {
+		
+		int result = 0;
+		for(String sender : senderList) {
+			result = mDao.insertSpam(sqlSession, sender, email);
+		}
+		
+		return result;
+		
+	}
+	
 }
