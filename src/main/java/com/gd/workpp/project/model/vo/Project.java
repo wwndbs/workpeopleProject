@@ -24,5 +24,9 @@ public class Project {
 	private Date proDate;
 	
 	private String proBoardNo;
+	private String pbUserName;
+	private String pbJobName;
+	private String pbDepName;
+	private String pmMemberCount;
 
 }

@@ -15,5 +15,11 @@ public class ProMember {
 	
 	private int proMemNo;
 	private String userMemNo;
+	private String pmMemberCount;
+	
+	private int projectNo;
+	private String pbUserName;
+	private String pbJobName;
+	private String pbDepName;
 
 }

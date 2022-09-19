@@ -5,7 +5,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
 <!-- favicon 설정 -->
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 <link rel="icon" href="resources/images/favicon.ico" type="image/x-icon">
@@ -33,7 +32,7 @@
   th{border-bottom: 1px solid #d9d9d9; height: 43px;}
   tbody tr{cursor: pointer;}
   .notice-area{margin-right:-10px !important}
-  .pp1{margin: 0px 110px -70px -45px; font-color:black}
+  .pp1{margin: 0px 110px -70px -65px; font-color:black}
   .searchForm{margin: 0px -100px 0px 100px}
 </style>
 </head>
@@ -74,8 +73,17 @@
 	                <div class="profile-area div1">
 	                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="margin: -27px 77px 0px -10px; width:80px; height: 80px;"><br>
 	                  <div style="margin: -65px -40px 0px 70px;">
-	                    <span id="profile-name" style="">홍길동</span><br>
-	                    <span id="department-name">인사부서/대리</span>
+	                  <c:choose>
+	                  	<c:when test="${ empty pList }">
+	                  	  현재 담당 관리자가 없습니다.
+	                  	</c:when>
+	                  	<c:otherwise>
+	                  	  <c:forEach var="p" items="${ pList }">
+		                    <td id="profile-name"><b>${ p.pbUserName }</b></td><br>
+		                    <td id="department-name" name="pbDepName pbJobName">${ p.pbDepName }/${ p.pbJobName }</td>
+		                  </c:forEach>  
+	                    </c:otherwise>
+	                  </c:choose>  
 	                  </div>
 	                </div>
 	
@@ -186,7 +194,6 @@
 							</c:when>
 							<c:otherwise>
 								<li class="page-item"><a class="page-link" href="proList.pr?no=8&cpage=${ pi.currentPage-1 }"><</a></li>
-								<!-- <li class="page-item"><a class="page-link" href="proList.pr?no=8.cpage=${ pi.currentPage-1 }"><</a></li> -->
 							</c:otherwise>	
 	                    </c:choose>
 	                    
@@ -213,85 +220,26 @@
 	            <div class="bottom-wrapper">
 	              <div class="time-area div3">
 	                <!-- 스크롤박스 -->
-	                <div class="scroll"style="overflow:auto; width:110%; height:320px; margin: -5px 12px 0px 10px;">
-		                <!-- 한명에 대한 정보 -->
-		                <div class="profile-area pp1">
-		                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px; margin: 0px -30px 0px 0px">
-		                  <div style="margin: -40px 0px 0px 120px; float: left; width:80px">
-		                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
-		                    <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
-		                  </div>
-		                </div>
-		                <br><br><br><br>
-		                <!-- 한명에 대한 정보 -->
-		                <div class="profile-area pp1">
-		                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px; margin: 0px -30px 0px 0px">
-		                  <div style="margin: -40px 0px 0px 120px; float: left; width:80px">
-		                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
-		                    <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
-		                  </div>
-		                </div>
-		                <br><br><br><br>
-		                <!-- 한명에 대한 정보 -->
-		                <div class="profile-area pp1">
-		                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px; margin: 0px -30px 0px 0px">
-		                  <div style="margin: -40px 0px 0px 120px; float: left; width:80px">
-		                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
-		                    <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
-		                  </div>
-		                </div>
-		                <br><br><br><br>
-		                <!-- 한명에 대한 정보 -->
-		                <div class="profile-area pp1">
-		                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px; margin: 0px -30px 0px 0px">
-		                  <div style="margin: -40px 0px 0px 120px; float: left; width:80px">
-		                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
-		                    <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
-		                  </div>
-		                </div>
-		                <br><br><br><br>
-		                <!-- 한명에 대한 정보 -->
-		                <div class="profile-area pp1">
-		                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px; margin: 0px -30px 0px 0px">
-		                  <div style="margin: -40px 0px 0px 120px; float: left; width:80px">
-		                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
-		                    <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
-		                  </div>
-		                </div>
-		                <br><br><br><br>
-		                <!-- 한명에 대한 정보 -->
-		                <div class="profile-area pp1">
-		                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px; margin: 0px -30px 0px 0px">
-		                  <div style="margin: -40px 0px 0px 120px; float: left; width:80px">
-		                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
-		                    <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
-		                  </div>
-		                </div>
-		                <br><br><br><br>
-		                <!-- 한명에 대한 정보 -->
-		                <div class="profile-area pp1">
-		                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px; margin: 0px -30px 0px 0px">
-		                  <div style="margin: -40px 0px 0px 120px; float: left; width:80px">
-		                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
-		                    <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
-		                  </div>
-		                </div>
-		                <br><br><br><br>
-		                <!-- 한명에 대한 정보 -->
-		                <div class="profile-area pp1">
-		                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px; margin: 0px -30px 0px 0px">
-		                  <div style="margin: -40px 0px 0px 120px; float: left; width:80px">
-		                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
-		                    <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
-		                  </div>
-		                </div>
-		                <br><br><br><br>
-		                
-	                
-	                
-	
+	                <div class="scroll"style="overflow:auto; width:110%; height:320px; margin: -5px 12px 0px -10px;">
+	                  <c:choose>	
+	                    <c:when test="${ empty pmList }">
+	                      현재 참여자가 없습니다.
+	                    </c:when>
+	                    <c:otherwise>
+	                      <c:forEach var="pm" items="${ pmList }">
+			                <!-- 한명에 대한 정보 -->
+			                <div class="profile-area pp1">
+			                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px; margin: 0px -30px 0px 0px">
+			                  <div style="margin: -40px 0px 0px 120px; float: left; width:80px">
+			                    <span id="profile-name" style="float: left"><b>&nbsp;&nbsp;${ pm.pbUserName }</b></span><br>
+			                    <span id="department-name" style="font-size: 14px;">${ pm.pbDepName }/${ pm.pbJobName }</span>
+			                  </div>
+			                </div>
+			                <br><br><br><br>
+			              </c:forEach>  
+			           </c:otherwise>    
+		             </c:choose>      
 	              </div>
-	              
 	            </div>
 	          </div>
 	        </div>

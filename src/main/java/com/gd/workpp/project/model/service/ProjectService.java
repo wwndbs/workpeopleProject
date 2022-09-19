@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.gd.workpp.common.model.vo.PageInfo;
 import com.gd.workpp.project.model.vo.ProBoard;
+import com.gd.workpp.project.model.vo.ProMember;
 import com.gd.workpp.project.model.vo.ProReply;
 import com.gd.workpp.project.model.vo.Project;
 
@@ -15,8 +16,8 @@ public interface ProjectService {
 	// 2. 프로젝트 작성하기
 	int insertProject(Project p);
 	
-	// 3. 프로젝트 게시물 리스트조회
-	int selectListCount();
+	// 3. 프로젝트 게시물 리스트조회, 검색
+	int selectListCount(int projectNo);
 	ArrayList<ProBoard> selectProBoardList(int projectNo, PageInfo pi);
 	
 	// 4. 프로젝트 삭제
@@ -41,5 +42,18 @@ public interface ProjectService {
 	
 	// 10. 프로젝트 게시물 삭제
 	int deleteProBoard(int proBoardNo);
+	
+	// 11. 프로젝트담당 관리자 조회
+	ArrayList<Project> selectAdmin(int projectNo);
+	
+	// 12. 프로젝트담당 참여자 조회
+	ArrayList<ProMember> selectMember(int projectNo);
+	
+	// 13. 프로젝트 인원수 조회
+	ArrayList<ProMember> countMember(int projectNo);
+	
+	// 14. 프로젝트게시판 검색리스트조회
+	int selectSearchCount(String condition, String keyword);
+	ArrayList<ProBoard> selectSearchList(String condition, String keyword, PageInfo pi);
 
 }

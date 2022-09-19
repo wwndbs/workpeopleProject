@@ -1,6 +1,7 @@
 package com.gd.workpp.project.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.gd.workpp.common.model.vo.PageInfo;
 import com.gd.workpp.project.model.vo.ProBoard;
+import com.gd.workpp.project.model.vo.ProMember;
 import com.gd.workpp.project.model.vo.ProReply;
 import com.gd.workpp.project.model.vo.Project;
 
@@ -18,10 +20,25 @@ public class ProjectDao {
 	public ArrayList<Project> selectList(SqlSessionTemplate sqlSession, String depName){
 		return (ArrayList)sqlSession.selectList("projectMapper.selectList", depName);
 	}
+	
+	// 프로젝트 참여 멤버수 조회
+	public ArrayList<ProMember> countMember(SqlSessionTemplate sqlSession, int projectNo) {
+		return (ArrayList)sqlSession.selectList("projectMapper.countMember", projectNo);
+	}
+	
+	// 프로젝트상세리스트 관리자조회
+	public ArrayList<Project> selectAdmin(SqlSessionTemplate sqlSession, int projectNo){
+		return (ArrayList)sqlSession.selectList("projectMapper.selectAdmin", projectNo);
+	}
+	
+	// 프로젝트상세리스트 참여자조회
+	public ArrayList<ProMember> selectMember(SqlSessionTemplate sqlSession, int projectNo){
+		return (ArrayList)sqlSession.selectList("projectMapper.selectMember", projectNo);
+	}
 		
 	// 프로젝트게시물리스트 페이징
-	public int selectListCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("projectMapper.selectListCount");
+	public int selectListCount(SqlSessionTemplate sqlSession, int projectNo) {
+		return sqlSession.selectOne("projectMapper.selectListCount", projectNo);
 	}
 	
 	// 프로젝트게시물리스트 조회
@@ -30,7 +47,20 @@ public class ProjectDao {
 		int offset = (pi.getCurrentPage() - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlSession.selectList("projectMapper.selectProBoardList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("projectMapper.selectProBoardList", projectNo, rowBounds);
+	}
+	
+	// 프로젝트게시물 검색
+	public ArrayList<ProBoard> selectSearchList(SqlSessionTemplate sqlSession, String condition, String keyword, PageInfo pi) {
+		HashMap<String, String> map = new HashMap<>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("projectMapper.selectSearchList", map, rowBounds);
 	}
 	
 	// 프로젝트게시물 조회수증가
