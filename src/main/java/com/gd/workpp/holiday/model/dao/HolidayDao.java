@@ -18,7 +18,7 @@ public class HolidayDao {
 	}
 	
 	public int insertTodo(SqlSessionTemplate sqlSession, String todoContent, String userNo) {
-		HashMap<String,String> map = new HashMap<String,String>();
+		HashMap<String,String> map = new HashMap<>();
 		map.put("todoContent", todoContent);
 		map.put("userNo", userNo);
 		return sqlSession.insert("holidayMapper.insertTodo", map);
@@ -28,6 +28,12 @@ public class HolidayDao {
 		return sqlSession.delete("holidayMapper.deleteTodo", no);
 	}
 	
+	public int updateTodoStatus(SqlSessionTemplate sqlSession, int todoNo, int section) {
+		HashMap<String, Integer> map = new HashMap<>();
+		map.put("todoNo", todoNo);
+		map.put("section", section);
+		return sqlSession.update("holidayMapper.updateTodoStatus", map);
+	}
 	
 	public ArrayList<Schedule> selectScheduleList(SqlSessionTemplate sqlSession, String userNo){
 		return (ArrayList)sqlSession.selectList("holidayMapper.selectScheduleList", userNo);

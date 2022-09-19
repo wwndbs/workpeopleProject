@@ -35,6 +35,11 @@ public class HolidayServiceImpl implements HolidayService {
 	}
 
 	@Override
+	public int updateTodoStatus(int todoNo, int section) {
+		return hDao.updateTodoStatus(sqlSession, todoNo, section);
+	}
+	
+	@Override
 	public ArrayList<Schedule> selectScheduleList(String userNo) {
 		return hDao.selectScheduleList(sqlSession, userNo);
 	}

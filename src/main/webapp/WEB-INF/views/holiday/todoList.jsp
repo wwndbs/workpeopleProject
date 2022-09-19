@@ -105,9 +105,9 @@
 			})
 		})
 	</script>
-	
-	<!-- 할 일 삭제 ajax -->
+
 	<script>
+	    // 할 일 삭제
 		$(document).on("click", "#item>button", function() {
 			location.href="deleteTodo.td?no=" + $(this).parent().children().eq(0).text();
 		});
@@ -133,36 +133,31 @@
 
 			// 텍스트 선택 불가능
 			$(".todo-list>ul, .todo-list>ul>li").disableSelection();
-
+		});
+	</script>
+	
+	<script>
+		// 할 일 상태변경
+		$(document).on("mousedown","#item", function(){
+			let todoNo = $(this).children().eq(0).text();
+			
 			// 각 구역별 리스트 드롭
 			$("#list").droppable({
 				drop : function() {
-					console.log("list-end");
+					location.href="updateTodoStatus.td?todoNo=" + todoNo + "&section=1";
 				}
 			})
 			$("#run").droppable({
 				drop : function() {
-					console.log("run-end");
-					$.ajax({
-						url : "",
-						data : {
-							
-						},
-						success : function(){
-							
-						},
-						error : function(){
-							// TODO Gson말고 Json사용법 질문 후 적용하기
-						}
-					})
+					location.href="updateTodoStatus.td?todoNo=" + todoNo + "&section=2";
 				}
 			})
 			$("#success").droppable({
 				drop : function() {
-					console.log("success-end");
+					location.href="updateTodoStatus.td?todoNo=" + todoNo + "&section=3";
 				}
 			})
-		});
+		})
 	</script>
 	<jsp:include page="../common/footer.jsp" />
 </body>

@@ -62,6 +62,12 @@
 		 where todo_no = #{todoNo}
 	</delete>
 	
+	<update id="updateTodoStatus">
+		update todo
+		   set status = #{section}
+		 where todo_no = #{todoNo}
+	</update>
+	
 	<!-- 장서원 / 일정 조회 -->
 	<select id="selectScheduleList" resultMap="scheduleResult">
 		select
