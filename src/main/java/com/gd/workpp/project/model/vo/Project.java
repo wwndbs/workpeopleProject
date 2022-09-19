@@ -22,5 +22,7 @@ public class Project {
 	private String proOpen;
 	private String depName;
 	private Date proDate;
+	
+	private String proBoardNo;
 
 }

@@ -21,14 +21,14 @@ public class ProjectServiceImpl implements ProjectService {
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
-	public ArrayList<Project> selectList() {
-		return pDao.selectList(sqlSession);
+	public ArrayList<Project> selectList(String depName) {
+		return pDao.selectList(sqlSession, depName);
 	}	
 	
-	@Override
-	public ArrayList<Project> selectMyProList(int projectNo) {
-		return pDao.selectMyProList(sqlSession, projectNo);
-	}
+	//@Override
+	//public ArrayList<Project> selectMyProList(int projectNo) {
+	//	return pDao.selectMyProList(sqlSession, projectNo);
+	//}
 
 	@Override
 	public int insertProject(Project p) {

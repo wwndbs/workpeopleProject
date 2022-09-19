@@ -55,19 +55,7 @@
 	</resultMap>
 	
 	<!-- 내팀의 프로젝트 리스트 조회 -->
-	<select id="selectList" resultMap="projectResult">
-	<!-- 
-	    select	
-               p.project_no
-		     , p.project_title
-		     , pb.user_no as "boardWriterNo"			     
-		     , p.category
-             , p.dep_name
-		  from project p
-          join pro_member pm on (p.project_no = pm.project_no)
-          join pro_board pb on (p.project_no = pb.project_no)
-         where pm.user_no = #{userNo}
-           and p.dep_name like '%'||#{depName}||'%'  -->            
+	<select id="selectList" resultMap="projectResult">       
         select
                p.project_no
 		     , p.project_title
@@ -77,16 +65,7 @@
   		  from project p             
          where p.dep_name like '%'||#{depName}||'%'      
 	</select>
-	
-	<!-- 내팀 프로젝트 부서만 조회 
-	<select id="selectMyProList">
-        select
-               project_no
-             , dep_name
-          from project
-         where dep_name like '%#{depName}%'
-	</select> -->
-	
+		
 	<!-- 프로젝트게시물리스트 페이징처리 -->
 	<select id="selectListCount" resultType="_int">
 		select
@@ -114,7 +93,7 @@
 		     , pb.attach_modify
 		  from pro_board pb
 		  join member m on (m.user_no = pb.user_no)
-		 where pb.project_no = 8
+		 where pb.project_no = #{projectNo}
 		   and pb.status = 'Y'
 		 order
 		    by pb.pro_board_no desc

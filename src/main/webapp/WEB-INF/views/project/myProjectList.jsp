@@ -72,7 +72,7 @@
 	              </h5>
 	            </div>
 	            
-                <input type="hidden" name="projectNo" value="11111"> <%-- ${ pb.projectNo } --%>
+	            <input type="hidden" name="projectNo" value="${ pp.projectNo }">
                 <input type="hidden" name="no" value="${ p.proBoardNo }">
                 
 	            <!--프로젝트 박스-->
@@ -85,11 +85,10 @@
 	              	<c:otherwise>
                    	<c:set var="depName" value="${ loginUser.depName }"/>	
 	                  <c:forEach var="pp" items="${ list }">	              
-	                  	<%-- <c:if test="${ loginUser.depName eq pp.depName }"> 이거없애야됨 --%>
 	                  	
 			              <div class="col-md-6 col-lg-3 d-flex">
 			                <div class="color"></div>
-			                <div class="card mb-grid project w-100 box1" onclick="location.href='proList.pr?no=8'">
+			                <div class="card mb-grid project w-100 box1" onclick="location.href='proList.pr?no=${no}'"> <!-- ${projectNo} -->
 			                  <div class="card-body d-flex flex-column">                                            
 			                    <div class="d-flex justify-content-between mb-3">
 			                      <h5 class="card-title mb-0">
@@ -102,7 +101,7 @@
 									<label class="font2">&nbsp;&nbsp;${ pp.depName }</label><br>
 			                        <label class="font3" style="vertical-align: bottom;">&nbsp;&nbsp;${ pp.category }</label>
 			                      </h5>
-			                      <i data-feather="user" style="margin: 230px -17px -20px 200px; float: right;"></i>
+			                      <i data-feather="user" style="margin: 230px -17px -20px 200px; float: right; width:27px !important"></i>
 			                      <label for="" style="margin: 230px 0px -20px 21px;">23</label>
 			                    </div>
 			                  </div>

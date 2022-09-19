@@ -11,15 +11,15 @@
 <link rel="icon" href="resources/images/favicon.ico" type="image/x-icon">
 <style>
   .div1{
-    width: 98%;
+    width: 165%;
     height: 40% !important;
     background-color: white
     !important;
   }
-  .div2{width: 98%; height: 46% !important;}
-  .div1 span{color:black !important}
+  .div2{width: 165%; height: 46% !important;}
+  .div1 span{color:black !important; width:200% !important}
   .div3{width: 244px !important; height: 350px !important; margin: -340px 0px 340px 0px;}
-  .div4{width: 11000px !important; height: 780px !important; margin: 0px 200px 0px -140px;}
+  .div4{width: 355% !important; height: 780px !important; margin: 0px 200px 0px -140px;}
   .bottom-wrapper{height: 1px;}
   .btn1{margin: 21px -1560px -36px 1560px; font-size: 16px; height: 38px !important;}
   .notice-list tr{margin: 23px 30px 300px 25px; vertical-align: middle; height: 29px;}
@@ -33,7 +33,8 @@
   th{border-bottom: 1px solid #d9d9d9; height: 43px;}
   tbody tr{cursor: pointer;}
   .notice-area{margin-right:-10px !important}
-  .pp1{margin: -32px 110px -70px -45px}
+  .pp1{margin: 0px 110px -70px -45px; font-color:black}
+  .searchForm{margin: 0px -100px 0px 100px}
 </style>
 </head>
 <body>
@@ -94,7 +95,7 @@
 	              </div>
 	
 	              <!-- 검색 -->
-	              <div style="display:flex; padding-top:10px;">
+	              <div style="display:flex; padding-top:10px; border:none" class="searchForm">
 	
 	                <div class="form-group formgroup">
 	                  <select class="form-control select1" id="demoStyle" name="demoStyle" style="height:40px;">
@@ -111,12 +112,12 @@
 	              </div>
 	              
 	              <!-- 게시글 시작 -->
-	              <h5 style="font-weight: 400; font-size: 16px; margin: -30px 0px 0px 0px; width: 1000px;"><b>전체 업무</b>&nbsp;<b>(20)</b></h2>
+	              <h5 style="font-weight: 400; font-size: 16px; margin: -30px -100px 0px 100px; width: 1000px;"><b>전체 업무</b>&nbsp;<b>(20)</b></h2>
 	              <div class="notice-area div4">
 	                <table class="pro-table table-hover mb-0" id="proList">
 	                  <thead>
 	                    <tr>
-	                      <th width="40px"></th>
+	                      <th width="20px"></th>
 	                      <th>번호</th>
 	                      <th>상태</th>
 	                      <th>우선순위</th>
@@ -212,106 +213,82 @@
 	            <div class="bottom-wrapper">
 	              <div class="time-area div3">
 	                <!-- 스크롤박스 -->
-	                <div class="scroll"style="overflow:auto; width:100%; height:320px; margin: -5px 10px 0px 8px;">
-	                <!-- 한명에 대한 정보 -->
-	                <div class="profile-area pp1">
-	                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px">
-	                  <div style="margin: -42px -100px 0px 50px; float: left; width:80px">
-	                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
-	                    <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
-	                  </div>
-	                </div>
-	                <br>
-	                <!-- 한명에 대한 정보 -->
-	                <div class="profile-area pp1">
-	                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px">
-	                  <div style="margin: -42px -100px 0px 50px; float: left; width:80px">
-	                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
-	                    <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
-	                  </div>
-	                </div>
-	                <br>
-	                <!-- 한명에 대한 정보 -->
-	                <div class="profile-area pp1">
-	                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px">
-	                  <div style="margin: -42px -100px 0px 50px; float: left; width:80px">
-	                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
-	                    <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
-	                  </div>
-	                </div>
-	                <br>
-	                <!-- 한명에 대한 정보 -->
-	                <div class="profile-area pp1">
-	                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px">
-	                  <div style="margin: -42px -100px 0px 50px; float: left; width:80px">
-	                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
-	                    <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
-	                  </div>
-	                </div>
-	                <br>
-	                <!-- 한명에 대한 정보 -->
-	                <div class="profile-area pp1">
-	                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px">
-	                  <div style="margin: -42px -100px 0px 50px; float: left; width:80px">
-	                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
-	                    <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
-	                  </div>
-	                </div>
-	                <br>
-	                <!-- 한명에 대한 정보 -->
-	                <div class="profile-area pp1">
-	                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px">
-	                  <div style="margin: -42px -100px 0px 50px; float: left; width:80px">
-	                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
-	                    <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
-	                  </div>
-	                </div>
-	                <br>
-	                <!-- 한명에 대한 정보 -->
-	                <div class="profile-area pp1">
-	                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px">
-	                  <div style="margin: -42px -100px 0px 50px; float: left; width:80px">
-	                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
-	                    <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
-	                  </div>
-	                </div>
-	                <br>
-	                <!-- 한명에 대한 정보 -->
-	                <div class="profile-area pp1">
-	                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px">
-	                  <div style="margin: -42px -100px 0px 50px; float: left; width:80px">
-	                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
-	                    <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
-	                  </div>
-	                </div>
-	                <br>
-	                <!-- 한명에 대한 정보 -->
-	                <div class="profile-area pp1">
-	                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px">
-	                  <div style="margin: -42px -100px 0px 50px; float: left; width:80px">
-	                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
-	                    <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
-	                  </div>
-	                </div>
-	                <br>
-	                <!-- 한명에 대한 정보 -->
-	                <div class="profile-area pp1">
-	                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px">
-	                  <div style="margin: -42px -100px 0px 50px; float: left; width:80px">
-	                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
-	                    <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
-	                  </div>
-	                </div>
-	                <br>
-	                <!-- 한명에 대한 정보 -->
-	                <div class="profile-area pp1">
-	                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px">
-	                  <div style="margin: -42px -100px 0px 50px; float: left; width:80px">
-	                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
-	                    <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
-	                  </div>
-	                </div>
-	                <br>   
+	                <div class="scroll"style="overflow:auto; width:110%; height:320px; margin: -5px 12px 0px 10px;">
+		                <!-- 한명에 대한 정보 -->
+		                <div class="profile-area pp1">
+		                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px; margin: 0px -30px 0px 0px">
+		                  <div style="margin: -40px 0px 0px 120px; float: left; width:80px">
+		                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
+		                    <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
+		                  </div>
+		                </div>
+		                <br><br><br><br>
+		                <!-- 한명에 대한 정보 -->
+		                <div class="profile-area pp1">
+		                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px; margin: 0px -30px 0px 0px">
+		                  <div style="margin: -40px 0px 0px 120px; float: left; width:80px">
+		                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
+		                    <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
+		                  </div>
+		                </div>
+		                <br><br><br><br>
+		                <!-- 한명에 대한 정보 -->
+		                <div class="profile-area pp1">
+		                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px; margin: 0px -30px 0px 0px">
+		                  <div style="margin: -40px 0px 0px 120px; float: left; width:80px">
+		                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
+		                    <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
+		                  </div>
+		                </div>
+		                <br><br><br><br>
+		                <!-- 한명에 대한 정보 -->
+		                <div class="profile-area pp1">
+		                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px; margin: 0px -30px 0px 0px">
+		                  <div style="margin: -40px 0px 0px 120px; float: left; width:80px">
+		                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
+		                    <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
+		                  </div>
+		                </div>
+		                <br><br><br><br>
+		                <!-- 한명에 대한 정보 -->
+		                <div class="profile-area pp1">
+		                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px; margin: 0px -30px 0px 0px">
+		                  <div style="margin: -40px 0px 0px 120px; float: left; width:80px">
+		                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
+		                    <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
+		                  </div>
+		                </div>
+		                <br><br><br><br>
+		                <!-- 한명에 대한 정보 -->
+		                <div class="profile-area pp1">
+		                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px; margin: 0px -30px 0px 0px">
+		                  <div style="margin: -40px 0px 0px 120px; float: left; width:80px">
+		                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
+		                    <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
+		                  </div>
+		                </div>
+		                <br><br><br><br>
+		                <!-- 한명에 대한 정보 -->
+		                <div class="profile-area pp1">
+		                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px; margin: 0px -30px 0px 0px">
+		                  <div style="margin: -40px 0px 0px 120px; float: left; width:80px">
+		                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
+		                    <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
+		                  </div>
+		                </div>
+		                <br><br><br><br>
+		                <!-- 한명에 대한 정보 -->
+		                <div class="profile-area pp1">
+		                  <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px; margin: 0px -30px 0px 0px">
+		                  <div style="margin: -40px 0px 0px 120px; float: left; width:80px">
+		                    <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
+		                    <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
+		                  </div>
+		                </div>
+		                <br><br><br><br>
+		                
+	                
+	                
 	
 	              </div>
 	              

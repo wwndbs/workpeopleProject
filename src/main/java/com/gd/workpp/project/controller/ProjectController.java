@@ -32,25 +32,26 @@ public class ProjectController {
 	// 로그인한 회원의 부서명 전달받기 , sql에도 전달하고
 	// 컨트롤러서부터 계속 부서명을 전달해야됨 (jsp는 조건문x)
 	@RequestMapping("myProject.pr")
-	public ModelAndView myProjectList(ModelAndView mv, HttpSession session) {
-		ArrayList<Project> list = pService.selectList();
+	public ModelAndView myProjectList(ModelAndView mv, HttpSession session, Project pp) {
 		
 		Member m = (Member)session.getAttribute("loginUser");
 		String depName = m.getDepName();
 				
+		ArrayList<Project> list = pService.selectList(depName);
+		
 		mv.addObject("list", list)
 		  .addObject("depName", depName)
-		  .setViewName("project/myProjectList");
-		
-		System.out.println(list);
-		
+		  .addObject("pp", pp)
+		  .addObject(list)
+		  .setViewName("project/myProjectList");		
+				
 		return mv;
 	}	
 	
 	// 프로젝트 게시물리스트
 	@ResponseBody
 	@RequestMapping("proList.pr")
-	public ModelAndView projectList(@RequestParam(value="cpage", defaultValue="1") int currentPage, int no, ModelAndView mv, Model model) {
+	public ModelAndView projectList(@RequestParam(value="cpage", defaultValue="1") int currentPage, int no, ModelAndView mv, Model model, Project p) {
 		int listCount = pService.selectListCount();
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);		
@@ -60,7 +61,9 @@ public class ProjectController {
 		  .addObject("pi", pi)
 		  .addObject("no", no)
 		  .addObject(list)
-		  .setViewName("project/projectDetailList");
+		  .setViewName("project/projectDetailList"); //no=" + p.getProjectNo());
+		
+		System.out.println(list);
 		
 		return mv;
 	}
