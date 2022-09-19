@@ -194,10 +194,12 @@ public class ApprovalController {
 	 * @param upfile : 사용자가 업로드한 파일
 	 */
 	@RequestMapping("insertApprovalPlan.ap")
-	public String insertApprovalPlan(Document document, Plan plan, MultipartFile upfile,
-			                   HttpSession session, Model model) {
+	public String insertApprovalPlan(@RequestParam(value="status", defaultValue="1")int status,
+			                         Document document, Plan plan, MultipartFile upfile, HttpSession session, Model model) {
 		Member m = (Member)session.getAttribute("loginUser");
 		String userNo = m.getUserNo();
+		
+		document.setStatus(status);
 		
 		// 전달된 첨부파일 존재할 경우에 파일명 수정 후 업로드
 		if(!upfile.getOriginalFilename().equals("")) {
@@ -209,10 +211,19 @@ public class ApprovalController {
 		int result = apService.insertApprovalPlan(document, plan);
 		
 		if(result > 0) {
-			session.setAttribute("alertMsg", "결재 상신 완료");
-			return "redirect:approvalList.ap";
+			if(document.getStatus() == 2) {
+				session.setAttribute("alertMsg", "임시저장 완료");	
+				return "redirect:saveList.ap";
+			}else {
+				session.setAttribute("alertMsg", "결재상신 완료");				
+				return "redirect:approvalList.ap";
+			}
 		}else {
-			model.addAttribute("errorMsg", "결재 상신 과정 중 오류 발생");
+			if(document.getStatus() == 2) {
+				model.addAttribute("errorMsg", "임시저장 과정 중 오류 발생");
+			}else {
+				model.addAttribute("errorMsg", "결재상신 과정 중 오류 발생");			
+			}
 			return "common/errorPage";
 		}
 	}

@@ -220,10 +220,18 @@ public class ApprovalDao {
 		data.put("document", document);
 		data.put("plan", plan);
 		
-		int result1 = sqlSession.update("approvalMapper.insertDocument", data);
-		int result2 = sqlSession.insert("approvalMapper.insertPlan", data);
+		int result1;
+		int result2;
 		
-		return result1 * result2; // 1행 업데이트, 1행 추가 = 결과값1이 성공
+		result1 = sqlSession.update("approvalMapper.insertDocument", data);
+		
+		if(document.getStatus() == 1) {
+			result2 = sqlSession.insert("approvalMapper.insertPlan", data);
+		}else {
+			result2 = 0;
+		}
+		
+		return result1 + result2;
 	}
 	
 	

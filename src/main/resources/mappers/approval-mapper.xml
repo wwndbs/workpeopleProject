@@ -483,7 +483,14 @@
 		                            and reference_status is null
 		                        )
 		     , progress = 1
-		     , status = 1
+		     <choose>
+		     	<when test="document.status == 2">
+		     		, status = 2
+		     	</when>
+		     	<otherwise>		     	
+		     		, status = 1
+		     	</otherwise>
+		     </choose>
 		 where document_no = #{document.documentNo}
 	</update>
 	
