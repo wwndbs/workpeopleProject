@@ -75,6 +75,10 @@ public class ProjectController {
 		
 		return mv;
 	}
+	
+	// 프로젝트 검색기능
+	//@RequstMapping("search.pr")
+	//public ModelAndView selectSearchList
 		
 	// 프로젝트 게시물 등록화면
 	@RequestMapping("enrollBoard.pr")

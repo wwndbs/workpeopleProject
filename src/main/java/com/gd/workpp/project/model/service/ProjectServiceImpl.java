@@ -114,7 +114,10 @@ public class ProjectServiceImpl implements ProjectService {
 
 	@Override
 	public ArrayList<ProBoard> selectSearchList(String condition, String keyword, PageInfo pi) {
-		return null;
+		SqlSession sqlSession = getSqlSession();
+		ArrayList<ProBoard> list = pDao.selectSearchList(sqlSession, condition, keyword, pi);
+		sqlSession.close();
+		return list;
 	}	
 
 }

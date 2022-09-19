@@ -74,8 +74,7 @@
                count(user_no) as "pmMemberCount"   
           from pro_member
          where project_no = #{projectNo}
-	</select>
-	
+	</select>	
 	
 	<!-- 프로젝트게시물 관리자조회 -->
 	<select id="selectAdmin" resultMap="projectResult">
@@ -138,6 +137,26 @@
 		    by pb.pro_board_no desc
 	</select>
 	
+	<!-- 프로젝트게시물 검색 -->
+	<select id="selectSearchCount" resultType="_int">
+		select
+		       count(*)
+		  from pro_board pb
+		  join member m on (m.user_no = pb.user_no)
+		 where pb.project_no = #{projectNo}
+		   and pb.status = 'Y'
+	   	  <if test="condition == 'writer'">
+		   and m.user_name
+	   	  </if>		
+          <if test="condition == 'title'">
+           and pb.pro_title
+          </if>
+          <if test="condition == 'content'">
+           and pb.pro_content	   
+          </if>
+	   	  like '%'||#{keyword}||'%'
+	</select>
+	
 	<!-- 프로젝트게시물 검색 (제목|내용|작성자) -->
 	<select id="selectSearchList" resultMap="proBoardResult">
 		select
@@ -157,7 +176,7 @@
 		     , pb.attach_modify
 		  from pro_board pb
 		  join member m on (m.user_no = pb.user_no)
-		 where pb.project_no = 8
+		 where pb.project_no = #{projectNo}
 		   and pb.status = 'Y'
 		   <choose>
 		   	  <when test="condition == 'writer'">

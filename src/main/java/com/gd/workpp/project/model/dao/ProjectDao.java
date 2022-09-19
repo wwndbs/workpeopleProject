@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
+import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -51,7 +52,16 @@ public class ProjectDao {
 	}
 	
 	// 프로젝트게시물 검색
-	public ArrayList<ProBoard> selectSearchList(SqlSessionTemplate sqlSession, String condition, String keyword, PageInfo pi) {
+	public int selectSearchCount(SqlSession sqlSession, String condition, String keyword) {
+		HashMap<String, String> map = new HashMap<>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		
+		return sqlSession.selectOne("projectMapper.selectSearchCount", map);
+	}
+	
+	// 프로젝트게시물 검색
+	public ArrayList<ProBoard> selectSearchList(SqlSession sqlSession, String condition, String keyword, PageInfo pi) {
 		HashMap<String, String> map = new HashMap<>();
 		map.put("condition", condition);
 		map.put("keyword", keyword);

@@ -102,21 +102,22 @@
 	                </div>
 	              </div>
 	
-	              <!-- 검색 -->
+	              <!-- 검색영역 -->
 	              <div style="display:flex; padding-top:10px; border:none" class="searchForm">
-	
-	                <div class="form-group formgroup">
-	                  <select class="form-control select1" id="demoStyle" name="demoStyle" style="height:40px;">
-	                    <option value="default" class="op1">제목</option>
-	                    <option class="text-secondary" value="secondary"><label class="se-la">내용</label></option>
-	                    <option class="text-secondary" value="secondary"><label class="se-la">작성자</label></option>
-	                  </select>
-	                </div>
-	                <div class="search-div" style="width:30%; display:flex; ">
-	                  <input class="form-control mb-2 search1" type="text" placeholder="게시물 검색" style="height:40px;">
-	                  <button type="submit" class="btn btn-sm btn-primary" style="height:38px;">&nbsp;&nbsp;&nbsp;검색&nbsp;&nbsp;&nbsp;&nbsp;</button>
-	                </div>
-	
+					<form action="search.pr">
+		                <div class="form-group formgroup">
+		                  <input type="hidden" name="cpage" value="1">
+		                  <select class="form-control select1" id="demoStyle" name="condition" style="height:40px;">
+		                    <option value="default title" class="op1">제목</option>
+		                    <option class="text-secondary" value="secondary content"><label class="se-la">내용</label></option>
+		                    <option class="text-secondary" value="secondary writer"><label class="se-la">작성자</label></option>
+		                  </select>
+		                </div>
+		                <div class="search-div" style="width:30%; display:flex; ">
+		                  <input class="form-control mb-2 search1" type="text" name="keyword" placeholder="게시물 검색" style="height:40px;" value="${ keyword }">
+		                  <button type="submit" class="btn btn-sm btn-primary" style="height:38px;">&nbsp;&nbsp;&nbsp;검색&nbsp;&nbsp;&nbsp;&nbsp;</button>
+		                </div>
+					</form>
 	              </div>
 	              
 	              <!-- 게시글 시작 -->
