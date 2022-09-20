@@ -65,6 +65,24 @@ public class HolidayController {
 		}
 	}
 	
+	/**
+	 * Author : 최영헌
+	 * 할 일 상태 변경 요청을 처리해주는 메소드
+	 * @param todoNo : 상태를 변경할 할 일 번호
+	 * @param section : 할 일 상태(1:할일, 2:진행중, 3:완료)
+	 */
+	@RequestMapping("updateTodoStatus.td")
+	public String updateTodoStatus(int todoNo, int section, Model model) {
+		int result = hService.updateTodoStatus(todoNo, section);
+		
+		if(result > 0) {
+			return "redirect:todoList.td";
+		}else {
+			model.addAttribute("errorMsg", "할 일 상태 변경을 실패 했습니다.");
+			return "common/errorPage";
+		}
+	}
+	
 	// 장서원 / 일정조회 페이지
 	/*
 	@RequestMapping("schedule.sc")

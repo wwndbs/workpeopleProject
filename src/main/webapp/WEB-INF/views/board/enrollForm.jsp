@@ -426,7 +426,7 @@
                         </fieldset>
                         
                         <div class="sub-btn">
-                        	<button type="submit" class="btn btn-sm btn-primary">등록</button>
+                        	<button type="button" class="btn btn-sm btn-primary" onclick="sub();">등록</button>
 	                        <button type="button" class="btn btn-sm btn-light" onclick="save();">임시저장</button>
 	                        <button type="button" class="btn btn-sm btn-light">취소</button> <!-- 바로 전 목록으로 돌아가기 -->
                         </div>
@@ -468,6 +468,18 @@
                       				console.log('실패');
                       			}
                       		});
+                      		
+                      	}
+                      	
+                      	function sub(){
+                      		
+                      		// summernote 비어있으면 작성하라고 toast 띄우고 
+                      		// 채워져있으면 button hidden|display=none submit 으로 넘기기
+                      		if($("#summernote").val() == ""){
+                      			console.log("비어있음");
+                      		}else{
+                      			console.log("비어있지않음");
+                      		}
                       		
                       	}
                       	

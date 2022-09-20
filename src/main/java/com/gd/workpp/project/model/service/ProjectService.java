@@ -53,7 +53,10 @@ public interface ProjectService {
 	ArrayList<ProMember> countMember(int projectNo);
 	
 	// 14. 프로젝트게시판 검색리스트조회
-	int selectSearchCount(String condition, String keyword);
-	ArrayList<ProBoard> selectSearchList(String condition, String keyword, PageInfo pi);
+	int selectSearchCount(String condition, String keyword, int projectNo);
+	ArrayList<ProBoard> selectSearchList(String condition, String keyword, PageInfo pi, int projectNo);
+	
+	// 15. 관리자 프로젝트 승인리스트조회
+	ArrayList<Project> adminProApproveList(String userNo);
 
 }

@@ -25,8 +25,8 @@
          <div class="sidebar2">
            <h5>메일함</h5>
            <ul class="mailbox-list">
-             <li><a href="">받은메일함</a></li>
-             <li><span><a href="">보낸메일함</a></span><span><button class="mail-btn-sidebar">수신확인</button><br></span></li>
+             <li><a href="box.ma">받은메일함</a></li>
+             <li><span><a href="box.ma?boxType=2">보낸메일함</a></span><span><button class="mail-btn-sidebar">수신확인</button><br></span></li>
              <li><a href="">내게쓴메일함</a></li>
              <li><a href="">임시보관함</a></li>
              <br>

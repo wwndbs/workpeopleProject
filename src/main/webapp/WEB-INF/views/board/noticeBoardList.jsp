@@ -67,14 +67,14 @@
                         			</tr>
                         		</c:when>
                         		<c:otherwise> 
-                        			<c:forEach var="i" items="${ list }">
+                        			<c:forEach var="b" items="${ list }">
 			                            <tr>
-			                            	<input type="hidden" value="${ list.boardNo }">
-			                                <td>${ list.length() - i }</td>
-			                                <td>${ list.boardTitle }</td>
-			                                <td>${ list.userName } ${ list.jobName }</td>
-			                                <td>${ list.createDate }</td>
-			                                <td>${ list.count }</td>
+			                            	<input type="hidden" name="boardNo" value="${ b.boardNo }">
+			                                <td>${ b.boardOrder }</td>
+			                                <td>${ b.boardTitle }</td>
+			                                <td>${ b.userName } ${ b.jobName }</td>
+			                                <td>${ b.createDate }</td>
+			                                <td>${ b.count }</td>
 			                            </tr>
 		                            </c:forEach>
 		                        </c:otherwise>

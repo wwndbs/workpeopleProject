@@ -1,5 +1,6 @@
 package com.gd.workpp.board.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
@@ -41,6 +42,7 @@ public class BoardController {
 
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
+		model.addAttribute("listCount", listCount);
 
 		if (no == 1) { // 공지게시판
 
@@ -79,43 +81,6 @@ public class BoardController {
 
 	}
 
-	// 게시글 작성
-	@RequestMapping("insert.bo")
-	public String insertBoard(Board b, MultipartFile file, HttpSession session, Model model) {
-		
-		// 임시저장을 ajax로 처리해야 하는데 임시저장 여부를 어떤식으로 넘길지 고민
-		
-		// 임시저장일 경우 updateBoard 메소드를 실행시키는 걸로
-		
-		Attachment at = new Attachment();
-		  
-		// 첨부파일이 있을 경우 FileUpload클래스로 파일 변환 후 Board 객체에 담기
-		if(!file.getOriginalFilename().equals("")) {
-		  
-			String saveFilePath = FileUpload.saveFile(file, session,"resources/board_upfiles");
-			  
-			at.setOriginName(file.getOriginalFilename()); 
-			at.setChangeName(saveFilePath);
-			at.setRefType(2);
-		  
-		}
-		  
-		int result = bService.insertBoard(b, at);
-		  
-		if(result > 0) { // 등록 성공
-		  
-			session.setAttribute("modalMsg", "게시글이 등록되었습니다."); 
-			return "redirect:list.bo?no=" + b.getBoardType() + "&dept=" + b.getDepName();
-		  
-		}else { // 등록 실패
-		  
-			model.addAttribute("errorMsg", "게시글 등록에 실패했습니다."); 
-			return "common/errorPage";
-		  
-		}
-
-	}
-
 	// 게시글 임시저장
 	@ResponseBody
 	@RequestMapping(value="save.bo", produces="application/json; charset=UTF-8")
@@ -141,19 +106,20 @@ public class BoardController {
 		}
 		
 		Attachment at = new Attachment();
-		  
-		// 첨부파일이 있을 경우 FileUpload클래스로 파일 변환 후 Board 객체에 담기
-		if(!file.getOriginalFilename().equals("")) {
-		  
-			String saveFilePath = FileUpload.saveFile(file, session,"resources/board_upfiles");
-			  
-			at.setOriginName(file.getOriginalFilename()); 
-			at.setChangeName(saveFilePath);
-			at.setRefType(2);
-		  
-		}
 		
 		if(b.getBoardNo().equals("")) { // 새로 임시저장
+			
+			
+			// 첨부파일이 있을 경우 FileUpload클래스로 파일 변환 후 Board 객체에 담기
+			if(!file.getOriginalFilename().equals("")) {
+				
+				String saveFilePath = FileUpload.saveFile(file, session,"resources/board_upfiles/");
+				  
+				at.setOriginName(file.getOriginalFilename()); 
+				at.setChangeName(saveFilePath);
+				at.setRefType(2);
+			  
+			}
 			
 			int result = bService.saveBoard(b, at);
 			String boardNo = bService.selectBoardNo();
@@ -176,13 +142,89 @@ public class BoardController {
 			}
 			
 		}else { // 임시저장 업데이트
+			int boardNo = Integer.parseInt(b.getBoardNo());
 			
-			// 여기부터 시작
+			// 글번호로 등록된 첨부파일 삭제하기
+			// 해당하는 첨부파일 조회
+			Attachment att = bService.selectAttachment(boardNo);
 			
-			return "에러임";
+			if(att != null) {
+				// db에서 해당 첨부파일 삭제
+				int result = bService.deleteAttachment(boardNo);
+				
+				if(result > 0) {
+					// 서버에 저장된 파일 삭제
+					new File(session.getServletContext().getRealPath(att.getChangeName())).delete();
+				}
+			}
+			
+			// 첨부파일이 있을 경우 FileUpload클래스로 파일 변환 후 Board 객체에 담기
+			if(!file.getOriginalFilename().equals("")) {
+			  
+				String saveFilePath = FileUpload.saveFile(file, session,"resources/board_upfiles/");
+				  
+				at.setOriginName(file.getOriginalFilename()); 
+				at.setChangeName(saveFilePath);
+				at.setRefType(2);
+				at.setRefNo(boardNo);
+			  
+			}
+			
+			int result = bService.updateSaveBoard(b, at);
+			
+			JSONObject jObj = new JSONObject();
+			jObj.put("result", result);
+			jObj.put("boardNo", boardNo);
+			
+			return jObj.toJSONString();
 			
 		}
 		
+
+	}
+	
+	// 게시글 작성
+	@RequestMapping("insert.bo")
+	public String insertBoard(Board b, MultipartFile file, HttpSession session, Model model) {
+		
+		if(b.getBoardType() == 2) {
+			if(b.getTopExp() == null || !b.getTopExp().equals("Y")) {
+				b.setTopExp("N");
+			}
+		}
+		
+		Attachment at = new Attachment();
+		
+		if(b.getBoardNo().equals("")) { // 새로 등록 => insert
+		
+			// 첨부파일이 있을 경우 FileUpload클래스로 파일 변환 후 Board 객체에 담기
+			if(!file.getOriginalFilename().equals("")) {
+			  
+				String saveFilePath = FileUpload.saveFile(file, session,"resources/board_upfiles/");
+				  
+				at.setOriginName(file.getOriginalFilename()); 
+				at.setChangeName(saveFilePath);
+				at.setRefType(2);
+			  
+			}
+			  
+			int result = bService.insertBoard(b, at);
+			  
+			if(result > 0) { // 등록 성공
+			  
+				session.setAttribute("modalMsg", "게시글이 등록되었습니다."); 
+				return "redirect:list.bo?no=" + b.getBoardType() + "&dept=" + b.getDepName();
+			  
+			}else { // 등록 실패
+			  
+				model.addAttribute("errorMsg", "게시글 등록에 실패했습니다."); 
+				return "common/errorPage";
+			  
+			}
+		
+		}else { // 임시저장 불러와서 등록 => update
+			
+		}
 
 	}
 

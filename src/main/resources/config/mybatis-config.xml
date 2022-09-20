@@ -16,6 +16,9 @@
 		<typeAlias type="com.gd.workpp.project.model.vo.ProReply" alias="ProReply" />
 		<typeAlias type="com.gd.workpp.mail.model.vo.Mail" alias="Mail" />
 		<typeAlias type="com.gd.workpp.mail.model.vo.MailStatus" alias="MailStatus" />
+		<typeAlias type="com.gd.workpp.mail.model.vo.Spam" alias="Spam" />
+		<typeAlias type="com.gd.workpp.mail.model.vo.Tag" alias="Tag" />
+		<typeAlias type="com.gd.workpp.mail.model.vo.SplitEmail" alias="SplitEmail" />
 		<typeAlias type="com.gd.workpp.common.model.vo.Attachment" alias="Attachment" />
 		<typeAlias type="com.gd.workpp.attendance.model.vo.Attendance" alias="Attendance" />
 		<typeAlias type="com.gd.workpp.board.model.vo.Board" alias="Board" />

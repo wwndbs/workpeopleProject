@@ -50,15 +50,27 @@
 	      <div class="adminx-content">
 	        <div class="adminx-main-content">
 	          <div class="container-fluid">
+	            
+	            <input type="hidden" name="projectNo" value="${ pp.projectNo }">
+                <input type="hidden" name="no" value="${ p.proBoardNo }">
+                <input type="hidden" name="pmMember" value="${ pmMember }">
+                <input type="hidden" name="userNo" value="${ loginUser.userNo }">
 	
 	            <!-- 관리자에게만 보여지는 승인탭(팀장/부장) -->
-	            <c:if test="${ loginUser.jobName == '부장' || loginUser.jobName == '팀장' }">
+	            <c:if test="${ loginUser.jobName == '부장' || loginUser.jobName == '팀장'}">
 		            <div class="form-group">
 		              <select class="form-control approval1" id="demoStyle" name="demoStyle">
 		                <option value="default" class="op1">가입요청 <label>3</label></option>
-		                <option class="text-secondary" value="secondary"><label class="se-la">8월달 매출보고서</label><label for="">&nbsp; 인사팀 김동동대리</label></option>
-		                <option class="text-secondary" value="secondary"><label class="se-la">8월달 매출보고서</label><label for="">&nbsp; 인사팀 김동동대리</label></option>
-		                <option class="text-secondary" value="secondary"><label class="se-la">8월달 매출보고서</label><label for="">&nbsp; 인사팀 김동동대리</label></option>
+		                <c:choose>
+		                  <c:when test="${ not empty appList }">
+			                <option class="text-secondary" value="secondary"><label class="se-la">8월달 매출보고서</label><label for="">&nbsp; 인사팀 김동동대리</label></option>
+			                <option class="text-secondary" value="secondary"><label class="se-la">8월달 매출보고서</label><label for="">&nbsp; 인사팀 김동동대리</label></option>
+			                <option class="text-secondary" value="secondary"><label class="se-la">8월달 매출보고서</label><label for="">&nbsp; 인사팀 김동동대리</label></option>
+			              </c:when>
+			              <c:otherwise>
+			              	<option class="text-secondary" value="secondary"><label class="se-la">가입신청이 없습니다.</label><label for="">&nbsp; </label></option>
+			              </c:otherwise>  
+		                </c:choose>
 		              </select>
 		            </div>
 	            </c:if>
@@ -72,10 +84,6 @@
 	              </c:if>
 	              </h5>
 	            </div>
-	            
-	            <input type="hidden" name="projectNo" value="${ pp.projectNo }">
-                <input type="hidden" name="no" value="${ p.proBoardNo }">
-                <input type="hidden" name="pmMember" value="${ pmMember }">
                 
 	            <!--프로젝트 박스-->
 	            <div class="row">

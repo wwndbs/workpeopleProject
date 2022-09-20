@@ -30,28 +30,33 @@ public class ProjectController {
 	private ProjectService pService;
 	
 	// 내프로젝트 리스트 (로그인한 회원의 부서명 전달받기, sql에도 전달하고 컨트롤러서부터 계속 부서명을 전달해야됨 (jsp는 조건문x))
+	// 프로젝트 관리자 승인리스트
 	@RequestMapping("myProject.pr")
 	public ModelAndView myProjectList(ModelAndView mv, HttpSession session, Project pp, ProMember pm) {
 		
 		Member m = (Member)session.getAttribute("loginUser");
 		String depName = m.getDepName();
 		int projectNo = pm.getProjectNo();
+		String userNo = m.getUserNo();
 				
 		ArrayList<Project> list = pService.selectList(depName);
 		ArrayList<ProMember> pmList = pService.countMember(projectNo);
+		// proAdminNo말고 로그인한 회원의 번호를 넘기게해주기
+		ArrayList<Project> appList = pService.adminProApproveList(userNo);
 		
 		mv.addObject("list", list)
 		  .addObject("depName", depName)
 		  .addObject("pp", pp)
 		  .addObject("pmList", pmList)
+		  .addObject("appList", appList)
 		  .addObject(list)
 		  .setViewName("project/myProjectList");	
 		
-		//System.out.println(pmList);
+		System.out.println(appList);
 				
 		return mv;
 	}	
-	
+		
 	// 프로젝트 게시물리스트
 	@ResponseBody
 	@RequestMapping("proList.pr")
@@ -72,6 +77,24 @@ public class ProjectController {
 		  .addObject(list)
 		  .setViewName("project/projectDetailList");
 		
+		
+		return mv;
+	}
+	
+	// 프로젝트 검색기능
+	@RequestMapping("search.pr")
+	public ModelAndView selectSearchList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, String keyword, String condition, int no) {
+		int listCount = pService.selectSearchCount(condition, keyword, no);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		ArrayList<ProBoard> list = pService.selectSearchList(condition, keyword, pi, no);
+		
+		mv.addObject("pi", pi)
+		  .addObject("list", list)
+		  .addObject("no", no)
+		  .setViewName("project/projectDetailList");
+		
+		System.out.println(list);
 		
 		return mv;
 	}

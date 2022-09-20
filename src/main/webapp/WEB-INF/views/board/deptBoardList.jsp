@@ -68,10 +68,10 @@
                         			</tr>
                         		</c:when>
                         		<c:otherwise> 
-                        			<c:forEach var="b" items="${ list }" varStatus="status">
+                        			<c:forEach var="b" items="${ list }">
 			                            <tr>
 			                            	<input type="hidden" name="boardNo" value="${ b.boardNo }">
-			                                <td>${ list.size() - status.index }</td>
+			                                <td>${ b.boardOrder }</td>
 			                                <td>
 		                                		${ b.boardTitle }
 		                                		<!-- 댓글이 존재할 경우에만 보여짐 -->

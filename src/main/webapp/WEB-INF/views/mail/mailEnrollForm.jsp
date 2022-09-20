@@ -5,7 +5,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
 <!-- favicon 설정 -->
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 <link rel="icon" href="resources/images/favicon.ico" type="image/x-icon">
@@ -87,7 +86,7 @@
 	                    <span style="margin-top: 0px;">&nbsp;&nbsp;임시저장</span>
 	                  </button>
 	
-	                  <button type="button" class="mail-btn3" onclick="toast('토스트 알림 예시입니다.');">
+	                  <button type="button" class="mail-btn3" onclick="toast('토스트 알림 예시입니다. 필요하신 분 쓰세여');">
 	                    <ion-icon name="eye-outline" style="margin-top:5px; font-size: 23px;"></ion-icon>
 	                    <span style="margin-top: 0px;">&nbsp;&nbsp;미리보기</span>
 	                  </button>
@@ -363,7 +362,7 @@
 		                
 		                // 받는 사람 최대 인원 제한
 		                function toLimit(){
-			              	if(document.querySelectorAll('.to-li').length == 3){
+			              	if(document.querySelectorAll('.to-li').length == 5){
 			              		$("#to").attr("readonly", true);
 			              		toast("최대 5명까지 발송 가능합니다.");
 			              	}else{
@@ -616,7 +615,7 @@
 		   			<!-- 모달 끝 -->
 		   			
 		   			<!-- 토스트 메시지 div -->
-		   			<div id="toast" class="">
+		   			<div id="toast">
 					    
 					</div>
 					
@@ -625,16 +624,6 @@
 						function saveMail(){
 							
 							let formData = new FormData(document.getElementById("mailForm"));
-							
-							let files = $("input[name=upfile]")[0].files;
-							
-							console.log(files.length);
-							
-							/* 
-							for(let i=0; i<files.length; i++){
-								formData.append("upfile", files[i]);
-							}
-							 */
 							
 				    		$.ajax({
 				    			url: "save.ma",

@@ -36,7 +36,7 @@ public class BoardServiceImpl implements BoardService {
 		int result1 = bDao.saveBoard(sqlSession, b);
 		
 		int result2 = 1;
-		if(at.getRefNo() == 2) {
+		if(at.getRefType() == 2) {
 			result2 = bDao.saveAttachment(sqlSession, at);
 		}
 		
@@ -49,6 +49,32 @@ public class BoardServiceImpl implements BoardService {
 		return bDao.selectBoardNo(sqlSession);
 	}
 	
+	// 글번호에 해당하는 첨부파일 조회
+	@Override
+	public Attachment selectAttachment(int boardNo) {
+		return bDao.selectAttachment(sqlSession, boardNo);
+	}
+	
+	// 글번호에 해당하는 첨부파일 삭제
+	@Override
+	public int deleteAttachment(int boardNo) {
+		return bDao.deleteAttachment(sqlSession, boardNo);
+	}
+	
+	
+	@Override
+	public int updateSaveBoard(Board b, Attachment at) {
+		int result1 = bDao.updateSaveBoard(sqlSession, b);
+		
+		int result2 = 1;
+		if(at.getRefType() == 2) {
+			result2 = bDao.updateSaveAttachment(sqlSession, at);
+		}
+		
+		return result1 * result2;
+	}
+
+	// 게시글 새로 등록
 	@Override
 	public int insertBoard(Board b, Attachment at) {
 		
@@ -62,6 +88,9 @@ public class BoardServiceImpl implements BoardService {
 		return result1 * result2;
 	}
 
+	
+	
+	
 	
 
 }
