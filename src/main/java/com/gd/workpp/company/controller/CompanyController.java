@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gd.workpp.company.model.service.CompanyService;
+import com.gd.workpp.company.model.vo.Company;
 import com.gd.workpp.company.model.vo.Department;
 import com.gd.workpp.company.model.vo.OrgChart;
-import com.gd.workpp.member.model.vo.Member;
 
 @Controller
 public class CompanyController {
@@ -37,8 +37,10 @@ public class CompanyController {
 	public ModelAndView documentListView1(ModelAndView mv) {
 		
 		ArrayList<OrgChart> list = cService.orgChartList();
+		ArrayList<Department> deplist = cService.departmentList();
 		
-		mv.addObject("list", list)
+		mv.addObject("deplist", deplist)
+		  .addObject("list", list)
 		  .setViewName("company/updateOrgchartView");
 		
 		return mv;
@@ -55,13 +57,22 @@ public class CompanyController {
 		return mv;
 	}
 	
+	@RequestMapping("companyUpdateForm.co")
+	public ModelAndView documentListView3(ModelAndView mv) {
+	    
+		//Company co = cService.selectCompany();
+		
+		mv.setViewName("company/companyUpdate");
+		return mv;
+	}
+	
 	@RequestMapping("addOrgChart.co")
 	public String addOrgChart(OrgChart o,HttpSession session, Model model) {
 		
 		int result = cService.addOrgChart(o);
 		
 		if(result>0) { // 성공
-			return "redirect:/updateOrgchartForm.co";
+			return "redirect:updateOrgchartForm.co";
 		}else { // 실패
 
 			// 에러페이지 포워딩
@@ -76,7 +87,7 @@ public class CompanyController {
 		int result = cService.deleteOrgChart(o);
 		
 		if(result > 0) {
-			return "redirect:/updateOrgchartForm.co";
+			return "redirect:updateOrgchartForm.co";
 			
 		}else {
 			// 실패 = 에ㅔ러 문구 담아서 에러메세지
@@ -92,7 +103,7 @@ public class CompanyController {
 		int result = cService.createDepartment(d);
 		
 		if(result>0) { // 성공
-			return "redirect:/updateDepForm.co";
+			return "redirect:updateDepForm.co";
 		}else { // 실패
 			// 에러페이지 포워딩
 			return "common/errorPage";
@@ -100,17 +111,14 @@ public class CompanyController {
 		
 	}
 
-	@RequestMapping("updateDep.co")
-	public String updateDepartment(Department d, Model model,HttpSession session,String updateName) {
+	@RequestMapping("deleteDep.co")
+	public String deleteDepartment(Department d, Model model,HttpSession session,String updateName) {
 		
-		d.setUpdateName(updateName);
-		
-		int result = cService.updateDepartment(d);
-		System.out.println(d);
+		int result = cService.deleteDepartment(d);
 		if(result>0) {
-			return "redirect:/updateDepForm.co";
+			return "redirect:updateDepForm.co";
 		}else {
-			session.setAttribute("alertMsg", "부서 변경에 실패하였습니다.");
+			session.setAttribute("alertMsg", "부서 삭제에 실패하였습니다.");
 			return "common/errorPage";
 		}
 		

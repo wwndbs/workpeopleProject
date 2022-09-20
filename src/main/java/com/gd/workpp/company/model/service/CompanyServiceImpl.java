@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gd.workpp.company.model.dao.CompanyDao;
+import com.gd.workpp.company.model.vo.Company;
 import com.gd.workpp.company.model.vo.Department;
 import com.gd.workpp.company.model.vo.Job;
 import com.gd.workpp.company.model.vo.OrgChart;
@@ -56,8 +57,13 @@ public class CompanyServiceImpl implements CompanyService{
 	}
 
 	@Override
-	public int updateDepartment(Department d) {
-		return cDao.updateDepartment(sqlSession,d);
+	public int deleteDepartment(Department d) {
+		return cDao.deleteDepartment(sqlSession,d);
+	}
+
+	@Override
+	public Company selectCompany() {
+		return cDao.selectCompany(sqlSession);
 	}
 
 

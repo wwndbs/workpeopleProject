@@ -77,8 +77,9 @@
 													console.log(data.getValue(chart.getSelection()[0].row, 0));
 													let orgName = data.getValue(chart.getSelection()[0].row, 0);
 													console.log(orgName);
-													$("#depName").val(orgName);
+													$("#delorgchart").val(orgName);
 													$("#deleteOrgChartModal").modal("show");
+													
 													// 모달 div 영역에 data.getValue(chart.getSelection()[0].row, 0)를 뿌려준 후
 													// 모달이 뜨게끔 => $("모달요소선택자").modal("show");
 													// 모달이 뜨게끔 => $("모달요소선택자").modal("hide"); -> 모달창 취소버튼 클릭시 숨겨주기 (여기있는거아님)
@@ -109,7 +110,21 @@
 		                <!-- Modal Body -->
 		                <div class="modal-body">
 		                    <label for="userPwd" class="mr-sm-2"></label>
-		                    <input type="text" class="form-control mb-2 mr-sm-2" placeholder="생성할 객체명" id="depName" name="depName" required>
+		                    <select id="depName" class="form-control" name="depName" style="height:40px; width:100%" required>
+                            	<option value=""></option>
+			                        <c:choose>
+				                		<c:when test="${ empty deplist }">
+				                			<tr>
+				                				<td colspan="6">선택할 부서가 존재하지 않습니다.</td>
+				                			</tr>
+				                		</c:when>
+				                		<c:otherwise>
+				                			<c:forEach var="d" items="${ deplist }">
+						                     <option value="${d.depName }">${d.depName}</option>
+				                    		</c:forEach>
+				                    	</c:otherwise>
+									</c:choose>
+                           	</select>
 		                    <input type="text" class="form-control mb-2 mr-sm-2" placeholder="부모 객체명" id="parOb" name="parOb" required>
 		                </div>
 		                
@@ -134,7 +149,7 @@
 		            <form action="deleteOrgChart.co" method="post">
 		                <!-- Modal Body -->
 		                <div class="modal-body">
-							정말로 삭제하시겠습니까?
+							정말로 <input type="text" id="delorgchart" name="depName" readonly style="width:150px; height:30px;" >를 삭제하시겠습니까?
 		                </div>
 		                
 		                <!-- Modal footer -->

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.gd.workpp.company.model.vo.Company;
 import com.gd.workpp.company.model.vo.Department;
 import com.gd.workpp.company.model.vo.Job;
 import com.gd.workpp.company.model.vo.OrgChart;
@@ -40,7 +41,11 @@ public class CompanyDao {
 		return sqlSession.insert("companyMapper.createDepartment",d);
 	}
 	
-	public int updateDepartment(SqlSessionTemplate sqlSession,Department d) {
-		return sqlSession.update("companyMapper.updateDepartment",d);
+	public int deleteDepartment(SqlSessionTemplate sqlSession,Department d) {
+		return sqlSession.delete("companyMapper.deleteDepartment",d);
+	}
+	
+	public Company selectCompany(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("companyMapper.selectCompany");
 	}
 }

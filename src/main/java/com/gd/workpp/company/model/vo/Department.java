@@ -22,6 +22,5 @@ public class Department {
 	private Date modifyDate;
 	private String userName;
 	private int userCount;
-	private String updateName;
 	
 }
