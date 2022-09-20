@@ -142,8 +142,8 @@ public class AjaxMailController {
 
 	/**
 	 * Author : 정주윤
-	 * 체크박스로 선택된 메일들을 읽음 처리/스팸 처리 해주는 메소드
-	 * @param type : 어떤 상태값을 변경할 건지 (읽음여부, 스팸여부)
+	 * 체크박스로 선택된 메일들을 읽음 처리/스팸 처리/휴지통 이동 해주는 메소드
+	 * @param type : 어떤 상태값을 변경할 건지 (읽음여부, 스팸여부, 삭제여부)
 	 * @param checkMailNo : 선택된 메일번호들
 	 */
 	@ResponseBody
@@ -153,15 +153,13 @@ public class AjaxMailController {
 		Member mem = (Member)session.getAttribute("loginUser");
 		String email = mem.getEmail();
 		
-		// 읽음처리, 스팸처리
+		// 읽음처리, 스팸처리, 휴지통 이동처리
 		int result1 = mService.updateMailStatus(type, checkMailNo, email);
 
-		if(type == "mail_spam") {
-			
+		if(type == "mail_spam") { // 스팸 처리의 경우
 			// 메일번호로 보낸사람 주소 조회
 			List<String> senderList = new ArrayList<>();
 			senderList = mService.selectSender(checkMailNo); // ["user24@workpp.com", "goodee@gmail.com"]
-			System.out.println(senderList);
 			
 			// 보낸사람 주소를 스팸 목록에 추가
 			int result2 = mService.insertSpam(senderList, email);

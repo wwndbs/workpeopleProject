@@ -48,7 +48,7 @@
 	                      <span style="margin-top: 0px;">&nbsp;&nbsp;답장</span>
 	                    </button>                    
 	                    
-	                    <button type="button" class="mail-btn5">
+	                    <button type="button" class="mail-btn5" id="deleteBtn">
 	                      <ion-icon name="trash-outline" style="margin-top:5px; font-size: 19px;"></ion-icon>
 	                      <span style="margin-top: 0px;">&nbsp;&nbsp;삭제</span>
 	                    </button>    
@@ -214,7 +214,7 @@
 									}
 								})
 								
-	                            // 체크박스 클릭 시 메일번호 담기, 모달 속성 변경
+	                            // 체크박스 클릭 시 메일번호 담기
 	                            let checkMailNo = "";
 								$("input:checkbox").change(function(){
 									
@@ -224,8 +224,6 @@
 		                            })
 		                            checkMailNo = checkMailNo.substring(0,checkMailNo.lastIndexOf(",")); // 맨 뒤 콤마 삭제
 									
-		                            console.log(checkMailNo);
-
 								})        
 								
 								// 메일 읽음 기능 (체크박스로 선택하여 읽음 버튼 클릭 시)
@@ -242,7 +240,8 @@
 				            				   type:"mail_read"},
 				            			success:function(result){
 				            				if(result == 'success'){
-					            				location.reload();
+					            				toast("읽음 처리 성공하였습니다.");
+					            				setTimeout(reload, 1000);
 				            				}else{
 				            					toast("읽음 처리 실패하였습니다.");
 				            				}
@@ -275,7 +274,8 @@
 	                                    	  type:"mail_spam"},
 	                                    success:function(result){
 	                        				if(result == "success"){
-		                                        location.reload();
+		                                        toast("스팸처리 되었습니다.");
+												setTimeout(reload, 1000);
 	                        				}else{
 	                        					toast("스팸 신고에 실패하였습니다.");
 	                        				}
@@ -287,6 +287,30 @@
 				       
 				            	})
 								
+				            	
+				            	// 메일 선택 삭제 요청 (휴지통 이동)
+				            	$("#deleteBtn").click(function(){
+				            		
+				            		$.ajax({
+	                                    url:"updateStatus.ma",
+	                                    data:{checkMailNo:checkMailNo,
+	                                    	  type:"mail_delete"},
+	                                    success:function(result){
+	                        				if(result == "success"){
+		                                        toast("휴지통으로 이동했습니다.");
+		                                        setTimeout(reload, 1000);
+	                        				}else{
+	                        					toast("삭제에 실패했습니다.");
+	                        				}
+	                                    },
+	                                    error:function(){
+	                                        console.log("스팸 신고 ajax통신 실패")
+	                                    }
+					            	})
+				       
+				            	})
+								
+				            	
 							})
 							
 			            	// 메일 중요여부 변경 요청
@@ -358,6 +382,14 @@
 			            		})
 			            		
 			            	})
+			            	/* 
+			            	setTimeout(function() {
+							  location.reload();
+							}, 3000);
+							 */
+							function reload(){
+								location.reload();
+							}
 			            	
 			            	
 							// toast script

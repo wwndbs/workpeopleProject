@@ -23,4 +23,7 @@ public class Mail {
 	private String sendDate;
 	private String sendStatus;
 	
+	private MailStatus mailStatus;
+	private Tag tag;
+	
 }
