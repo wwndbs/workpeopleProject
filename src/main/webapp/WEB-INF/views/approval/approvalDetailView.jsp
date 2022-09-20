@@ -36,8 +36,14 @@
 			                                	<tr>
 			                                    	<th width="120">${ list.userNo }&nbsp;&nbsp; ${ list.jobName }</th>
 			                                    </tr>
-			                                    <tr style="cursor : pointer;" onclick="approvalOfAp('${ list.userNo }');">
-			                                    	<td><br>${ list.userNo }<br><br></td>
+			                                    <tr style="cursor : pointer;" onclick="location.href='approvalOfApproval.ap?approvalUser=${ list.userNo }&order=${list.approvalOrder}&approvalCount=${ document.approvalCount }&form=${ document.documentForm }&documentNo=${ document.documentNo }'">
+			                                    	<td>
+			                                    	<br>
+				                                    	<c:if test="${ list.status != 0 }">
+				                                    		${ list.userNo }
+				                                    	</c:if>
+			                                    	<br><br>
+			                                    	</td>
 			                                    </tr>
 			                                </table>
 			                            </c:forEach>
@@ -180,18 +186,5 @@
 			</script>
 		</c:otherwise>
 	</c:choose>
-	
-	<script>
-		function approvalOfAp(user){
-			let loginUser = '${m.userName }';
-			console.log(user);
-			
-			if(loginUser == user){
-				console.log("같다!!!");
-			}else{
-				console.log("다르다1!");
-			}
-		}
-	</script>
 </body>
 </html>

@@ -107,4 +107,9 @@ public interface ApprovalService {
 	
 	// 연장근무신청서 결재 등록
 	int insertApprovalOvertime(Document document, Overtime overtime);
+	
+//-----------------------------------
+	
+	// 결재 승인
+	int approvalOfApproval(String approvalUser, int documentNo);
 }

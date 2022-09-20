@@ -371,13 +371,32 @@ public class ApprovalController {
 		mv.addObject("list", list);
 		mv.addObject("m", m);
 		mv.setViewName("approval/approvalDetailView");
-		
-		
-		System.out.println(document);
-		System.out.println(obj);
-		System.out.println(list);
-		System.out.println(m);
+
 		return mv;
+	}
+	
+	@RequestMapping("approvalOfApproval.ap")
+	public String approvalOfApproval(String approvalUser, int order, int approvalCount, String form, int documentNo, HttpSession session, Model model) {
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		if(m.getUserName().equals(approvalUser)) {
+			if(approvalCount == order) {
+				int result = apService.approvalOfApproval(approvalUser, documentNo);
+				if(result > 0) {
+					session.setAttribute("alertMsg", "승인 했습니다.");	
+					return "redirect:approvalDetail.ap?no=" + documentNo +"&form=" + form;
+				}else {
+					model.addAttribute("errorMsg", "결재승인 과정 중 오류 발생");
+					return "common/errorPage";
+				}
+			}else {
+				session.setAttribute("alertMsg", "결재 순서가 아닙니다.");	
+				return "redirect:approvalDetail.ap?no=" + documentNo +"&form=" + form;
+			}
+		}else {
+			session.setAttribute("alertMsg", "결재자가 아닙니다.");	
+			return "redirect:approvalDetail.ap?no=" + documentNo +"&form=" + form;
+		}
 	}
 		
 		

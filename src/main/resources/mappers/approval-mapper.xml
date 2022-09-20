@@ -88,11 +88,12 @@
 	</select>
 	
 	<select id="selectApprovalCount" resultType="_int">
-		select count(*) as "count"
-		  from document
-		  join approval using(user_no)
-		 where user_no = #{userNo}
-		   and approval_count = approval_order
+	    select count(*) as "count"
+	      from approval a
+	      join document d on(a.document_no = d.document_no)
+	      join member m on(a.user_no = m.user_no)
+	     where a.user_no = #{userNo}
+	       and reference_status is null
 	</select>
 	
 	<select id="selectApprovalAllList" resultMap="documentResult">
@@ -148,6 +149,7 @@
 	   join member m on(a.user_no = m.user_no)
 	  where a.user_no = #{userNo}
 	    and reference_status is null
+	    and progress = 1
 	  order by a.document_no desc
 	</select>
 	
@@ -642,8 +644,36 @@
 		  join member m using(user_no)
 		 where document_no = #{no}
 		   and reference_status is null
+         order by approval_order desc
 	</select>
-
+	
+	<update id="updateDocumentApprovalCount">
+		update document
+		   set approval_count = approval_count - 1
+		 where document_no = #{documentNo}
+	</update>
+	
+	<update id="updateApprovalStatus">
+		update approval
+		   set status = '1'
+		     , approval_date = sysdate
+		 where user_no = (select user_no
+		                    from member
+		                   where user_name = #{approvalUser})
+		   and document_no = #{documentNo}
+	</update>
+	
+	<select id="approvalStatusCheck" resultType="_int">
+		select approval_count
+		  from document
+		 where document_no = #{documentNo}
+	</select>
+	
+	<update id="updateProgress">
+		update document
+		   set progress = 2
+         where document_no = #{documentNo}
+	</update>
    
    
    

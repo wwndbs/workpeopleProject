@@ -165,4 +165,9 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public ArrayList<Approval> approvalDetailLine(int no) {
 		return apDao.approvalDetailLine(sqlSession, no);
 	}
+
+	@Override
+	public int approvalOfApproval(String approvalUser, int documentNo) {
+		return apDao.approvalOfApproval(sqlSession, approvalUser, documentNo);
+	}
 }

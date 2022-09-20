@@ -321,4 +321,27 @@ public class ApprovalDao {
 		return (ArrayList)sqlSession.selectList("approvalMapper.approvalDetailLine", no);
 	}
 	
+	public int approvalOfApproval(SqlSessionTemplate sqlSession, String approvalUser, int documentNo) {
+		HashMap<String, Object> data = new HashMap<>();
+		data.put("approvalUser", approvalUser);
+		data.put("documentNo", documentNo);
+		
+		int result1;
+		int result2;
+		
+		int approvalCountCheck = sqlSession.selectOne("approvalMapper.approvalStatusCheck", data);
+		System.out.println(approvalCountCheck);
+		if(approvalCountCheck == 1) {
+			System.out.println("ASdddddddddddd");
+			result1 = sqlSession.update("approvalMapper.updateDocumentApprovalCount", data);
+			result2 = sqlSession.update("approvalMapper.updateApprovalStatus", data);
+			sqlSession.update("approvalMapper.updateProgress", data);
+		}else {
+			result1 = sqlSession.update("approvalMapper.updateDocumentApprovalCount", data);
+			result2 = sqlSession.update("approvalMapper.updateApprovalStatus", data);
+		}
+		
+		return result1 * result2; // 1 or 0
+	}
+	
 }
