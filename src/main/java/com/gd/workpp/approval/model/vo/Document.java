@@ -25,4 +25,5 @@ public class Document {
 	private String changeName;
 	private String filePath;
 	private int approvalCount;
+	private String depName;
 }

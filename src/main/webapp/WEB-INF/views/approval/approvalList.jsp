@@ -31,10 +31,10 @@
 					</div>
 					<div class="menu-wrapper">
 						<button class="btn btn-secondary btn-sm" onclick="location.href='approvalList.ap'">전체</button>
-						<button class="btn btn-secondary btn-sm" onclick="location.href='approvalList.ap?category=2'">진행</button>
-						<button class="btn btn-secondary btn-sm" onclick="location.href='approvalList.ap?category=3'">완료</button>
-						<button class="btn btn-secondary btn-sm" onclick="location.href='approvalList.ap?category=4'">반려</button>
-						<button class="btn btn-secondary btn-sm" onclick="location.href='approvalList.ap?category=5'">대기</button>
+						<button class="btn btn-secondary btn-sm" onclick="location.href='approvalList.ap?category=1'">진행</button>
+						<button class="btn btn-secondary btn-sm" onclick="location.href='approvalList.ap?category=2'">완료</button>
+						<button class="btn btn-secondary btn-sm" onclick="location.href='approvalList.ap?category=3'">반려</button>
+						<button class="btn btn-secondary btn-sm" onclick="location.href='approvalList.ap?category=0'">대기</button>
 					</div>
 					<div class="list-wrapper">
 						<table class="table table-hover" style="text-align: center;">
@@ -123,6 +123,15 @@
 			</div>
 		</div>
 	</div>
+
+	<script>
+		$(".list-wrapper>table>tbody>tr").click(function(){
+			let approvalNo = $(this).children().eq(0).text();
+			let approvalForm = $(this).children().eq(1).text();
+			
+			location.href="approvalDetail.ap?no=" + approvalNo + "&form=" + approvalForm;
+		})
+	</script>
 	
 	<script>
 	    // 결재 내역 검색
@@ -186,5 +195,7 @@
 	</script>
 	
 	<jsp:include page="../common/footer.jsp"/>
+	
+	<jsp:include page="../approval/approvalDetail.jsp" />
 </body>
 </html>

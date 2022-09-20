@@ -1,5 +1,6 @@
 package com.gd.workpp.approval.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -55,15 +56,22 @@ public class AjaxApprovalController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="deleteSaveList.ap", produces="application/json; charset=UTF-8")
-	public String deleteSaveList(String no) {
+	public String deleteSaveList(String changeName, String no, HttpSession session) {
 		
 		String[] noArr = no.split(",");
+		String[] fileArr = changeName.split(",");
 		
 		int result = apService.deleteSaveList(noArr);
 		
 		String msg = "";
 		
 		if(result > 0) {
+			for(int i = 0; i < fileArr.length; i++) {
+				if(!fileArr[i].equals("")) {
+					new File(session.getServletContext().getRealPath(fileArr[i])).delete();
+				}	
+			}
+			
 			msg = "임시저장문서를 삭제 했습니다.";
 			return new Gson().toJson(msg);
 		}else {

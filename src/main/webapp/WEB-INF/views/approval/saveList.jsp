@@ -53,6 +53,7 @@
 									    <tr>
 									        <td>
 									            <input type="checkbox" value="${ list.documentNo }" name="delete-check">
+									            <input type="hidden" value="${list.changeName}" id="fileName">
 									        </td>
 									        <td>${ list.documentNo }</td>
 									        <td>${ list.documentForm }</td>
@@ -214,22 +215,27 @@
 
 			let checkCount = $("input[name='delete-check']:checked").length; // 체크된 체크박스 수
 			let checkList = $("input[name='delete-check']:checked"); // 체크된 체크박스 리스트
+			let checkListNext = $("input[name='delete-check']:checked + input[type=hidden]"); // 체크된 체크박스 리스트의 다음 요소
 
 			if(checkCount > 0){
 				if(confirm("정말 삭제 하시겠습니까?")){
 					let documentNo = "";
+					let fileName = "";
 					for(let i = 0; i < checkList.length; i++){
 						if(i == (checkList.length - 1)){
 							documentNo += checkList[i].value;
+							fileName += checkListNext[i].value;
 						}else{
 							documentNo += checkList[i].value + ",";
+							fileName += checkListNext[i].value; + ",";
 						}
 					}
 					
 					$.ajax({
 						url : "deleteSaveList.ap",
 						data : {
-							no : documentNo
+							no : documentNo,
+							changeName : fileName
 						},
 						success : function(msg){
 							location.reload();

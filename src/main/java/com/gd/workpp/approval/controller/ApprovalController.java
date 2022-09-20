@@ -1,6 +1,7 @@
 package com.gd.workpp.approval.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,16 +10,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gd.workpp.approval.model.service.ApprovalServiceImpl;
+import com.gd.workpp.approval.model.vo.Absence;
+import com.gd.workpp.approval.model.vo.Approval;
 import com.gd.workpp.approval.model.vo.Document;
+import com.gd.workpp.approval.model.vo.Overtime;
 import com.gd.workpp.approval.model.vo.Plan;
+import com.gd.workpp.approval.model.vo.Vacation;
 import com.gd.workpp.common.model.vo.PageInfo;
 import com.gd.workpp.common.template.FileUpload;
 import com.gd.workpp.common.template.Pagination;
 import com.gd.workpp.member.model.vo.Member;
+import com.google.gson.Gson;
 
 @Controller
 public class ApprovalController {
@@ -35,7 +42,7 @@ public class ApprovalController {
 	 */
 	@RequestMapping("approvalList.ap")
 	public ModelAndView approvalList(@RequestParam(value="cpage", defaultValue="1")int currentPage,
-                                     @RequestParam(value="category", defaultValue="1")int category,
+                                     @RequestParam(value="category", defaultValue="4")int category,
                                      HttpSession session,ModelAndView mv) {
 		Member m = (Member)session.getAttribute("loginUser");
 		String userNo = m.getUserNo();
@@ -157,21 +164,6 @@ public class ApprovalController {
 		return "common/errorPage";
 	}
 	
-	@RequestMapping("overtime.ap")
-	public String overtimeView() {
-		return "approval/overtime";
-	}
-	
-	@RequestMapping("vacation.ap")
-	public String vacationView() {
-		return "approval/vacation";
-	}
-	
-	@RequestMapping("absence.ap")
-	public String absenceView() {
-		return "approval/absence";
-	}
-	
 	/**
 	 * Author : 최영헌
 	 * 결재문서 작성 중 뒤로가기 요청을 처리하는 메소드
@@ -227,8 +219,166 @@ public class ApprovalController {
 			return "common/errorPage";
 		}
 	}
-		
 	
+	/**
+	 * Author : 최영헌
+	 * 업무기안 결재 등록 요청을 처리하는 메소드
+	 * @param document : 사용자가 입력한 결재문서 내용이 담겨있는 객체
+	 * @param planStart : 사용자가 입력한 시행일자
+	 * @param upfile : 사용자가 업로드한 파일
+	 */
+	@RequestMapping("insertApprovalOvertime.ap")
+	public String insertApprovalOvertime(@RequestParam(value="status", defaultValue="1")int status,
+			                         Document document, Overtime overtime, MultipartFile upfile, HttpSession session, Model model) {
+		Member m = (Member)session.getAttribute("loginUser");
+		String userNo = m.getUserNo();
+		
+		document.setStatus(status);
+		
+		// 전달된 첨부파일 존재할 경우에 파일명 수정 후 업로드
+		if(!upfile.getOriginalFilename().equals("")) {
+			String changeName = FileUpload.saveFile(upfile, session, "resources/approval_upfiles/");
+			document.setOriginName(upfile.getOriginalFilename());
+			document.setChangeName(changeName);
+		}
+		
+		int result = apService.insertApprovalOvertime(document, overtime);
+		
+		if(result > 0) {
+			if(document.getStatus() == 2) {
+				session.setAttribute("alertMsg", "임시저장 완료");	
+				return "redirect:saveList.ap";
+			}else {
+				session.setAttribute("alertMsg", "결재상신 완료");				
+				return "redirect:approvalList.ap";
+			}
+		}else {
+			if(document.getStatus() == 2) {
+				model.addAttribute("errorMsg", "임시저장 과정 중 오류 발생");
+			}else {
+				model.addAttribute("errorMsg", "결재상신 과정 중 오류 발생");			
+			}
+			return "common/errorPage";
+		}
+	}
+	
+	/**
+	 * Author : 최영헌
+	 * 업무기안 결재 등록 요청을 처리하는 메소드
+	 * @param document : 사용자가 입력한 결재문서 내용이 담겨있는 객체
+	 * @param planStart : 사용자가 입력한 시행일자
+	 * @param upfile : 사용자가 업로드한 파일
+	 */
+	@RequestMapping("insertApprovalAbsence.ap")
+	public String insertApprovalAbsence(@RequestParam(value="status", defaultValue="1")int status,
+			                         Document document, Absence absence, MultipartFile upfile, HttpSession session, Model model) {
+		Member m = (Member)session.getAttribute("loginUser");
+		String userNo = m.getUserNo();
+		
+		document.setStatus(status);
+		
+		// 전달된 첨부파일 존재할 경우에 파일명 수정 후 업로드
+		if(!upfile.getOriginalFilename().equals("")) {
+			String changeName = FileUpload.saveFile(upfile, session, "resources/approval_upfiles/");
+			document.setOriginName(upfile.getOriginalFilename());
+			document.setChangeName(changeName);
+		}
+		
+		int result = apService.insertApprovalAbsence(document, absence);
+		
+		if(result > 0) {
+			if(document.getStatus() == 2) {
+				session.setAttribute("alertMsg", "임시저장 완료");	
+				return "redirect:saveList.ap";
+			}else {
+				session.setAttribute("alertMsg", "결재상신 완료");				
+				return "redirect:approvalList.ap";
+			}
+		}else {
+			if(document.getStatus() == 2) {
+				model.addAttribute("errorMsg", "임시저장 과정 중 오류 발생");
+			}else {
+				model.addAttribute("errorMsg", "결재상신 과정 중 오류 발생");			
+			}
+			return "common/errorPage";
+		}
+	}
+	
+	/**
+	 * Author : 최영헌
+	 * 업무기안 결재 등록 요청을 처리하는 메소드
+	 * @param document : 사용자가 입력한 결재문서 내용이 담겨있는 객체
+	 * @param planStart : 사용자가 입력한 시행일자
+	 * @param upfile : 사용자가 업로드한 파일
+	 */
+	@RequestMapping("insertApprovalVacation.ap")
+	public String insertApprovalVacation(@RequestParam(value="status", defaultValue="1")int status,
+			                         Document document, Vacation vacation, MultipartFile upfile, HttpSession session, Model model) {
+		Member m = (Member)session.getAttribute("loginUser");
+		String userNo = m.getUserNo();
+		
+		document.setStatus(status);
+		
+		// 전달된 첨부파일 존재할 경우에 파일명 수정 후 업로드
+		if(!upfile.getOriginalFilename().equals("")) {
+			String changeName = FileUpload.saveFile(upfile, session, "resources/approval_upfiles/");
+			document.setOriginName(upfile.getOriginalFilename());
+			document.setChangeName(changeName);
+		}
+		
+		int result = apService.insertApprovalVacation(document, vacation);
+		
+		if(result > 0) {
+			if(document.getStatus() == 2) {
+				session.setAttribute("alertMsg", "임시저장 완료");	
+				return "redirect:saveList.ap";
+			}else {
+				session.setAttribute("alertMsg", "결재상신 완료");				
+				return "redirect:approvalList.ap";
+			}
+		}else {
+			if(document.getStatus() == 2) {
+				model.addAttribute("errorMsg", "임시저장 과정 중 오류 발생");
+			}else {
+				model.addAttribute("errorMsg", "결재상신 과정 중 오류 발생");			
+			}
+			return "common/errorPage";
+		}
+	}
+		
+	/**
+	 * Author : 최영헌
+	 * 결재내역 상세페이지 이동 요청을 처리하는 메소드
+	 * @param no : 이동하고자 하는 결재내역 번호
+	 * @param form : 양식 확인용도 양식 명
+	 */
+	@RequestMapping("approvalDetail.ap")
+	public ModelAndView approvalDetail(int no, String form, HttpSession session, ModelAndView mv) {
+		Member m = (Member)session.getAttribute("loginUser");
+		String userNo = m.getUserNo();
+		
+		// 공통부분 결재양식 조회
+		Document document = apService.approvalDetail(no);
+		
+		// 해당 결재양식 조회
+		Object obj = apService.approvalDetailForm(no, form);
+		
+		// 해당 결재 결재자 리스트 조회
+		ArrayList<Approval> list = apService.approvalDetailLine(no);
+		
+		mv.addObject("document", document);
+		mv.addObject("obj", obj);
+		mv.addObject("list", list);
+		mv.addObject("m", m);
+		mv.setViewName("approval/approvalDetailView");
+		
+		
+		System.out.println(document);
+		System.out.println(obj);
+		System.out.println(list);
+		System.out.println(m);
+		return mv;
+	}
 		
 		
 		

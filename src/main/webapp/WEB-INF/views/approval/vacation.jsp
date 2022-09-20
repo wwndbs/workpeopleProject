@@ -23,139 +23,89 @@
 				<div class="container-fluid">
 
 					<!--메인페이지 컨텐츠-->
-					<div class="document-wrapper">
-						<form class="write-area" action="" method="POST">
+					<form class="document-wrapper" action="insertApprovalVacation.ap" method="post" enctype="multipart/form-data">
+						<div class="write-area">
 							<table class="table table-bordered">
 								<tr>
 									<th colspan="2">
 										<br><br>
-										<h1><strong>휴가 신청서</strong></h1>
+										<h1><strong>${ document.documentForm }</strong></h1>
+										<input type="hidden" name="documentNo" value="${ document.documentNo }">	
 									</th>
-									<td colspan="4">
-										<table align="right">
-											<tr>
-												<th width="120">홍길동 대리</th>
-											</tr>
-											<tr>
-												<td>
-													<br>홍길동<br>
-													<br>
-												</td>
-											</tr>
-										</table>
-										<table align="right">
-											<tr>
-												<th width="120">홍길남 팀장</th>
-											</tr>
-											<tr>
-												<td>
-													<br>홍길남<br>
-													<br>
-												</td>
-											</tr>
-										</table>
+									<td colspan="4" id="approval-section">
+									<!-- ajax 조회 -->
 									</td>
 								</tr>
 								<tr>
 									<th>제목</th>
 									<td colspan="5">
-										<input type="text" name="" class="form-control form-control-sm">
+										<input type="text" name="documentTitle" class="form-control form-control-sm" required>
 									</td>
 								</tr>
 								<tr>
 									<th>부서</th>
-									<td>개발팀</td>
+									<td>${ member.depName }</td>
 									<th>기안자</th>
-									<td>홍길동</td>
-									<th>기안일</th>
-									<td>2022-22-22</td>
+									<td>${ member.userName }</td>
+									<th>작성일</th>
+									<td>${ document.createDate }</td>
 								</tr>
-								<tr>
-									<th>휴가종류</th>
-									<td colspan="5">
-										<select class="form-control form-control-sm" id="sel1">
-											<option>연차</option>
-											<option>병가</option>
-											<option>경조사</option>
-											<option>기타</option>
-										</select>
-									</td>
-								</tr>
-								<tr>
-									<th>휴가기간</th>
-									<td colspan="5">
-										<div class="date-form" style="display: flex;">
-											<input type="date" class="form-control form-control-sm" style="width: 150px;">
-											<span>&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;</span>
-											<input type="date" class="form-control form-control-sm" style="width: 150px;">
-										</div>
-									</td>
-								</tr>
+		                        <tr>
+		                            <th>휴가종류</th>
+		                            <td colspan="5">
+		                                <select class="form-control form-control-sm" id="sel1" name="vacationCategory">
+		                                  <option value="연차">연차</option>
+		                                  <option value="병가">병가</option>
+		                                  <option value="경조사">경조사</option>
+		                                  <option value="기타">기타</option>
+		                                </select>
+		                            </td>
+		                        </tr>
+		                        <tr>
+		                            <th>휴가기간</th>
+		                            <td colspan="5">
+		                              <div class="date-form" style="display : flex;">
+		                                <input type="date" name="vacationStart" class="form-control form-control-sm" style="width : 150px;">
+		                                <span>&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;</span>
+		                                <input type="date" name="vacationEnd" class="form-control form-control-sm" style="width : 150px;">
+		                              </div>   
+		                            </td>
+		                        </tr>
 								<tr>
 									<th>내용</th>
 									<td colspan="5" style="text-align: left;">
-										<textarea id="summernote" name="editordata"></textarea>
+										<textarea id="summernote" name="documentContent"></textarea>
 									</td>
 								</tr>
 								<tr>
 									<th>첨부파일</th>
 									<td colspan="5">
-										<input type="file" class="form-control-file border">
+										<input type="file" name="upfile" class="form-control-file border">
 									</td>
 								</tr>
 							</table>
 							<div class="btn-area">
-								<button type="button" class="btn btn-secondary btn-sm">돌아가기</button>
-								<button type="submit" class="btn btn-primary btn-sm" id="save">임시저장</button>
+								<button type="button" class="btn btn-secondary btn-sm" onclick="location.href='backPage.ap?documentNo=${ document.documentNo }'">돌아가기</button>
+								<button type="submit" class="btn btn-primary btn-sm" id="save" name="status" value="2">임시저장</button>
 								<button type="submit" class="btn btn-primary btn-sm" id="approval">결재상신</button>
 							</div>
-						</form>
+						</div>
 						<div class="approval-wrapper">
-							<button class="btn btn-primary btn-sm">결재선 설정</button>
-							<div class="approval-reference-area">
+							<button class="btn btn-primary btn-sm" id="approval-line" type="button">결재선 설정</button>
+							<div class="approval-reference-area" id="approval-list">
 								<p>결재선</p>
-								<ul>
-									<li>
-										<div>
-											<img src="resources/images/defaultProfile.jpg" alt="프로필이미지">&nbsp;&nbsp;<strong>개발팀</strong>&nbsp;&nbsp; 홍길동 대리
-										</div>
-										<button>
-											<i class="fas fa-times"></i>
-										</button>
-									</li>
-									<li>
-										<div>
-											<img src="resources/images/defaultProfile.jpg" alt="프로필이미지">&nbsp;&nbsp;<strong>개발팀</strong>&nbsp;&nbsp; 홍길동 대리
-										</div>
-										<button>
-											<i class="fas fa-times"></i>
-										</button>
-									</li>
-								</ul>
+								<div>
+									<!-- ajax 조회 -->								
+								</div>
 							</div>
-							<div class="approval-reference-area">
+							<div class="approval-reference-area" id="reference-list">
 								<p>참조</p>
-								<ul>
-									<li>
-										<div>
-											<img src="resources/images/defaultProfile.jpg" alt="프로필이미지">&nbsp;&nbsp;<strong>개발팀</strong>&nbsp;&nbsp; 홍길동 대리
-										</div>
-										<button>
-											<i class="fas fa-times"></i>
-										</button>
-									</li>
-									<li>
-										<div>
-											<img src="resources/images/defaultProfile.jpg" alt="프로필이미지">&nbsp;&nbsp;<strong>개발팀</strong>&nbsp;&nbsp; 홍길동 대리
-										</div>
-										<button>
-											<i class="fas fa-times"></i>
-										</button>
-									</li>
-								</ul>
+								<div>
+									<!-- ajax 조회 -->								
+								</div>
 							</div>
 						</div>
-					</div>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -164,5 +114,63 @@
 	<jsp:include page="approvalModal.jsp" />
 
 	<jsp:include page="../common/footer.jsp" />
+
+	<script>
+	    // 결재자, 참조자 조회
+		$(function(){
+			$.ajax({
+				url : "approvalLineView.ap",
+				data : {
+					documentNo : ${document.documentNo}
+				},
+				success : function(list){
+					approvalSection="";
+					approval="";
+					reference="";
+
+					if(list.length != 0){
+						for(let i = 0; i < list.length; i++){
+							if(list[i].referenceStatus == 0){
+								approvalSection += '<table align="right">'
+								               +  	'<tr>'
+								               +    	'<th width="120">' + list[i].userNo + " " + list[i].jobName + '</th>'
+								               +  	'</tr>'
+								               +  	'<tr>'
+								               +  		'<td>'
+								               +    		'<br><br><br>'
+								               +  		'</td>'
+								               +  	'</tr>'
+								               +  '</table>';
+								               
+								approval += '<ul>'
+								         +  	'<li>'
+								         +  		'<div>'
+								         +  			'<img src="' + list[i].profImg + '" alt="프로필이미지">  <strong>' + list[i].depName + '</strong>  ' + list[i].userNo + ' ' + list[i].jobName
+								         +  		'</div>'
+								         +  	'</li>'
+								         +  '</ul>';
+							}
+							
+							if(list[i].referenceStatus == 1){
+								reference += '<ul>'
+								          +  	'<li>'
+								          +  		'<div>'
+								          +  			'<img src="' + list[i].profImg + '" alt="프로필이미지">  <strong>' + list[i].depName + '</strong>  ' + list[i].userNo + ' ' + list[i].jobName
+								          +  		'</div>'
+								          +  	'</li>'
+								          +  '</ul>';
+							}
+						}
+						$("#approval-section").html(approvalSection);
+						$("#approval-list>div").html(approval);
+						$("#reference-list>div").html(reference);
+					}
+				},
+				error : function(){
+					console.log("결재자, 참조자 조회 부분 ajax연결 실패");
+				}
+			})
+		})
+	</script>
 </body>
 </html>

@@ -16,6 +16,7 @@
 		<result column="change_name" property="changeName" />
 		<result column="file_path" property="filePath" />
 		<result column="approval_count" property="approvalCount" />
+		<result column="dep_name" property="depName" />
 	</resultMap>
 	
 	<resultMap id="approvalResult" type="Approval">
@@ -45,35 +46,56 @@
 		<result column="user_pwd" property="userPwd"/>
 		<result column="birthday" property="birthday"/>
 	</resultMap>
+	
+	<resultMap id="planResult" type="Plan">
+		<result column="plan_start" property="planStart" />
+	</resultMap>
+	
+	<resultMap id="vacationResult" type="Vacation">
+		<result column="vacation_category" property="vacationCategory" />
+		<result column="vacation_start" property="vacationStart" />
+		<result column="vacation_end" property="vacationEnd" />
+		<result column="vacation_count" property="vacationCount" />
+	</resultMap>
+	
+	<resultMap id="absenceResult" type="Absence">
+		<result column="absence_date" property="absenceDate" />
+	</resultMap>
+	
+	<resultMap id="overtimeResult" type="Overtime">
+		<result column="work_start" property="workStart" />
+		<result column="work_end" property="workEnd" />
+		<result column="work_date" property="workDate" />
+		<result column="work_use" property="workUse" />
+	</resultMap>
 
-	<select id="selectApprovalCount_5" resultType="_int">
+	<select id="selectApprovalAllCount" resultType="_int">
 		select count(*) as "count"
 		  from document d
-		  join approval a using(document_no)
-		 where a.user_no = #{userNo}
+		 where user_no = #{userNo}
 		   and d.status = 1
-		   and progress = 0
+		   <choose>
+		   		<when test='category == "1"'>
+		   		and progress = 1
+		   		</when>
+		   		<when test='category == "2"'>
+		   		and progress = 2
+		   		</when>
+		   		<when test='category == "3"'>
+		   		and progress = 3
+		   		</when>
+		   </choose>
 	</select>
 	
 	<select id="selectApprovalCount" resultType="_int">
 		select count(*) as "count"
 		  from document
+		  join approval using(user_no)
 		 where user_no = #{userNo}
-		   and status = 1
-		 <choose>
-		 	<when test='category == "2"'>
-			   and progress = 1
-		 	</when>
-		 	<when test='category == "3"'>
-			   and progress = 2
-		 	</when>
-		 	<when test='category == "4"'>
-			   and progress = 3
-		 	</when>
-		 </choose>
+		   and approval_count = approval_order
 	</select>
 	
-	<select id="selectApprovalList_5" resultMap="documentResult">
+	<select id="selectApprovalAllList" resultMap="documentResult">
 		select document_no
 		     , user_name
 		     , document_form
@@ -89,43 +111,44 @@
 		     , approval_count
 		  from document d
 		  join member m using(user_no)
-		  join approval a using(document_no)
-		 where a.user_no = #{userNo}
+		 where user_no = #{userNo}
 		   and d.status = 1
-		   and progress = 0
+		   <choose>
+		   		<when test='category == "1"'>
+		   		and progress = 1
+		   		</when>
+		   		<when test='category == "2"'>
+		   		and progress = 2
+		   		</when>
+		   		<when test='category == "3"'>
+		   		and progress = 3
+		   		</when>
+		   </choose>
 		 order by document_no desc
 	</select>
 	
 	<select id="selectApprovalList" resultMap="documentResult">
-		select document_no
-		     , user_name
-		     , document_form
-		     , document_title
-		     , d.create_date
-		     , document_content
-		     , progress
-		     , d.status
-		     , message
-		     , origin_name
-		     , change_name
-		     , file_path
-		     , approval_count
-		  from document d
-          join member m using(user_no)
-         where d.status = 1
-           and user_no = #{userNo}
-		 <choose>
-		 	<when test='viewPage == "2"'>
-			   and progress = 1
-		 	</when>
-		 	<when test='viewPage == "3"'>
-			   and progress = 2
-		 	</when>
-		 	<when test='viewPage == "4"'>
-			   and progress = 3
-		 	</when>
-		 </choose>
-		 order by document_no desc
+	    select a.document_no
+	      , a.user_no
+	      , user_name
+	      , document_form
+	      , document_title
+	      , d.create_date
+	      , document_content
+	      , progress
+	      , d.status
+	      , message
+	      , origin_name
+	      , change_name
+	      , file_path
+	      , approval_count
+	      , approval_order
+	   from approval a
+	   join document d on(a.document_no = d.document_no)
+	   join member m on(a.user_no = m.user_no)
+	  where a.user_no = #{userNo}
+	    and reference_status is null
+	  order by a.document_no desc
 	</select>
 	
 	<select id="searchApprovalCount" resultType="_int">
@@ -506,22 +529,137 @@
 		       )
 	</insert>
 	
+	<insert id="insertAbsence">
+		insert into
+	   absence (
+		  	   document_no
+		  	 , absence_date
+		       )
+		values (
+		       #{document.documentNo}
+		     , #{absence.absenceDate}
+		       )
+	</insert>
 	
+	<insert id="insertVacation">
+		insert into
+	  vacation (
+		  	   document_no
+		  	 , vacation_category
+		  	 , vacation_start
+		  	 , vacation_end
+		  	 , vacation_count
+		       )
+		values (
+		       #{document.documentNo}
+		     , #{vacation.vacationCategory}
+		     , #{vacation.vacationStart}
+		     , #{vacation.vacationEnd}
+		     , to_date(#{vacation.vacationEnd},'YYYY-MM-DD') - to_date(#{vacation.vacationStart},'YYYY-MM-DD')
+		       )
+	</insert>
 	
+	<insert id="insertOvertime">
+		insert into
+	      work (
+		  	   document_no
+		  	 , work_start
+		  	 , work_end
+		  	 , work_date
+		  	 , work_use
+		       )
+		values (
+		       #{document.documentNo}
+		     , #{overtime.workStart}
+		     , #{overtime.workEnd}
+		     , #{overtime.workDate}
+		     , round((to_date(#{overtime.workEnd},'HH24:MI') - to_date(#{overtime.workStart},'HH24:MI')) *24)
+		       )
+	</insert>
+
+	<select id="approvalDetail" resultMap="documentResult">
+		select document_no
+		     , user_name
+		     , document_form
+		     , document_title
+		     , d.create_date
+		     , document_content
+		     , progress
+		     , d.status
+		     , message
+		     , origin_name
+		     , change_name
+		     , file_path
+		     , approval_count
+		     , dep_name
+		  from document d
+		  join member m using(user_no)
+		 where document_no = #{no}
+	</select>
 	
+	<select id="approvalDetailPlan" resultMap="planResult">
+		select plan_start
+		  from plan
+		  join document using(document_no)
+		 where document_no = #{no}
+		</select>
 	
+	<select id="approvalDetailOvertime" resultMap="overtimeResult">
+		select work_start
+		     , work_end
+		     , work_date
+		     , work_use
+		  from work
+		  join document using(document_no)
+		 where document_no = #{no}
+	</select>
 	
+	<select id="approvalDetailVacation" resultMap="vacationResult">
+		select vacation_category
+		     , vacation_start
+		     , vacation_end
+		     , vacation_count
+		  from vacation
+		  join document using(document_no)
+		 where document_no = #{no}
+	</select>
 	
+	<select id="approvalDetailAbsence" resultMap="absenceResult">
+		select absence_date
+		  from absence
+		  join document using(document_no)
+		 where document_no = #{no}
+	</select>
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	<select id="approvalDetailLine" resultMap="approvalResult">
+		select user_name
+		     , approval_order
+		     , a.status
+		     , approval_date
+		     , reference_status
+		     , job_name
+		  from approval a
+		  join member m using(user_no)
+		 where document_no = #{no}
+		   and reference_status is null
+	</select>
+
+   
+   
+   
+   
+   
+
+ 
+
+ 
+
+ 
+ 
+ 
+ 
+ 
+
 	
 	
 	

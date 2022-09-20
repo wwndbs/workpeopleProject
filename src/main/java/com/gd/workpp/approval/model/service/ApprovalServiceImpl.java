@@ -7,9 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gd.workpp.approval.model.dao.ApprovalDao;
+import com.gd.workpp.approval.model.vo.Absence;
 import com.gd.workpp.approval.model.vo.Approval;
 import com.gd.workpp.approval.model.vo.Document;
+import com.gd.workpp.approval.model.vo.Overtime;
 import com.gd.workpp.approval.model.vo.Plan;
+import com.gd.workpp.approval.model.vo.Vacation;
 import com.gd.workpp.common.model.vo.PageInfo;
 import com.gd.workpp.member.model.vo.Member;
 
@@ -131,5 +134,35 @@ public class ApprovalServiceImpl implements ApprovalService {
 	@Override
 	public int insertApprovalPlan(Document document, Plan plan) {
 		return apDao.insertApprovalPlan(sqlSession, document, plan);
+	}
+
+	@Override
+	public int insertApprovalAbsence(Document document, Absence absence) {
+		return apDao.insertApprovalAbsence(sqlSession, document, absence);
+	}
+
+	@Override
+	public int insertApprovalVacation(Document document, Vacation vacation) {
+		return apDao.insertApprovalVacation(sqlSession, document, vacation);
+	}
+
+	@Override
+	public int insertApprovalOvertime(Document document, Overtime overtime) {
+		return apDao.insertApprovalOvertime(sqlSession, document, overtime);
+	}
+
+	@Override
+	public Document approvalDetail(int no) {
+		return apDao.approvalDetail(sqlSession, no);
+	}
+
+	@Override
+	public Object approvalDetailForm(int no, String form) {
+		return apDao.approvalDetailForm(sqlSession, no, form);
+	}
+
+	@Override
+	public ArrayList<Approval> approvalDetailLine(int no) {
+		return apDao.approvalDetailLine(sqlSession, no);
 	}
 }

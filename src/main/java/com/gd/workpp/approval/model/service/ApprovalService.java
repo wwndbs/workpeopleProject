@@ -2,9 +2,12 @@ package com.gd.workpp.approval.model.service;
 
 import java.util.ArrayList;
 
+import com.gd.workpp.approval.model.vo.Absence;
 import com.gd.workpp.approval.model.vo.Approval;
 import com.gd.workpp.approval.model.vo.Document;
+import com.gd.workpp.approval.model.vo.Overtime;
 import com.gd.workpp.approval.model.vo.Plan;
+import com.gd.workpp.approval.model.vo.Vacation;
 import com.gd.workpp.common.model.vo.PageInfo;
 import com.gd.workpp.member.model.vo.Member;
 
@@ -20,6 +23,17 @@ public interface ApprovalService {
 	
 	// 결재문서 검색 결과 리스트 조회
 	ArrayList<Document> searchApprovalList(PageInfo pi, String userNo, String keyword);
+	
+//--------------------------------------------------------
+	
+	// 결재문서 상세 조회(공통 부분)
+	Document approvalDetail(int no);
+	
+	// 결재문서 상세 조회(각 양식 별)
+	Object approvalDetailForm(int no, String form);
+	
+	// 결재문서 상세 조회(해당 결재문서 결재자)
+	ArrayList<Approval> approvalDetailLine(int no);
 	
 //--------------------------------------------------------
 	
@@ -82,6 +96,15 @@ public interface ApprovalService {
 	// 뒤로가기(작성중인 결재문서, 결재선, 참조자 삭제)
 	void backPage(String userNo, int documentNo);
 	
-	// 결재 등록
+	// 업무기안 결재 등록
 	int insertApprovalPlan(Document document, Plan plan);
+	
+	// 결근사유서 결재 등록
+	int insertApprovalAbsence(Document document, Absence absence);
+	
+	// 휴가신청서 결재 등록
+	int insertApprovalVacation(Document document, Vacation vacation);
+	
+	// 연장근무신청서 결재 등록
+	int insertApprovalOvertime(Document document, Overtime overtime);
 }

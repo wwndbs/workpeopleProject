@@ -7,9 +7,12 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.gd.workpp.approval.model.vo.Absence;
 import com.gd.workpp.approval.model.vo.Approval;
 import com.gd.workpp.approval.model.vo.Document;
+import com.gd.workpp.approval.model.vo.Overtime;
 import com.gd.workpp.approval.model.vo.Plan;
+import com.gd.workpp.approval.model.vo.Vacation;
 import com.gd.workpp.common.model.vo.PageInfo;
 import com.gd.workpp.member.model.vo.Member;
 
@@ -17,14 +20,15 @@ import com.gd.workpp.member.model.vo.Member;
 public class ApprovalDao {
 	
 	public int selectApprovalCount(SqlSessionTemplate sqlSession, int category, String userNo) {
+		// 1진행, 2완료, 3반려, 4전체, 0대기
 		
-		if(category == 5) {
-			return sqlSession.selectOne("approvalMapper.selectApprovalCount_5", userNo);			
-		}else {
+		if(category > 0) {
 			HashMap<String, String> data = new HashMap<>();
 			data.put("category", String.valueOf(category));
 			data.put("userNo", userNo);
-			return sqlSession.selectOne("approvalMapper.selectApprovalCount", data);			
+			return sqlSession.selectOne("approvalMapper.selectApprovalAllCount", data);
+		}else {
+			return sqlSession.selectOne("approvalMapper.selectApprovalCount", userNo);
 		}
 	}
 	
@@ -41,14 +45,13 @@ public class ApprovalDao {
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		if(category == 5) {
-			return (ArrayList)sqlSession.selectList("approvalMapper.selectApprovalList_5", userNo, rowBounds);			
-		}else {
+		if(category > 0) {
 			HashMap<String, String> data = new HashMap<>();
-			data.put("viewPage", String.valueOf(category));
+			data.put("category", String.valueOf(category));
 			data.put("userNo", userNo);
-			
-			return (ArrayList)sqlSession.selectList("approvalMapper.selectApprovalList", data, rowBounds);			
+			return (ArrayList)sqlSession.selectList("approvalMapper.selectApprovalAllList", data, rowBounds);
+		}else {
+			return (ArrayList)sqlSession.selectList("approvalMapper.selectApprovalList", userNo, rowBounds);
 		}
 	}
 	
@@ -191,9 +194,9 @@ public class ApprovalDao {
 		int referenceResult = 0; // 참조 isnert결과값
 		
 		if(approvalArr.length > 0) {
-			for(int i = 0; i < approvalArr.length; i++) {
-				data.put("approval", approvalArr[i]);
-				data.put("order", String.valueOf(i + 1));
+			for(int i = approvalArr.length; i > 0; i--) {
+				data.put("approval", approvalArr[i - 1]);
+				data.put("order", String.valueOf(i));
 				
 				approvalResult += sqlSession.insert("approvalMapper.insertApproval", data);
 				
@@ -234,6 +237,88 @@ public class ApprovalDao {
 		return result1 + result2;
 	}
 	
+	public int insertApprovalAbsence(SqlSessionTemplate sqlSession, Document document, Absence absence) {
+		HashMap<String, Object> data = new HashMap<>();
+		data.put("document", document);
+		data.put("absence", absence);
+		
+		int result1;
+		int result2;
+		
+		result1 = sqlSession.update("approvalMapper.insertDocument", data);
+		
+		if(document.getStatus() == 1) {
+			result2 = sqlSession.insert("approvalMapper.insertAbsence", data);
+		}else {
+			result2 = 0;
+		}
+		
+		return result1 + result2;
+	}
 	
+	public int insertApprovalVacation(SqlSessionTemplate sqlSession, Document document, Vacation vacation) {
+		HashMap<String, Object> data = new HashMap<>();
+		data.put("document", document);
+		data.put("vacation", vacation);
+		
+		System.out.println(vacation.getVacationStart());
+		System.out.println(vacation.getVacationEnd());
+		
+		int result1;
+		int result2;
+		
+		result1 = sqlSession.update("approvalMapper.insertDocument", data);
+		
+		if(document.getStatus() == 1) {
+			result2 = sqlSession.insert("approvalMapper.insertVacation", data);
+		}else {
+			result2 = 0;
+		}
+		
+		return result1 + result2;
+	}
+	
+	public int insertApprovalOvertime(SqlSessionTemplate sqlSession, Document document, Overtime overtime) {
+		HashMap<String, Object> data = new HashMap<>();
+		data.put("document", document);
+		data.put("overtime", overtime);
+		
+		System.out.println(overtime.getWorkStart());
+		System.out.println(overtime.getWorkEnd());
+		
+		int result1;
+		int result2;
+		
+		result1 = sqlSession.update("approvalMapper.insertDocument", data);
+		
+		if(document.getStatus() == 1) {
+			result2 = sqlSession.insert("approvalMapper.insertOvertime", data);
+		}else {
+			result2 = 0;
+		}
+		
+		return result1 + result2;
+	}
+	
+	public Document approvalDetail(SqlSessionTemplate sqlSession, int no) {
+		return sqlSession.selectOne("approvalMapper.approvalDetail", no);
+	}
+	
+	public Object approvalDetailForm(SqlSessionTemplate sqlSession, int no, String form) {
+
+		if(form.equals("업무기안서")) {
+			return sqlSession.selectOne("approvalMapper.approvalDetailPlan", no);
+		}else if(form.equals("휴가신청서")) {
+			return sqlSession.selectOne("approvalMapper.approvalDetailVacation", no);
+		}else if(form.equals("결근사유서")){
+			return sqlSession.selectOne("approvalMapper.approvalDetailAbsence", no);
+		}else {
+			return sqlSession.selectOne("approvalMapper.approvalDetailOvertime", no);			
+		}
+	}
+	
+	public ArrayList<Approval> approvalDetailLine(SqlSessionTemplate sqlSession, int no){
+		return (ArrayList)sqlSession.selectList("approvalMapper.approvalDetailLine", no);
+	}
 	
 }
