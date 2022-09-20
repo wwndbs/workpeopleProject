@@ -13,6 +13,37 @@
 <body>
 
 	<!-- 컨텐츠 부분 wrapper -->
+	
+			<!-- 토스트 메시지 -->
+	   		  <div id="toast" class="">
+				    
+			  </div>
+			
+			<c:if test="${ not empty toastMsg }">
+				<script>
+					
+					
+					// 토스트
+	            	
+	          	
+					function toast(string) {
+					    const toast = document.getElementById("toast");
+
+					    toast.classList.contains("reveal") ?
+					        (clearTimeout(removeToast), removeToast = setTimeout(function () {
+					            document.getElementById("toast").classList.remove("reveal")
+					        }, 1000)) :
+					        removeToast = setTimeout(function () {
+					            document.getElementById("toast").classList.remove("reveal")
+					        }, 1500)
+					    toast.classList.add("reveal"),
+					        toast.innerText = string
+					}
+					
+					toast("${toastMsg}");
+				</script>
+				<c:remove var="toastMsg" scope="session" />
+			</c:if>
             <!-- 게시판 전체 div 시작 -->
             <div class="container-board">
               <!-- 게시판 사이드바 시작 -->
@@ -60,6 +91,9 @@
                 </div>
 
               </div>
+              
+			  
+			 
               <!-- 게시판 사이드바 끝 -->
 
 </body>

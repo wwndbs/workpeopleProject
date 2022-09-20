@@ -73,5 +73,17 @@ public class BoardDao {
 	public int insertAttachment(SqlSessionTemplate sqlSession, Attachment at) {
 		return sqlSession.insert("boardMapper.insertAttachment", at);
 	}
+	
+	public int insertSaveBoard(SqlSessionTemplate sqlSession, Board b) {
+		return sqlSession.update("boardMapper.insertSaveBoard", b);
+	}
+	
+	public ArrayList<Board> selectSaveList(SqlSessionTemplate sqlSession, Board b){
+		return (ArrayList)sqlSession.selectList("boardMapper.selectSaveList", b);
+	}
+	
+	public Board selectSave(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.selectOne("boardMapper.selectSave", boardNo);
+	}
 
 }

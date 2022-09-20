@@ -31,6 +31,7 @@
 			   count(*)
 		  from board
 		 where status = 'Y'
+		   and save_status = 'N'
 		   and board_type = #{no}
 	</select>
 	
@@ -40,6 +41,8 @@
 			   count(*)
 		  from board
 		 where status = 'Y'
+		   and board_type = 2
+		   and save_status = 'N'
 		   and dep_name = #{depName}
 	</select>
 	
@@ -70,7 +73,10 @@
 				  from board b
 				  join member using(user_no)
 				 where b.status = 'Y'
+				   and save_status = 'N'
 				   and board_type = #{no}
+				 order
+				    by board_no asc
 		  		) "A"
 		 order
 		    by b_no desc
@@ -107,7 +113,11 @@
 				  from board b
 				  join member using(user_no)
 				 where b.status = 'Y'
+				   and board_type = 2
+				   and save_status = 'N'
 				   and b.dep_name = #{depName}
+				 order
+				    by board_no asc
 		  	  ) "A"
 		 order
 		    by b_no desc
@@ -268,5 +278,46 @@
 		  , #{changeName}
 		  )
 	</insert>
+	
+	<!-- 임시저장된 게시글 등록 -->
+	<update id="insertSaveBoard">
+		update
+			   board
+		   set board_title = #{boardTitle}
+		     , board_content = #{boardContent}
+		     , create_date = sysdate
+		     , top_exp = #{topExp}
+		     , save_status = 'N'
+		 where board_no = #{boardNo}
+	</update>
+	
+	<!-- 임시저장 리스트 조회 -->
+	<select id="selectSaveList" resultMap="boardResult">
+		select
+			   board_no
+			 , board_title
+			 , to_char(create_date, 'YY-MM-DD') "CREATE_DATE"
+			 , dep_name
+		  from board
+		 where user_no = #{userNo}
+		   and board_type = #{boardType}
+		   and status = 'Y'
+		   and save_status = 'Y'
+		 order
+		    by board_no desc
+	</select>
+	
+	<!-- 임시저장 게시글 조회 -->
+	<select id="selectSave" resultMap="boardResult">
+		select
+			   board_no
+			 , board_title
+			 , board_content
+			 , top_exp
+		  from board
+		 where board_no = #{boardNo}
+		   and status = 'Y'
+		   and save_status = 'Y'
+	</select>
 
 </mapper>

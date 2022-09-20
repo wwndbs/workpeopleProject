@@ -262,7 +262,7 @@
                                             </c:if>
                                         </th>
                                         <td>
-                                            <input type="text" class="txt" name="boardTitle" required>
+                                            <input type="text" class="txt" id="title" name="boardTitle" required>
                                         </td>
                                     </tr>
                                     <tr id="attachPart">
@@ -394,7 +394,7 @@
                                 </tbody>
                             </table>
                             <div class="editor" style="border:0px">
-                              <button type="button" class="btn btn-sm btn-light" style="position:absolute; right:0; top:-20px">임시 저장된 글(0)</button>
+                              <button type="button" class="btn btn-sm btn-light" data-toggle="modal" data-target="#jyModal_confirm" onclick="saveList();" style="position:absolute; right:0; top:-20px">임시 저장된 글(0)</button>
                               <div class="go-editor" style="width:100%; padding-bottom:10px; padding-top:20px">
                                 <textarea id="summernote" name="boardContent" rows="10" style="resize: none;"></textarea>
 
@@ -429,6 +429,7 @@
                         	<button type="button" class="btn btn-sm btn-primary" onclick="sub();">등록</button>
 	                        <button type="button" class="btn btn-sm btn-light" onclick="save();">임시저장</button>
 	                        <button type="button" class="btn btn-sm btn-light">취소</button> <!-- 바로 전 목록으로 돌아가기 -->
+	                        <button type="submit" id="subBtn" style="display:none"></button>
                         </div>
                       </form>
                       
@@ -436,6 +437,30 @@
 			   		  <div id="toast" class="">
 						    
 					  </div>
+					  
+					  <!-- 모달: 제목 있음 / 버튼 2개 -->
+					  <div class="modal" id="jyModal_confirm">
+					      <div class="modal-dialog modal-dialog-centered">
+					          <div class="modal-content">
+					              <!-- Modal Header -->
+					              <div class="modal-header">
+					                  <h6 class="modal-title">임시 저장된 글</h6>
+					                  <button type="button" class="modal_close" data-dismiss="modal">&times;</button>
+					              </div>
+					              <!-- Modal body -->
+					              <div class="modal-body" style="text-align: center;">
+					              	<ul class="list-line">
+				                        
+				                     </ul>
+					              </div>
+					              <!-- Modal footer -->
+					              <div class="modal-footer">
+					              <button type="button" class="btn btn-jyok" id="realSpam" data-dismiss="modal">확인</button>
+					              </div>
+					          </div>
+					      </div>
+					  </div>
+					  <!-- 모달 끝 -->
                       
                       <script>
                       
@@ -475,11 +500,96 @@
                       		
                       		// summernote 비어있으면 작성하라고 toast 띄우고 
                       		// 채워져있으면 button hidden|display=none submit 으로 넘기기
-                      		if($("#summernote").val() == ""){
-                      			console.log("비어있음");
+                      		if($("#title").val() == ""){
+                      			toast("제목을 입력해주세요.");
+                      		}else if($("#summernote").val() == ""){
+                      			toast("내용을 입력해주세요.");
                       		}else{
-                      			console.log("비어있지않음");
+                      			$("#subBtn").click();
                       		}
+                      		
+                      	}
+                      	
+                      	function saveList(){
+                      		
+                      		$.ajax({
+                      			url: "saveList.bo",
+                      			data: {
+                      				userNo: "${loginUser.userNo}",
+                      				boardType: ${typeNo}
+                      			},
+                      			success: function(list){
+                      				
+                      				let value = "";
+                      				let lastNo = list.length - 1;
+                      				
+                      				if(list.length == 0){ // 조회된 list가 없을 때
+                      					
+                      					value += '<li class="last">'
+      										+	'<div style="text-align:center">'
+          									+		'<span>임시 저장된 글이 없습니다.</span>'
+          									+	'</div>'
+          									
+                      				}else{ // 조회된 list가 있을 때
+                      					
+                      					if(list.length != 1){
+	                      					for(var i=0; i<list.length - 1; i++){
+	                      						value += '<li>'
+                      									+	'<div>'
+                      									+		'<input type="hidden" class="boardNo" name="boardNo" value="' + list[i].boardNo + '">'
+                      									+		'<a onclick="selectSave($(this).prev());">'
+                      									+			'<span class="subject">' + list[i].boardTitle + '</span>'
+                      									+		'</a>'
+                      									+		'<span class="date">' + list[i].createDate + '</span>'
+                      									+	'</div>'
+                      									+	'<span class="btn-bdr">'
+                      									+		'<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="deleteBtn" onclick="deleteLi();" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>'
+                      									+	'</span>'
+                      									+'</li>';
+	                      					}
+                      					}
+                      					
+                      					value += '<li class="last">'
+          										+	'<div>'
+          										+		'<input type="hidden" class="boardNo" name="boardNo" value="' + list[lastNo].boardNo + '">'
+          										+		'<a onclick="selectSave($(this).prev());">'
+          										+			'<span class="subject">' + list[lastNo].boardTitle + '</span>'
+	          									+		'</a>'
+	          									+		'<span class="date">' + list[lastNo].createDate + '</span>'
+	          									+	'</div>'
+	          									+	'<span class="btn-bdr">'
+	          									+		'<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" class="deleteBtn" onclick="deleteLi();" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>'
+	          									+	'</span>'
+	          									+'</li>';
+                      					
+                      				}
+                      				
+                      				$(".list-line").html(value);
+                      				
+                      			},error: function(){
+                      				console.log("임시저장 리스트 ajax 통신 실패");
+                      			}
+                      		});
+                      		
+                      	}
+                      	
+                      	function selectSave(result){
+                      		
+                      		// 왜 여기서 $(this).prev().val()이 안 먹히는지 궁금함
+                      		var boardNum = result.val();
+                      		
+                      		$("#realSpam").click();
+                      		
+                      		$.ajax({
+                      			url: "selectSave.bo",
+                      			data: {boardNo: boardNum},
+                      			success: function(result){
+                      				console.log("성공");
+                      				console.log(result);
+                      			},errlr: function(){
+                      				console.log("임시저장 게시글 ajax 통신 실패");
+                      			}
+                      		});
                       		
                       	}
                       	

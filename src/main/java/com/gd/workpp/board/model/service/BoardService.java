@@ -24,4 +24,13 @@ public interface BoardService {
 	// 게시글 작성
 	int insertBoard(Board b, Attachment at);
 	
+	// 임시저장한 게시글 insert
+	int insertSaveBoard(Board b, Attachment at);
+	
+	// 임시저장 리스트 조회
+	ArrayList<Board> selectSaveList(Board b);
+	
+	// 임시저장 게시글 조회
+	Board selectSave(int boardNo);
+	
 }

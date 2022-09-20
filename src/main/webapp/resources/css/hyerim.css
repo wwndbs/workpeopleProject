@@ -510,3 +510,50 @@
     font-size: 13px;
     margin-left: 3px;
 }
+
+/* modal */
+.board-content .modal-body ul{
+    padding: 0;
+    list-style: none;
+}
+
+.board-content .modal-body li{
+    position: relative;
+    border-bottom: 1px solid #ddd;
+    padding: 8px;
+}
+
+.board-content .modal-body ul li div{
+    /*width: 350px;*/
+    text-align: left;
+}
+
+.board-content .modal-body a{
+    text-decoration: none;
+    color: #333;
+    cursor: pointer;
+}
+
+.board-content .modal-body .subject{
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.board-content .modal-body .date{
+    font-size: 13px;
+    color: #999;
+}
+
+.board-content .modal-body .btn-bdr{
+    display: block;
+    position: absolute;
+    top: 7px;
+    right: 0;
+    line-height: 1;
+    padding: 3px;
+    cursor: pointer;
+}
+
+.board-content .modal-body li.last{
+    border-bottom: 0;
+}

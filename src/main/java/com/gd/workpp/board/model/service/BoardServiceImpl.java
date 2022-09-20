@@ -81,11 +81,38 @@ public class BoardServiceImpl implements BoardService {
 		int result1 = bDao.insertBoard(sqlSession, b);
 		
 		int result2 = 1;
-		if(at != null) {
+		if(at.getRefType() == 2) {
 			result2 = bDao.insertAttachment(sqlSession, at);
 		}
 		
 		return result1 * result2;
+	}
+
+	// 임시저장한 글 등록
+	@Override
+	public int insertSaveBoard(Board b, Attachment at) {
+
+		int result1 = bDao.insertSaveBoard(sqlSession, b);
+		
+		int result2 = 1;
+		if(at.getRefType() == 2) {
+			result2 = bDao.updateSaveAttachment(sqlSession, at);
+		}
+		
+		return result1 * result2;
+		
+	}
+
+	// 임시저장 리스트 조회
+	@Override
+	public ArrayList<Board> selectSaveList(Board b) {
+		return bDao.selectSaveList(sqlSession, b);
+	}
+
+	// 임시저장 게시글 조회
+	@Override
+	public Board selectSave(int boardNo) {
+		return bDao.selectSave(sqlSession, boardNo);
 	}
 
 	

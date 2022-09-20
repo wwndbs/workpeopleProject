@@ -21,6 +21,7 @@ import com.gd.workpp.common.model.vo.PageInfo;
 import com.gd.workpp.common.template.FileUpload;
 import com.gd.workpp.common.template.Pagination;
 import com.gd.workpp.member.model.vo.Member;
+import com.google.gson.Gson;
 
 @Controller
 public class BoardController {
@@ -99,10 +100,8 @@ public class BoardController {
 		 * - 임시저장 불러와서 등록 : insert
 		 */
 		
-		if(b.getBoardType() == 2) {
-			if(b.getTopExp() == null || !b.getTopExp().equals("Y")) {
-				b.setTopExp("N");
-			}
+		if(b.getTopExp() == null || !b.getTopExp().equals("Y")) {
+			b.setTopExp("N");
 		}
 		
 		Attachment at = new Attachment();
@@ -187,10 +186,8 @@ public class BoardController {
 	@RequestMapping("insert.bo")
 	public String insertBoard(Board b, MultipartFile file, HttpSession session, Model model) {
 		
-		if(b.getBoardType() == 2) {
-			if(b.getTopExp() == null || !b.getTopExp().equals("Y")) {
-				b.setTopExp("N");
-			}
+		if(b.getTopExp() == null || !b.getTopExp().equals("Y")) {
+			b.setTopExp("N");
 		}
 		
 		Attachment at = new Attachment();
@@ -212,7 +209,7 @@ public class BoardController {
 			  
 			if(result > 0) { // 등록 성공
 			  
-				session.setAttribute("modalMsg", "게시글이 등록되었습니다."); 
+				session.setAttribute("toastMsg", "게시글이 등록되었습니다."); 
 				return "redirect:list.bo?no=" + b.getBoardType() + "&dept=" + b.getDepName();
 			  
 			}else { // 등록 실패
@@ -224,8 +221,75 @@ public class BoardController {
 		
 		}else { // 임시저장 불러와서 등록 => update
 			
+			int boardNo = Integer.parseInt(b.getBoardNo());
+			
+			// 글번호로 등록된 첨부파일 삭제하기
+			// 해당하는 첨부파일 조회
+			Attachment att = bService.selectAttachment(boardNo);
+			
+			if(att != null) {
+				// db에서 해당 첨부파일 삭제
+				int result = bService.deleteAttachment(boardNo);
+				
+				if(result > 0) {
+					// 서버에 저장된 파일 삭제
+					new File(session.getServletContext().getRealPath(att.getChangeName())).delete();
+				}
+			}
+			
+			// 첨부파일이 있을 경우 FileUpload클래스로 파일 변환 후 Board 객체에 담기
+			if(!file.getOriginalFilename().equals("")) {
+			  
+				String saveFilePath = FileUpload.saveFile(file, session,"resources/board_upfiles/");
+				  
+				at.setOriginName(file.getOriginalFilename()); 
+				at.setChangeName(saveFilePath);
+				at.setRefType(2);
+				at.setRefNo(boardNo);
+			  
+			}
+			
+			int result = bService.insertSaveBoard(b, at);
+			
+			if(result > 0) { // 등록 성공
+				  
+				session.setAttribute("toastMsg", "게시글이 등록되었습니다."); 
+				return "redirect:list.bo?no=" + b.getBoardType() + "&dept=" + b.getDepName();
+			  
+			}else { // 등록 실패
+			  
+				model.addAttribute("errorMsg", "게시글 등록에 실패했습니다."); 
+				return "common/errorPage";
+			  
+			}
+			
 		}
+		
 
 	}
 
+	// 임시저장 리스트 조회
+	@ResponseBody
+	@RequestMapping(value="saveList.bo", produces="application/json; charset=UTF-8")
+	public String ajaxSaveList(Board b) {
+		
+		ArrayList<Board> list = bService.selectSaveList(b);
+		
+		return new Gson().toJson(list);
+		
+	}
+	
+	// 임시저장 게시글 조회
+	@ResponseBody
+	@RequestMapping(value="selectSave.bo", produces="application/json; charset=UTF-8")
+	public String ajaxSelectSave(int boardNo) {
+		
+		// 글번호에 해당하는 게시글 조회
+		Board b = bService.selectSave(boardNo);
+		
+		// 글번호에 해당하는 첨부파일 조회
+		
+		return "" + boardNo;
+		
+	}
 }
