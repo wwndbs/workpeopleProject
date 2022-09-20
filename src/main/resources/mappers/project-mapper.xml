@@ -103,20 +103,37 @@
          where pm.project_no = #{projectNo}
 	</select>
 	
+	<!-- 프로젝트 등록 -->
+	<insert id="insertProject">
+		insert
+		  into project
+		  (
+		    project_no
+		  , user_no
+          , project_title
+          , project_content
+          , status
+          , category
+          , pro_open
+          , dep_name
+          , pro_date
+		  )
+		  values
+		  (
+		    seq_project.nextval
+		  , #{proAdminNo}
+          , #{projectTitle}
+          , #{projectContent}
+          , #{status}
+          , #{category}
+          , #{proOpen}
+          , #{depName}
+          , sysdate
+		  )	
+	</insert>
+	
 	<!-- 프로젝트 관리자 승인탭 -->
 	<select id="adminProApproveList" resultMap="projectResult">
-<!-- 	select 
-	       p.project_no
-	     , p.project_title
-	     , pm.user_no
-	     , p.user_no as "proAdminNo"		     
-	     , m.user_name as "pbUserName"	     
-	     , m.job_name as "pbJobName"
-	  from project p
-	  join pro_member pm on (p.project_no = pm.project_no)
-	  join member m on (m.user_no = pm.user_no)
-	 where pro_approve = 'N'
-	   and p.user_no = #{proAdminNo} -->
 	    select pm.project_no
 		     , p.project_title
 		     , p.user_no as "proAdminNo"
@@ -129,6 +146,22 @@
 		  join member m on (pm.user_no = m.user_no)  
 		 where p.user_no = #{userNo} <!-- 로그인한 사원번호 -->
 		   and pro_approve = 'N'
+	</select>
+	
+	<!-- 프로젝트 관리자 승인 시 한명 모달조회 -->
+	<select id="adminApproveMember" resultMap="projectResult">
+		select
+               p.project_no
+		     , pm.user_no as "userMemNo"		     
+		     , m.user_name as "pbUserName"
+		     , m.job_name as "pbJobName"
+             , m.dep_name as "pbDepName"
+          from project p    
+          join pro_member pm on (p.project_no = pm.project_no)
+          join member m on (m.user_no = pm.user_no) 
+         where p.project_no = #{projectNo}
+           and pm.pro_approve = 'N'
+           and pm.user_no = #{userMemNo}		
 	</select>
 		
 	<!-- 프로젝트게시물리스트 페이징처리 -->

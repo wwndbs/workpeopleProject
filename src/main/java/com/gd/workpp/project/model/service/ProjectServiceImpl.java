@@ -31,7 +31,7 @@ public class ProjectServiceImpl implements ProjectService {
 	
 	@Override
 	public int insertProject(Project p) {
-		return 0;
+		return pDao.insertProject(sqlSession, p);
 	}
 	
 	@Override
@@ -117,6 +117,11 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public ArrayList<Project> adminProApproveList(String userNo) {
 		return pDao.adminProApproveList(sqlSession, userNo);
+	}
+
+	@Override
+	public Project adminApproveMember(int projectNo) {
+		return pDao.adminApproveMember(sqlSession, projectNo);
 	}	
 
 }

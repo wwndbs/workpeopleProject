@@ -28,5 +28,6 @@ public class Project {
 	private String pbJobName;
 	private String pbDepName;
 	private String pmMemberCount;
+	private String userMemNo;
 
 }

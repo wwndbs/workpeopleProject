@@ -10,6 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.gd.workpp.project.model.service.ProjectService;
 import com.gd.workpp.project.model.vo.ProReply;
+import com.gd.workpp.project.model.vo.Project;
 import com.google.gson.Gson;
 
 @Controller
@@ -34,5 +35,5 @@ public class AjaxProjectController {
 		int result = pService.ajaxInsertReply(pr);
 		return result > 0 ? "success" : "fail";
 	}
-
+	
 }

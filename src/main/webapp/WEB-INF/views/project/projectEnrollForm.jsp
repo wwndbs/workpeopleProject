@@ -33,9 +33,11 @@
   .mdiv1{width: 53%; height: 10px; float: left; margin: 0px 0px -100px 0px;}
   .mdiv2{width: 53%; height: 10px; float: right; margin: 0px -45px -100px 30px}
   .div3-1{height: 90%; margin: 10px 0px 0px 0px;}
-  .bdiv{font-weight: bold; width: 10px; color:gray; margin: 10px 0px -186px 420px !important}
+  .bdiv{font-weight: bold; width: 10px; color:gray; margin: 10px 0px -186px 415px !important}
   .btn1{margin: 180px -520px -400px 520px;}
   .search1{margin: 10px 10px 10px 10px; width:86% !important}
+  .bdiv label, .searchIcon{cursor:pointer}
+  
 </style>
 </head>
 <body>
@@ -60,23 +62,24 @@
 	              <div class="col-lg-6 div2">
 	                <div class="card mb-grid div3">
 	                  <div class="card-body collapse show div4" id="card1">
-	                    <form>
+	                  
+	                    <form action="insert.pr" method="post" enctype="multipart/form-data">
 	                      <div class="insert-div">
 	                        <!-- 프로젝트 제목 입력 -->
-	                        <input class="form-control mb-2" type="text" placeholder="프로젝트명을 입력하세요.">
+	                        <input class="form-control mb-2" type="text" name="projectTitle" placeholder="프로젝트명을 입력하세요.">
 	                        <!-- 프로젝트 설명 입력 -->
 	                        <div class="form-group">
-	                          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" style="resize: none"  placeholder="프로젝트에 대한 설명을 입력하세요."></textarea>
+	                          <textarea class="form-control" id="exampleFormControlTextarea1" name="projectContent" rows="3" style="resize: none"  placeholder="프로젝트에 대한 설명을 입력하세요."></textarea>
 	                        </div>
 	                        <!-- 프로젝트 전체공개/승인후참여 -->
 	                        <label class="form-check-label">
-	                          <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+	                          <input class="form-check-input" type="radio" name="proOpen" id="gridRadios1" id="open" value="Y" checked>
 	                          전체공개                        
 	                        </label>
 	                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	                        <label class="form-check-label">
-	                          <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+	                          <input class="form-check-input" type="radio" name="proOpen" id="gridRadios1" id="approve" value="N" checked>
 	                          담당자 승인 후 참여가능                          
 	                        </label>
 	                        <!-- 프로젝트 부서선택 -->                        
@@ -85,36 +88,65 @@
 	                            <label for=""><b>부서선택</b></label>
 	                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	                            <input class="form-check-input" type="checkbox"> 인사팀
+	                            <input class="form-check-input" type="checkbox" name="category" value="인사팀"> 인사팀
 	                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	                            <input class="form-check-input" type="checkbox"> 개발팀
+	                            <input class="form-check-input" type="checkbox" name="category" value="개발팀"> 개발팀
 	                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	                            <input class="form-check-input" type="checkbox"> 총무팀
+	                            <input class="form-check-input" type="checkbox" name="category" value="총무팀"> 총무팀
 	                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	                            <input class="form-check-input" type="checkbox"> 회계팀
+	                            <input class="form-check-input" type="checkbox" name="category" value="회계팀"> 회계팀
 	                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	                            <input class="form-check-input" type="checkbox"> 영업팀
+	                            <input class="form-check-input" type="checkbox" name="category" value="영업팀"> 영업팀
 	                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	                          </label>
 	                        </div>
+	                        
+	                        <script>
+	                        	function selectDep(){
+	                        		// input value에 입력한 주소 추가
+	                        		/* 
+	    			              	let currTo = $("#receiver").val();
+	    			              	if(currTo == ''){ // 처음 주소 추가 시
+	    			              		$("#receiver").val($addr);
+	    			              	}else{
+	    			              		$("#receiver").val(currTo + "," + $addr);
+	    			              	}
+	    			              	
+	    			              	toLimit();
+	    			              	 */
+	                        	}
+	                        </script>
+	                        
+	                        <!-- 프로젝트 전체공개/승인후참여 | 삭제예정-->
+	                        <label class="form-check-label">
+	                          <input class="form-check-input" type="radio" name="status" id="gridRadios1" id="open" value="Y" checked>
+	                          전체공개                        
+	                        </label>
+	                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	                        <label class="form-check-label">
+	                          <input class="form-check-input" type="radio" name="status" id="gridRadios1" id="approve" value="N" checked>
+	                          담당자 승인 후 참여가능                          
+	                        </label>
+	                        
 	                        <!-- 프로젝트 진행단계 -->
 	                        <label class="form-check-label pro1">
 	                          <label for=""><b>프로젝트 진행단계</b></label>
 	                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	                          <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+	                          <input class="form-check-input" type="radio" name="status" id="1" value="기획중" checked>
 	                          기획중
 	                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	                          <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+	                          <input class="form-check-input" type="radio" name="status" id="2" value="기획완료" checked>
 	                          기획완료  
 	                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	                          <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
-	                          프로젝트 진행중     
+	                          <input class="form-check-input" type="radio" name="status" id="3" value="프로젝트 진행중" checked>
+	                          프로젝트 진행중   
 	                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	                          <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
-	                          피드백     
+	                          <input class="form-check-input" type="radio" name="status" id="4" value="프로젝트 완료" checked>
+	                          프로젝트 완료  	                          
 	                          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	                          <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
-	                          프로젝트 완료                         
+	                          <input class="form-check-input" type="radio" name="status" id="5" value="피드백" checked>
+	                          피드백                        
 	                        </label><br>
 	                        <!-- 참여인원 선택 -->
 	                        <div class="member-div">
@@ -126,10 +158,10 @@
 	                                <div class="card mb-grid div3 div3-1">
 	                                  <div style="float: left;">
 	                                    <input class="form-control mb-2 search1" type="text" placeholder="이름 검색">
-	                                    <i data-feather="search" style="margin: -80px -160px 0px 200px;"></i>
+	                                    <i data-feather="search" class="searchIcon" style="margin: -80px -160px 0px 190px;"></i>
 	                                  </div>
 	                                  <!-- 스크롤박스 -->
-	                                  <div class="scroll"style="overflow:auto; width:380px; height:213px; margin: -10px 20px 20px 20px">
+	                                  <div class="scroll"style="overflow:auto; width:370px; height:213px; margin: -10px 20px 20px 20px">
 	                                  <!-- 한명에 대한 정보 -->
 	                                  <div class="profile-area" style="margin: 0px 350px 0px 0px;">
 	                                    <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px">
@@ -144,104 +176,7 @@
 	                                    </div>
 	                                  </div>
 	                                  <br>
-	                                  <!-- 한명에 대한 정보 -->
-	                                  <div class="profile-area" style="margin: 0px 350px 0px 0px;">
-	                                    <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px">
-	                                    <div style="margin: -42px -200px 0px 50px; float: left;">
-	                                      <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
-	                                      <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
-	                                      <div class="form-check check1">
-	                                        <label class="form-check-label">
-	                                          <input class="form-check-input" type="checkbox" style="margin: -70px -100px 70px 251px;">
-	                                        </label>
-	                                      </div>
-	                                    </div>
-	                                  </div>
-	                                  <br>
-	                                  <!-- 한명에 대한 정보 -->
-	                                  <div class="profile-area" style="margin: 0px 350px 0px 0px;">
-	                                    <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px">
-	                                    <div style="margin: -42px -200px 0px 50px; float: left;">
-	                                      <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
-	                                      <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
-	                                      <div class="form-check check1">
-	                                        <label class="form-check-label">
-	                                          <input class="form-check-input" type="checkbox" style="margin: -70px -100px 70px 251px;">
-	                                        </label>
-	                                      </div>
-	                                    </div>
-	                                  </div>
-	                                  <br>
-	                                  <!-- 한명에 대한 정보 -->
-	                                  <div class="profile-area" style="margin: 0px 350px 0px 0px;">
-	                                    <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px">
-	                                    <div style="margin: -42px -200px 0px 50px; float: left;">
-	                                      <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
-	                                      <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
-	                                      <div class="form-check check1">
-	                                        <label class="form-check-label">
-	                                          <input class="form-check-input" type="checkbox" style="margin: -70px -100px 70px 251px;">
-	                                        </label>
-	                                      </div>
-	                                    </div>
-	                                  </div>
-	                                  <br>
-	                                  <!-- 한명에 대한 정보 -->
-	                                  <div class="profile-area" style="margin: 0px 350px 0px 0px;">
-	                                    <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px">
-	                                    <div style="margin: -42px -200px 0px 50px; float: left;">
-	                                      <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
-	                                      <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
-	                                      <div class="form-check check1">
-	                                        <label class="form-check-label">
-	                                          <input class="form-check-input" type="checkbox" style="margin: -70px -100px 70px 251px;">
-	                                        </label>
-	                                      </div>
-	                                    </div>
-	                                  </div>
-	                                  <br>
-	                                  <!-- 한명에 대한 정보 -->
-	                                  <div class="profile-area" style="margin: 0px 350px 0px 0px;">
-	                                    <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px">
-	                                    <div style="margin: -42px -200px 0px 50px; float: left;">
-	                                      <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
-	                                      <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
-	                                      <div class="form-check check1">
-	                                        <label class="form-check-label">
-	                                          <input class="form-check-input" type="checkbox" style="margin: -70px -100px 70px 251px;">
-	                                        </label>
-	                                      </div>
-	                                    </div>
-	                                  </div>
-	                                  <br>
-	                                  <!-- 한명에 대한 정보 -->
-	                                  <div class="profile-area" style="margin: 0px 350px 0px 0px;">
-	                                    <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px">
-	                                    <div style="margin: -42px -200px 0px 50px; float: left;">
-	                                      <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
-	                                      <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
-	                                      <div class="form-check check1">
-	                                        <label class="form-check-label">
-	                                          <input class="form-check-input" type="checkbox" style="margin: -70px -100px 70px 251px;">
-	                                        </label>
-	                                      </div>
-	                                    </div>
-	                                  </div>
-	                                  <br>
-	                                  <!-- 한명에 대한 정보 -->
-	                                  <div class="profile-area" style="margin: 0px 350px 0px 0px;">
-	                                    <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px">
-	                                    <div style="margin: -42px -200px 0px 50px; float: left;">
-	                                      <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
-	                                      <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
-	                                      <div class="form-check check1">
-	                                        <label class="form-check-label">
-	                                          <input class="form-check-input" type="checkbox" style="margin: -70px -100px 70px 251px;">
-	                                        </label>
-	                                      </div>
-	                                    </div>
-	                                  </div>
-	                                  <br>
+	                                  	                                 
 	                                  </div>
 	                                </div>
 	                              </div>
@@ -260,10 +195,10 @@
 	                                <div class="card mb-grid div3 div3-1">
 	                                  <div style="float: left;">
 	                                    <input class="form-control mb-2 search1" type="text" placeholder="이름 검색">
-	                                    <i data-feather="search" style="margin: -80px -160px 0px 200px;"></i>
+	                                    <i data-feather="search" class="searchIcon" style="margin: -80px -160px 0px 190px;"></i>
 	                                  </div>
 	                                  <!-- 스크롤박스 -->
-	                                  <div class="scroll"style="overflow:auto; width:380px; height:213px; margin: -10px 20px 20px 20px">
+	                                  <div class="scroll"style="overflow:auto; width:370px; height:213px; margin: -10px 20px 20px 20px">
 	                                  <!-- 한명에 대한 정보 -->
 	                                  <div class="profile-area" style="margin: 0px 350px 0px 0px;">
 	                                    <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px">
@@ -278,61 +213,7 @@
 	                                    </div>
 	                                  </div>
 	                                  <br>
-	                                  <!-- 한명에 대한 정보 -->
-	                                  <div class="profile-area" style="margin: 0px 350px 0px 0px;">
-	                                    <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px">
-	                                    <div style="margin: -42px -200px 0px 50px; float: left;">
-	                                      <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
-	                                      <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
-	                                      <div class="form-check check1">
-	                                        <label class="form-check-label">
-	                                          <input class="form-check-input" type="checkbox" style="margin: -70px -100px 70px 251px;">
-	                                        </label>
-	                                      </div>
-	                                    </div>
-	                                  </div>
-	                                  <br>
-	                                  <!-- 한명에 대한 정보 -->
-	                                  <div class="profile-area" style="margin: 0px 350px 0px 0px;">
-	                                    <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px">
-	                                    <div style="margin: -42px -200px 0px 50px; float: left;">
-	                                      <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
-	                                      <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
-	                                      <div class="form-check check1">
-	                                        <label class="form-check-label">
-	                                          <input class="form-check-input" type="checkbox" style="margin: -70px -100px 70px 251px;">
-	                                        </label>
-	                                      </div>
-	                                    </div>
-	                                  </div>
-	                                  <br>
-	                                  <!-- 한명에 대한 정보 -->
-	                                  <div class="profile-area" style="margin: 0px 350px 0px 0px;">
-	                                    <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px">
-	                                    <div style="margin: -42px -200px 0px 50px; float: left;">
-	                                      <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
-	                                      <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
-	                                      <div class="form-check check1">
-	                                        <label class="form-check-label">
-	                                          <input class="form-check-input" type="checkbox" style="margin: -70px -100px 70px 251px;">
-	                                        </label>
-	                                      </div>
-	                                    </div>
-	                                  </div>
-	                                  <br>
-	                                  <!-- 한명에 대한 정보 -->
-	                                  <div class="profile-area" style="margin: 0px 350px 0px 0px;">
-	                                    <img src="resources/images/defaultProfile.jpg" alt="프로필이미지" style="border-radius: 50%; width:40px">
-	                                    <div style="margin: -42px -200px 0px 50px; float: left;">
-	                                      <span id="profile-name" style="float: left"><b>홍길동</b></span><br>
-	                                      <span id="department-name" style="font-size: 14px;">인사부서/대리</span>
-	                                      <div class="form-check check1">
-	                                        <label class="form-check-label">
-	                                          <input class="form-check-input" type="checkbox" style="margin: -70px -100px 70px 251px;">
-	                                        </label>
-	                                      </div>
-	                                    </div>
-	                                  </div>
+	                                  
 	                                  </div>
 	                                </div>
 	                              </div>
@@ -342,6 +223,7 @@
 	                          <button type="submit" class="btn btn-primary btn1" style="width: 14%; height: 40px;">프로젝트 생성</button>
 	                        </div>       
 	                    </form>
+	                    
 	                  </div>
 	                </div>
 	              </div>

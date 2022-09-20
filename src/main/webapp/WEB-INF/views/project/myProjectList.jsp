@@ -51,29 +51,100 @@
 	        <div class="adminx-main-content">
 	          <div class="container-fluid">
 	            
-	            <input type="hidden" name="projectNo" value="${ pp.projectNo }">
+	            <input type="hidden" name="projectNo" value="${ pp.projectNo }"> <!-- ${ pp.projectNo } -->
                 <input type="hidden" name="no" value="${ p.proBoardNo }">
                 <input type="hidden" name="pmMember" value="${ pmMember }">
                 <input type="hidden" name="userNo" value="${ loginUser.userNo }">
-	
+                
+                <input type="hidden" name="userMemNo" value="14">
+                <input type="hidden" name="pbUserName" value="이영환">
+                <input type="hidden" name="pbJobName" value="사원">
+                <input type="hidden" name="pbDepName" value="개발팀">
+                
+                <%-- 
+                <input type="hidden" name="userMemNo" value="14"> <!-- ${ approveP.userMemNo } -->
+                <input type="hidden" name="pbUserName" value="${ approveP.pbUserName }">
+                <input type="hidden" name="pbJobName" value="${ approveP.pbJobName }">
+                <input type="hidden" name="pbDepName" value="${ approveP.pbDepName }">
+	 --%>
 	            <!-- 관리자에게만 보여지는 승인탭(팀장/부장) -->
 	            <c:if test="${ loginUser.jobName == '부장' || loginUser.jobName == '팀장'}">
 		            <div class="form-group">
-		              <select class="form-control approval1" id="demoStyle" name="demoStyle">
-		                <option value="default" class="op1">가입요청 <label>3</label></option>
+		              <select class="form-control approval1" name="demoStyle" id="approveTest">
+		                <option value="default" class="op1">가입요청</option>
 		                <c:choose>
 		                  <c:when test="${ not empty appList }">
-			                <option class="text-secondary" value="secondary"><label class="se-la">8월달 매출보고서</label><label for="">&nbsp; 인사팀 김동동대리</label></option>
-			                <option class="text-secondary" value="secondary"><label class="se-la">8월달 매출보고서</label><label for="">&nbsp; 인사팀 김동동대리</label></option>
-			                <option class="text-secondary" value="secondary"><label class="se-la">8월달 매출보고서</label><label for="">&nbsp; 인사팀 김동동대리</label></option>
+		                  	<c:forEach var="p" items="${ appList }">
+			                  <option class="text-secondary" id="testOption" value="option">
+				                  <span id="projectTitle">[${ p.projectTitle }]</span>
+					              <span id="pbDepName">${ p.pbDepName }</span>
+					              <span id="pbUserName">${ p.pbUserName }</span>
+					              <span id="pbJobName">${ p.pbJobName }</span>
+			                  </option>		                
+			                </c:forEach>
 			              </c:when>
 			              <c:otherwise>
 			              	<option class="text-secondary" value="secondary"><label class="se-la">가입신청이 없습니다.</label><label for="">&nbsp; </label></option>
 			              </c:otherwise>  
 		                </c:choose>
 		              </select>
-		            </div>
+		            </div>		           
 	            </c:if>
+	            
+	            <!-- 관리자 승인 모달 -->
+	            <form action="" method="post">
+			       <div class="modal" id="approveAdd">
+			           <div class="modal-dialog modal-dialog-centered">
+			               <div class="modal-content" style="height:230px; width: 370px;">
+			               	  <input type="hidden" name="projectNo" value="${ pp.projectNo }">
+			               	  <input type="hidden" name="userMemNo" value="${ userMemNo }">
+				              <input type="hidden" name="pmMember" value="${ pmMember }">
+				              <input type="hidden" name="userNo" value="${ loginUser.userNo }">
+				              
+				              <input type="hidden" name="userMemNo" value="${ approveP.userMemNo }">
+				              <input type="hidden" name="pbUserName" value="${ approveP.pbUserName }">
+				              <input type="hidden" name="pbJobName" value="${ approveP.pbJobName }">
+				              <input type="hidden" name="pbDepName" value="${ approveP.pbDepName }">
+	
+			                  <!-- Modal body -->
+			                  <div class="modal-body" style="text-align:center;">
+			                  	  <br><br>
+			                      인사팀${ userMemNo } 김동동${ approveP.pbUserName }대리의 <br>
+			                      <b>[기술팀 협업관리]</b>가입을 승인하시겠습니까?
+			                  </div>
+			                  <!-- Modal footer -->
+			                  <div class="modal-footer" style="justify-content:center;">
+				                <button class="btn btn-jyok" id="holiday-give-btn" onclick="location.href='modifyBoard.pr?no=${no}'">승인</button>	                
+				                <button type="button" class="btn btn-jycancle" data-dismiss="modal">취소</button>
+			                  </div>
+			              </div>
+			           </div>
+			        </div>
+			        
+			        <script>
+			        	$('#approveTest').change(function(){
+			        		var state = $('#approveTest').prop('option', 'seleted').val();
+			        		if(state == 'option'){
+			        			var userMemNo = $(this).data('id');
+		        				//var userMemNo = $(this).children().val('userMemNo');
+		        				//$(".userMemNo").val($("#userMemNo").val());
+		        				//$(".userMemNo").val($(this).val('userMemNo'));
+			        			$('#approveAdd').modal('show').on('click', function(){
+			        				
+			        			});
+			        			
+			        			console.log(userMemNo);
+			        		}else{
+			        			console.log("실패");
+			        		}
+		        		})
+			        </script>
+			        
+			        
+			        <form id="postForm" action="" method="post">
+			        	<input type="hidden" name="attachModify" value="${ pb.attachModify }">
+			        </form>
+			    </form>	
 	
 	            <!-- 내팀 -->
 	            <div class="pb-3">

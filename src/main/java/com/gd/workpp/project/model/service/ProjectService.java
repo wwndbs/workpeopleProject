@@ -58,5 +58,8 @@ public interface ProjectService {
 	
 	// 15. 관리자 프로젝트 승인리스트조회
 	ArrayList<Project> adminProApproveList(String userNo);
+	
+	// 16. 프로젝트 관리자 승인 - 한명 모달조회
+	Project adminApproveMember(int projectNo);
 
 }

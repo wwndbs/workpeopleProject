@@ -32,6 +32,16 @@ public class ProjectDao {
 		return (ArrayList)sqlSession.selectList("projectMapper.adminProApproveList", userNo);
 	}
 	
+	// 프로젝트 관리자 승인 - 한명 모달조회
+	public Project adminApproveMember(SqlSessionTemplate sqlSession, int projectNo) {
+		return sqlSession.selectOne("projectMapper.adminApproveMember", projectNo);
+	}
+	
+	// 프로젝트 등록
+	public int insertProject(SqlSessionTemplate sqlSession, Project p) {
+		return sqlSession.insert("projectMapper.insertProject", p);
+	}
+	
 	// 프로젝트상세리스트 관리자조회
 	public ArrayList<Project> selectAdmin(SqlSessionTemplate sqlSession, int projectNo){
 		return (ArrayList)sqlSession.selectList("projectMapper.selectAdmin", projectNo);
