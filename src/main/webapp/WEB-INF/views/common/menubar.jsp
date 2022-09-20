@@ -33,7 +33,7 @@
 
 					<li class="sidebar-nav-item">
 						<a href="createForm.me" class="sidebar-nav-link">
-							<span class="sidebar-nav-abbr"> Ac </span> <span class="sidebar-nav-name"> 사원계정생성 </span>
+							<span class="sidebar-nav-abbr"> Mo </span> <span class="sidebar-nav-name"> 사원계정생성 </span>
 						</a>
 					</li>
 
@@ -46,6 +46,12 @@
 					<li class="sidebar-nav-item">
 						<a href="updateDepForm.co" class="sidebar-nav-link">
 							<span class="sidebar-nav-abbr"> Mo </span> <span class="sidebar-nav-name"> 부서관리 </span>
+						</a>
+					</li>
+					
+					<li class="sidebar-nav-item">
+						<a href="companyUpdateForm.co" class="sidebar-nav-link">
+							<span class="sidebar-nav-abbr"> Mo </span> <span class="sidebar-nav-name"> 회사관리 </span>
 						</a>
 					</li>
 

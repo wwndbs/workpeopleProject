@@ -60,37 +60,23 @@ public class MemberController {
 	
 	
 	@RequestMapping("tel.me")
-	public ModelAndView tel(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv) {
+	public ModelAndView tel(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv,@RequestParam(value="dep", defaultValue="") String dep) {
 		
 		
-		int listCount = mService.telListCount();
-		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 12);
-		ArrayList<Member> list = mService.telList(pi);
-		
-
-		mv.addObject("pi", pi)
-		  .addObject("list", list)
-		  .setViewName("member/telListView");
-		
-		return mv;
-		
-	}
+			int listCount = mService.telListCount(dep);
+			
+			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 12);
+			ArrayList<Member> list = mService.telList(pi,dep);
+			ArrayList<Department> deplist = cService.departmentList();
 	
-	@RequestMapping("searchTel.me")
-	public ModelAndView searchTel(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv,String keyword) {
+			mv.addObject("pi", pi)
+			  .addObject("dep",dep)
+			  .addObject("deplist", deplist)
+			  .addObject("list", list)
+			  .setViewName("member/telListView");
+			
+			return mv;
 		
-		int listCount = mService.searchTelListCount(keyword);
-		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 12);
-		ArrayList<Member> list = mService.searchTelList(pi,keyword);
-		
-
-		mv.addObject("pi", pi)
-		  .addObject("list", list)
-		  .setViewName("member/telListView");
-		
-		return mv;
 		
 	}
 	
@@ -297,20 +283,5 @@ public class MemberController {
 		
 	}
 	
-	@RequestMapping("selectTel.me")
-	public ModelAndView selectTel(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv,String dep) {
-		
-		int listCount = mService.selectTelListCount(dep);
-		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 12);
-		ArrayList<Member> list = mService.selectTelList(pi,dep);
-		
-
-		mv.addObject("pi", pi)
-		  .addObject("list", list)
-		  .setViewName("member/telListView");
-		
-		return mv;
-		
-	}
+	
 }
