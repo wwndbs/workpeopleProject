@@ -126,6 +126,7 @@
 	</delete>
 	
 	<select id="selectCompany" resultMap="companyResult">
+		<![CDATA[
 		select
 			com_name
 			,com_no
@@ -139,7 +140,8 @@
 			,com_img
 		from company
 		order by modify_no desc
-		where rownum <=1
+		where rownum <= 1
+		]]>
 	</select>
 	
 </mapper>	  

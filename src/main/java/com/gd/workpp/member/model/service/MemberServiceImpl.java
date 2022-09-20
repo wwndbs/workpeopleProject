@@ -11,7 +11,7 @@ import com.gd.workpp.member.model.dao.MemberDao;
 import com.gd.workpp.member.model.vo.Member;
 
 @Service
-public class MebmerServiceImpl implements MemberService{
+public class MemberServiceImpl implements MemberService{
 
 	@Autowired // 자동으로 생성된 객체를 주입받아 사용
 	private SqlSessionTemplate sqlSession;
