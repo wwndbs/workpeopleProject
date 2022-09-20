@@ -135,20 +135,20 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public List<String> selectSender(String checkMailNo) {
-		return mDao.selectSender(sqlSession, checkMailNo);
+	public List<String> selectSender(String checkMailNo, String email) {
+		return mDao.selectSender(sqlSession, checkMailNo, email);
 	}
 
 	@Override
 	public int insertSpam(List<String> senderList, String email) {
-		
 		int result = 0;
+		
 		for(String sender : senderList) {
-			result = mDao.insertSpam(sqlSession, sender, email);
+			if(!sender.equals(email)) { // 자신을 수신거부할 수는 없음
+				result = mDao.insertSpam(sqlSession, sender, email);
+			}
 		}
-		
 		return result;
-		
 	}
-	
+
 }

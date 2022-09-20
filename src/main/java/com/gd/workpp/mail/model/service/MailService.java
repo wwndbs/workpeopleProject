@@ -58,13 +58,11 @@ public interface MailService {
 	int updateMailStatus(String type, String checkMailNo, String email);
 	
 	// 메일번호로 보낸 사람 조회 서비스
-	List<String> selectSender(String checkMailNo);
+	List<String> selectSender(String checkMailNo, String email);
 	
 	// 스팸 주소 등록 서비스
 	int insertSpam(List<String> senderList, String email);
 	
-	// 보낸메일함 리스트 페이지 서비스
-
 	
 	// 내게쓴메일함 리스트 페이지 서비스
 	

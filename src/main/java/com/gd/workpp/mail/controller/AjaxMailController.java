@@ -149,20 +149,21 @@ public class AjaxMailController {
 	@ResponseBody
 	@RequestMapping(value="updateStatus.ma", produces="text/html; charset=UTF-8")
 	public String updateMailStatus(String type, String checkMailNo, HttpSession session) {
-
+		
 		Member mem = (Member)session.getAttribute("loginUser");
 		String email = mem.getEmail();
 		
 		// 읽음처리, 스팸처리, 휴지통 이동처리
 		int result1 = mService.updateMailStatus(type, checkMailNo, email);
 
-		if(type == "mail_spam") { // 스팸 처리의 경우
-			// 메일번호로 보낸사람 주소 조회
+		int result2 = 1;
+		if(type.equals("mail_spam")) { // 스팸 처리의 경우
+			// 메일번호로 아직 스팸주소 목록에 추가되지 않은 보낸사람 주소 조회 
 			List<String> senderList = new ArrayList<>();
-			senderList = mService.selectSender(checkMailNo); // ["user24@workpp.com", "goodee@gmail.com"]
+			senderList = mService.selectSender(checkMailNo, email); // ["user24@workpp.com", "goodee@gmail.com"]
 			
 			// 보낸사람 주소를 스팸 목록에 추가
-			int result2 = mService.insertSpam(senderList, email);
+			result2 = mService.insertSpam(senderList, email);
 			
 			return result1 * result2 > 0 ? "success" : "fail";
 		}

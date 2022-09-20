@@ -126,11 +126,12 @@ public class MailDao {
 		return sqlSession.update("mailMapper.updateMailStatus", data);
 	}
 	
-	public List<String> selectSender(SqlSessionTemplate sqlSession, String checkMailNo) {
+	public List<String> selectSender(SqlSessionTemplate sqlSession, String checkMailNo, String email) {
 		String[] noArr = checkMailNo.split(",");
 
-		HashMap<String, String[]> data = new HashMap<>();
+		HashMap<String, Object> data = new HashMap<>();
 		data.put("noArr", noArr);
+		data.put("email", email);
 		
 		return sqlSession.selectList("mailMapper.selectSender", data);
 	}
@@ -140,10 +141,11 @@ public class MailDao {
 		data.put("sender", sender);
 		data.put("email", email);
 		
-		System.out.println(sender);
-		System.out.println(email);
+		System.out.println("sender : " + sender);
+		System.out.println("email : " + email);
 		
 		return sqlSession.insert("mailMapper.insertSpam", data);
 	}
 	
+
 }

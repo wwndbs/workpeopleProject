@@ -212,9 +212,9 @@
 		  join mail_status using (mail_no)
 		 where user_mail = #{email}
 		   and mail_delete = 'N'
-		   and mail_spam = 'N'
 		 <choose>
 		 	<when test='boxType == "1"'>
+ 			    and mail_spam = 'N'
 				and mail_type in (1, 3)
 			    and sender not in (
 			                       select spam_address
@@ -235,16 +235,16 @@
 		  join mail_status using (mail_no)
 		 where user_mail = #{email}
 		   and mail_delete = 'N'
-		   and mail_spam = 'N'
 		   and mail_read = 'N'
 		 <choose>
 		 	<when test='boxType == "1"'>
+			    and mail_spam = 'N'
 				and mail_type in (1, 3)
 			    and sender not in (
-			                       select spam_address
-			                         from mail_spam
-			                        where user_mail = #{email}
-			                     )		 	
+			                        select spam_address
+			                          from mail_spam
+			                         where user_mail = #{email}
+			                       )		 	
 		 	</when>
 		 	<when test='boxType == "2"'>
 		 		and mail_type = 2
@@ -353,11 +353,21 @@
 	
 	<select id="selectSender" resultType="String">
 		select sender
-		  from mail
-		 where mail_no in
-		  <foreach collection="noArr" item='no' index='i' open="(" close=")" separator=",">
-           #{no}
-         </foreach>
+		  from (
+		            select sender
+		                 , (
+		                     select count(*)
+		                      from mail_spam
+		                     where user_mail = #{email}
+		                       and spam_address = sender
+		                   ) count
+		              from mail
+		             where mail_no in
+					  <foreach collection="noArr" item='no' index='i' open="(" close=")" separator=",">
+			           #{no}
+			         </foreach>
+		       )
+		 where count = 0
 	</select>
 	
 	<insert id="insertSpam">
