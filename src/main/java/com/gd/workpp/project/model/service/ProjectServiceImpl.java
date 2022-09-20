@@ -105,19 +105,18 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public int selectSearchCount(String condition, String keyword) {
-		SqlSession sqlSession = getSqlSession();
-		int searchCount = pDao.selectSearchCount(sqlSession, condition, keyword);
-		sqlSession.close();
-		return searchCount;
+	public int selectSearchCount(String condition, String keyword, int projectNo) {
+		return pDao.selectSearchCount(sqlSession, condition, keyword, projectNo);
 	}
 
 	@Override
-	public ArrayList<ProBoard> selectSearchList(String condition, String keyword, PageInfo pi) {
-		SqlSession sqlSession = getSqlSession();
-		ArrayList<ProBoard> list = pDao.selectSearchList(sqlSession, condition, keyword, pi);
-		sqlSession.close();
-		return list;
+	public ArrayList<ProBoard> selectSearchList(String condition, String keyword, PageInfo pi, int projectNo) {
+		return pDao.selectSearchList(sqlSession, condition, keyword, pi, projectNo);
+	}
+
+	@Override
+	public ArrayList<Project> adminProApproveList(String userNo) {
+		return pDao.adminProApproveList(sqlSession, userNo);
 	}	
 
 }

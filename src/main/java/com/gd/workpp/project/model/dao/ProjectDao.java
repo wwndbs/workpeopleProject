@@ -27,6 +27,11 @@ public class ProjectDao {
 		return (ArrayList)sqlSession.selectList("projectMapper.countMember", projectNo);
 	}
 	
+	// 프로젝트 관리자 승인리스트 조회
+	public ArrayList<Project> adminProApproveList(SqlSessionTemplate sqlSession, String userNo){
+		return (ArrayList)sqlSession.selectList("projectMapper.adminProApproveList", userNo);
+	}
+	
 	// 프로젝트상세리스트 관리자조회
 	public ArrayList<Project> selectAdmin(SqlSessionTemplate sqlSession, int projectNo){
 		return (ArrayList)sqlSession.selectList("projectMapper.selectAdmin", projectNo);
@@ -52,25 +57,21 @@ public class ProjectDao {
 	}
 	
 	// 프로젝트게시물 검색
-	public int selectSearchCount(SqlSession sqlSession, String condition, String keyword) {
-		HashMap<String, String> map = new HashMap<>();
-		map.put("condition", condition);
-		map.put("keyword", keyword);
-		
-		return sqlSession.selectOne("projectMapper.selectSearchCount", map);
+	public int selectSearchCount(SqlSessionTemplate sqlSession, String condition, String keyword, int projectNo) {
+		return sqlSession.selectOne("projectMapper.selectSearchCount", projectNo);
 	}
 	
 	// 프로젝트게시물 검색
-	public ArrayList<ProBoard> selectSearchList(SqlSession sqlSession, String condition, String keyword, PageInfo pi) {
-		HashMap<String, String> map = new HashMap<>();
-		map.put("condition", condition);
-		map.put("keyword", keyword);
+	public ArrayList<ProBoard> selectSearchList(SqlSessionTemplate sqlSession, String condition, String keyword, PageInfo pi, int projectNo) {
+		//HashMap<String, String> map = new HashMap<>();
+		//map.put("condition", condition);
+		//map.put("keyword", keyword);
 		
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlSession.selectList("projectMapper.selectSearchList", map, rowBounds);
+		return (ArrayList)sqlSession.selectList("projectMapper.selectSearchList", projectNo, rowBounds);
 	}
 	
 	// 프로젝트게시물 조회수증가

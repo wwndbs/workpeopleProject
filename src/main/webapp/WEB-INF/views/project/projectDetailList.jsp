@@ -18,14 +18,14 @@
   .div2{width: 165%; height: 46% !important;}
   .div1 span{color:black !important; width:200% !important}
   .div3{width: 244px !important; height: 350px !important; margin: -340px 0px 340px 0px;}
-  .div4{width: 355% !important; height: 780px !important; margin: 0px 200px 0px -140px;}
+  .div4{width: 365% !important; height: 780px !important; margin: 0px 200px 0px -140px;}
   .bottom-wrapper{height: 1px;}
   .btn1{margin: 21px -1560px -36px 1560px; font-size: 16px; height: 38px !important;}
   .notice-list tr{margin: 23px 30px 300px 25px; vertical-align: middle; height: 29px;}
   .btn2{pointer-events:none; width: 100px; color:white;}
   .page1>ul>li{margin: -7px 650px 7px -650px;}
-  .search-div{height: 10px; margin: -63px -1450px 210px 1250px;}
-  .search1{width: 250px !important;}
+  .search-div{height: 10px; margin: -63px -1560px 210px 1250px;}
+  .search1{width: 250px !important; margin: 45px 165px 0px -165px}
   .form-group{height: 1px; margin: -65px -1465px 10px 1200px; width: 100px;}
   .select1{width: 100px; height: 39px !important; margin: 2px 0px 0px -216px;}
   .pro-table{width: 100%; height: 90%; text-align: center; margin: 0px 0px 0px 0px;}
@@ -34,6 +34,7 @@
   .notice-area{margin-right:-10px !important}
   .pp1{margin: 0px 110px -70px -65px; font-color:black}
   .searchForm{margin: 0px -100px 0px 100px}
+  .searchBtn{margin: 46px 165px 0px -165px}
 </style>
 </head>
 <body>
@@ -104,7 +105,7 @@
 	
 	              <!-- 검색영역 -->
 	              <div style="display:flex; padding-top:10px; border:none" class="searchForm">
-					<form action="search.pr">
+					<form action="search.pr" method="get">
 		                <div class="form-group formgroup">
 		                  <input type="hidden" name="cpage" value="1">
 		                  <select class="form-control select1" id="demoStyle" name="condition" style="height:40px;">
@@ -115,7 +116,7 @@
 		                </div>
 		                <div class="search-div" style="width:30%; display:flex; ">
 		                  <input class="form-control mb-2 search1" type="text" name="keyword" placeholder="게시물 검색" style="height:40px;" value="${ keyword }">
-		                  <button type="submit" class="btn btn-sm btn-primary" style="height:38px;">&nbsp;&nbsp;&nbsp;검색&nbsp;&nbsp;&nbsp;&nbsp;</button>
+		                  <button type="submit" class="btn btn-sm btn-primary searchBtn" style="height:38px;">&nbsp;&nbsp;&nbsp;검색&nbsp;&nbsp;&nbsp;&nbsp;</button>
 		                </div>
 					</form>
 	              </div>
