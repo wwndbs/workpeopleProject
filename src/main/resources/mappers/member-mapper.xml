@@ -156,8 +156,13 @@
 				   count(*)
 			  from member
 			 where status = 'N'
+			 <choose>
+			 	<when test="dep != ''">
+			 		and dep_name = #{dep}
+			 	</when>
+			 </choose>
 	</select>
-	
+		
 	<select id="searchTelListCount" resultType="_int">
 			select 
 				   count(*)
@@ -165,22 +170,7 @@
 			 where status = 'N'
 			 and user_name LIKE '%'||#{keyword}||'%'
 	</select>
-		
-	<select id="telList" resultMap="memberResult">
-			select
-				   user_no
-				 , user_name
-				 , email
-				 , dep_name
-				 , job_name
-				 , prof_img
-				 , phone
-			  from member
-			 where status = 'N'
-			 order 
-			    by user_no desc
-	</select>
-
+	
 	<select id="searchTelList" resultMap="memberResult">
 			select
 				   user_no
@@ -196,18 +186,8 @@
 			 order 
 			    by user_no desc
 	</select>
-	
-	
-	<select id="selectTelListCount" resultType="_int">
-			select 
-				   count(*)
-			  from member
-			 where status = 'N'
-			 and dep_name LIKE '%'||#{dep}||'%'
-	</select>
-	
-	
-	<select id="selectTelList" resultMap="memberResult">
+		
+	<select id="telList" resultMap="memberResult">
 			select
 				   user_no
 				 , user_name
@@ -218,10 +198,16 @@
 				 , phone
 			  from member
 			 where status = 'N'
-			 and dep_name LIKE '%'||#{dep}||'%'
+			 <choose>
+			 	<when test="dep !=''">
+			 		and dep_name = #{dep}
+			 	</when>
+			 </choose>
 			 order 
 			    by user_no desc
 	</select>
+
+
 	
 	
 </mapper>	  

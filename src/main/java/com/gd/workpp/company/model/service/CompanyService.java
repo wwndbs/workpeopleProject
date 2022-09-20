@@ -2,10 +2,10 @@ package com.gd.workpp.company.model.service;
 
 import java.util.ArrayList;
 
+import com.gd.workpp.company.model.vo.Company;
 import com.gd.workpp.company.model.vo.Department;
 import com.gd.workpp.company.model.vo.Job;
 import com.gd.workpp.company.model.vo.OrgChart;
-import com.gd.workpp.member.model.vo.Member;
 
 public interface CompanyService {
 	
@@ -23,6 +23,8 @@ public interface CompanyService {
 	
 	int createDepartment(Department d);
 	
-	int updateDepartment(Department d);
+	int deleteDepartment(Department d);
+	
+	Company selectCompany();
 	
 }

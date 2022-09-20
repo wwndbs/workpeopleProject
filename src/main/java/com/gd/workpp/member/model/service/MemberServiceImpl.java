@@ -11,7 +11,7 @@ import com.gd.workpp.member.model.dao.MemberDao;
 import com.gd.workpp.member.model.vo.Member;
 
 @Service
-public class MebmerServiceImpl implements MemberService{
+public class MemberServiceImpl implements MemberService{
 
 	@Autowired // 자동으로 생성된 객체를 주입받아 사용
 	private SqlSessionTemplate sqlSession;
@@ -82,14 +82,14 @@ public class MebmerServiceImpl implements MemberService{
 
 
 	@Override
-	public int telListCount() {
-		return mDao.telListCount(sqlSession);
+	public int telListCount(String dep) {
+		return mDao.telListCount(sqlSession,dep);
 	}
 
 
 	@Override
-	public ArrayList<Member> telList(PageInfo pi) {
-		return mDao.telList(sqlSession, pi);
+	public ArrayList<Member> telList(PageInfo pi, String dep) {
+		return mDao.telList(sqlSession, pi,dep);
 	}
 	
 
@@ -102,18 +102,6 @@ public class MebmerServiceImpl implements MemberService{
 	@Override
 	public ArrayList<Member> searchTelList(PageInfo pi, String keyword) {
 		return mDao.searchTelList(sqlSession, pi, keyword);
-	}
-
-
-	@Override
-	public int selectTelListCount(String dep) {
-		return mDao.selectTelListCount(sqlSession,dep);
-	}
-
-
-	@Override
-	public ArrayList<Member> selectTelList(PageInfo pi, String dep) {
-		return mDao.selectTelList(sqlSession, pi, dep);
 	}
 
 	

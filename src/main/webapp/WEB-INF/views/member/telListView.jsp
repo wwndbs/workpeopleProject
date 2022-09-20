@@ -39,21 +39,24 @@
 		                    <form id="tel_2">
 		                        <ul>
 		                            <li style="width: 80px;"><a href="tel.me">전체</a></li>
-		                            <li style="width: 80px;"><a href="selectTel.me?dep=인사팀">인사팀</a></li>
-		                            <li style="width: 80px;"><a href="selectTel.me?dep=총무팀">총무팀</a></li>
-		                            <li style="width: 80px;"><a href="selectTel.me?dep=개발팀">개발팀</a></li>
-		                            <li style="width: 80px;"><a href="selectTel.me?dep=영업팀">영업팀</a></li>
-		                            <li style="width: 80px;"><a href="selectTel.me?dep=회계팀">회계팀</a></li>
+		                            <c:choose>
+			                			<c:when test="${ empty deplist }">
+		                					<li>${dep}</li>
+			                			</c:when>
+			                		<c:otherwise>
+			                			<c:forEach var="d" items="${ deplist }">
+			                				<li style="width: 80px;"><a href="tel.me?dep=${d.depName }">${d.depName }</a></li>
+			                    		</c:forEach>
+	                    			</c:otherwise>
+								</c:choose>
 		                        </ul>
 		                    </form>
 		                    <hr>
-		                    <form id="telsearchForm" action="searchTel.me" method="Get">
+		                    <form id="telsearchForm" action="" method="Get">
 				                <div class="telsearchdiv">
-				                    <input style="height:42px;" type="text" class="telsearchForm" name="keyword" placeholder="이름검색">
+				                    <input style="height:42px;" type="text" class="form-control" id="searchform" placeholder="이름검색">
 				                </div>
-				                <div>
-				                	<button type="submit" class="searchBtn btn btn-secondary">검색</button>
-				                </div>
+				               
 				            </form>
 							<br>
 							
@@ -91,33 +94,67 @@
 							
 		                    </div>
 		                    
-		                    <div id="pagingArea">
-				                <ul class="pagination">
-				                	
-				                	<c:choose>
-				                		<c:when test="${ pi.currentPage eq 1 }">
-				                    		<li class="page-item disabled"><a class="page-link">Previous</a></li>
-				                    	</c:when>
-				                    	<c:otherwise>
-				                    		<li class="page-item"><a class="page-link" href="tel.me?cpage=${ pi.currentPage-1 }">Previous</a></li>
-				                    	</c:otherwise>
-				                    </c:choose>
-				                    
-				                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-				                    	<li class="page-item"><a class="page-link" href="tel.me?cpage=${ p }">${ p }</a></li>
-				                    </c:forEach>
-				                    
-				                    <c:choose>
-				                    	<c:when test="${ pi.currentPage eq pi.maxPage }">
-				                    		<li class="page-item disabled"><a class="page-link">Next</a></li>
-				                    	</c:when>
-				                    	<c:otherwise>
-				                    		<li class="page-item"><a class="page-link" href="modifyList.me?cpage=${ pi.currentPage+1 }">Next</a></li>
-				                    	</c:otherwise>
-				                    </c:choose>
-				                </ul>
-				            </div>
-				            
+		                    
+		                    <c:choose>
+					            <c:when test="${dep!=''}">
+				                    <div id="pagingArea">
+						                <ul class="pagination">
+						                	
+						                	<c:choose>
+						                		<c:when test="${ pi.currentPage eq 1 }">
+						                    		<li class="page-item disabled"><a class="page-link">Previous</a></li>
+						                    	</c:when>
+						                    	<c:otherwise>
+						                    		<li class="page-item"><a class="page-link" href="tel.me?dep=${dep}&cpage=${ pi.currentPage-1 }">Previous</a></li>
+						                    	</c:otherwise>
+						                    </c:choose>
+						                    
+						                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+					                   			<li class="page-item"><a class="page-link" href="tel.me?dep=${dep}&cpage=${ p }">${ p }</a></li>
+						                    </c:forEach>
+						                    
+						                    <c:choose>
+						                    	<c:when test="${ pi.currentPage eq pi.maxPage }">
+						                    		<li class="page-item disabled"><a class="page-link">Next</a></li>
+						                    	</c:when>
+						                    	<c:otherwise>
+						                    		<li class="page-item"><a class="page-link" href="tel.me?dep=${dep}&cpage=${ pi.currentPage+1 }">Next</a></li>
+						                    	</c:otherwise>
+						                    </c:choose>
+						                </ul>
+						            </div>
+					            </c:when>
+
+					            <c:otherwise>
+					            	<div id="pagingArea">
+						                <ul class="pagination">
+						                	
+						                	<c:choose>
+						                		<c:when test="${ pi.currentPage eq 1 }">
+						                    		<li class="page-item disabled"><a class="page-link">Previous</a></li>
+						                    	</c:when>
+						                    	<c:otherwise>
+						                    		<li class="page-item"><a class="page-link" href="tel.me?cpage=${ pi.currentPage-1 }">Previous</a></li>
+						                    	</c:otherwise>
+						                    </c:choose>
+						                    
+						                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+					                   			<li class="page-item"><a class="page-link" href="tel.me?cpage=${ p }">${ p }</a></li>
+						                    </c:forEach>
+						                    
+						                    <c:choose>
+						                    	<c:when test="${ pi.currentPage eq pi.maxPage }">
+						                    		<li class="page-item disabled"><a class="page-link">Next</a></li>
+						                    	</c:when>
+						                    	<c:otherwise>
+						                    		<li class="page-item"><a class="page-link" href="tel.me?cpage=${ pi.currentPage+1 }">Next</a></li>
+						                    	</c:otherwise>
+						                    </c:choose>
+						                </ul>
+						            </div>
+					            
+					            </c:otherwise>
+				            </c:choose>
 							<br><br>
 		                </div>
 		            </div>
@@ -127,7 +164,75 @@
 		
 		
 	</div>
-	
+	<script>
+	    // 검색
+		$(function(){
+			$("#searchform").keyup(function(){
+				let keyword = $("#searchform").val();
+				$.ajax({
+					url : "searchtel.me",
+					data : {
+						keyword : keyword
+						
+					},
+					success : function(map){
+						let pi = map.pi;
+						let list = map.list;
+						value="";
+						page="";
+						if(list.length != 0){
+							for(let i = 0; i < list.length; i++){
+								value += '<div>'
+						              +      '<table style="border: 1px solid #444444;">'
+					                  +         '<tr style="height:50px">'
+					                  +              '<td rowspan="3" style="width:130px">'
+					                  +              	'<img style="width:115px;" id="profileImg" src="';
+					                  
+					                  if (list[i].profImg == null){
+					                	  value += "resources/profile_images/defaultProfile.jpg";
+					                  }else{
+					                	  value += list[i].profImg;
+					                  }
+					                  
+					                  value += '">'
+					                  +              '</td>'
+					                  +              '<td colspan="2" style="width:300px"><h4>'
+					                                    +list[i].userName
+					                  +              '</h4></td>'
+					                  +          '</tr>'
+					                  +          '<tr style="height:30px">'
+					                  +              '<td colspan="2">'+list[i].email+'</td>'
+					                  +         '</tr>'
+					
+					                  +          '<tr style="height:40px">'
+					                  +              '<td style="width:100px">'+list[i].depName +'/'+list[i].jobName+'</td>'
+					                  +              '<td style="width:200px">';
+					                  if(list[i].phone == null){
+					                	  value += "";
+					                  }else{
+					                	  value += list[i].phone;
+					                  }
+					                  
+					                  value +='</td>'
+					                  +          '</tr>'
+					                  +      '</table>'
+				                      +  '</div>'
+							}$('.tel_area2').html(value);
+							
+						}else{
+							value += '<tr>'
+							      +  	'<td colspan="6">검색결과가 없습니다.</td>'
+							      +  '</tr>'
+						}
+						$('.tel_area2').html(value);
+					},
+					error : function(){
+						console.log("검색 부분 ajax연결 실패");
+					}
+				})
+			})
+		})
+	</script>
 	
 	<jsp:include page="../common/footer.jsp"/>
 </body>

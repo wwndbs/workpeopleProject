@@ -81,7 +81,7 @@
                                         <th style="width: 60px">사원수</th>
                                         <th style="width: 100px;">부서등록일</th>
                                         <th style="width: 80px;">활성화 여부</th>
-                                        <th style="width: 120px;">수정/삭제 수정</th>
+                                        <th style="width: 40px;">부서 삭제</th>
                                       </tr>
                                     </thead>
                                     <tbody>
@@ -103,17 +103,11 @@
 			                                            <td>${d.createDate }</td>
 			                                            <td>${d.status}</td>
 			                                            <td id="depbtn">
-			                                                <a style="color:white;" data-id="${d.depName}" id="updatebtn" class="btn btn-primary" style="width:45%" data-toggle="modal" data-target="#updatedepModal">수정하기</a>
-			                                                <a style="color:white;" data-id="${d.depName}" id="deletebtn" class="btn btn-danger" style="width:45%" data-toggle="modal" data-target="#delModal">삭제하기</a>
+			                                                <a style="color:white;" data-id="${d.depName}" id="deletebtn" class="btn btn-danger" data-toggle="modal" data-target="#delModal">삭제하기</a>
 			                                            </td>
 			                                            
 			                                        </tr>
                                                     <script>
-											         	$(document).on("click", "#updatebtn", function () {
-														     var depName = $(this).data('id');
-														     $("#updepName").val( depName );
-														});
-											         	
 											         	$(document).on("click", "#deletebtn", function () {
 														     var depName = $(this).data('id');
 														     $("#deldepName").val( depName );
@@ -137,45 +131,6 @@
 
                 </div>
 				<br>
-				
-                <div class="modal fade" id="updatedepModal">
-                    <div class="modal-dialog modal-sm">
-                        <div class="modal-content">
-            
-                            <form action="updateDep.co" method="post" style="margin:5px; padding:5px;">
-                                <!-- Modal Body -->
-                                <table>
-                                    <tr><h3>부서 수정</h3></tr>
-                                    <tr>
-                                    	<td style="width:70px;">부서명 : </td>
-                                    	<td>
-                                    		<input type="text" id="updepName" name="depName" readonly style="width:150px; height:30px">
-                                    	</td>
-                                    </tr>
-                                    <tr>
-                                        <td>수정명 : </td>
-                                        <td>
-                                            <input style="width:150px; height:30px" name="updateName" placeholder="수정후 부서명" required>
-                                        </td>
-                                    </tr>
-                                    <tr> 
-                                        <td>설명 : </td>
-                                        <td>
-                                            <input style="width:150px; height:30px" name="depContent" placeholder="부서 설명">
-                                        </td>
-                                    </tr>
-                                </table>
-                                <br>
-                                <!-- Modal footer -->
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary">수정</button>
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
 
                 <div class="modal fade" id="delModal">
                     <div class="modal-dialog modal-sm">

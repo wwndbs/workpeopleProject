@@ -57,21 +57,21 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.deleteMember",userNo);
 	}
 	
-	public int telListCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("memberMapper.telListCount");
+	public int telListCount(SqlSessionTemplate sqlSession,String dep) {
+		return sqlSession.selectOne("memberMapper.telListCount",dep);
 	}
 	
 	public int searchTelListCount(SqlSessionTemplate sqlSession, String keyword) {
-		return sqlSession.selectOne("memberMapper.searchTelListCount");
+		return sqlSession.selectOne("memberMapper.searchTelListCount",keyword);
 	}
 	
-	public ArrayList<Member> telList(SqlSessionTemplate sqlSession, PageInfo pi){
+	public ArrayList<Member> telList(SqlSessionTemplate sqlSession, PageInfo pi,String dep){
 		
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlSession.selectList("memberMapper.telList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("memberMapper.telList", dep, rowBounds);
 	}
 	
 	public ArrayList<Member> searchTelList(SqlSessionTemplate sqlSession, PageInfo pi,String keyword){

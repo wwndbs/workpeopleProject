@@ -43,7 +43,7 @@
 	                      <span style="margin-top: 0px;">&nbsp;&nbsp;스팸신고</span>
 	                    </button>
 	                    
-	                    <button type="button" class="mail-btn5">
+	                    <button type="button" class="mail-btn5" id="replyBtn">
 	                      <ion-icon name="return-down-forward-outline" style="margin-top:5px; font-size: 20px;"></ion-icon>
 	                      <span style="margin-top: 0px;">&nbsp;&nbsp;답장</span>
 	                    </button>                    
@@ -382,15 +382,10 @@
 			            		})
 			            		
 			            	})
-			            	/* 
-			            	setTimeout(function() {
-							  location.reload();
-							}, 3000);
-							 */
+			            	
 							function reload(){
 								location.reload();
 							}
-			            	
 			            	
 							// toast script
 							let removeToast;
