@@ -61,5 +61,8 @@ public interface ProjectService {
 	
 	// 16. 프로젝트 관리자 승인 - 한명 모달조회
 	Project adminApproveMember(int projectNo);
+	
+	// 17. 프로젝트 관리자 승인
+	int projectApprove(ProMember pm);
 
 }

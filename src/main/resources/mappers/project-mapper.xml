@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="projectMapper">
 	
-	<resultMap id="projectResult" type="Project">
+	<resultMap type="Project" id="projectResult">
 		<result column="project_no" property="projectNo"/>
 		<result column="proAdminNo" property="proAdminNo"/>
 		<result column="project_title" property="projectTitle"/>
@@ -12,11 +12,16 @@
 		<result column="pro_open" property="proOpen"/>
 		<result column="dep_name" property="depName"/>
 		<result column="pro_date" property="proDate"/>
+		<result column="userMemNo" property="userMemNo"/>
+		<result column="pro_approve" property="proApprove"/>
 	</resultMap>
 	
 	<resultMap type="ProMember" id="proMemberResult">
+		<result column="project_no" property="projectNo"/>
+		<result column="user_no" property="userMemNo"/>
 		<result column="userMemNo" property="userMemNo"/>
 		<result column="pmMemberCount" property="pmMemberCount"/>
+		<result column="pro_approve" property="proApprove"/>
 	</resultMap>
 	
 	<resultMap type="ProBoard" id="proBoardResult">
@@ -141,6 +146,7 @@
 		     , pm.user_no as "userMemNo"
 		     , m.user_name as "pbUserName"
 		     , m.job_name as "pbJobName"
+		     , pm.pro_approve
 		  from pro_member pm
 		  join project p on (pm.project_no = p.project_no)
 		  join member m on (pm.user_no = m.user_no)  
@@ -156,6 +162,7 @@
 		     , m.user_name as "pbUserName"
 		     , m.job_name as "pbJobName"
              , m.dep_name as "pbDepName"
+             , pm.pro_approve
           from project p    
           join pro_member pm on (p.project_no = pm.project_no)
           join member m on (m.user_no = pm.user_no) 
@@ -163,7 +170,16 @@
            and pm.pro_approve = 'N'
            and pm.user_no = #{userMemNo}		
 	</select>
-		
+	
+	<!-- 관리자 프로젝트 승인 -->
+	<update id="projectApprove">
+		update
+			   pro_member
+		   set pro_approve = 'Y'
+		 where project_no = #{projectNo}
+           and user_no = #{userMemNo}
+	</update>
+			
 	<!-- 프로젝트게시물리스트 페이징처리 -->
 	<select id="selectListCount" resultType="_int">
 		select

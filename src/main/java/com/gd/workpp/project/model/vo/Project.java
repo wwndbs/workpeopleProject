@@ -29,5 +29,6 @@ public class Project {
 	private String pbDepName;
 	private String pmMemberCount;
 	private String userMemNo;
+	private String proApprove;
 
 }

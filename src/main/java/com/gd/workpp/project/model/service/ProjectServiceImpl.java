@@ -122,8 +122,13 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public Project adminApproveMember(int projectNo) {
 		return pDao.adminApproveMember(sqlSession, projectNo);
+	}
+	
+	@Override
+	public int projectApprove(ProMember pm) {
+		return pDao.projectApprove(sqlSession, pm);
 	}	
-
+	
 }
 
 

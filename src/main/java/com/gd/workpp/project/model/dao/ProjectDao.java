@@ -36,6 +36,11 @@ public class ProjectDao {
 	public Project adminApproveMember(SqlSessionTemplate sqlSession, int projectNo) {
 		return sqlSession.selectOne("projectMapper.adminApproveMember", projectNo);
 	}
+		
+	// 프로젝트 관리자승인	
+	public int projectApprove(SqlSessionTemplate sqlSession, ProMember pm) {
+		return sqlSession.update("projectMapper.projectApprove", pm);
+	}
 	
 	// 프로젝트 등록
 	public int insertProject(SqlSessionTemplate sqlSession, Project p) {

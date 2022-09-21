@@ -51,22 +51,13 @@
 	        <div class="adminx-main-content">
 	          <div class="container-fluid">
 	            
-	            <input type="hidden" name="projectNo" value="${ pp.projectNo }"> <!-- ${ pp.projectNo } -->
+	            <input type="hidden" name="projectNo" value="${ pp.projectNo }">
+	            <input type="hidden" name="projectNo" value="${ pm.projectNo }">
                 <input type="hidden" name="no" value="${ p.proBoardNo }">
                 <input type="hidden" name="pmMember" value="${ pmMember }">
                 <input type="hidden" name="userNo" value="${ loginUser.userNo }">
+                <input type="hidden" name="userMemNo" value="${ pm.userMemNo }">
                 
-                <input type="hidden" name="userMemNo" value="14">
-                <input type="hidden" name="pbUserName" value="이영환">
-                <input type="hidden" name="pbJobName" value="사원">
-                <input type="hidden" name="pbDepName" value="개발팀">
-                
-                <%-- 
-                <input type="hidden" name="userMemNo" value="14"> <!-- ${ approveP.userMemNo } -->
-                <input type="hidden" name="pbUserName" value="${ approveP.pbUserName }">
-                <input type="hidden" name="pbJobName" value="${ approveP.pbJobName }">
-                <input type="hidden" name="pbDepName" value="${ approveP.pbDepName }">
-	 --%>
 	            <!-- 관리자에게만 보여지는 승인탭(팀장/부장) -->
 	            <c:if test="${ loginUser.jobName == '부장' || loginUser.jobName == '팀장'}">
 		            <div class="form-group">
@@ -75,11 +66,8 @@
 		                <c:choose>
 		                  <c:when test="${ not empty appList }">
 		                  	<c:forEach var="p" items="${ appList }">
-			                  <option class="text-secondary" id="testOption" value="option">
-				                  <span id="projectTitle">[${ p.projectTitle }]</span>
-					              <span id="pbDepName">${ p.pbDepName }</span>
-					              <span id="pbUserName">${ p.pbUserName }</span>
-					              <span id="pbJobName">${ p.pbJobName }</span>
+			                  <option class="text-secondary" id="testOption" value="${ p.projectNo }" userNo="${ p.userMemNo }" proApprove="${ p.proApprove }">
+				                  <b>[${ p.projectTitle }]</b> ${ p.pbDepName } ${ p.pbUserName }${ p.pbJobName }
 			                  </option>		                
 			                </c:forEach>
 			              </c:when>
@@ -92,29 +80,23 @@
 	            </c:if>
 	            
 	            <!-- 관리자 승인 모달 -->
-	            <form action="" method="post">
+	            <form action="approve.pr" method="post">
 			       <div class="modal" id="approveAdd">
 			           <div class="modal-dialog modal-dialog-centered">
 			               <div class="modal-content" style="height:230px; width: 370px;">
-			               	  <input type="hidden" name="projectNo" value="${ pp.projectNo }">
-			               	  <input type="hidden" name="userMemNo" value="${ userMemNo }">
-				              <input type="hidden" name="pmMember" value="${ pmMember }">
-				              <input type="hidden" name="userNo" value="${ loginUser.userNo }">
-				              
-				              <input type="hidden" name="userMemNo" value="${ approveP.userMemNo }">
-				              <input type="hidden" name="pbUserName" value="${ approveP.pbUserName }">
-				              <input type="hidden" name="pbJobName" value="${ approveP.pbJobName }">
-				              <input type="hidden" name="pbDepName" value="${ approveP.pbDepName }">
-	
+			               	  <input type="hidden" name="projectNo" id="projectNo" value="">
+				              <input type="hidden" name="userMemNo" id="userMemNo" value="">
+							  <input type="hidden" name="proApprove" id="proApprove" value="">
+							  
 			                  <!-- Modal body -->
 			                  <div class="modal-body" style="text-align:center;">
 			                  	  <br><br>
-			                      인사팀${ userMemNo } 김동동${ approveP.pbUserName }대리의 <br>
-			                      <b>[기술팀 협업관리]</b>가입을 승인하시겠습니까?
+			                      <span id="modalContent"></span>의 <br>
+			                      가입을 승인하시겠습니까?
 			                  </div>
 			                  <!-- Modal footer -->
 			                  <div class="modal-footer" style="justify-content:center;">
-				                <button class="btn btn-jyok" id="holiday-give-btn" onclick="location.href='modifyBoard.pr?no=${no}'">승인</button>	                
+				                <button type="submit" class="btn btn-jyok" id="holiday-give-btn">승인</button>	                
 				                <button type="button" class="btn btn-jycancle" data-dismiss="modal">취소</button>
 			                  </div>
 			              </div>
@@ -123,27 +105,26 @@
 			        
 			        <script>
 			        	$('#approveTest').change(function(){
-			        		var state = $('#approveTest').prop('option', 'seleted').val();
-			        		if(state == 'option'){
-			        			var userMemNo = $(this).data('id');
-		        				//var userMemNo = $(this).children().val('userMemNo');
-		        				//$(".userMemNo").val($("#userMemNo").val());
-		        				//$(".userMemNo").val($(this).val('userMemNo'));
-			        			$('#approveAdd').modal('show').on('click', function(){
-			        				
-			        			});
-			        			
-			        			console.log(userMemNo);
-			        		}else{
-			        			console.log("실패");
-			        		}
+			        		
+			        		let projectNo = $(this).children(":selected").val();
+			        		let userMemNo = $(this).children(":selected").attr("userNo");
+			        		let proApprove = $(this).children(":selected").attr("proApprove");
+			        		// 위의 두개는 모달 div안에 input type="hidden"요소에 value값으로 넣어야됨
+			        		let content = $(this).children(":selected").text();
+			        		// content는 모달 div안에 id가 modalContent요소에 text값으로 넣어야됨			        		
+			        		
+			        		$('input[name=projectNo]').attr('value', projectNo);
+			        		$('input[name=userMemNo]').attr('value', userMemNo);
+			        		$('input[name=proApprove]').attr('value', proApprove);
+							$('#modalContent').text(content);			        		
+			        		
+			        		//console.log(projectNo, userMemNo, content, proApprove);
+			        		
+		        			$('#approveAdd').modal('show');
+		        			
 		        		})
 			        </script>
-			        
-			        
-			        <form id="postForm" action="" method="post">
-			        	<input type="hidden" name="attachModify" value="${ pb.attachModify }">
-			        </form>
+			        			        
 			    </form>	
 	
 	            <!-- 내팀 -->
@@ -165,9 +146,10 @@
 	              	</c:when>	
 	              	<c:otherwise>
                    	<c:set var="depName" value="${ loginUser.depName }"/>	
-	                  <c:forEach var="pp" items="${ list }">	              
-	                  	
-			              <div class="col-md-6 col-lg-3 d-flex">
+	                  <c:forEach var="pp" items="${ list }">       
+	                       
+	                     <div class="col-md-6 col-lg-3 d-flex">
+			              	
 			                <div class="color"></div>
 			                <div class="card mb-grid project w-100 box1" onclick="location.href='proList.pr?no=${pp.projectNo}'">
 			                  <div class="card-body d-flex flex-column">                                            

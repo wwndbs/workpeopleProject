@@ -41,7 +41,7 @@ public class ProjectController {
 				
 		ArrayList<Project> list = pService.selectList(depName);
 		ArrayList<ProMember> pmList = pService.countMember(projectNo);		
-		ArrayList<Project> appList = pService.adminProApproveList(userNo); // proAdminNo말고 로그인한 회원의 번호를 넘기게해주기
+		ArrayList<Project> appList = pService.adminProApproveList(userNo);
 		Project approveP = pService.adminApproveMember(projectNo);
 		
 		mv.addObject("list", list)
@@ -51,28 +51,33 @@ public class ProjectController {
 		  .addObject("appList", appList)
 		  .addObject("approveP", approveP)
 		  .addObject("pm", pm)
+		  //.addObject(approveP)
 		  .addObject(list)
-		  .setViewName("project/myProjectList");
-		
-		System.out.println(approveP);
-		
+		  .setViewName("project/myProjectList");		
 						
 		return mv;
 	}	
 	
-	// 프로젝트 관리자 승인 - 한명 모달조회
-	/*
+	// 프로젝트 관리자 승인
 	@RequestMapping("approve.pr")
-	public ModelAndView adminApproveMember(int projectNo, ModelAndView mv, Project p) {
-		int result = pService.adminApproveMember(projectNo);
+	public String projectApprove(Model model, HttpSession session, ProMember pm) {
+		int result = pService.projectApprove(pm);
+		
+		//model.addAttribute("pm", pm);	
+		int projectNo = pm.getProjectNo();
+		String userMemNo = pm.getUserMemNo();
+				
+		System.out.println(result);
+		System.out.println(pm);
 		
 		if(result > 0) {
-			mv.addObject("p", p)
+			session.setAttribute("alertMsg", "가입이 승인되었습니다.");
+			return "redirect:myProject.pr";
+		}else {
+			model.addAttribute("errorMsg", "승인 실패");
+			return "common/errorPage";
 		}
-		
-		return mv;
 	}
-	*/
 	
 	// 프로젝트 등록
 	@RequestMapping("insert.pr")
@@ -156,7 +161,6 @@ public class ProjectController {
 		}
 		
 		return mv;
-		//return "project/proBoardModifyForm";
 	}
 			
 	// 프로젝트 게시물 등록
