@@ -87,7 +87,7 @@
 							<div class="btn-area">
 								<button type="button" class="btn btn-secondary btn-sm" onclick="location.href='backPage.ap?documentNo=${ document.documentNo }'">돌아가기</button>
 								<button type="submit" class="btn btn-primary btn-sm" id="save" name="status" value="2">임시저장</button>
-								<button type="submit" class="btn btn-primary btn-sm" id="approval">결재상신</button>
+								<button type="submit" class="btn btn-primary btn-sm" id="approval" disabled>결재상신</button>
 							</div>
 						</div>
 						<div class="approval-wrapper">
@@ -149,6 +149,7 @@
 								         +  		'</div>'
 								         +  	'</li>'
 								         +  '</ul>';
+								$("#approval").prop("disabled", false);
 							}
 							
 							if(list[i].referenceStatus == 1){
