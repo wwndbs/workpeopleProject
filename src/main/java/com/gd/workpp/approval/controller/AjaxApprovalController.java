@@ -182,6 +182,13 @@ public class AjaxApprovalController {
 		return new Gson().toJson(list);
 	}
 	
+	/**
+	 * Author : 최영헌
+	 * 결재선, 참조자 등록 요청을 처리하는 메소드
+	 * @param approvalMember : 결재자 배열
+	 * @param referenceMember : 참조자 배열
+	 * @param documentNo : 결재자, 참조자를 등록할 결재문서번호
+	 */
 	@ResponseBody
 	@RequestMapping(value="insertApprovalAndReference.ap", produces="application/json; charset=UTF-8")
 	public void insertApprovalAndReference(String approvalMember, String referenceMember, int documentNo) {
