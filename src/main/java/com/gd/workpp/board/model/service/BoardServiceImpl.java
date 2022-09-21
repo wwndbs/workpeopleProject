@@ -127,6 +127,12 @@ public class BoardServiceImpl implements BoardService {
 		return bDao.increaseCount(sqlSession, boardNo);
 	}
 
+	// 선택한 게시글 조회
+	@Override
+	public Board selectBoard(int boardNo) {
+		return bDao.selectBoard(sqlSession, boardNo);
+	}
+
 	
 	
 	

@@ -309,14 +309,16 @@ public class BoardController {
 		if(result > 0) {
 			
 			// 게시글 조회
+			Board b = bService.selectBoard(boardNo);
+			
+			return null;
 			
 		}else {
 			
 			// 에러페이지
+			return "common/errorPage";
 			
 		}
-		
-		return null;
 		
 	}
 }

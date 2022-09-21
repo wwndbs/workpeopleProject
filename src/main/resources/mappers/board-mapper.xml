@@ -375,5 +375,37 @@
 		 where board_no = #{boardNo}
 		   and status = 'Y'
 	</update>
+	
+	<!-- 선택한 게시글 조회 -->
+	<select id="selectBoard" resultMap="boardResult">
+		select
+		       board_no
+		     , user_no
+		     , board_type
+		     , user_name
+		     , board_title
+		     , board_content
+		     , b.create_date
+		     , top_exp
+		     , count
+		     , job_name
+		     , b.dep_name
+		     , (
+			 	select
+			 		   count(*)
+			 	  from b_like bl
+			 	 where bl.board_no = b.board_no
+			 ) as "LIKE"
+			 , (
+			 	select
+			 		   count(*)
+			 	  from reply
+			 	 where ref_bno = board_no
+			 ) as "REPLY"
+		  from board b
+		  join member using(user_no)
+		 where board_no = #{boardNo}
+		   and b.status = 'Y'
+	</select>
 
 </mapper>

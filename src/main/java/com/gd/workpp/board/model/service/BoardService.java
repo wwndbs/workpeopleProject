@@ -36,5 +36,6 @@ public interface BoardService {
 	
 	// 게시판 상세페이지
 	int increaseCount(int boardNo);
+	Board selectBoard(int boardNo);
 	
 }
