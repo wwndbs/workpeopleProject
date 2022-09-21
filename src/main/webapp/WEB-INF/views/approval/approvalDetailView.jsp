@@ -96,7 +96,7 @@
 						                    <th>휴가기간</th>
 						                    <td colspan="5" style="text-align: left;">
 						                      <div class="date-form" style="display : flex;">
-						                        ${ obj.vacationStart } ~ ${ obj.vacationEnd } (${ obj.vacationCount }일)
+						                        ${ obj.vacationStart } ~ ${ obj.vacationEnd } (${ obj.vacationCount + 1 }일)
 						                      </div>   
 						                    </td>
 						                </tr>
