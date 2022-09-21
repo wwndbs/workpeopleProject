@@ -3,6 +3,7 @@ package com.gd.workpp.attendance.model.service;
 import java.util.ArrayList;
 
 import com.gd.workpp.attendance.model.vo.Attendance;
+import com.gd.workpp.holiday.model.vo.Schedule;
 
 public interface AttendanceService {
 	
@@ -61,10 +62,12 @@ public interface AttendanceService {
 	// 2-4. 수정요청 update
 	
 	
+	/*
 	// 3. 개인근태현황 / attendanceList.jsp
 	
 	// 3-1. 출근시간/퇴근시간/연장근무시간/근태상태
-	
+	ArrayList<Attendance> attendanceList(String userNo);
+	*/
 	
 	// 4. 휴가관리 / atHolidayList.jsp
 	

@@ -13,52 +13,61 @@ import com.gd.workpp.attendance.model.vo.Attendance;
 public class AttendanceServiceImpl implements AttendanceService {
 	
 	@Autowired
-	private AttendanceDao aDao;
+	private AttendanceDao atDao;
 	@Autowired
 	private SqlSessionTemplate sqlSession;	
 	
 	
+	/*
+	// 3. 개인근태현황 / attendanceList.jsp	
+	@Override
+	public ArrayList<Attendance> attendanceList(String userNo) {
+		return atDao.attendanceList(sqlSession, userNo);
+	}
+	*/
+	
 	// 4. 휴가관리 / atHolidayList.jsp
 	@Override
 	public int holidayAllCount(String userNo) {
-		return aDao.holidayAllCount(sqlSession, userNo);
+		return atDao.holidayAllCount(sqlSession, userNo);
 	}
 	
 	@Override
 	public int holidayUserCount(String userNo) {
-		return aDao.holidayUserCount(sqlSession, userNo);
+		return atDao.holidayUserCount(sqlSession, userNo);
 	}
 
 	@Override
 	public int holidayRemainderCount(String userNo) {
-		return aDao.holidayRemainderCount(sqlSession, userNo);
+		return atDao.holidayRemainderCount(sqlSession, userNo);
 	}
 	
 	@Override
 	public ArrayList<Attendance> selectHolidayList(String userNo) {
-		return aDao.selectHolidayList(sqlSession, userNo);
+		return atDao.selectHolidayList(sqlSession, userNo);
 	}
 
 	// 5. 연장근무내역조회 / atWorkList.jsp
 	@Override
 	public int workAllCount(String userNo) {
-		return aDao.workAllCount(sqlSession, userNo);
+		return atDao.workAllCount(sqlSession, userNo);
 	}
 
 	@Override
 	public int workPossibleCount(String userNo) {
-		return aDao.workPossibleCount(sqlSession, userNo);
+		return atDao.workPossibleCount(sqlSession, userNo);
 	}
 
 	@Override
 	public int workPossibleDay(String userNo) {
-		return aDao.workPossibleDay(sqlSession, userNo);
+		return atDao.workPossibleDay(sqlSession, userNo);
 	}
 
 	@Override
 	public ArrayList<Attendance> selectWorkList(String userNo) {
-		return aDao.selectWorkList(sqlSession, userNo);
+		return atDao.selectWorkList(sqlSession, userNo);
 	}
+
 
 		
 	

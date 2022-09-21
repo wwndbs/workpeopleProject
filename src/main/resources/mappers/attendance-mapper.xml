@@ -93,9 +93,22 @@
 	
 	<!-- 3. 개인근태현황 / attendanceList.jsp -->
 	
-	<!-- 3-1. 출근시간/퇴근시간/연장근무시간/근태상태 -->
-	
-	
+	<!-- 3-1. 출근시간/퇴근시간/연장근무시간/근태상태
+	<select id="attendanceList" resultMap="attendanceResult">
+		select 
+		       user_no
+		     , at_date
+		     , at_date || 'T' || at_start as at_start
+		     , at_date || 'T' || at_end as at_end
+		     , DECODE(at_status, 1, '정상',
+		                         2, '지각',
+		                         3, '휴가',
+		                         4, '결근') as at_status    
+		  from attendance 
+		 where user_no = #{userNo}
+		 order by at_date desc		
+	</select>
+	-->
 	
 	<!-- 4. 휴가관리 / atHolidayList.jsp -->
 	

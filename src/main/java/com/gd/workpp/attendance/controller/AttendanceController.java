@@ -7,11 +7,14 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gd.workpp.attendance.model.service.AttendanceService;
 import com.gd.workpp.attendance.model.vo.Attendance;
+import com.gd.workpp.holiday.model.vo.Schedule;
 import com.gd.workpp.member.model.vo.Member;
+import com.google.gson.Gson;
 
 @Controller
 public class AttendanceController {
@@ -109,23 +112,20 @@ public class AttendanceController {
 	} 	 
 	*/
 			
-	// 개인근태현황 / attendanceList.jsp
+	// 3. 개인근태현황 / attendanceList.jsp
+	/*
 	@RequestMapping("attendance.at")
-	public String attendanceList() {
+	public String attendanceView() {
 		return "attendance/attendanceList";
 	}
 	
-	// 휴가관리 페이지
-	// 3. 개인근태현황 / attendanceList.jsp
-	/*
-	@RequestMapping("commuteUpdateList.at")
-	public ModelAndView commuteUpdate(ModelAndView mv) {
-		
-		// 3-1. 출근시간/퇴근시간/연장근무시간/근태상태
-		
-	}
-	*/	
-
+	@ResponseBody
+	@RequestMapping(value="attendanceList.at", produces="application/json; charset=utf-8")
+	public String attendanceList(String userNo) {
+		ArrayList<Attendance> list = atService.attendanceList(userNo);
+		return new Gson().toJson(list);
+	}	
+	*/
 	
 	// 연장근무내역 조회
 	// 4. 휴가관리 / atHolidayList.jsp

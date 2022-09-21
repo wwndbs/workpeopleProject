@@ -59,10 +59,14 @@ public class AttendanceDao {
 	// 2-4. 수정요청 update
 	
 	
+	/*
 	// 3. 개인근태현황 / attendanceList.jsp
 	
 	// 3-1. 출근시간/퇴근시간/연장근무시간/근태상태
-	
+	public ArrayList<Attendance> attendanceList(SqlSessionTemplate sqlSession, String userNo) {		
+		return (ArrayList)sqlSession.selectList("attendanceMapper.attendanceList", userNo);		
+	}	
+	*/
 	
 	// 4. 휴가관리 / atHolidayList.jsp
 	

@@ -74,7 +74,7 @@
 					
 					$.ajax({
 		    			type: "GET",
-		    			url: "",
+		    			url: "attendanceList.at?no=${loginUser.userNo}",
 		    			data: {userNo:'${loginUser.userNo}'},
 		    			success: function(response){
 		    				
@@ -84,10 +84,9 @@
 		    				
 		    				for(let i=0; i<response.length; i++) {
 		    					let obj = {
-			    						title: response[i].scheduleTitle,
-			    						start: response[i].scheduleStart,
-			    						end: response[i].scheduleEnd,
-			    				    	color : response[i].scheduleColor				
+			    						start: response[i].atStart,
+			    						end: response[i].atEnd,
+			    				    	color : rgb(0, 135, 239)				
 			    					};
 		    					
 		    					data.push(obj);
