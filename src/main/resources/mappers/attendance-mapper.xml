@@ -33,6 +33,11 @@
 		<result column="vacation_category" property="vacationCategory" />
 		<result column="vacation_date" property="vacationDate" />
 		<result column="vacation_count" property="vacationCount" />
+		<result column="work_use" property="workUse" />
+		<result column="word_date" property="workDate" />
+		<result column="at_date" property="atDate" />
+		<result column="work_day" property="workDay" />
+		<result column="work_dateList" property="workDateList" />
 	</resultMap>
 	
 	<!-- 1. 출퇴근기록 / commuteList.jsp -->
@@ -151,20 +156,56 @@
 	<!-- 5. 연장근무내역조회 / atWorkList.jsp -->
 	
 	<!-- 5-1. 이번달 총 연장근무 시간 -->
-	
+	<select id="workAllCount" resultType="_int">
+		select 
+		       nvl(sum(work_use), 0) as work_use
+		  from document
+		  join attendance using(user_no)
+		  join work using(document_no)
+		 where user_no = #{userNo}
+		   and work_date between (TRUNC(SYSDATE, 'MONTH')) and (LAST_DAY(SYSDATE))
+	</select>
 	
 	<!-- 5-2. 이번달 연장근무 가능시간 -->
-	
+	<select id="workPossibleCount" resultType="_int">
+		select
+		       60 - nvl(sum(work_use),0) as work_user
+		  from document
+		  left join attendance using(user_no)
+		  left join work using(document_no)
+		 where user_no = #{userNo}
+		   and work_date between (TRUNC(SYSDATE, 'MONTH')) and (LAST_DAY(SYSDATE))
+	</select>	
 	
 	<!-- 5-3. 이번달 연장근무 일수 -->
+	<select id="workPossibleDay" resultType="_int">
+		select 
+		       count(work_use)
+		  from document
+		  left join attendance using(user_no)
+		  left join work using(document_no)
+		 where user_no = #{userNo}
+		   and at_date between (TRUNC(SYSDATE, 'MONTH')) and (LAST_DAY(SYSDATE))
+	</select>	
 	
-	
-	<!-- 5-4. 연장근무내역 표 페이징처리 listCount -->
-	
-	
-	<!-- 5-5. 연장근무내역 표_연장근무일자/요일/연장근무시간/사유/소요시간/승인내역 -->
-	
-	
+	<!-- 5-4. 연장근무내역 표_연장근무일자/요일/연장근무시간/사유/소요시간/승인내역 -->
+	<select id="selectWorkList" resultMap="documentResult">
+		select
+		       do.user_no
+		     , work_date
+		     , at_day
+		     , nvl(wo.work_start || '~' || wo.work_end, '-') as work_dateList
+		     , do.document_content
+		     , wo.work_use
+		     , DECODE(ap.status, '0', '결재대기',
+		                         '승인', '승인',
+		                         '반려', '반려') as ap_status
+		  from document do
+		  left join attendance at on(at.user_no = do.user_no)
+		  left join approval ap on(ap.document_no = do.document_no)
+		  left join work wo on(wo.document_no = do.document_no)
+		 where do.user_no = #{userNo}
+	</select>	
 	
 	<!-- 6. 사원별 출퇴근 현황 조회 / commuteMemberList.jsp -->
 	

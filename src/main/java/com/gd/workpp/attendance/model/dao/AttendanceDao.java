@@ -89,19 +89,24 @@ public class AttendanceDao {
 	// 5. 연장근무내역조회 / atWorkList.jsp
 	
 	// 5-1. 이번달 총 연장근무 시간
-	
+	public int workAllCount(SqlSessionTemplate sqlSession, String userNo) {
+		return sqlSession.selectOne("attendanceMapper.workAllCount", userNo);
+	}	
 	
 	// 5-2. 이번달 연장근무 가능시간
-	
+	public int workPossibleCount(SqlSessionTemplate sqlSession, String userNo) {
+		return sqlSession.selectOne("attendanceMapper.workPossibleCount", userNo);
+	}	
 	
 	// 5-3. 이번달 연장근무 일수
+	public int workPossibleDay(SqlSessionTemplate sqlSession, String userNo) {
+		return sqlSession.selectOne("attendanceMapper.workPossibleDay", userNo);
+	}	
 	
-	
-	// 5-4. 연장근무내역 표 페이징처리 listCount
-	
-	
-	// 5-5. 연장근무내역 표_연장근무일자/요일/연장근무시간/사유/소요시간/승인내역
-	
+	// 5-4. 연장근무내역 표_연장근무일자/요일/연장근무시간/사유/소요시간/승인내역
+	public ArrayList<Attendance> selectWorkList(SqlSessionTemplate sqlSession, String userNo) {		
+		return (ArrayList)sqlSession.selectList("attendanceMapper.selectWorkList", userNo);		
+	}	
 	
 	// 6. 사원별 출퇴근 현황 조회 / commuteMemberList.jsp
 	

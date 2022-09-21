@@ -51,7 +51,7 @@
                         총 연장근무 시간
                       </span> <br>
                       <span class="span-bottom">
-                        7시간
+                        ${ workAllCount }시간
                       </span>
                     </td>
                     <td style="text-align:center;"><hr style="border:1px solid LightGray; width:0; height:100px;"></td>
@@ -61,7 +61,7 @@
                         연장근무 가능시간
                       </span> <br>
                       <span class="span-bottom">
-                        13시간  
+                        ${ workPossibleCount }시간  
                       </span>
                     </td>
                     <td style="text-align:center;"><hr style="border:1px solid LightGray; width:0; height:100px;"></td>
@@ -71,7 +71,7 @@
                         연장근무 일수
                       </span> <br>
                       <span class="span-bottom">
-                        4일  
+                        ${ workPossibleDay }일  
                       </span>
                     </td>
                   </tr>
@@ -130,49 +130,27 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                              <td>2022-07-05</td>
-                              <td>화</td>
-                              <td>19:00~22:00</td>
-                              <td>사유사유사유</td>
-                              <td>3</td>
-                              <td>결제대기</td>
-                            </tr>
-                            <tr>
-                              <td>2022-07-05</td>
-                              <td>화</td>
-                              <td>19:00~22:00</td>
-                              <td>사유사유사유</td>
-                              <td>3</td>
-                              <td>결제대기</td>
-                            </tr>
-                            <tr>
-                              <td>2022-07-05</td>
-                              <td>화</td>
-                              <td>19:00~22:00</td>
-                              <td>사유사유사유</td>
-                              <td>3</td>
-                              <td>결제대기</td>
-                            </tr>
-                            <tr>
-                              <td>2022-07-05</td>
-                              <td>화</td>
-                              <td>19:00~22:00</td>
-                              <td>사유사유사유</td>
-                              <td>3</td>
-                              <td>결제대기</td>
-                            </tr>
-                            <tr>
-                              <td>2022-07-05</td>
-                              <td>화</td>
-                              <td>19:00~22:00</td>
-                              <td>사유사유사유</td>
-                              <td>3</td>
-                              <td>결제대기</td>
-                            </tr>
+                          <c:choose>
+                          	<c:when test="${ empty list }">
+                          		<tr>
+                					<td colspan="6">조회내역이 없습니다.</td>
+                				</tr>
+                          	</c:when>
+                          	<c:otherwise>
+                          		<c:forEach var="at" items="${ list }">
+		                            <tr>
+		                              <td>${ at.workDate }</td>
+		                              <td>${ at.atDay }</td>
+		                              <td>${ at.workDateList }</td>
+		                              <td>${ at.documentContent }</td>
+		                              <td>${ at.workUse }</td>
+		                              <td>${ at.status }</td>
+		                            </tr>
+	                            </c:forEach>
+                            </c:otherwise>
+                          </c:choose>
                           </tbody>
                         </table>
-
                       </div>
                     <!-- // Table seamless -->
 

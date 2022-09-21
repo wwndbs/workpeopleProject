@@ -80,21 +80,20 @@ public interface AttendanceService {
 	// 4-4. 휴가사용내역 표_휴가신청일자/휴가종류/사유/휴가사용기간/차감일수/승인내역
 	ArrayList<Attendance> selectHolidayList(String userNo);
 	
+	
 	// 5. 연장근무내역조회 / atWorkList.jsp
 	
 	// 5-1. 이번달 총 연장근무 시간
-	
+	int workAllCount(String userNo);
 	
 	// 5-2. 이번달 연장근무 가능시간
-	
+	int workPossibleCount(String userNo);
 	
 	// 5-3. 이번달 연장근무 일수
+	int workPossibleDay(String userNo);
 	
-	
-	// 5-4. 연장근무내역 표 페이징처리 listCount
-	
-	
-	// 5-5. 연장근무내역 표_연장근무일자/요일/연장근무시간/사유/소요시간/승인내역
+	// 5-4. 연장근무내역 표_연장근무일자/요일/연장근무시간/사유/소요시간/승인내역
+	ArrayList<Attendance> selectWorkList(String userNo);
 	
 	
 	// 6. 사원별 출퇴근 현황 조회 / commuteMemberList.jsp

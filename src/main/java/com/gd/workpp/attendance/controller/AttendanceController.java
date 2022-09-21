@@ -157,35 +157,35 @@ public class AttendanceController {
 		
 	}
 	
-	// 연장근무내역조회 / atWorkList.jsp
-	@RequestMapping("work.at")
-	public String atWorkList() {
-		return "attendance/atWorkList";
-	}
-	
-	// 사원별 출퇴근 현황 조회
 	// 5. 연장근무내역조회 / atWorkList.jsp
-	/*
 	@RequestMapping("work.at")
-	public ModelAndView atWorkList(ModelAndView mv) {
+	public ModelAndView atWorkList(ModelAndView mv, HttpSession session) {
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		String userNo = m.getUserNo();
 
-		// 5-1. 이번달 총 연장근무 시간
-	
+		// 5-1. 이번달 총 연장근무 시간 
+		int workAllCount = atService.workAllCount(userNo);
 	
 		// 5-2. 이번달 연장근무 가능시간
-	
+		int workPossibleCount = atService.workPossibleCount(userNo);
 	
 		// 5-3. 이번달 연장근무 일수
+		int workPossibleDay = atService.workPossibleDay(userNo);
 	
-	
-		// 5-4. 연장근무내역 표 페이징처리 listCount
-	
-	
-		// 5-5. 연장근무내역 표_연장근무일자/요일/연장근무시간/사유/소요시간/승인내역
-		 * 
+		// 5-4. 연장근무내역 표_연장근무일자/요일/연장근무시간/사유/소요시간/승인내역
+		ArrayList<Attendance> list = atService.selectWorkList(userNo);
+		
+		mv.addObject("workAllCount", workAllCount)
+		  .addObject("workPossibleCount", workPossibleCount)
+		  .addObject("workPossibleDay", workPossibleDay)
+		  .addObject("list", list)
+		  .setViewName("attendance/atWorkList");
+		
+		return mv;
 
 	}
-	*/	
+	
 	
 	// 사원별 출퇴근 현황 조회 / commuteMemberList.jsp
 	@RequestMapping("commuteMember.at")

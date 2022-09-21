@@ -39,6 +39,27 @@ public class AttendanceServiceImpl implements AttendanceService {
 		return aDao.selectHolidayList(sqlSession, userNo);
 	}
 
+	// 5. 연장근무내역조회 / atWorkList.jsp
+	@Override
+	public int workAllCount(String userNo) {
+		return aDao.workAllCount(sqlSession, userNo);
+	}
+
+	@Override
+	public int workPossibleCount(String userNo) {
+		return aDao.workPossibleCount(sqlSession, userNo);
+	}
+
+	@Override
+	public int workPossibleDay(String userNo) {
+		return aDao.workPossibleDay(sqlSession, userNo);
+	}
+
+	@Override
+	public ArrayList<Attendance> selectWorkList(String userNo) {
+		return aDao.selectWorkList(sqlSession, userNo);
+	}
+
 		
 	
 

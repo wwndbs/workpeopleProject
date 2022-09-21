@@ -32,6 +32,11 @@ public class Document {
 	private String vacationDate;
 	private int vacationCount;
 	private String apStatus;
+	private String workUse;
+	private String workDate;
+	private String atDate;
+	private String workDateList;
+	private String atDay;
 	
 	
 }
