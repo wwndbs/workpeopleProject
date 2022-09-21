@@ -25,28 +25,37 @@
 			            <div class="write-area" style="margin : auto;">
 							<table class="table table-bordered">
 								<tr>
-									<th colspan="2">
+									<th colspan="2" style=" min-height : 100px;">
 										<br><br>
 										<h1><strong>${ document.documentForm }</strong></h1>
 										<input type="hidden" name="documentNo" value="">	
+										<br>
 									</th>
 									<td colspan="4" id="approval-section">
-										<c:forEach var="list" items="${ list }">
-											<table align="right">
-			                                	<tr>
-			                                    	<th width="120">${ list.userNo }&nbsp;&nbsp; ${ list.jobName }</th>
-			                                    </tr>
-			                                    <tr style="cursor : pointer;" onclick="location.href='approvalOfApproval.ap?approvalUser=${ list.userNo }&order=${list.approvalOrder}&approvalCount=${ document.approvalCount }&form=${ document.documentForm }&documentNo=${ document.documentNo }'">
-			                                    	<td>
-			                                    	<br>
-				                                    	<c:if test="${ list.status != 0 }">
-				                                    		${ list.userNo }
-				                                    	</c:if>
-			                                    	<br><br>
-			                                    	</td>
-			                                    </tr>
-			                                </table>
-			                            </c:forEach>
+										<c:choose>
+											<c:when test="${ not empty document.message }">
+												<br><br>
+												<h1 style="color :red;"><strong>반려된 문서</strong></h1>
+											</c:when>
+											<c:otherwise>
+												<c:forEach var="list" items="${ list }">
+													<table align="right">
+					                                	<tr>
+					                                    	<th width="120">${ list.userNo }&nbsp;&nbsp; ${ list.jobName }</th>
+					                                    </tr>
+					                                    <tr style="cursor : pointer;" onclick="location.href='approvalOfApproval.ap?approvalUser=${ list.userNo }&order=${list.approvalOrder}&approvalCount=${ document.approvalCount }&form=${ document.documentForm }&documentNo=${ document.documentNo }'">
+					                                    	<td>
+					                                    	<br>
+						                                    	<c:if test="${ list.status != 0 }">
+						                                    		${ list.userNo }
+						                                    	</c:if>
+					                                    	<br><br>
+					                                    	</td>
+					                                    </tr>
+					                                </table>
+					                            </c:forEach>
+											</c:otherwise>
+										</c:choose>
 									</td>
 								</tr>
 								<tr>
@@ -144,12 +153,12 @@
 							</table>
 				              <div class="btn-area" align="right">
 				                <button class="btn btn-secondary btn-sm" onclick="history.back();">돌아가기</button>
-				                <c:if test="${ list[0].status == 0 && document.userNo == m.userName}">
+				                <c:if test="${ list[0].status == 0 && document.userNo == m.userName || not empty document.message}">
 							        <button class="btn btn-danger btn-sm" onclick="deleteApproval();">삭제</button>
 						        </c:if>
 						        <c:forEach var="i" items="${ list }">
-							        <c:if test="${ i.userNo == m.userNo}">
-					                	<button class="btn btn-danger btn-sm">반려</button>
+							        <c:if test="${ i.userNo eq m.userName}">
+					                	<button class="btn btn-danger btn-sm" onclick="approvalreFusal();">반려</button>
 					              	</c:if>
 				              	</c:forEach>
 				              </div>
@@ -170,6 +179,24 @@
 			if(confirm("삭제하시겠습니까?")){
 				let documentNo = '${document.documentNo}';
 				location.href="deleteApproval.ap?documentNo=" + documentNo;
+			}
+		}
+	</script>
+	
+	<script>
+		function approvalreFusal(){
+			
+			let fusalMsg = prompt("반려메세지");
+			let documentNo = '${document.documentNo}';
+			
+			if(fusalMsg == null){
+				alert("반려메세지를 입력해 주세요.");
+			}else{
+				if(fusalMsg.length == 0){
+					alert("반려메세지를 입력해 주세요.");					
+				}else{
+					location.href="approvalFusal.ap?documentNo=" + documentNo + "&msg=" + fusalMsg;					
+				}
 			}
 		}
 	</script>

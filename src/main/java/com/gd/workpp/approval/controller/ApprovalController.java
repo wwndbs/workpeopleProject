@@ -449,7 +449,21 @@ public class ApprovalController {
 		}
 	}
 		
+	@RequestMapping("approvalFusal.ap")
+	public String approvalFusal(int documentNo, String msg, HttpSession session, Model model) {
+		Member m = (Member)session.getAttribute("loginUser");
+		String userNo = m.getUserNo();
 		
+		int result = apService.approvalFusal(documentNo, msg, userNo);
+				
+		if(result > 0) {
+			session.setAttribute("alertMsg", "결재문서를 반려처리 했습니다.");	
+			return "redirect:approvalList.ap";
+		}else {
+			model.addAttribute("errorMsg", "결재문서 반려처리 과정 중 오류 발생");
+			return "common/errorPage";
+		}
+	}
 		
 		
 		

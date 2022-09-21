@@ -261,9 +261,6 @@ public class ApprovalDao {
 		data.put("document", document);
 		data.put("vacation", vacation);
 		
-		System.out.println(vacation.getVacationStart());
-		System.out.println(vacation.getVacationEnd());
-		
 		int result1;
 		int result2;
 		
@@ -307,7 +304,6 @@ public class ApprovalDao {
 		if(form.equals("업무기안서")) {
 			return sqlSession.selectOne("approvalMapper.approvalDetailPlan", no);
 		}else if(form.equals("휴가신청서")) {
-			System.out.println("DAO : " + no);
 			return sqlSession.selectOne("approvalMapper.approvalDetailVacation", no);
 		}else if(form.equals("결근사유서")){
 			return sqlSession.selectOne("approvalMapper.approvalDetailAbsence", no);
@@ -355,6 +351,18 @@ public class ApprovalDao {
 		int result = sqlSession.delete("approvalMapper.deleteApproval", documentNo);
 		
 		return result;
+	}
+	
+	public int approvalFusal(SqlSessionTemplate sqlSession, int documentNo, String msg, String userNo) {
+		HashMap<String, String> data = new HashMap<>();
+		data.put("documentNo", String.valueOf(documentNo));
+		data.put("msg", msg);
+		data.put("userNo", userNo);
+		
+		int result1 = sqlSession.update("approvalMapper.approvalLineFusal", data);
+		int result2 = sqlSession.update("approvalMapper.approvalFusal", data);
+		
+		return result1 * result2;
 	}
 	
 }
