@@ -1,6 +1,11 @@
 package com.gd.workpp.attendance.model.dao;
 
+import java.util.ArrayList;
+
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
+
+import com.gd.workpp.attendance.model.vo.Attendance;
 
 @Repository
 public class AttendanceDao {
@@ -62,16 +67,24 @@ public class AttendanceDao {
 	// 4. 휴가관리 / atHolidayList.jsp
 	
 	// 4-1. 총 휴가 갯수
-	//return sqlSession.selectOne("attendanceMapper.holidayAllCount", userNo);
+	public int holidayAllCount(SqlSessionTemplate sqlSession, String userNo) {
+		return sqlSession.selectOne("attendanceMapper.holidayAllCount", userNo);
+	}
 	
 	// 4-2. 사용 휴가 갯수
-	//return sqlSession.selectOne("attendanceMapper.holidayUserCount", userNo);
+	public int holidayUserCount(SqlSessionTemplate sqlSession, String userNo) {
+		return sqlSession.selectOne("attendanceMapper.holidayUserCount", userNo);
+	}
 	
 	// 4-3. 잔여 휴가 갯수
-	//return sqlSession.selectOne("attendanceMapper.holidayRemainderCount", userNo);
+	public int holidayRemainderCount(SqlSessionTemplate sqlSession, String userNo) {
+		return sqlSession.selectOne("attendanceMapper.holidayRemainderCount", userNo);
+	}
 	
-	// 4-4. 휴가사용내역 표_휴가신청일자/휴가종류/사유/휴가사용기간/차감일수/승인내역
-	//return (ArrayList)sqlSession.selectList("boardMapper.selectHolidayList", userNo);		
+	// 4-4. 휴가사용내역 표_휴가신청일자/휴가종류/사유/휴가사용기간/차감일수/승인내역	
+	public ArrayList<Attendance> selectHolidayList(SqlSessionTemplate sqlSession, String userNo) {		
+		return (ArrayList)sqlSession.selectList("attendanceMapper.selectHolidayList", userNo);		
+	}
 	
 	// 5. 연장근무내역조회 / atWorkList.jsp
 	

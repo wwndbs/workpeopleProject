@@ -26,4 +26,12 @@ public class Document {
 	private String filePath;
 	private int approvalCount;
 	private String depName;
+	
+	// 장서원 추가
+	private String vacationCategory;
+	private String vacationDate;
+	private int vacationCount;
+	private String apStatus;
+	
+	
 }

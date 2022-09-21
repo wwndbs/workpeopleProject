@@ -2,20 +2,29 @@
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.gd.workpp.attendance.model.service.AttendanceServiceImpl;
+import com.gd.workpp.attendance.model.service.AttendanceService;
 import com.gd.workpp.attendance.model.vo.Attendance;
+import com.gd.workpp.member.model.vo.Member;
 
 @Controller
 public class AttendanceController {
+	
+	@Autowired
+	private AttendanceService atService;
+	
+	// 메인페이지 출근버튼 클릭시 insert
+	
+	
 	// 메인페이지 퇴근버튼 클릭시 update
 	
 	
-	// 출퇴근기록 페이지
 	// 출퇴근기록 페이지 / commuteList.jsp
 	@RequestMapping("commute.at")
 	public String commute() {
@@ -116,29 +125,35 @@ public class AttendanceController {
 		
 	}
 	*/	
-	
-	//휴가관리 / atHolidayList.jsp
-	@RequestMapping("holiday.at")
-	public String atHolidayList() {
-		return "attendance/atHolidayList";
-	}
+
 	
 	// 연장근무내역 조회
 	// 4. 휴가관리 / atHolidayList.jsp
-	@RequestMapping("holidayList.at")
-	public ModelAndView holidayList(String userNo, ModelAndView mv) {
+	@RequestMapping("holiday.at")
+	public ModelAndView holidayList(ModelAndView mv, HttpSession session) {
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		String userNo = m.getUserNo();
 		
 		// 4-1. 총 휴가 갯수
-		//int holidayAllCount = atService.holidayAllCount(userNo);
+		int holidayAllCount = atService.holidayAllCount(userNo);
 		
 		// 4-2. 사용 휴가 갯수
-		//int holidayUserCount = atService.holidayUserCount(userNo);
+		int holidayUserCount = atService.holidayUserCount(userNo);
 		
 		// 4-3. 잔여 휴가 갯수
-		//int holidayRemainderCount = atService.holidayRemainderCount(userNo);
+	    int holidayRemainderCount = atService.holidayRemainderCount(userNo);
 		
 		// 4-4. 휴가사용내역 표_휴가신청일자/휴가종류/사유/휴가사용기간/차감일수/승인내역
-		//ArrayList<Attendance> list = atService.selectHolidayList(userNo);
+		ArrayList<Attendance> list = atService.selectHolidayList(userNo);
+		
+		mv.addObject("holidayAllCount", holidayAllCount)
+		  .addObject("holidayUserCount", holidayUserCount)
+		  .addObject("holidayRemainderCount", holidayRemainderCount)
+		  .addObject("list", list)
+		  .setViewName("attendance/atHolidayList");
+		
+		System.out.println(holidayAllCount);
 		
 		return mv;
 		
@@ -153,8 +168,8 @@ public class AttendanceController {
 	// 사원별 출퇴근 현황 조회
 	// 5. 연장근무내역조회 / atWorkList.jsp
 	/*
-	@RequestMapping("commuteUpdateList.at")
-	public ModelAndView commuteUpdate(ModelAndView mv) {
+	@RequestMapping("work.at")
+	public ModelAndView atWorkList(ModelAndView mv) {
 
 		// 5-1. 이번달 총 연장근무 시간
 	

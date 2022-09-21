@@ -28,4 +28,16 @@ public class Attendance {
 	private String atModifyStatus;
 	private String atModifyDate;
 	
+	// 휴가사용내역
+	private String annualGive;
+	private String annualDate;
+	
+	private String createDate;
+	private String documentContent;
+	
+	private String vacationCategory;
+	private String vacationDate;
+	private int vacationCount;
+	private String apStatus;
+	
 }

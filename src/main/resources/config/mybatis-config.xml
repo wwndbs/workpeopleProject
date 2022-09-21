@@ -32,6 +32,7 @@
 		<typeAlias type="com.gd.workpp.company.model.vo.OrgChart" alias="OrgChart" />
 		<typeAlias type="com.gd.workpp.company.model.vo.Department" alias="Department" />
 		<typeAlias type="com.gd.workpp.company.model.vo.Job" alias="Job" />
+		<typeAlias type="com.gd.workpp.attendance.model.vo.Attendance" alias="Annual" />
 	</typeAliases>
 	
 	 <mappers>

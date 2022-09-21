@@ -30,14 +30,14 @@
 		<jsp:include page="../common/menubar.jsp" />
 		
 		
-		      <!-- 컨텐츠 부분 wrapper -->
+	  <!-- 컨텐츠 부분 wrapper -->
       <div class="adminx-content">
         <div class="adminx-main-content">
 
           <span style="margin-left:20px;"><b>강보람님의 2022년 휴가</b></span> 
 
           <div class="container-fluid">
-
+			<input type="hidden" name="userNo" value="${loginUser.userNo}">
             <!--메인페이지 컨텐츠-->
             <div class="top-wrapper2">
               
@@ -51,7 +51,7 @@
                         총 휴가
                       </span> <br>
                       <span class="span-bottom">
-                        13개
+                        ${holidayAllCount}개
                       </span>
                     </td>
                     <td style="text-align:center;"><hr style="border:1px solid LightGray; width:0; height:100px;"></td>
@@ -61,7 +61,7 @@
                         사용 휴가
                       </span> <br>
                       <span class="span-bottom">
-                        3개  
+                        ${holidayUserCount}개  
                       </span>
                     </td>
                     <td style="text-align:center;"><hr style="border:1px solid LightGray; width:0; height:100px;"></td>
@@ -71,7 +71,7 @@
                         잔여 휴가
                       </span> <br>
                       <span class="span-bottom">
-                        10개  
+                        ${holidayRemainderCount}개  
                       </span>
                     </td>
                   </tr>
@@ -138,86 +138,25 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                              <td>2022-09-05</td>
-                              <td>연차</td>
-                              <td>휴가갑니다.</td>
-                              <td>2022-09-06~2022-09-06</td>
-                              <td>1</td>
-                              <td>결제대기</td>
-                            </tr>
-                            <tr>
-                                <td>2022-09-05</td>
-                                <td>연차</td>
-                                <td>휴가갑니다.</td>
-                                <td>2022-09-06~2022-09-06</td>
-                                <td>1</td>
-                                <td>결제대기</td>
-                            </tr>
-                            <tr>
-                                <td>2022-09-05</td>
-                                <td>연차</td>
-                                <td>휴가갑니다.</td>
-                                <td>2022-09-06~2022-09-06</td>
-                                <td>1</td>
-                                <td>결제대기</td>
-                            </tr>
-                            <tr>
-                                <td>2022-09-05</td>
-                                <td>연차</td>
-                                <td>휴가갑니다.</td>
-                                <td>2022-09-06~2022-09-06</td>
-                                <td>1</td>
-                                <td>결제대기</td>
-                            </tr>
-                            <tr>
-                                <td>2022-09-05</td>
-                                <td>연차</td>
-                                <td>휴가갑니다.</td>
-                                <td>2022-09-06~2022-09-06</td>
-                                <td>1</td>
-                                <td>결제대기</td>
-                            </tr>
-                            <tr>
-                                <td>2022-09-05</td>
-                                <td>연차</td>
-                                <td>휴가갑니다.</td>
-                                <td>2022-09-06~2022-09-06</td>
-                                <td>1</td>
-                                <td>결제대기</td>
-                            </tr>
-                            <tr>
-                                <td>2022-09-05</td>
-                                <td>연차</td>
-                                <td>휴가갑니다.</td>
-                                <td>2022-09-06~2022-09-06</td>
-                                <td>1</td>
-                                <td>결제대기</td>
-                            </tr>
-                            <tr>
-                                <td>2022-09-05</td>
-                                <td>연차</td>
-                                <td>휴가갑니다.</td>
-                                <td>2022-09-06~2022-09-06</td>
-                                <td>1</td>
-                                <td>결제대기</td>
-                            </tr>
-                            <tr>
-                                <td>2022-09-05</td>
-                                <td>연차</td>
-                                <td>휴가갑니다.</td>
-                                <td>2022-09-06~2022-09-06</td>
-                                <td>1</td>
-                                <td>결제대기</td>
-                            </tr>
-                            <tr>
-                                <td>2022-09-05</td>
-                                <td>연차</td>
-                                <td>휴가갑니다.</td>
-                                <td>2022-09-06~2022-09-06</td>
-                                <td>1</td>
-                                <td>승인</td>
-                            </tr>
+                          	<c:choose>							                          
+                         		<c:when test="${ empty list }">
+                         			<tr>
+                         				<td colspan="6">조회내역이 없습니다.</td>
+                         			</tr>
+                         		</c:when>
+                         		<c:otherwise>  
+                         			<c:forEach var="at" items="${ list }">                       		
+		                            <tr>
+		                              <td>${ at.createDate }</td>
+		                              <td>${ at.vacationCategory }</td>
+		                              <td>${ at.documentContent }</td>
+		                              <td>${ at.vacationDate }</td>
+		                              <td>${ at.vacationCount }</td>
+		                              <td>${ at.apStatus }</td>
+		                            </tr>
+		                            </c:forEach>
+                            	</c:otherwise>
+                            </c:choose>
                           </tbody>
                         </table>
                         

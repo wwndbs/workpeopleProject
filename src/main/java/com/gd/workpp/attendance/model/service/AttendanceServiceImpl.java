@@ -15,26 +15,28 @@ public class AttendanceServiceImpl implements AttendanceService {
 	@Autowired
 	private AttendanceDao aDao;
 	@Autowired
-	private SqlSessionTemplate sqlSession;
+	private SqlSessionTemplate sqlSession;	
 	
 	
-	
-	
+	// 4. 휴가관리 / atHolidayList.jsp
 	@Override
 	public int holidayAllCount(String userNo) {
-		return 0;
+		return aDao.holidayAllCount(sqlSession, userNo);
 	}
+	
 	@Override
 	public int holidayUserCount(String userNo) {
-		return 0;
+		return aDao.holidayUserCount(sqlSession, userNo);
 	}
+
 	@Override
 	public int holidayRemainderCount(String userNo) {
-		return 0;
+		return aDao.holidayRemainderCount(sqlSession, userNo);
 	}
+	
 	@Override
 	public ArrayList<Attendance> selectHolidayList(String userNo) {
-		return null;
+		return aDao.selectHolidayList(sqlSession, userNo);
 	}
 
 		

@@ -69,22 +69,22 @@
 
 				<ul class="sidebar-sub-nav collapse" id="navTables">
 					<li class="sidebar-nav-item">
-						<a href="commute.at" class="sidebar-nav-link">
+						<a href="commute.at?userNo=${loginUser.userNo}" class="sidebar-nav-link">
 							<span class="sidebar-nav-abbr"> Vi </span> <span class="sidebar-nav-name"> 출퇴근 기록 </span>
 						</a>
 					</li>
 					<li class="sidebar-nav-item">
-						<a href="attendance.at" class="sidebar-nav-link">
+						<a href="attendance.at?userNo=${loginUser.userNo}" class="sidebar-nav-link">
 							<span class="sidebar-nav-abbr"> Vi </span> <span class="sidebar-nav-name"> 개인 근태현황 조회 </span>
 						</a>
 					</li>
 					<li class="sidebar-nav-item">
-						<a href="holiday.at" class="sidebar-nav-link">
+						<a href="holiday.at?userNo=${loginUser.userNo}" class="sidebar-nav-link">
 							<span class="sidebar-nav-abbr"> Vi </span> <span class="sidebar-nav-name"> 휴가관리 </span>
 						</a>
 					</li>
 					<li class="sidebar-nav-item">
-						<a href="work.at" class="sidebar-nav-link">
+						<a href="work.at?userNo=${loginUser.userNo}" class="sidebar-nav-link">
 							<span class="sidebar-nav-abbr"> Vi </span> <span class="sidebar-nav-name"> 연장근무 내역조회 </span>
 						</a>
 					</li>
