@@ -79,7 +79,7 @@
 
               </div>  
 
-              <!--검색필터 부분-->
+              <!--검색필터 부분
               <div class="holiday-blank" style="width:100%; height:100%;">
                 
                 <div class="attendence-area">
@@ -102,13 +102,15 @@
                      </div>
                  </div>
                 </div>
-
-                <div class="commute-table-area holiday-manage">
+				-->
+				
+                <div class="commute-table-area holiday-manage" style="margin-top:25px;">
 
                     <div style="padding-left:15px; width:100%;">
                       
                       <div style="display:inline-block; text-align:center; margin-top:15px; margin-bottom:15px;">
-                        <strong>2022-07-01 ~ 2022-07-31 연장근무내역</strong>
+                        <strong>2022년 강보람님의 연장근무내역</strong>
+                        <button type="button" class="btn btn-sm btn-primary" style="margin-left:15px; height:40px;" onclick="location.href='documentList.ap'">연장근무신청</button>
                       </div>
                                                                   
                     </div>
@@ -170,22 +172,6 @@
                             </tr>
                           </tbody>
                         </table>
-                        
-                        <div class="card-footer d-flex justify-content-end" style="justify-content:center !important;">
-                          <ul class="pagination pagination-clean pagination-sm mb-0">
-                            <li class="page-item disabled">
-                              <a class="page-link" href="#" tabindex="-1">‹</a>
-                            </li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link" href="#">5</a></li>
-                            <li class="page-item">
-                              <a class="page-link" href="#">›</a>
-                            </li>
-                          </ul>
-                        </div>
 
                       </div>
                     <!-- // Table seamless -->

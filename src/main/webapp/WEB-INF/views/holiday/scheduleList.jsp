@@ -142,7 +142,7 @@
 		                                		<option value="#FFC0CB" style="background:#FFC0CB;">분홍색</option>
 			                                    <option value="#D25565" style="background:#DC143C;">빨간색</option>
 			                                    <option value="#ffa94d" style="background:#ffa94d;">주황색</option>
-			                                    <option value="#FFFF00" style="background:#FFD700;">노란색</option>
+			                                    <option value="#FFD700" style="background:#FFD700;">노란색</option>
 			                                    <option value="#63e6be" style="background:#9ACD32;">연두색</option>
 			                                    <option value="#a9e34b" style="background:#2E8B57;">초록색</option>	                                                                       
 			                                    <option value="#74c0fc" style="background:#0000CD;">파란색</option>                                                        

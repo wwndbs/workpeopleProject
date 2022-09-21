@@ -79,7 +79,7 @@
 
               </div>  
 
-              <!--검색필터 부분-->
+              <!--검색필터 부분
               <div class="holiday-blank" style="width:100%; height:100%;">
                 
                 <div class="attendence-area">
@@ -109,16 +109,19 @@
                      </div>
                  </div>
                 </div>
-
-                <div class="commute-table-area holiday-manage">
+				-->
+				
+                <div class="commute-table-area holiday-manage" style="margin-top:25px;">
 
                     <div style="padding-left:15px; width:100%;">
                       
-                      <div style="display:inline-block; text-align:center; margin-top:15px; margin-bottom:15px;">
-                        <strong>2022-01-01 ~ 2022-12-31 휴가사용내역</strong>
+                      <div style="display:inline-block; text-align:left; width:100%; height:40px; margin-top:15px; margin-bottom:15px;">
+                        <strong>2022년 강보람님의 휴가사용내역</strong> 
+                        <button type="button" class="btn btn-sm btn-primary" style="margin-left:15px; height:40px;" onclick="location.href='documentList.ap'">휴가신청</button>
                       </div>
                                                                   
                     </div>
+                    
                     
                     <!-- Table Seamless -->
                       <div class="card mb-grid" style="margin-left:15px; margin-right:15px;">
