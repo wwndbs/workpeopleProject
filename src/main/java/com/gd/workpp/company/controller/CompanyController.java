@@ -14,6 +14,7 @@ import com.gd.workpp.company.model.service.CompanyService;
 import com.gd.workpp.company.model.vo.Company;
 import com.gd.workpp.company.model.vo.Department;
 import com.gd.workpp.company.model.vo.OrgChart;
+import com.gd.workpp.member.model.vo.Member;
 
 @Controller
 public class CompanyController {
@@ -23,7 +24,7 @@ public class CompanyController {
 	
 	
 	@RequestMapping("orgchart.co")
-	public ModelAndView documentListView(ModelAndView mv) {
+	public ModelAndView orgChartListView(ModelAndView mv) {
 		
 		ArrayList<OrgChart> list = cService.orgChartList();
 		
@@ -34,7 +35,7 @@ public class CompanyController {
 	}
 	
 	@RequestMapping("updateOrgChartForm.co")
-	public ModelAndView documentListView1(ModelAndView mv) {
+	public ModelAndView orgChartList(ModelAndView mv) {
 		
 		ArrayList<OrgChart> list = cService.orgChartList();
 		ArrayList<Department> deplist = cService.departmentList();
@@ -47,7 +48,7 @@ public class CompanyController {
 	}
 	
 	@RequestMapping("updateDepForm.co")
-	public ModelAndView documentListView2(ModelAndView mv) {
+	public ModelAndView updateDepList(ModelAndView mv) {
 		
 		ArrayList<Department> list = cService.updateDepList();
 		
@@ -58,12 +59,26 @@ public class CompanyController {
 	}
 	
 	@RequestMapping("companyUpdateForm.co")
-	public ModelAndView documentListView3(ModelAndView mv) {
+	public ModelAndView selectCompany(ModelAndView mv) {
 	    
-		//Company co = cService.selectCompany();
-		
-		mv.setViewName("company/companyUpdate");
+		Company co = cService.selectCompany();
+		mv.addObject("co",co)
+		  .setViewName("company/companyUpdate");		  
 		return mv;
+	}
+
+	@RequestMapping("updateCom.co")
+	public String updateCompany(Company co, Model model,HttpSession session) {
+		
+		int result = cService.updateCompany(co);
+		
+		if(result>0) { // 수정성공
+			return "redirect:companyUpdateForm.co";
+			
+		}else { // 수정실패
+			model.addAttribute("errorMsg","회사정보 수정 실패");
+			return "common/errorPage";
+		}
 	}
 	
 	@RequestMapping("addOrgChart.co")

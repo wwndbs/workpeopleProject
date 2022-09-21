@@ -40,56 +40,56 @@
                 <div class="top-wrapper">
 
                     <!--게시판 부분-->
-                    <div id="company-area" class="company-area">
+                    <div id="company-area" class="company-area" style="width:2000px;">
                         
                         <div id="company2">
                             
                             <h2>회사 관리</h2>
                             <br>
-                            <form id="createForm" method="post" action="" enctype="multipart/form-data">
-                              
+                            <form id="companyForm" method="post" action="updateCom.co" enctype="multipart/form-data">
+                              	<input type="hidden" name="createDate" value="${co.createDate}">
                                 <table border="1px">
                                     <tr style="height:50px">
                                         <th id="hold" style="width:80px;">업체명</th>
-                                        <td><input style="width:100%; height:50px" placeholder="신규값 입력"></td>
-                                        <td><input style="width:100%; height:50px" value="기존 저장값" readonly></td>
+                                        <td><input name="comName" style="width:100%; height:50px" placeholder="${co.comName}"></td>
+                                        <td><input style="width:100%; height:50px" value="${co.comName}" readonly></td>
                                         <th id="hold" style="width:150;">법인등록번호</th>
-                                        <td><input style="width:100%; height:50px" placeholder="신규값 입력"></td>
-                                        <td><input style="width:100%; height:50px" value="기존 저장값" readonly></td>
+                                        <td><input name="comNo" style="width:100%; height:50px" placeholder="${co.comNo}"></td>
+                                        <td><input style="width:100%; height:50px" value="${co.comNo}" readonly></td>
                                     </tr>
 
                                     <tr style="height:50px">
                                         <th id="hold">대표자명</th>
-                                        <td><input style="width:100%; height:50px" placeholder="기존 저장값"></td>
+                                        <td><input name="ceo" style="width:100%; height:50px" placeholder="${co.ceo}"></td>
                                         <th id="hold">전화</th>
-                                        <td><input style="width:100%; height:50px" placeholder="기존 저장값"></td>
+                                        <td><input name="phone" style="width:100%; height:50px" placeholder="${co.phone}"></td>
                                         <th id="hold">팩스</th>
-                                        <td><input style="width:100%; height:50px" placeholder="기존 저장값"></td>
+                                        <td><input name="fax" style="width:100%; height:50px" placeholder="${co.fax}"></td>
                                     </tr>
 
                                     <tr style="height:50px">
                                         <th id="hold">주소</th>
-                                        <td colspan="3"><input style="width:100%; height:50px" placeholder="기존 저장값"></td>
+                                        <td colspan="3"><input name="address" style="width:100%; height:50px" placeholder="${co.address}"></td>
                                         <th id="hold">우편번호</th>
-                                        <td><input style="width:100%; height:50px" placeholder="기존 저장값"></td>
+                                        <td><input name="postNo" style="width:100%; height:50px" placeholder="${co.postNo}"></td>
                                     </tr>
                                 </table>
 
                                 <br>
                                 <div>
-                                    <button>사업자 등록증 이미지 등록</button>
+                                    <button class="btn btn-secondary">사업자 등록증 이미지 등록</button>
                                     <br>
                                     <br>
-                                    <div style="height: 100px;">
-                                        <img alt="image" class="img-fluid rounded" src="./imgs/people/7.jpg">
+                                    <div style="height: 100px;">                   
+                                        <img alt="image" name="comImg" class="img-fluid rounded" src="<c:out value='${co.comImg}' default='resources/profile_images/defaultProfile.jpg' />">
                                     </div>
                                 </div>
 
 
                                 <br>
                                 <div align="right">
-                                    <button type="submit" id="loginbtn" >저장</button>
-                                    <button type="submit" id="loginbtn" >취소</button>
+                                    <button class="btn btn-primary" type="submit" id="loginbtn" >저장</button>
+                                    <button class="btn btn-secondary" type="submit" id="loginbtn" >취소</button>
                                 </div>
 
 

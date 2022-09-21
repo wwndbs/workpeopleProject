@@ -27,4 +27,6 @@ public interface CompanyService {
 	
 	Company selectCompany();
 	
+	int updateCompany(Company co);
+	
 }

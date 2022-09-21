@@ -36,7 +36,6 @@
 	  		from member
 	  		where status = 'N'
 	  		and email = #{email}
-	  		and user_pwd = #{userPwd}
 	</select>
 	  
 	<update id="updateMember">

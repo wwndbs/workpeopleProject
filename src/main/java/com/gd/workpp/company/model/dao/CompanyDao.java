@@ -48,4 +48,9 @@ public class CompanyDao {
 	public Company selectCompany(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("companyMapper.selectCompany");
 	}
+	
+	public int updateCompany(SqlSessionTemplate sqlSession,Company co) {
+		return sqlSession.insert("companyMapper.updateCompany",co);
+	}
+	
 }

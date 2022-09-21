@@ -30,30 +30,32 @@
 							<span class="sidebar-nav-abbr"> Mo </span> <span class="sidebar-nav-name"> 개인정보수정 </span>
 						</a>
 					</li>
-
-					<li class="sidebar-nav-item">
-						<a href="createForm.me" class="sidebar-nav-link">
-							<span class="sidebar-nav-abbr"> Mo </span> <span class="sidebar-nav-name"> 사원계정생성 </span>
-						</a>
-					</li>
-
-					<li class="sidebar-nav-item">
-						<a href="modifyList.me" class="sidebar-nav-link">
-							<span class="sidebar-nav-abbr"> Mo </span> <span class="sidebar-nav-name"> 사원정보수정 및 삭제 </span>
-						</a>
-					</li>
 					
-					<li class="sidebar-nav-item">
-						<a href="updateDepForm.co" class="sidebar-nav-link">
-							<span class="sidebar-nav-abbr"> Mo </span> <span class="sidebar-nav-name"> 부서관리 </span>
-						</a>
-					</li>
-					
-					<li class="sidebar-nav-item">
-						<a href="companyUpdateForm.co" class="sidebar-nav-link">
-							<span class="sidebar-nav-abbr"> Mo </span> <span class="sidebar-nav-name"> 회사관리 </span>
-						</a>
-					</li>
+               		<c:if test="${ loginUser.depName == '인사팀' }">
+	                   	<li class="sidebar-nav-item">
+							<a href="createForm.me" class="sidebar-nav-link">
+								<span class="sidebar-nav-abbr"> Mo </span> <span class="sidebar-nav-name"> 사원계정생성 </span>
+							</a>
+						</li>
+	
+						<li class="sidebar-nav-item">
+							<a href="modifyList.me" class="sidebar-nav-link">
+								<span class="sidebar-nav-abbr"> Mo </span> <span class="sidebar-nav-name"> 사원정보수정 및 삭제 </span>
+							</a>
+						</li>
+						
+						<li class="sidebar-nav-item">
+							<a href="updateDepForm.co" class="sidebar-nav-link">
+								<span class="sidebar-nav-abbr"> Mo </span> <span class="sidebar-nav-name"> 부서관리 </span>
+							</a>
+						</li>
+						
+						<li class="sidebar-nav-item">
+							<a href="companyUpdateForm.co" class="sidebar-nav-link">
+								<span class="sidebar-nav-abbr"> Mo </span> <span class="sidebar-nav-name"> 회사관리 </span>
+							</a>
+						</li>
+                  	</c:if>
 
 				</ul>
 			</li>
@@ -201,11 +203,14 @@
 						</a>
 					</li>
 
-					<li class="sidebar-nav-item">
-						<a href="updateOrgChartForm.co" class="sidebar-nav-link">
-							<span class="sidebar-nav-abbr"> Mo </span> <span class="sidebar-nav-name"> 조직도 수정 및 삭제 </span>
-						</a>
-					</li>
+					<c:if test="${ loginUser.depName == '인사팀' }">
+	                   	<li class="sidebar-nav-item">
+							<a href="updateOrgChartForm.co" class="sidebar-nav-link">
+								<span class="sidebar-nav-abbr"> Mo </span> <span class="sidebar-nav-name"> 조직도 수정 및 삭제 </span>
+							</a>
+						</li>
+	                </c:if>
+
 				</ul>
 			</li>
 			<!--일정관리-->

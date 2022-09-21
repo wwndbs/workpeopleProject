@@ -66,6 +66,11 @@ public class CompanyServiceImpl implements CompanyService{
 		return cDao.selectCompany(sqlSession);
 	}
 
+	@Override
+	public int updateCompany(Company co) {
+		return cDao.updateCompany(sqlSession,co);
+	}
+
 
 	
 	

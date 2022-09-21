@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +33,9 @@ public class MemberController {
 	@Autowired 
 	private MemberService mService;
 	
+	@Autowired 
+	private BCryptPasswordEncoder bcryptPasswordEncoder;
+	
 	@RequestMapping("logout.me")
 	public String logoutMember(HttpSession session) {
 		// 세션 만료
@@ -41,13 +45,13 @@ public class MemberController {
 	}
 	
 	@RequestMapping("updateForm.me")
-	public ModelAndView documentListView(ModelAndView mv) {
+	public ModelAndView updateMemberForm(ModelAndView mv) {
 		mv.setViewName("member/updateMember");
 		return mv;
 	}
 	
 	@RequestMapping("createForm.me")
-	public ModelAndView documentListView1(ModelAndView mv) {
+	public ModelAndView createMemberForm(ModelAndView mv,Member m) {
 		
 		ArrayList<Department> deplist = cService.departmentList();
 		ArrayList<Job> joblist = cService.jobList();
@@ -56,6 +60,7 @@ public class MemberController {
 		  .addObject("joblist", joblist)
 		  .setViewName("member/createMember");
 		return mv;
+		
 	}
 	
 	
@@ -100,7 +105,25 @@ public class MemberController {
 	
 	@RequestMapping("login.me")
 	public ModelAndView loginMember(Member m, HttpSession session, ModelAndView mv) {
-	
+		/*	암호화 확인용 코드
+			String encPwd = bcryptPasswordEncoder.encode(m.getUserPwd());
+			System.out.println(m.getUserPwd());
+			System.out.println(encPwd);
+		*/
+		
+		Member loginUser = mService.loginMember(m);
+		// loginUser : 오로지 아이디만을 가지고 조회된 회원
+		// loginUser userPwd 필드 : db에 기록되어있는 비번 (암호문)
+		
+		if(loginUser != null && bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) { // 로그인 성공
+			// 아이디가 일치하고 , 비밀번호도 일치할때 ( 매치를이용해서 db의 랜덤값과 유저가 입력한 비밀번호를 검사함 )
+			session.setAttribute("loginUser", loginUser); // 여기 비밀번호 암호문으로 담겨있음
+			mv.setViewName("main");
+		}else {
+			mv.setViewName("redirect:/");
+		}
+		
+		/* 비밀번호 암호화 이전
 		Member loginUser = mService.loginMember(m);
 		
 		if(loginUser == null) { // 실패
@@ -109,7 +132,7 @@ public class MemberController {
 			session.setAttribute("loginUser", loginUser);
 			mv.setViewName("main");
 		}
-		
+		*/
 		return mv;
 	}
 	
@@ -162,21 +185,17 @@ public class MemberController {
 	public String updatePwd(Member m,HttpSession session,String updatePwd,String userPwd) {
 		
 		Member loginUser = (Member)session.getAttribute("loginUser");
-		if(userPwd.equals(loginUser.getUserPwd())) {
-			m.setUserPwd(updatePwd);
+		if(bcryptPasswordEncoder.matches(userPwd, loginUser.getUserPwd())) {
+			String encPwd = bcryptPasswordEncoder.encode(updatePwd);
+			m.setUserPwd(encPwd);
 			int result = mService.updatePwd(m);
 			
 			if(result > 0) {
-				// > 변경 성공 시
-		           //- 갱신된 회원 객체 조회해서 session에 덮어씌우기
-		           //- 마이페이지가 보여질 수 있도록 처리 (이때 alert로 성공 알림)
 				session.setAttribute("loginUser",mService.loginMember(m));
 				session.setAttribute("alertMsg", "성공적으로 비밀번호가 변경되었습니다.");
 				return "redirect:updateForm.me";
 				
 			}else {
-		        //> 변경 실패 시
-		           //- 마이페이지가 보여질 수 있도록 처리 (이때 alert로 실패 알림)
 				session.setAttribute("alertMsg", "비밀번호 변경에 실패하였습니다.");
 				return "redirect:updateForm.me";
 				
@@ -217,7 +236,13 @@ public class MemberController {
 	// 사원 계정 생성 창 이동
 	@RequestMapping("create.me")
 	public String createMember(Member m ,HttpSession session, Model model) {
+		
+		String encPwd = bcryptPasswordEncoder.encode(m.getUserPwd());
+		
+		m.setUserPwd(encPwd);
+		
 		int result = mService.createMember(m);
+		
 		
 		if(result>0) { // 성공
 			return "redirect:/createForm.me";

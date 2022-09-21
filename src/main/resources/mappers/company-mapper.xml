@@ -127,21 +127,65 @@
 	
 	<select id="selectCompany" resultMap="companyResult">
 		<![CDATA[
-		select
-			com_name
-			,com_no
-			,ceo
-			,post_no
-			,phone
-			,fax
-			,address
-			,modify_date
-			,create_date
-			,com_img
-		from company
-		order by modify_no desc
-		where rownum <= 1
+			select
+				 com_name
+				,com_no
+				,ceo
+				,post_no
+				,phone
+				,fax
+				,address
+				,modify_date
+				,create_date
+				,com_img
+			from (select
+				 com_name
+				,com_no
+				,ceo
+				,post_no
+				,phone
+				,fax
+				,address
+				,modify_date
+				,create_date
+				,com_img
+			from company
+			order by modify_no desc)
+			where rownum = 1
 		]]>
 	</select>
+	
+	<insert id="updateCompany">
+		insert
+			into company
+			(
+				modify_no
+				,com_name
+				,com_no
+				,ceo
+				,post_no
+				,phone
+				,fax
+				,address
+				,modify_date
+				,create_date
+				,com_img
+			)
+			values
+			(
+				SEQ_COMPANY.NEXTVAL
+				,#{comName}
+				,#{comNo}
+				,#{ceo}
+				,#{postNo}
+				,#{phone}
+				,#{fax}
+				,#{address}
+				,sysdate
+				,#{createDate}
+				,#{comImg}
+			)
+	
+	</insert>
 	
 </mapper>	  
