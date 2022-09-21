@@ -35,6 +35,7 @@ public class Attendance {
 	private String createDate;
 	private String documentContent;
 	
+	
 	private String vacationCategory;
 	private String vacationDate;
 	private int vacationCount;

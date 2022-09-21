@@ -132,7 +132,7 @@
 	<!-- 4-4. 휴가사용내역 표_휴가신청일자/휴가종류/사유/휴가사용기간/차감일수/승인내역 -->
 	<select id="selectHolidayList" resultMap="documentResult">
 		select
-		       do.create_date
+		       to_char(do.create_date, 'YYYY-MM-DD') as create_date
 		     , nvl(v.vacation_category, '-') as vacation_category
 		     , do.document_content 
 		     , nvl(v.vacation_start || '~' || vacation_end, '-') as vacation_date
