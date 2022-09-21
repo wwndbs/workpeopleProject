@@ -127,6 +127,21 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public int projectApprove(ProMember pm) {
 		return pDao.projectApprove(sqlSession, pm);
+	}
+
+	@Override
+	public ArrayList<Project> selectTotalProject() {
+		return pDao.selectTotalProject(sqlSession);
+	}
+
+	@Override
+	public ArrayList<ProMember> checkMeList(String userNo) {
+		return pDao.checkMeList(sqlSession, userNo);
+	}
+
+	@Override
+	public ArrayList<Project> selectList2(String depName) {
+		return pDao.selectList2(sqlSession, depName);
 	}	
 	
 }

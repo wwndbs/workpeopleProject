@@ -73,12 +73,50 @@
             by p.project_no desc
 	</select>
 	
-	<!-- 프로젝트 참여자 수 조회 -->
+	<!-- 참여중인 프로젝트리스트 조회 | 위의 프로젝트리스트는 제외 -->
+	<select id="selectList2" resultMap="projectResult">
+	    select
+               p.project_no
+		     , p.project_title
+             , p.user_no as "proAdminNo"
+		     , p.category
+             , p.dep_name
+  		  from project p       
+          join pro_member pm on (p.project_no = pm.project_no)
+         where p.dep_name not like '%'||#{depName}||'%'      
+         order
+            by p.project_no desc
+	</select>
+	
+	<!-- 내가 프로젝트에 참여했는지 확인 -->
+	<select id="checkMeList" resultMap="proMemberResult">
+	    select
+               pm.project_no
+             , pm.user_no
+             , pm.pro_approve
+          from pro_member pm
+         where user_no = #{userNo}
+	</select>
+	
+	<!-- 프로젝트 참여자 조회 -->
 	<select id="countMember" resultMap="proMemberResult">
 		select
                count(user_no) as "pmMemberCount"   
           from pro_member
          where project_no = #{projectNo}
+	</select>
+	
+	<!-- 전체 프로젝트 조회 -->
+	<select id="selectTotalProject" resultMap="projectResult">
+		select
+               p.project_no
+		     , p.project_title
+             , p.user_no as "proAdminNo"
+		     , p.category
+             , p.dep_name
+  		  from project p                
+         order
+            by p.project_no desc
 	</select>	
 	
 	<!-- 프로젝트게시물 관리자조회 -->

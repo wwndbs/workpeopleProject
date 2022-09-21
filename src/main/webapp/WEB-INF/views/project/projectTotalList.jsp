@@ -23,13 +23,17 @@
   .font1{
     font-weight: bold;
     font-size: 90%;
+    width:300%
   }
-  .font2{font-size: 75%;}
-  .font3{font-size: 90%; font-weight: bold; color:rgb(244, 217, 14)}
-  .box1{cursor : pointer}
-  .box1:hover{background-color : #f4f9fe;}
-  .demo-icon-display{color: rgb(77,77,77)}
-  .demo-icon-display span{font-size:14px}
+ .font2{font-size: 75%; width:200%}
+ .font3{font-size: 90%; font-weight: bold; color:rgb(244, 217, 14); width:300%}
+ .approval1{width: 98.5% !important; font-weight: bold; font-size: 15px;}
+ .btn1{margin: 10px -1500px 0px 1500px; width: 70%;}
+ .box1{cursor : pointer; margin: 0px -5px 0px 0px;} 
+ .box1:hover{background-color : #f4f9fe;}
+ .col-lg-3{max-width: 80%;}
+ .container-fluid{margin-right: 0px !important;}
+ .modifyPro, .deletePro{cursor : pointer}	
 </style>
 </head>
 <body>
@@ -52,219 +56,59 @@
 	            <!--프로젝트 박스 시작-->
 	            <div class="row">
 	
-	              <!-- 박스 한개 -->
-	              <div class="col-md-6 col-lg-3 d-flex">
-	                <div class="color"></div>
-	                <div class="card mb-grid w-100 box1">
-	                  <div class="card-body d-flex flex-column">                                            
-	                    <div class="d-flex justify-content-between mb-3">
-	                      <h5 class="card-title mb-0">
-	                        <!-- 승인여부 -->
-	                        <div style="float:right; font-size: 80%; margin: 0px -270px 0px 0px;">
-	                          <div class="demo-icon-display">
-	                              <i data-feather="unlock" style="width: 30px; height:30px; margin: 0px 0px 8px 13px"></i>
-	                              <br>
-	                              <span>승인완료</span>
-	                          </div>
-	                        </div>
-	                        <br>
-	                        <label class="font1">&nbsp;&nbsp;프로젝트명</label><br>                        
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font3" style="margin: 10px 0px 0px 0px;">&nbsp;&nbsp;기획중</label>
-	                      </h5>
-	                      <i data-feather="user" style="margin: 230px -17px -20px 200px; float: right;"></i>
-	                      <label for="" style="margin: 230px 0px -20px 0px;">23</label>
-	                    </div>
-	                  </div>
-	                </div>
-	              </div>
-	              <!-- 박스 한개 -->
-	              <div class="col-md-6 col-lg-3 d-flex">
-	                <div class="color2"></div>
-	                <div class="card mb-grid w-100 box1">
-	                  <div class="card-body d-flex flex-column">                                            
-	                    <div class="d-flex justify-content-between mb-3">
-	                      <h5 class="card-title mb-0">
-	                        <!-- 승인여부 -->
-	                        <div style="float:right; font-size: 80%; margin: 0px -270px 0px 0px;">
-	                          <div class="demo-icon-display" style="margin: 0px -20px 8px 113px">
-	                              <i data-feather="lock" style="width: 30px; height:30px; margin: 0px 0px 8px 13px"></i>
-	                              <br>
-	                              <span>승인필요</span>
-	                          </div>
-	                        </div>
-	                        <br>
-	                        <label class="font1">&nbsp;&nbsp;프로젝트명</label><br>                        
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font3" style="margin: 10px 0px 0px 0px;">&nbsp;&nbsp;기획중</label>
-	                      </h5>
-	                      <i data-feather="user" style="margin: 230px -17px -20px 200px; float: right;"></i>
-	                      <label for="" style="margin: 230px 0px -20px 0px;">23</label>
-	                    </div>
-	                  </div>
-	                </div>
-	              </div>
-	              <!-- 박스 한개 -->
-	              <div class="col-md-6 col-lg-3 d-flex">
-	                <div class="color"></div>
-	                <div class="card mb-grid w-100 box1">
-	                  <div class="card-body d-flex flex-column">                                            
-	                    <div class="d-flex justify-content-between mb-3">
-	                      <h5 class="card-title mb-0">
-	                        <!-- 승인여부 -->
-	                        <div style="float:right; font-size: 80%; margin: 0px -270px 0px 0px;">
-	                          <div class="demo-icon-display">
-	                              <i data-feather="unlock" style="width: 30px; height:30px; margin: 0px 0px 8px 13px"></i>
-	                              <br>
-	                              <span>승인완료</span>
-	                          </div>
-	                        </div>
-	                        <br>
-	                        <label class="font1">&nbsp;&nbsp;프로젝트명</label><br>                        
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font3" style="margin: 10px 0px 0px 0px;">&nbsp;&nbsp;기획중</label>
-	                      </h5>
-	                      <i data-feather="user" style="margin: 230px -17px -20px 200px; float: right;"></i>
-	                      <label for="" style="margin: 230px 0px -20px 0px;">23</label>
-	                    </div>
-	                  </div>
-	                </div>
-	              </div>
-	              <!-- 박스 한개 -->
-	              <div class="col-md-6 col-lg-3 d-flex">
-	                <div class="color"></div>
-	                <div class="card mb-grid w-100 box1">
-	                  <div class="card-body d-flex flex-column">                                            
-	                    <div class="d-flex justify-content-between mb-3">
-	                      <h5 class="card-title mb-0">
-	                        <!-- 승인여부 -->
-	                        <div style="float:right; font-size: 80%; margin: 0px -270px 0px 0px;">
-	                          <div class="demo-icon-display">
-	                              <i data-feather="unlock" style="width: 30px; height:30px; margin: 0px 0px 8px 13px"></i>
-	                              <br>
-	                              <span>승인완료</span>
-	                          </div>
-	                        </div>
-	                        <br>
-	                        <label class="font1">&nbsp;&nbsp;프로젝트명</label><br>                        
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font3" style="margin: 10px 0px 0px 0px;">&nbsp;&nbsp;기획중</label>
-	                      </h5>
-	                      <i data-feather="user" style="margin: 230px -17px -20px 200px; float: right;"></i>
-	                      <label for="" style="margin: 230px 0px -20px 0px;">23</label>
-	                    </div>
-	                  </div>
-	                </div>
-	              </div>
-	              <!-- 박스 한개 -->
-	              <div class="col-md-6 col-lg-3 d-flex">
-	                <div class="color"></div>
-	                <div class="card mb-grid w-100 box1">
-	                  <div class="card-body d-flex flex-column">                                            
-	                    <div class="d-flex justify-content-between mb-3">
-	                      <h5 class="card-title mb-0">
-	                        <!-- 승인여부 -->
-	                        <div style="float:right; font-size: 80%; margin: 0px -270px 0px 0px;">
-	                          <div class="demo-icon-display">
-	                              <i data-feather="unlock" style="width: 30px; height:30px; margin: 0px 0px 8px 13px"></i>
-	                              <br>
-	                              <span>승인완료</span>
-	                          </div>
-	                        </div>
-	                        <br>
-	                        <label class="font1">&nbsp;&nbsp;프로젝트명</label><br>                        
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font3" style="margin: 10px 0px 0px 0px;">&nbsp;&nbsp;기획중</label>
-	                      </h5>
-	                      <i data-feather="user" style="margin: 230px -17px -20px 200px; float: right;"></i>
-	                      <label for="" style="margin: 230px 0px -20px 0px;">23</label>
-	                    </div>
-	                  </div>
-	                </div>
-	              </div>
-	              <!-- 박스 한개 -->
-	              <div class="col-md-6 col-lg-3 d-flex">
-	                <div class="color"></div>
-	                <div class="card mb-grid w-100 box1">
-	                  <div class="card-body d-flex flex-column">                                            
-	                    <div class="d-flex justify-content-between mb-3">
-	                      <h5 class="card-title mb-0">
-	                        <!-- 승인여부 -->
-	                        <div style="float:right; font-size: 80%; margin: 0px -270px 0px 0px;">
-	                          <div class="demo-icon-display">
-	                              <i data-feather="unlock" style="width: 30px; height:30px; margin: 0px 0px 8px 13px"></i>
-	                              <br>
-	                              <span>승인완료</span>
-	                          </div>
-	                        </div>
-	                        <br>
-	                        <label class="font1">&nbsp;&nbsp;프로젝트명</label><br>                        
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font3" style="margin: 10px 0px 0px 0px;">&nbsp;&nbsp;기획중</label>
-	                      </h5>
-	                      <i data-feather="user" style="margin: 230px -17px -20px 200px; float: right;"></i>
-	                      <label for="" style="margin: 230px 0px -20px 0px;">23</label>
-	                    </div>
-	                  </div>
-	                </div>
-	              </div>
-	              <!-- 박스 한개 -->
-	              <div class="col-md-6 col-lg-3 d-flex">
-	                <div class="color"></div>
-	                <div class="card mb-grid w-100 box1">
-	                  <div class="card-body d-flex flex-column">                                            
-	                    <div class="d-flex justify-content-between mb-3">
-	                      <h5 class="card-title mb-0">
-	                        <!-- 승인여부 -->
-	                        <div style="float:right; font-size: 80%; margin: 0px -270px 0px 0px;">
-	                          <div class="demo-icon-display">
-	                              <i data-feather="unlock" style="width: 30px; height:30px; margin: 0px 0px 8px 13px"></i>
-	                              <br>
-	                              <span>승인완료</span>
-	                          </div>
-	                        </div>
-	                        <br>
-	                        <label class="font1">&nbsp;&nbsp;프로젝트명</label><br>                        
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font3" style="margin: 10px 0px 0px 0px;">&nbsp;&nbsp;기획중</label>
-	                      </h5>
-	                      <i data-feather="user" style="margin: 230px -17px -20px 200px; float: right;"></i>
-	                      <label for="" style="margin: 230px 0px -20px 0px;">23</label>
-	                    </div>
-	                  </div>
-	                </div>
-	              </div>
-	              
-	              
-	
+	              <!-- 전체 프로젝트 -->
+	              <c:choose>
+	                <c:when test="${ empty list }">
+	                  <span style="margin: 0px 0px 0px 730px"><br><br><br><br><br>현재 진행하고 있는 프로젝트가 없습니다.</span>
+	                </c:when>
+	                <c:otherwise>
+	                  <c:forEach var="pp" items="${ list }">
+	                  
+			              <div class="col-md-6 col-lg-3 d-flex">
+			                <div class="color"></div>
+			                <div class="card mb-grid project w-100 box1" onclick="location.href='proList.pr?no=${pp.projectNo}'">
+			                  <div class="card-body d-flex flex-column">                                            
+			                    <div class="d-flex justify-content-between mb-3">
+			                      <h5 class="card-title mb-0">
+			                        <!-- 승인여부 -->
+			                        <div style="float:right; font-size: 70%; margin: 0px -220px 0px 0px;">
+			                          <div class="demo-icon-display">
+			                              <i data-feather="unlock" style="width: 30px; height:30px; margin: 0px 0px 8px 13px"></i>
+			                              <br>
+			                              <span>승인완료</span>
+			                          </div>
+			                        </div>
+			                        <br>
+			                        <label class="font1">&nbsp;&nbsp;${ pp.projectTitle }</label><br>                        
+			                        <label class="font2">&nbsp;&nbsp;${ pp.depName }</label><br>
+			                        <div style="position:absolute;  bottom:30px !important">
+										<c:if test="${ pp.category == '기획중' }">
+					                        <label class="font3" style="">&nbsp;&nbsp;기획중</label>
+				                        </c:if>
+										<c:if test="${ pp.category == '기획완료' }">
+					                        <label class="font3" style="color:orange;">&nbsp;&nbsp;기획완료</label>
+				                        </c:if>
+										<c:if test="${ pp.category == '프로젝트 진행중' }">
+					                        <label class="font3" style="color:rgb(42, 187, 42)">&nbsp;&nbsp;프로젝트 진행중</label>
+				                        </c:if>
+										<c:if test="${ pp.category == '프로젝트 완료' }">
+					                        <label class="font3" style="color:rgb(113, 113, 255)">&nbsp;&nbsp;프로젝트 완료</label>
+				                        </c:if>
+										<c:if test="${ pp.category == '피드백' }">
+					                        <label class="font3" style="color:rgb(185, 101, 213)">&nbsp;&nbsp;피드백</label>
+				                        </c:if>	
+			                        </div>
+			                      </h5>
+			                      <i data-feather="user" style="margin: 230px -17px -20px 200px; float: right; width:27px !important"></i>
+			                      <span for="" style="margin: 230px 0px -20px 21px;" id="pcount">${ pp.pmMemberCount }</span]>
+			                    </div>
+			                  </div>
+			                </div>
+			              </div>
+		              
+		              </c:forEach>
+		            </c:otherwise>  
+	              </c:choose>
 	
 	            </div>
 	              

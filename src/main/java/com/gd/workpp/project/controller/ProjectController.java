@@ -29,7 +29,7 @@ public class ProjectController {
 	@Autowired
 	private ProjectService pService;
 	
-	// 내프로젝트 리스트 (로그인한 회원의 부서명 전달받기, sql에도 전달하고 컨트롤러서부터 계속 부서명을 전달해야됨 (jsp는 조건문x))
+	// [김은지] 내프로젝트 리스트 (로그인한 회원의 부서명 전달받기, sql에도 전달하고 컨트롤러서부터 계속 부서명을 전달해야됨 (jsp는 조건문x))
 	// 프로젝트 관리자 승인리스트
 	@RequestMapping(value="myProject.pr", produces="application/json; charset=utf-8")
 	public ModelAndView myProjectList(ModelAndView mv, HttpSession session, Project pp, ProMember pm) {
@@ -38,11 +38,14 @@ public class ProjectController {
 		String depName = m.getDepName();
 		int projectNo = pm.getProjectNo();
 		String userNo = m.getUserNo();
+		String proApprove = pm.getProApprove();
 				
 		ArrayList<Project> list = pService.selectList(depName);
 		ArrayList<ProMember> pmList = pService.countMember(projectNo);		
 		ArrayList<Project> appList = pService.adminProApproveList(userNo);
 		Project approveP = pService.adminApproveMember(projectNo);
+		ArrayList<ProMember> checkList = pService.checkMeList(userNo);
+		ArrayList<Project> list2 = pService.selectList2(depName);
 		
 		mv.addObject("list", list)
 		  .addObject("depName", depName)
@@ -51,14 +54,20 @@ public class ProjectController {
 		  .addObject("appList", appList)
 		  .addObject("approveP", approveP)
 		  .addObject("pm", pm)
+		  .addObject("checkList", checkList)
+		  .addObject("proApprove", proApprove)
+		  .addObject("list2", list2)
 		  //.addObject(approveP)
 		  .addObject(list)
+		  .addObject(list2)
 		  .setViewName("project/myProjectList");		
+		
+		System.out.println(checkList);
 						
 		return mv;
-	}	
+	}
 	
-	// 프로젝트 관리자 승인
+	// [김은지] 프로젝트 관리자 승인
 	@RequestMapping("approve.pr")
 	public String projectApprove(Model model, HttpSession session, ProMember pm) {
 		int result = pService.projectApprove(pm);
@@ -79,7 +88,7 @@ public class ProjectController {
 		}
 	}
 	
-	// 프로젝트 등록
+	// [김은지] 프로젝트 등록
 	@RequestMapping("insert.pr")
 	public String insertProject(Project p, HttpSession session, Model model) {
 		int result = pService.insertProject(p);
@@ -93,7 +102,7 @@ public class ProjectController {
 		}
 	}
 		
-	// 프로젝트 게시물리스트
+	// [김은지] 프로젝트 게시물리스트
 	@ResponseBody
 	@RequestMapping("proList.pr")
 	public ModelAndView projectList(@RequestParam(value="cpage", defaultValue="1") int currentPage, int no, ModelAndView mv, Model model, ProBoard pb) {
@@ -117,7 +126,7 @@ public class ProjectController {
 		return mv;
 	}
 	
-	// 프로젝트 검색기능
+	// [김은지] 프로젝트 검색기능
 	@ResponseBody
 	@RequestMapping("search.pr")
 	public ModelAndView selectSearchList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, String keyword, String condition, int no) {
@@ -136,7 +145,7 @@ public class ProjectController {
 		return mv;
 	}
 		
-	// 프로젝트 게시물 등록화면
+	// [김은지] 프로젝트 게시물 등록화면
 	@RequestMapping("enrollBoard.pr")
 	public String proBoardEnrollForm(int no, Model model) {
 		model.addAttribute("no", no);
@@ -144,7 +153,7 @@ public class ProjectController {
 		return "project/proBoardEnrollForm";				
 	}
 	
-	// 프로젝트 게시물 수정화면
+	// [김은지] 프로젝트 게시물 수정화면
 	@RequestMapping("modifyBoard.pr")
 	public ModelAndView proBoardModifyForm(int no, ModelAndView mv) { 
 		
@@ -163,7 +172,7 @@ public class ProjectController {
 		return mv;
 	}
 			
-	// 프로젝트 게시물 등록
+	// [김은지] 프로젝트 게시물 등록
 	@RequestMapping("insertBoard.pr")
 	public String insertProBoard(ProBoard pb, MultipartFile upfile, HttpSession session, Model model) {
 		
@@ -186,7 +195,7 @@ public class ProjectController {
 		
 	}
 	
-	// 프로젝트 게시물 상세조회
+	// [김은지] 프로젝트 게시물 상세조회
 	@RequestMapping("boardDetail.pr")
 	public ModelAndView proBoardDetail(int no, ModelAndView mv) {
 		
@@ -205,7 +214,7 @@ public class ProjectController {
 
 	}	
 	
-	// 프로젝트 게시물 수정
+	// [김은지] 프로젝트 게시물 수정
 	@RequestMapping("updateBoard.pr")
 	public String updateProBoard(ProBoard pb, MultipartFile reupfile, HttpSession session, Model model) {
 		
@@ -236,7 +245,7 @@ public class ProjectController {
 		
 	}
 	
-	// 프로젝트 게시물 삭제요청
+	// [김은지] 프로젝트 게시물 삭제요청
 	@RequestMapping("deleteBoard.pr")
 	public String deleteProBoard(int no, String filePath, Model model, HttpSession session) {
 		int result = pService.deleteProBoard(no);
@@ -250,16 +259,24 @@ public class ProjectController {
 		}
 	}
 	
-	// 프로젝트 등록 폼
+	// [김은지] 프로젝트 등록 폼
 	@RequestMapping("enrollPro.pr")
 	public String projectEnrollForm() {
 		return "project/projectEnrollForm";
 	}
-	
+		
 	// 전체프로젝트 조회리스트
 	@RequestMapping("totalList.pr")
-	public String projectTotalList() {
-		return "project/projectTotalList";
+	public ModelAndView selectTotalProject(ModelAndView mv, HttpSession session, Project pp) {
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		ArrayList<Project> list = pService.selectTotalProject();
+				
+		mv.addObject("list", list)
+		  .addObject(list)
+		  .setViewName("project/projectTotalList");
+						
+		return mv;
 	}	
 
 }

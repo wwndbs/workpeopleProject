@@ -10,6 +10,7 @@ import com.gd.workpp.project.model.vo.Project;
 
 public interface ProjectService {
 	
+	// 작성자 김은지
 	// 1. 내 프로젝트 리스트 조회
 	ArrayList<Project> selectList(String depName);
 	
@@ -64,5 +65,14 @@ public interface ProjectService {
 	
 	// 17. 프로젝트 관리자 승인
 	int projectApprove(ProMember pm);
+	
+	// 18. 전체 프로젝트리스트 조회
+	ArrayList<Project> selectTotalProject();
+	
+	// 19. 내가 프로젝트에 참여했는지 확인
+	ArrayList<ProMember> checkMeList(String userNo);
+	
+	// 20. 내 프로젝트리스트조회2
+	ArrayList<Project> selectList2(String depName);
 
 }

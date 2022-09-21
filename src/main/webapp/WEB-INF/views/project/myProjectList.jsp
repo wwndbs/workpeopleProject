@@ -58,6 +58,16 @@
                 <input type="hidden" name="userNo" value="${ loginUser.userNo }">
                 <input type="hidden" name="userMemNo" value="${ pm.userMemNo }">
                 
+                <!-- 
+                <input type="hidden" name="projectNo" value="${ pp.projectNo }">
+	            <input type="hidden" name="projectNo" value="${ pm.projectNo }">
+                <input type="hidden" name="no" value="${ p.proBoardNo }">
+                <input type="hidden" name="pmMember" value="${ pmMember }">
+                <input type="hidden" name="userNo" value="${ loginUser.userNo }">
+                <input type="hidden" name="userMemNo" value="${ pm.userMemNo }">
+                <input type="hidden" name="proMemNo" value="${ pm.userMemNo }">
+                 -->
+                
 	            <!-- 관리자에게만 보여지는 승인탭(팀장/부장) -->
 	            <c:if test="${ loginUser.jobName == '부장' || loginUser.jobName == '팀장'}">
 		            <div class="form-group">
@@ -132,7 +142,7 @@
 	              <h5 style="font-weight: 400"><b>My Team</b>
 	              <!-- 관리자에게만 보여지는 프로젝트 생성버튼-->
 	              <c:if test="${ loginUser.jobName == '부장' || loginUser.jobName == '팀장' }">
-	              	<button type="button" class="btn btn-primary btn1" onclick="location.href='enrollPro.pr'" style="width: 7.5%; height: 40px; font-size: 17px;">프로젝트 생성</button>
+	              	<button hidden type="button" class="btn btn-primary btn1" onclick="location.href='enrollPro.pr'" style="width: 7.5%; height: 40px; font-size: 17px;">프로젝트 생성</button>
 	              </c:if>
 	              </h5>
 	            </div>
@@ -150,7 +160,10 @@
 	                       
 	                     <div class="col-md-6 col-lg-3 d-flex">
 			              	
-			                <div class="color"></div>
+			              	<c:if test="${ proApprove == 'Y' }">
+			                  <div class="color"></div>
+			                </c:if>
+			                
 			                <div class="card mb-grid project w-100 box1" onclick="location.href='proList.pr?no=${pp.projectNo}'">
 			                  <div class="card-body d-flex flex-column">                                            
 			                    <div class="d-flex justify-content-between mb-3">
@@ -215,107 +228,79 @@
 	            </div>
 	
 	            <div class="row">
-	              <div class="col-md-6 col-lg-3 d-flex">
-	                <div class="color"></div>
-	                <div class="card mb-grid w-100 box1">
-	                  <div class="card-body d-flex flex-column">                                            
-	                    <div class="d-flex justify-content-between mb-3">
-	                      <h5 class="card-title mb-0">
-	                        <div style="float:right; font-size: 80%; margin: 0px -270px 0px 0px;">
-	                          <label for="">수정</label>
-	                          <label for="">삭제</label>
-	                        </div>
-	                        <br>
-	                        <label class="font1">&nbsp;&nbsp;프로젝트명</label><br>                        
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font3" style="margin: 10px 0px 0px 0px; color:orange;">&nbsp;&nbsp;기획완료</label>
-	                      </h5>
-	                      <i data-feather="user" style="margin: 230px -17px -20px 200px; float: right;"></i>
-	                      <label for="" style="margin: 230px 0px -20px 0px;">23</label>
-	                    </div>
-	                  </div>
-	                </div>
+	            
+	              <!-- 내가 참여한 프로젝트2  -->
+	              <c:choose>
+	              	<c:when test="${ empty list2 }">
+	              		<span style="margin: 0px 0px 0px 730px"><br><br><br><br><br>현재 팀에서 진행하고 있는 프로젝트가 없습니다.</span>
+	              	</c:when>	
+	              	<c:otherwise>
+                   	<c:set var="depName" value="${ loginUser.depName }"/>	
+	                  <c:forEach var="pp" items="${ list2 }">       
+	                       
+	                     <div class="col-md-6 col-lg-3 d-flex">
+			              	
+			              	<c:if test="${ proApprove == 'Y' }">
+			                </c:if>
+			                  <div class="color"></div>
+			                
+			                <div class="card mb-grid project w-100 box1" onclick="location.href='proList.pr?no=${pp.projectNo}'">
+			                  <div class="card-body d-flex flex-column">                                            
+			                    <div class="d-flex justify-content-between mb-3">
+			                      <h5 class="card-title mb-0">
+			                        <div style="float:right; font-size: 80%; margin: 0px -240px 0px 100px">	
+			                          <label for="" class="modifyPro">수정</label>
+			                          <label for="" class="deletePro">삭제</label>&nbsp;&nbsp;&nbsp;
+			                        </div>
+			                        <br>
+			                        <label class="font1">&nbsp;&nbsp;${ pp.projectTitle }</label><br>                    
+									<label class="font2">&nbsp;&nbsp;${ pp.depName }</label><br>
+									<div style="position:absolute;  bottom:30px !important">
+										<c:if test="${ pp.category == '기획중' }">
+					                        <label class="font3" style="">&nbsp;&nbsp;기획중</label>
+				                        </c:if>
+										<c:if test="${ pp.category == '기획완료' }">
+					                        <label class="font3" style="color:orange;">&nbsp;&nbsp;기획완료</label>
+				                        </c:if>
+										<c:if test="${ pp.category == '프로젝트 진행중' }">
+					                        <label class="font3" style="color:rgb(42, 187, 42)">&nbsp;&nbsp;프로젝트 진행중</label>
+				                        </c:if>
+										<c:if test="${ pp.category == '프로젝트 완료' }">
+					                        <label class="font3" style="color:rgb(113, 113, 255)">&nbsp;&nbsp;프로젝트 완료</label>
+				                        </c:if>
+										<c:if test="${ pp.category == '피드백' }">
+					                        <label class="font3" style="color:rgb(185, 101, 213)">&nbsp;&nbsp;피드백</label>
+				                        </c:if>	
+			                        </div>		                        			                        			                        
+			                      </h5>
+			                      <i data-feather="user" style="margin: 230px -17px -20px 200px; float: right; width:27px !important"></i>
+			                      <span for="" style="margin: 230px 0px -20px 21px;" id="pcount">${ pp.pmMemberCount }</span]>
+			                    </div>
+			                  </div>
+			                </div>
+			              </div>
+			              <!-- 
+			              <script>
+			              	$(function(){
+			              		ajaxSelectList();
+			              	})
+			              	function ajaxSelectList(){ // 프로젝트 인원수조회용 ajax
+			              		$.ajax({
+			              			data:{no:{p.projectNo}},
+			              			success:function(list){
+			              				console.log("ddd");
+			              			}
+			              		})
+			              	}
+			              </script>
+			               -->
+			              
+		              </c:forEach>
+		            </c:otherwise>
+	              </c:choose>
+	              
+	                       
 	              </div>
-	              <div class="col-md-6 col-lg-3 d-flex">
-	                <div class="color"></div>
-	                <div class="card mb-grid w-100 box1">
-	                  <div class="card-body d-flex flex-column">                                            
-	                    <div class="d-flex justify-content-between mb-3">
-	                      <h5 class="card-title mb-0">
-	                        <div style="float:right; font-size: 80%; margin: 0px -270px 0px 0px;">
-	                          <label for="">수정</label>
-	                          <label for="">삭제</label>
-	                        </div>
-	                        <br>
-	                        <label class="font1">&nbsp;&nbsp;프로젝트명</label><br>                        
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font3" style="margin: 10px 0px 0px 0px;">&nbsp;&nbsp;기획중</label>
-	                      </h5>
-	                      <i data-feather="user" style="margin: 230px -17px -20px 200px; float: right;"></i>
-	                      <label for="" style="margin: 230px 0px -20px 0px;">23</label>
-	                    </div>
-	                  </div>
-	                </div>
-	              </div>
-	              <div class="col-md-6 col-lg-3 d-flex">
-	                <div class="color"></div>
-	                <div class="card mb-grid w-100 box1">
-	                  <div class="card-body d-flex flex-column">                                            
-	                    <div class="d-flex justify-content-between mb-3">
-	                      <h5 class="card-title mb-0">
-	                        <div style="float:right; font-size: 80%; margin: 0px -270px 0px 0px;">
-	                          <label for="">수정</label>
-	                          <label for="">삭제</label>
-	                        </div>
-	                        <br>
-	                        <label class="font1">&nbsp;&nbsp;프로젝트명</label><br>                        
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font3" style="margin: 10px 0px 0px 0px;">&nbsp;&nbsp;기획중</label>
-	                      </h5>
-	                      <i data-feather="user" style="margin: 230px -17px -20px 200px; float: right;"></i>
-	                      <label for="" style="margin: 230px 0px -20px 0px;">23</label>
-	                    </div>
-	                  </div>
-	                </div>
-	              </div>
-	              <div class="col-md-6 col-lg-3 d-flex">
-	                <div class="color"></div>
-	                <div class="card mb-grid w-100 box1">
-	                  <div class="card-body d-flex flex-column">                                            
-	                    <div class="d-flex justify-content-between mb-3">
-	                      <h5 class="card-title mb-0">
-	                        <div style="float:right; font-size: 80%; margin: 0px -270px 0px 0px;">
-	                          <label for="">수정</label>
-	                          <label for="">삭제</label>
-	                        </div>
-	                        <br>
-	                        <label class="font1">&nbsp;&nbsp;프로젝트명</label><br>                        
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font2">&nbsp;&nbsp;참여팀1</label><br>
-	                        <label class="font3" style="margin: 10px 0px 0px 0px;">&nbsp;&nbsp;기획중</label>
-	                      </h5>
-	                      <i data-feather="user" style="margin: 230px -17px -20px 200px; float: right;"></i>
-	                      <label for="" style="margin: 230px 0px -20px 0px;">23</label>
-	                    </div>
-	                  </div>
-	                </div>
-	              </div>          
-	            </div>
 	
 	            </div>
 	          </div>
