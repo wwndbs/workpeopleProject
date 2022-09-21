@@ -429,6 +429,25 @@ public class ApprovalController {
 		
 		return mv;
 	}
+	
+	/**
+	 * Author : 최영헌
+	 * 결재문서 삭제 요청을 처리하는 메소드
+	 * @param documentNo : 삭제하고자 하는 결재문서 번호
+	 */
+	@RequestMapping("deleteApproval.ap")
+	public String deleteApproval(int documentNo, HttpSession session, Model model) {
+		
+		int result = apService.deleteApproval(documentNo);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "결재문서를 삭제 했습니다.");	
+			return "redirect:approvalList.ap";
+		}else {
+			model.addAttribute("errorMsg", "결재문서 삭제 과정 중 오류 발생");
+			return "common/errorPage";
+		}
+	}
 		
 		
 		

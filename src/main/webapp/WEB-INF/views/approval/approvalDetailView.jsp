@@ -145,7 +145,7 @@
 				              <div class="btn-area" align="right">
 				                <button class="btn btn-secondary btn-sm" onclick="history.back();">돌아가기</button>
 				                <c:if test="${ list[0].status == 0 && document.userNo == m.userName}">
-							        <button class="btn btn-danger btn-sm">삭제</button>
+							        <button class="btn btn-danger btn-sm" onclick="deleteApproval();">삭제</button>
 						        </c:if>
 						        <c:forEach var="i" items="${ list }">
 							        <c:if test="${ i.userNo == m.userNo}">
@@ -164,6 +164,15 @@
 	<jsp:include page="approvalModal.jsp" />
 
 	<jsp:include page="../common/footer.jsp" />
+	
+	<script>
+		function deleteApproval(){
+			if(confirm("삭제하시겠습니까?")){
+				let documentNo = '${document.documentNo}';
+				location.href="deleteApproval.ap?documentNo=" + documentNo;
+			}
+		}
+	</script>
 	
 	<c:choose>
 		<c:when test="${ document.documentContent eq null}">

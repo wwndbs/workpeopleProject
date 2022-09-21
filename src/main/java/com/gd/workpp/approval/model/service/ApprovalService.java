@@ -115,4 +115,7 @@ public interface ApprovalService {
 	
 	// 결재 승인
 	int approvalOfApproval(String approvalUser, int documentNo);
+	
+	// 결재문서 삭제
+	int deleteApproval(int documentNo);
 }

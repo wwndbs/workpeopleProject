@@ -175,4 +175,9 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public Document saveListModify(int no, String form, String userNo) {
 		return apDao.saveListModify(sqlSession, no, form, userNo);
 	}
+
+	@Override
+	public int deleteApproval(int documentNo) {
+		return apDao.deleteApproval(sqlSession, documentNo);
+	}
 }

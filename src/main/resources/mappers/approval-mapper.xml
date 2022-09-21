@@ -693,7 +693,11 @@
 		   and d.status = 2
    </select>
    
-   
+   <delete id="deleteApproval">
+   		delete
+   		  from document
+   		 where document_no = #{documentNo}
+   </delete>
    
 
  

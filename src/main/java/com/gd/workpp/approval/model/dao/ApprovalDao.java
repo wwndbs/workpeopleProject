@@ -351,4 +351,10 @@ public class ApprovalDao {
 		return sqlSession.selectOne("approvalMapper.saveListModify", data);
 	}
 	
+	public int deleteApproval(SqlSessionTemplate sqlSession, int documentNo) {
+		int result = sqlSession.delete("approvalMapper.deleteApproval", documentNo);
+		
+		return result;
+	}
+	
 }
