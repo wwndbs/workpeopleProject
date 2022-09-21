@@ -180,4 +180,9 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public int deleteApproval(int documentNo) {
 		return apDao.deleteApproval(sqlSession, documentNo);
 	}
+
+	@Override
+	public int approvalFusal(int documentNo, String msg, String userNo) {
+		return apDao.approvalFusal(sqlSession, documentNo, msg, userNo);
+	}
 }

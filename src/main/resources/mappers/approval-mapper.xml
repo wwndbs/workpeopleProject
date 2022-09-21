@@ -699,10 +699,20 @@
    		 where document_no = #{documentNo}
    </delete>
    
+   <update id="approvalLineFusal">
+   		update approval
+   		   set approval_date = sysdate
+   		     , status = '2'
+   		 where user_no = #{userNo}
+   		   and document_no = #{documentNo}
+   </update>
 
- 
-
- 
+   <update id="approvalFusal">
+   		update document
+   		   set progress = 3
+   		     , message = #{msg}
+   		 where document_no = #{documentNo}
+   </update>
 
  
  
