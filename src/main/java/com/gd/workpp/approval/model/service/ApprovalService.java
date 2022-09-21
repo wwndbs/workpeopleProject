@@ -66,6 +66,9 @@ public interface ApprovalService {
 	// 임시저장문서 검색 결과 리스트 조회
 	ArrayList<Document> searchSaveList(PageInfo pi, String userNo, String keyword);
 	
+	// 임시저장문서 상세 조회(수정)
+	Document saveListModify(int no, String form, String userNo);
+	
 //--------------------------------------------------------
 	
 	// 1. 결재문서 작성 전 약식작성된 결재문서 유무 확인

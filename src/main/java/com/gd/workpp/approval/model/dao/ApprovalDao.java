@@ -269,11 +269,10 @@ public class ApprovalDao {
 		
 		result1 = sqlSession.update("approvalMapper.insertDocument", data);
 		
-		if(document.getStatus() == 1) {
-			result2 = sqlSession.insert("approvalMapper.insertVacation", data);
-		}else {
-			result2 = 0;
-		}
+		result2 = sqlSession.insert("approvalMapper.insertVacation", data);
+		/*
+		 * if(document.getStatus() == 1) { }else { result2 = 0; }
+		 */
 		
 		return result1 + result2;
 	}
@@ -305,10 +304,10 @@ public class ApprovalDao {
 	}
 	
 	public Object approvalDetailForm(SqlSessionTemplate sqlSession, int no, String form) {
-
 		if(form.equals("업무기안서")) {
 			return sqlSession.selectOne("approvalMapper.approvalDetailPlan", no);
 		}else if(form.equals("휴가신청서")) {
+			System.out.println("DAO : " + no);
 			return sqlSession.selectOne("approvalMapper.approvalDetailVacation", no);
 		}else if(form.equals("결근사유서")){
 			return sqlSession.selectOne("approvalMapper.approvalDetailAbsence", no);
@@ -342,6 +341,14 @@ public class ApprovalDao {
 		}
 		
 		return result1 * result2; // 1 or 0
+	}
+	
+	public Document saveListModify(SqlSessionTemplate sqlSession, int no, String form, String userNo) {
+		HashMap<String, String> data = new HashMap<>();
+		data.put("no", String.valueOf(no));
+		data.put("form", form);
+		data.put("userNo", userNo);
+		return sqlSession.selectOne("approvalMapper.saveListModify", data);
 	}
 	
 }

@@ -107,8 +107,16 @@
 			</div>
 		</div>
 	</div>
-
-	<jsp:include page="../common/footer.jsp" />
+	
+	<script>
+		// 문서 상세조회
+		$(".list-wrapper>table>tbody>tr").click(function(){
+			let approvalNo = $(this).children().eq(1).text();
+			let approvalForm = $(this).children().eq(2).text();
+			
+			location.href="saveListModify?no=" + approvalNo + "&form=" + approvalForm;
+		})
+	</script>
 	
 	<script>
 	    // 임시저장 문서 검색
@@ -252,5 +260,7 @@
 			}
 		})
 	</script>
+	
+	<jsp:include page="../common/footer.jsp" />
 </body>
 </html>

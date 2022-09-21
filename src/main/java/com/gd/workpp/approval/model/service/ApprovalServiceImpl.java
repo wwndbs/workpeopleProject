@@ -170,4 +170,9 @@ public class ApprovalServiceImpl implements ApprovalService {
 	public int approvalOfApproval(String approvalUser, int documentNo) {
 		return apDao.approvalOfApproval(sqlSession, approvalUser, documentNo);
 	}
+
+	@Override
+	public Document saveListModify(int no, String form, String userNo) {
+		return apDao.saveListModify(sqlSession, no, form, userNo);
+	}
 }

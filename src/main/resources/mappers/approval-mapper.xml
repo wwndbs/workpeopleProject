@@ -101,7 +101,7 @@
 		     , user_name
 		     , document_form
 		     , document_title
-		     , d.create_date
+	         , to_char(d.create_date, 'YYYY-MM-DD') as "CREATE_DATE"
 		     , document_content
 		     , progress
 		     , d.status
@@ -134,7 +134,7 @@
 	      , user_name
 	      , document_form
 	      , document_title
-	      , d.create_date
+	      , to_char(d.create_date, 'YYYY-MM-DD') as "CREATE_DATE"
 	      , document_content
 	      , progress
 	      , d.status
@@ -166,7 +166,7 @@
 		     , user_name
 		     , document_form
 		     , document_title
-		     , d.create_date
+	         , to_char(d.create_date, 'YYYY-MM-DD') as "CREATE_DATE"
 		     , document_content
 		     , progress
 		     , d.status
@@ -198,7 +198,7 @@
 		     , user_name
 		     , document_form
 		     , document_title
-		     , d.create_date
+	         , to_char(d.create_date, 'YYYY-MM-DD') as "CREATE_DATE"
 		     , document_content
 		     , progress
 		     , d.status
@@ -223,8 +223,8 @@
 		     , user_name
 		     , email
 		     , phone
-		     , create_date
-		     , modify_date
+	         , create_date
+	         , modify_date
 		     , status
 		     , prof_img
 		     , user_email
@@ -252,7 +252,7 @@
 		     , user_name
 		     , document_form
 		     , document_title
-		     , d.create_date
+	         , to_char(d.create_date, 'YYYY-MM-DD') as "CREATE_DATE"
 		     , document_content
 		     , progress
 		     , d.status
@@ -291,7 +291,7 @@
 	     , user_name
 	     , document_form
 	     , document_title
-	     , d.create_date
+	     , to_char(d.create_date, 'YYYY-MM-DD') as "CREATE_DATE"
 	     , document_content
 	     , progress
 	     , d.status
@@ -324,7 +324,7 @@
 		     , user_name
 		     , document_form
 		     , document_title
-		     , d.create_date
+	         , to_char(d.create_date, 'YYYY-MM-DD') as "CREATE_DATE"
 		     , document_content
 		     , progress
 		     , d.status
@@ -362,7 +362,7 @@
 		select document_no
 		     , user_no
 		     , document_form
-		     , create_date
+	         , to_char(create_date, 'YYYY-MM-DD') as "CREATE_DATE"
 		  from document
 		 where user_no = #{userNo}
 		   and document_title is null
@@ -421,8 +421,8 @@
 		     , user_name
 		     , email
 		     , phone
-		     , create_date
-		     , modify_date
+	         , create_date
+	         , modify_date
 		     , status
 		     , prof_img
 		     , user_email
@@ -447,8 +447,8 @@
 		     , user_name
 		     , email
 		     , phone
-		     , create_date
-		     , modify_date
+	         , create_date
+	         , modify_date
 		     , status
 		     , prof_img
 		     , user_email
@@ -584,7 +584,7 @@
 		     , user_name
 		     , document_form
 		     , document_title
-		     , d.create_date
+	         , to_char(d.create_date, 'YYYY-MM-DD') as "CREATE_DATE"
 		     , document_content
 		     , progress
 		     , d.status
@@ -602,7 +602,6 @@
 	<select id="approvalDetailPlan" resultMap="planResult">
 		select plan_start
 		  from plan
-		  join document using(document_no)
 		 where document_no = #{no}
 		</select>
 	
@@ -612,7 +611,6 @@
 		     , work_date
 		     , work_use
 		  from work
-		  join document using(document_no)
 		 where document_no = #{no}
 	</select>
 	
@@ -622,14 +620,12 @@
 		     , vacation_end
 		     , vacation_count
 		  from vacation
-		  join document using(document_no)
 		 where document_no = #{no}
 	</select>
 	
 	<select id="approvalDetailAbsence" resultMap="absenceResult">
 		select absence_date
 		  from absence
-		  join document using(document_no)
 		 where document_no = #{no}
 	</select>
 	
@@ -675,7 +671,27 @@
          where document_no = #{documentNo}
 	</update>
    
-   
+   <select id="saveListModify" resultMap="documentResult">
+		select document_no
+		     , user_name
+		     , document_form
+		     , document_title
+		     , to_char(d.create_date, 'YYYY-MM-DD') as "CREATE_DATE"
+		     , document_content
+		     , progress
+		     , d.status
+		     , message
+		     , origin_name
+		     , change_name
+		     , file_path
+		     , approval_count
+		  from document d
+		  join member m using(user_no)
+		 where user_no = #{userNo}
+		   and document_form = #{form}
+		   and document_no = #{no}
+		   and d.status = 2
+   </select>
    
    
    

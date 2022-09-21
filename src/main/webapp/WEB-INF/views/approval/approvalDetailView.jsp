@@ -143,9 +143,8 @@
 								</c:if>
 							</table>
 				              <div class="btn-area" align="right">
-				                <button class="btn btn-secondary btn-sm" onclick="location.href='approvalList.ap'">돌아가기</button>
+				                <button class="btn btn-secondary btn-sm" onclick="history.back();">돌아가기</button>
 				                <c:if test="${ list[0].status == 0 && document.userNo == m.userName}">
-						            <button class="btn btn-primary btn-sm">회수</button>
 							        <button class="btn btn-danger btn-sm">삭제</button>
 						        </c:if>
 						        <c:forEach var="i" items="${ list }">

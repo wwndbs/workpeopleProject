@@ -1,7 +1,6 @@
 package com.gd.workpp.approval.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -25,7 +23,6 @@ import com.gd.workpp.common.model.vo.PageInfo;
 import com.gd.workpp.common.template.FileUpload;
 import com.gd.workpp.common.template.Pagination;
 import com.gd.workpp.member.model.vo.Member;
-import com.google.gson.Gson;
 
 @Controller
 public class ApprovalController {
@@ -375,6 +372,15 @@ public class ApprovalController {
 		return mv;
 	}
 	
+	/**
+	 * Author : 최영헌
+	 * 결재 승인 요청을 처리하는 메소드
+	 * @param approvalUser : 결재자 정보
+	 * @param order : 결재 승인자 결재 순서
+	 * @param approvalCount : 결재문서 결재자 총인원
+	 * @param form : 결재문서 양식
+	 * @param documentNo : 결재문서 번호
+	 */
 	@RequestMapping("approvalOfApproval.ap")
 	public String approvalOfApproval(String approvalUser, int order, int approvalCount, String form, int documentNo, HttpSession session, Model model) {
 		Member m = (Member)session.getAttribute("loginUser");
@@ -398,8 +404,31 @@ public class ApprovalController {
 			return "redirect:approvalDetail.ap?no=" + documentNo +"&form=" + form;
 		}
 	}
+	
+	/**
+	 * Author : 최영헌
+	 * 임시저장문서 수정(상세) 페이지 이동 요청을 처리하는 메소드
+	 * @param no : 임시저장문서 번호
+	 * @param form : 임시저장문서 양식
+	 */
+	@RequestMapping("saveListModify")
+	public ModelAndView saveListModify(int no, String form, HttpSession session, ModelAndView mv) {
+		Member m = (Member)session.getAttribute("loginUser");
+		String userNo = m.getUserNo();
 		
+		Document document = apService.saveListModify(no, form, userNo);
+		Object obj = apService.approvalDetailForm(no, form);
+		System.out.println(no);
+		System.out.println(form);
+		System.out.println(document);
+		System.out.println(obj);
+		mv.addObject("document", document);
+		mv.addObject("obj", obj);
+		mv.addObject("member", m);
+		mv.setViewName("approval/saveListModify");
 		
+		return mv;
+	}
 		
 		
 		

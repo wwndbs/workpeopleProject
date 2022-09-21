@@ -120,6 +120,16 @@
 	</div>
 	
 	<script>
+		// 문서 상세조회
+		$(".list-wrapper>table>tbody>tr").click(function(){
+			let approvalNo = $(this).children().eq(0).text();
+			let approvalForm = $(this).children().eq(1).text();
+			
+			location.href="approvalDetail.ap?no=" + approvalNo + "&form=" + approvalForm;
+		})
+	</script>
+
+	<script>
 	    // 참조문서 검색
 		$(function(){
 			$("#search").keyup(function(){
