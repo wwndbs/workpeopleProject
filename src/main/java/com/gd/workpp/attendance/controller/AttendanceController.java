@@ -153,8 +153,6 @@ public class AttendanceController {
 		  .addObject("list", list)
 		  .setViewName("attendance/atHolidayList");
 		
-		System.out.println(holidayAllCount);
-		
 		return mv;
 		
 	}
