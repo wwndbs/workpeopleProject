@@ -298,6 +298,9 @@
                                                         <span class="btn-file">
                                                             <span class="file-txt">파일선택</span>
                                                             <input type="file" name="file" class="input-file" title="파일선택" multiple accept="undefined" style="display: inline-block; position: absolute; top: 0; left: 0; opacity: 0; cursor: pointer;">
+                                                            <input type="hidden" name="fileNo" id="fileNo"> <!-- 임시저장된 글에서 불러온 첨부파일번호 -->
+                                                            <input type="hidden" name="delFile" id="delFile"> <!-- 불러올 첨부파일 삭제할 때 넘기는 파일번호 -->
+                                                            <input type="hidden" name="changeName" id="changeName"> <!-- 불러올 첨부파일 삭제할 때 넘기는 파일경로 -->
                                                         </span>
                                                     </span>
                                                 </div>
@@ -312,6 +315,11 @@
                                                 <script>
                                                 	$(function(){
                                                 		$(".input-file").change(function(){
+                                                			
+                                                			// 임시저장된 글 불러와서 첨부파일 변경할 경우 삭제하기 위해 파일 번호 넘기기
+                                                			if($("#fileNo").val() != ""){
+                                                				deleteFile();
+                                                			}
                                                 			
                                                 			fileChange();
                                                 			
@@ -396,7 +404,7 @@
                             <div class="editor" style="border:0px">
                               <button type="button" class="btn btn-sm btn-light" data-toggle="modal" data-target="#jyModal_confirm" onclick="saveList();" style="position:absolute; right:0; top:-20px">임시 저장된 글(0)</button>
                               <div class="go-editor" style="width:100%; padding-bottom:10px; padding-top:20px">
-                                <textarea id="summernote" name="boardContent" rows="10" style="resize: none;"></textarea>
+                                <textarea id="summernote" name="boardContent" rows="10" style="resize: none;"><div id="sumDiv"></div></textarea>
 
                                 <script>
                                   // summernote
@@ -583,14 +591,71 @@
                       		$.ajax({
                       			url: "selectSave.bo",
                       			data: {boardNo: boardNum},
-                      			success: function(result){
-                      				console.log("성공");
-                      				console.log(result);
+                      			success: function(map){
+                      				
+                      				// board 객체 뿌리기
+                      				$("input[name=boardNo]").val(map.b.boardNo);
+                      				if(map.b.topExp == 'Y'){
+                      					$("#chkButton").prop("checked", true);
+                      				}else{
+                      					$("#chkButton").prop("checked", false);
+                      				}
+                      				$("#title").val(map.b.boardTitle);
+                      				if(map.b.boardContent != null){
+	                      				$('#summernote').summernote('code', map.b.boardContent);
+                      				}else{
+                      					$('#summernote').summernote('code', "");
+                      				}
+                      				
+                      				// 첨부파일 있으면 뿌리기
+                      				if(map.at != null){
+                      					// 파일번호, 파일이름 뿌리고
+                      					// 기존파일 삭제버튼 클릭시 input파일에 파일번호, 경로 넣어주기 => db에서 삭제 후 서버에서 삭제
+                      					// 기존파일 그대로 넘어가면 파일 변경할 필요 없음
+                      					// 파일 변경시 기존파일 삭제하기 위해 input파일에 파일번호, 경로 넘기고
+                      					// 새로운 input 넘기면 됨 (비교는 새로운 input값이 넘어오면 기존파일 삭제, 안 넘어오면 기존파일 그대로)
+                      					// 새로운 파일 선택해서 li 보여질 때 삭제버튼은 기존파일 삭제버튼과 다르게 지정(클래스 부여)
+                      					$("#fileNo").val(map.at.fileNo);
+                      					$("#changeName").val(map.at.changeName);
+                      					let value = '<li id="originFile">'
+                    						+	'<span class="item-file">'
+                    						+		'<span class="btn-wrap" title="삭제">'
+                    						+			'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" class="deleteBtn" onclick="deleteFile();" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>'
+                    						+		'</span>'
+                    						+		'<span class="ic-file">'
+                    						+			'<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="rgb(0, 135, 239)" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-slack"><path d="M22.08 9C19.81 1.41 16.54-.35 9 1.92S-.35 7.46 1.92 15 7.46 24.35 15 22.08 24.35 16.54 22.08 9z"></path><line x1="12.57" y1="5.99" x2="16.15" y2="16.39"></line><line x1="7.85" y1="7.61" x2="11.43" y2="18.01"></line><line x1="16.39" y1="7.85" x2="5.99" y2="11.43"></line><line x1="18.01" y1="12.57" x2="7.61" y2="16.15"></line></svg>'
+                    						+		'</span>'
+                    						+		'<span class="name">'
+                    						+			map.at.originName
+                    						+		'</span>'
+                    						+	'</span>'
+                    						+ '</li>';
+                    			
+                    					$(".file-wrap").html(value);
+                      					
+                      				}else{
+                      					$("#fileNo").val("");
+                      					$("#changeName").val("");
+                      					$(".file-wrap").html("");
+                      				}
+                      				
                       			},errlr: function(){
                       				console.log("임시저장 게시글 ajax 통신 실패");
                       			}
                       		});
                       		
+                      	}
+                      	
+                      	function deleteFile(){
+                      		$("#originFile").remove(); // li 요소 삭제
+                      		
+                      		const fileNo = $("#fileNo").val(); // 기존 파일 번호 변수에 담기
+                      		$("#delFile").val(fileNo); // 삭제할 번호로 넘기기
+                      		
+                      		$("#fileNo").val(""); // 초기화
+                      		
+                      		console.log(fileNo);
+                      		console.log($("#delFile").val()); // 삭제 후 다시 빈칸으로 돌려놓기 !!!!!!!!!!!!!!!!!!!!!!!!!
                       	}
                       	
                       	// 토스트

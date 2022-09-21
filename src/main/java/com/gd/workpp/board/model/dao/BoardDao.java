@@ -38,6 +38,10 @@ public class BoardDao {
 		
 	}
 	
+	public ArrayList<Board> selectTopList(SqlSessionTemplate sqlSession, String depName){
+		return (ArrayList)sqlSession.selectList("boardMapper.selectTopList", depName);
+	}
+	
 	public int saveBoard(SqlSessionTemplate sqlSession, Board b) {
 		return sqlSession.insert("boardMapper.saveBoard", b);
 	}

@@ -6,8 +6,11 @@
 		<result column="board_no" property="boardNo"/>
 		<result column="user_no" property="userNo"/>
 		<result column="b_no" property="boardOrder"/>
+		<result column="board_type" property="boardType"/>
 		<result column="board_title" property="boardTitle"/>
+		<result column="board_content" property="boardContent"/>
 		<result column="create_date" property="createDate"/>
+		<result column="top_exp" property="topExp"/>
 		<result column="count" property="count"/>
 		<result column="job_name" property="jobName"/>
 		<result column="user_name" property="userName"/>
@@ -43,6 +46,7 @@
 		 where status = 'Y'
 		   and board_type = 2
 		   and save_status = 'N'
+		   and top_exp = 'N'
 		   and dep_name = #{depName}
 	</select>
 	
@@ -76,7 +80,7 @@
 				   and save_status = 'N'
 				   and board_type = #{no}
 				 order
-				    by board_no asc
+				    by b.create_date asc
 		  		) "A"
 		 order
 		    by b_no desc
@@ -115,9 +119,52 @@
 				 where b.status = 'Y'
 				   and board_type = 2
 				   and save_status = 'N'
+				   and top_exp = 'N'
 				   and b.dep_name = #{depName}
 				 order
-				    by board_no asc
+				    by b.create_date asc
+		  	  ) "A"
+		 order
+		    by b_no desc
+	</select>
+	
+	<!-- 부서게시판 공지글 리스트 조회 -->
+	<select id="selectTopList" resultMap="boardResult">
+		select 
+			   rownum b_no
+			 , A.*
+		  from
+		  	  (
+		  	    select
+					   board_no
+					 , user_no
+					 , board_title
+					 , b.create_date
+					 , count
+					 , job_name
+					 , user_name
+					 , b.dep_name
+					 , (
+					 	select
+					 		   count(*)
+					 	  from b_like bl
+					 	 where bl.board_no = b.board_no
+					 ) as "LIKE"
+					 , (
+					 	select
+					 		   count(*)
+					 	  from reply
+					 	 where ref_bno = board_no
+					 ) as "REPLY"
+				  from board b
+				  join member using(user_no)
+				 where b.status = 'Y'
+				   and board_type = 2
+				   and save_status = 'N'
+				   and top_exp = 'Y'
+				   and b.dep_name = #{depName}
+				 order
+				    by b.create_date asc
 		  	  ) "A"
 		 order
 		    by b_no desc

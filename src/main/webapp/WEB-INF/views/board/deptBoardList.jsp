@@ -61,6 +61,29 @@
                             </tr>
                         </thead>
                         <tbody> <!-- 시간 다르게 표현하기 도전 -->
+                        	<c:if test="${ not empty topList and pi.currentPage eq 1 }">
+                       			<c:forEach var="t" items="${ topList }">
+                       				<tr class="notice" style="font-weight: 800;">
+                       					<input type="hidden" name="boardNo" value="${ t.boardNo }">
+			                            <!-- <td>${ t.boardOrder }</td>  -->
+			                            <td></td>
+		                                <td>
+	                                		[공지] ${ t.boardTitle }
+	                                		<!-- 댓글이 존재할 경우에만 보여짐 -->
+	                                		<c:if test="${ t.reply ne 0 }">
+		                                		<span class="i-reply">
+		                                			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-circle"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+		                                			[${ t.reply }]
+		                                		</span>
+	                                		</c:if>
+	                                	</td>
+		                                <td>${ t.userName } ${ t.jobName }</td>
+		                                <td>${ t.createDate }</td>
+		                                <td>${ t.count }</td>
+		                                <td>${ t.like }</td>
+                    				</tr>
+                      			</c:forEach>
+                        	</c:if>
                         	<c:choose>
                         		<c:when test="${ empty list }">
                         			<tr>

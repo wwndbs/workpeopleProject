@@ -2,6 +2,7 @@ package com.gd.workpp.board.controller;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -50,8 +51,11 @@ public class BoardController {
 			return "board/noticeBoardList";
 
 		} else if (no == 2) { // 부서게시판
+			
+			ArrayList<Board> topList = bService.selectTopList(depName);
 
 			model.addAttribute("depName", depName);
+			model.addAttribute("topList", topList);
 			return "board/deptBoardList";
 
 		} else { // 익명게시판
@@ -184,7 +188,7 @@ public class BoardController {
 	
 	// 게시글 작성
 	@RequestMapping("insert.bo")
-	public String insertBoard(Board b, MultipartFile file, HttpSession session, Model model) {
+	public String insertBoard(Board b, String delFile, String changeName, MultipartFile file, HttpSession session, Model model) {
 		
 		if(b.getTopExp() == null || !b.getTopExp().equals("Y")) {
 			b.setTopExp("N");
@@ -223,23 +227,20 @@ public class BoardController {
 			
 			int boardNo = Integer.parseInt(b.getBoardNo());
 			
-			// 글번호로 등록된 첨부파일 삭제하기
-			// 해당하는 첨부파일 조회
-			Attachment att = bService.selectAttachment(boardNo);
-			
-			if(att != null) {
+			// 첨부파일이 있을 경우 FileUpload클래스로 파일 변환 후 Board 객체에 담기
+			// 기존파일은 삭제하기
+			if(!file.getOriginalFilename().equals("")) {
+				
+				// 글번호로 등록된 첨부파일 삭제하기
 				// db에서 해당 첨부파일 삭제
 				int result = bService.deleteAttachment(boardNo);
 				
 				if(result > 0) {
 					// 서버에 저장된 파일 삭제
-					new File(session.getServletContext().getRealPath(att.getChangeName())).delete();
+					new File(session.getServletContext().getRealPath(changeName)).delete();
 				}
-			}
-			
-			// 첨부파일이 있을 경우 FileUpload클래스로 파일 변환 후 Board 객체에 담기
-			if(!file.getOriginalFilename().equals("")) {
 			  
+				// 새로운 첨부파일 업로드
 				String saveFilePath = FileUpload.saveFile(file, session,"resources/board_upfiles/");
 				  
 				at.setOriginName(file.getOriginalFilename()); 
@@ -288,8 +289,13 @@ public class BoardController {
 		Board b = bService.selectSave(boardNo);
 		
 		// 글번호에 해당하는 첨부파일 조회
+		Attachment at = bService.selectAttachment(boardNo);
 		
-		return "" + boardNo;
+		HashMap<String, Object> map = new HashMap<>(); 
+		map.put("b", b);
+		map.put("at", at);
+		
+		return new Gson().toJson(map);
 		
 	}
 }

@@ -29,6 +29,12 @@ public class BoardServiceImpl implements BoardService {
 	public ArrayList<Board> selectList(PageInfo pi, int no, String depName) {
 		return bDao.selectList(sqlSession, pi, no, depName);
 	}
+	
+	// 부서게시판 공지글 리스트 조회
+	@Override
+	public ArrayList<Board> selectTopList(String depName) {
+		return bDao.selectTopList(sqlSession, depName);
+	}
 
 	@Override
 	public int saveBoard(Board b, Attachment at) {
