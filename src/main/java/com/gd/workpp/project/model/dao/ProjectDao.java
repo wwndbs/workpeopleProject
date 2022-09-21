@@ -18,23 +18,23 @@ import com.gd.workpp.project.model.vo.Project;
 public class ProjectDao {
 	
 	// [김은지] 내프로젝트조회 리스트 
+	public ArrayList<Project> selectList(SqlSessionTemplate sqlSession, String depName, String userNo){ 
+		HashMap<String, String> data = new HashMap<>();
+		data.put("dapName", depName);
+		data.put("userNo", userNo);
+		
+		return (ArrayList)sqlSession.selectList("projectMapper.selectList", data);
+	}
+	
+	// [김은지] 내프로젝트조회 리스트 
+	/* 
 	public ArrayList<Project> selectList(SqlSessionTemplate sqlSession, String depName){
 		return (ArrayList)sqlSession.selectList("projectMapper.selectList", depName);
-	}
+	}*/
 	
 	// [김은지] 내프로젝트조회 리스트2
 	public ArrayList<Project> selectList2(SqlSessionTemplate sqlSession, String depName){
 		return (ArrayList)sqlSession.selectList("projectMapper.selectList2", depName);
-	}
-	
-	// [김은지] 프로젝트 참여 멤버수 조회
-	public ArrayList<ProMember> countMember(SqlSessionTemplate sqlSession, int projectNo) {
-		return (ArrayList)sqlSession.selectList("projectMapper.countMember", projectNo);
-	}
-	
-	// [김은지] 내가 프로젝트에 참여했는지 확인
-	public ArrayList<ProMember> checkMeList(SqlSessionTemplate sqlSession, String userNo){
-		return (ArrayList)sqlSession.selectList("projectMapper.checkMeList", userNo);
 	}
 	
 	// [김은지] 프로젝트 관리자 승인리스트 조회
@@ -58,8 +58,12 @@ public class ProjectDao {
 	}
 	
 	// [김은지] 전체 프로젝트리스트 조회
-	public ArrayList<Project> selectTotalProject(SqlSessionTemplate sqlSession){
-		return (ArrayList)sqlSession.selectList("projectMapper.selectTotalProject");
+	public ArrayList<Project> selectTotalProject(SqlSessionTemplate sqlSession, String depName, String userNo){
+		HashMap<String, String> data = new HashMap<>();
+		data.put("dapName", depName);
+		data.put("userNo", userNo);
+		
+		return (ArrayList)sqlSession.selectList("projectMapper.selectTotalProject", data);
 	}
 	
 	// [김은지] 프로젝트상세리스트 관리자조회

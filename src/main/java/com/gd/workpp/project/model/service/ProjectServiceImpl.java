@@ -25,8 +25,8 @@ public class ProjectServiceImpl implements ProjectService {
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
-	public ArrayList<Project> selectList(String depName) {
-		return pDao.selectList(sqlSession, depName);
+	public ArrayList<Project> selectList(String depName, String userNo) {
+		return pDao.selectList(sqlSession, depName, userNo);
 	}	
 	
 	@Override
@@ -100,11 +100,6 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 	
 	@Override
-	public ArrayList<ProMember> countMember(int projectNo) {
-		return pDao.countMember(sqlSession, projectNo);
-	}
-
-	@Override
 	public int selectSearchCount(String condition, String keyword, int projectNo) {
 		return pDao.selectSearchCount(sqlSession, condition, keyword, projectNo);
 	}
@@ -130,13 +125,8 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public ArrayList<Project> selectTotalProject() {
-		return pDao.selectTotalProject(sqlSession);
-	}
-
-	@Override
-	public ArrayList<ProMember> checkMeList(String userNo) {
-		return pDao.checkMeList(sqlSession, userNo);
+	public ArrayList<Project> selectTotalProject(String depName, String userNo) {
+		return pDao.selectTotalProject(sqlSession, depName, userNo);
 	}
 
 	@Override

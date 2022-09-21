@@ -15,6 +15,7 @@ public class Project {
 	
 	private int projectNo;
 	private String proAdminNo;
+	private String userNo;
 	private String projectTitle;
 	private String projectContent;
 	private String status;
@@ -30,5 +31,7 @@ public class Project {
 	private String pmMemberCount;
 	private String userMemNo;
 	private String proApprove;
+	private int checkDep;
+	private int countMember;
 
 }

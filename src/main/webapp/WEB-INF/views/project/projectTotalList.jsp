@@ -65,19 +65,43 @@
 	                  <c:forEach var="pp" items="${ list }">
 	                  
 			              <div class="col-md-6 col-lg-3 d-flex">
-			                <div class="color"></div>
+			              
+			                <c:if test="${ pp.checkDep == 1 }">
+			                  <div class="color"></div>
+			                </c:if>
+			                <c:if test="${ pp.checkDep == 0 }">			                
+			                  <!-- 토스트 메시지 div -->
+			                  <div id="toast">
+			                    <span id="toastShow" class="close" style="color: white">sss</span>			                    
+			                  </div>
+			                </c:if>  
+			                
 			                <div class="card mb-grid project w-100 box1" onclick="location.href='proList.pr?no=${pp.projectNo}'">
 			                  <div class="card-body d-flex flex-column">                                            
 			                    <div class="d-flex justify-content-between mb-3">
 			                      <h5 class="card-title mb-0">
 			                        <!-- 승인여부 -->
-			                        <div style="float:right; font-size: 70%; margin: 0px -220px 0px 0px;">
-			                          <div class="demo-icon-display">
-			                              <i data-feather="unlock" style="width: 30px; height:30px; margin: 0px 0px 8px 13px"></i>
+			                        <c:if test="${ pp.proOpen == 'Y' }">
+			                          <div style="float:right; font-size: 70%; margin: 0px -230px 0px 0px;">
+			                            <div class="demo-icon-display">
+			                              <i data-feather="unlock" style="width: 25px; height:30px; margin: 0px 0px -5px 5px"></i>
+			                            </div>
+			                            <br>
+			                            <span>참여중</span>
+			                          </div>
+			                        </c:if>
+			                        <c:if test="${ pp.proOpen == 'N' }">
+			                          <div style="float:right; font-size: 70%; margin: 0px -230px 0px 0px;">
+			                            <div class="demo-icon-display">
+			                              <i data-feather="lock" style="width: 25px; height:30px; margin: 0px 0px 8px 13px"></i>
 			                              <br>
-			                              <span>승인완료</span>
+			                              <span>승인필요</span>
 			                          </div>
 			                        </div>
+			                        </c:if>
+			                              
+			                              
+			                        
 			                        <br>
 			                        <label class="font1">&nbsp;&nbsp;${ pp.projectTitle }</label><br>                        
 			                        <label class="font2">&nbsp;&nbsp;${ pp.depName }</label><br>
@@ -99,8 +123,8 @@
 				                        </c:if>	
 			                        </div>
 			                      </h5>
-			                      <i data-feather="user" style="margin: 230px -17px -20px 200px; float: right; width:27px !important"></i>
-			                      <span for="" style="margin: 230px 0px -20px 21px;" id="pcount">${ pp.pmMemberCount }</span]>
+			                      <i data-feather="user" style="margin: 230px -17px -20px 200px; float: right; width:10% !important"></i>
+			                      <span for="" style="margin: 230px 0px -20px 21px;" id="pcount">${ pp.countMember }</span]>
 			                    </div>
 			                  </div>
 			                </div>

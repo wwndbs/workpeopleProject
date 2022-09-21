@@ -12,7 +12,7 @@ public interface ProjectService {
 	
 	// 작성자 김은지
 	// 1. 내 프로젝트 리스트 조회
-	ArrayList<Project> selectList(String depName);
+	ArrayList<Project> selectList(String depName, String userNo);
 	
 	// 2. 프로젝트 작성하기
 	int insertProject(Project p);
@@ -50,29 +50,23 @@ public interface ProjectService {
 	// 12. 프로젝트담당 참여자 조회
 	ArrayList<ProMember> selectMember(int projectNo);
 	
-	// 13. 프로젝트 인원수 조회
-	ArrayList<ProMember> countMember(int projectNo);
-	
-	// 14. 프로젝트게시판 검색리스트조회
+	// 13. 프로젝트게시판 검색리스트조회
 	int selectSearchCount(String condition, String keyword, int projectNo);
 	ArrayList<ProBoard> selectSearchList(String condition, String keyword, PageInfo pi, int projectNo);
 	
-	// 15. 관리자 프로젝트 승인리스트조회
+	// 14. 관리자 프로젝트 승인리스트조회
 	ArrayList<Project> adminProApproveList(String userNo);
 	
-	// 16. 프로젝트 관리자 승인 - 한명 모달조회
+	// 15. 프로젝트 관리자 승인 - 한명 모달조회
 	Project adminApproveMember(int projectNo);
 	
-	// 17. 프로젝트 관리자 승인
+	// 16. 프로젝트 관리자 승인
 	int projectApprove(ProMember pm);
 	
-	// 18. 전체 프로젝트리스트 조회
-	ArrayList<Project> selectTotalProject();
+	// 17. 전체 프로젝트리스트 조회
+	ArrayList<Project> selectTotalProject(String depName, String userNo);
 	
-	// 19. 내가 프로젝트에 참여했는지 확인
-	ArrayList<ProMember> checkMeList(String userNo);
-	
-	// 20. 내 프로젝트리스트조회2
+	// 18. 내 프로젝트리스트조회2
 	ArrayList<Project> selectList2(String depName);
 
 }

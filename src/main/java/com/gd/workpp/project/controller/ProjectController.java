@@ -2,6 +2,7 @@ package com.gd.workpp.project.controller;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -36,34 +37,31 @@ public class ProjectController {
 		
 		Member m = (Member)session.getAttribute("loginUser");
 		String depName = m.getDepName();
-		int projectNo = pm.getProjectNo();
 		String userNo = m.getUserNo();
+		
+		int projectNo = pm.getProjectNo();
 		String proApprove = pm.getProApprove();
 				
-		ArrayList<Project> list = pService.selectList(depName);
-		ArrayList<ProMember> pmList = pService.countMember(projectNo);		
+		ArrayList<Project> list = pService.selectList(depName, userNo);	
 		ArrayList<Project> appList = pService.adminProApproveList(userNo);
-		Project approveP = pService.adminApproveMember(projectNo);
-		ArrayList<ProMember> checkList = pService.checkMeList(userNo);
+		Project approveP = pService.adminApproveMember(projectNo);		
 		ArrayList<Project> list2 = pService.selectList2(depName);
-		
+				
 		mv.addObject("list", list)
 		  .addObject("depName", depName)
-		  .addObject("pp", pp)
-		  .addObject("pmList", pmList)
+		  .addObject("pp", pp)		  
 		  .addObject("appList", appList)
 		  .addObject("approveP", approveP)
-		  .addObject("pm", pm)
-		  .addObject("checkList", checkList)
+		  .addObject("pm", pm)		  
 		  .addObject("proApprove", proApprove)
 		  .addObject("list2", list2)
-		  //.addObject(approveP)
+		  .addObject("userNo", userNo)
 		  .addObject(list)
 		  .addObject(list2)
 		  .setViewName("project/myProjectList");		
 		
-		System.out.println(checkList);
-						
+		//System.out.println(list);
+		
 		return mv;
 	}
 	
@@ -72,12 +70,8 @@ public class ProjectController {
 	public String projectApprove(Model model, HttpSession session, ProMember pm) {
 		int result = pService.projectApprove(pm);
 		
-		//model.addAttribute("pm", pm);	
 		int projectNo = pm.getProjectNo();
 		String userMemNo = pm.getUserMemNo();
-				
-		System.out.println(result);
-		System.out.println(pm);
 		
 		if(result > 0) {
 			session.setAttribute("alertMsg", "가입이 승인되었습니다.");
@@ -122,7 +116,6 @@ public class ProjectController {
 		  .addObject(list)
 		  .setViewName("project/projectDetailList");
 		
-		
 		return mv;
 	}
 	
@@ -134,13 +127,13 @@ public class ProjectController {
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
 		ArrayList<ProBoard> list = pService.selectSearchList(condition, keyword, pi, no);
+		System.out.println(no);
 		
 		mv.addObject("pi", pi)
 		  .addObject("list", list)
 		  .addObject("no", no)
 		  .setViewName("project/projectDetailList");
 		
-		System.out.println(list);
 		
 		return mv;
 	}
@@ -163,8 +156,7 @@ public class ProjectController {
 			ProBoard pb = pService.selectDetailProBoard(no);
 			mv.addObject("pb", pb)
 			  .addObject("no", no)
-			  .setViewName("project/proBoardModifyForm");
-			
+			  .setViewName("project/proBoardModifyForm");			
 		}else {
 			mv.addObject("errorMsg", "상세조회 실패").setViewName("common/errorPage");
 		}
@@ -200,6 +192,8 @@ public class ProjectController {
 	public ModelAndView proBoardDetail(int no, ModelAndView mv) {
 		
 		int result = pService.increaseCount(no);
+		
+		System.out.println(no);
 					
 		if(result > 0) {
 			ProBoard pb = pService.selectDetailProBoard(no);
@@ -270,11 +264,16 @@ public class ProjectController {
 	public ModelAndView selectTotalProject(ModelAndView mv, HttpSession session, Project pp) {
 		
 		Member m = (Member)session.getAttribute("loginUser");
-		ArrayList<Project> list = pService.selectTotalProject();
+		String depName = m.getDepName();
+		String userNo = m.getUserNo();
+		
+		ArrayList<Project> list = pService.selectTotalProject(depName, userNo);
 				
 		mv.addObject("list", list)
 		  .addObject(list)
 		  .setViewName("project/projectTotalList");
+		
+		System.out.println(list);
 						
 		return mv;
 	}	

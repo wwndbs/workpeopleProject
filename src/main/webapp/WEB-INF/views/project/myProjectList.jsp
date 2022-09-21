@@ -56,8 +56,8 @@
                 <input type="hidden" name="no" value="${ p.proBoardNo }">
                 <input type="hidden" name="pmMember" value="${ pmMember }">
                 <input type="hidden" name="userNo" value="${ loginUser.userNo }">
-                <input type="hidden" name="userMemNo" value="${ pm.userMemNo }">
-                
+                <input type="hidden" name="userMemNo" value="${ pm.userMemNo }">                
+                                
                 <!-- 
                 <input type="hidden" name="projectNo" value="${ pp.projectNo }">
 	            <input type="hidden" name="projectNo" value="${ pm.projectNo }">
@@ -66,6 +66,7 @@
                 <input type="hidden" name="userNo" value="${ loginUser.userNo }">
                 <input type="hidden" name="userMemNo" value="${ pm.userMemNo }">
                 <input type="hidden" name="proMemNo" value="${ pm.userMemNo }">
+                <input type="hidden" name="depName" value="${ loginUser.depName }">
                  -->
                 
 	            <!-- 관리자에게만 보여지는 승인탭(팀장/부장) -->
@@ -146,7 +147,7 @@
 	              </c:if>
 	              </h5>
 	            </div>
-                
+	                            
 	            <!--프로젝트 박스-->
 	            <div class="row">
 	              <!-- 내가 참여한 프로젝트만  -->
@@ -158,19 +159,80 @@
                    	<c:set var="depName" value="${ loginUser.depName }"/>	
 	                  <c:forEach var="pp" items="${ list }">       
 	                       
-	                     <div class="col-md-6 col-lg-3 d-flex">
+	                     <div class="col-md-6 col-lg-3 d-flex myPro">
 			              	
-			              	<c:if test="${ proApprove == 'Y' }">
+			              	<c:if test="${ pp.checkDep == 1 }">
 			                  <div class="color"></div>
 			                </c:if>
+			                <c:if test="${ pp.checkDep == 0 }">			                
+			                  <!-- 토스트 메시지 div -->
+			                  <div id="toast">
+			                    <span id="toastShow" class="close" style="color: white">sss</span>			                    
+			                  </div>
+			                </c:if>     
+			                
+			                <script>
+			                /*
+			                $('#approveTest').change(function(){
+				        		
+				        		let projectNo = $(this).children(":selected").val();
+				        		let userMemNo = $(this).children(":selected").attr("userNo");
+				        		let proApprove = $(this).children(":selected").attr("proApprove");
+				        		// 위의 두개는 모달 div안에 input type="hidden"요소에 value값으로 넣어야됨
+				        		let content = $(this).children(":selected").text();
+				        		// content는 모달 div안에 id가 modalContent요소에 text값으로 넣어야됨			        		
+				        		
+				        		$('input[name=projectNo]').attr('value', projectNo);
+				        		$('input[name=userMemNo]').attr('value', userMemNo);
+				        		$('input[name=proApprove]').attr('value', proApprove);
+								$('#modalContent').text(content);			        		
+				        		
+				        		//console.log(projectNo, userMemNo, content, proApprove);
+				        		
+			        			$('#approveAdd').modal('show');
+			        			
+				                <button type="button" class="mail-btn3" onclick="toast('토스트 알림 예시입니다. 필요하신 분 쓰세여');">
+			        			
+			        		})*/
+			        		
+			        		function chooseProject(){
+			                	if($(".toastShow").show(){
+			                		//$('.myPro').click(function(){
+				                    //	$('.myPro').attr("readonly", true);
+					        			toast("랄랄라");
+					        		//}else{
+					        		//	$('.myPro').attr("readonly", false);
+					        		//})
+			                	})
+			                }
+			                	
+			                //토스트
+			                let removeToast;
+	
+							function toast(string) {
+							    const toast = document.getElementById("toast");
+		
+							    toast.classList.contains("reveal") ?
+							        (clearTimeout(removeToast), removeToast = setTimeout(function () {
+							            document.getElementById("toast").classList.remove("reveal")
+							        }, 1000)) :
+							        removeToast = setTimeout(function () {
+							            document.getElementById("toast").classList.remove("reveal")
+							        }, 1500)
+							    toast.classList.add("reveal"),
+							        toast.innerText = string
+							}
+			                </script>		                
 			                
 			                <div class="card mb-grid project w-100 box1" onclick="location.href='proList.pr?no=${pp.projectNo}'">
+			                <%-- chooseProject(); --%>
+			                
 			                  <div class="card-body d-flex flex-column">                                            
 			                    <div class="d-flex justify-content-between mb-3">
 			                      <h5 class="card-title mb-0">
 			                        <div style="float:right; font-size: 80%; margin: 0px -240px 0px 100px">	
-			                          <label for="" class="modifyPro">수정</label>
-			                          <label for="" class="deletePro">삭제</label>&nbsp;&nbsp;&nbsp;
+			                          <label hidden for="" class="modifyPro">수정</label>
+			                          <label hidden for="" class="deletePro">삭제</label>&nbsp;&nbsp;&nbsp;
 			                        </div>
 			                        <br>
 			                        <label class="font1">&nbsp;&nbsp;${ pp.projectTitle }</label><br>                    
@@ -194,27 +256,12 @@
 			                        </div>		                        			                        			                        
 			                      </h5>
 			                      <i data-feather="user" style="margin: 230px -17px -20px 200px; float: right; width:27px !important"></i>
-			                      <span for="" style="margin: 230px 0px -20px 21px;" id="pcount">${ pp.pmMemberCount }</span]>
+			                      <span for="" style="margin: 230px 0px -20px 21px;" id="pcount">${ pp.countMember }</span]>
 			                    </div>
 			                  </div>
 			                </div>
 			              </div>
-			              <!-- 
-			              <script>
-			              	$(function(){
-			              		ajaxSelectList();
-			              	})
-			              	function ajaxSelectList(){ // 프로젝트 인원수조회용 ajax
-			              		$.ajax({
-			              			data:{no:{p.projectNo}},
-			              			success:function(list){
-			              				console.log("ddd");
-			              			}
-			              		})
-			              	}
-			              </script>
-			               -->
-			              
+			              			              
 		              </c:forEach>
 		            </c:otherwise>
 	              </c:choose>
@@ -249,8 +296,8 @@
 			                    <div class="d-flex justify-content-between mb-3">
 			                      <h5 class="card-title mb-0">
 			                        <div style="float:right; font-size: 80%; margin: 0px -240px 0px 100px">	
-			                          <label for="" class="modifyPro">수정</label>
-			                          <label for="" class="deletePro">삭제</label>&nbsp;&nbsp;&nbsp;
+			                          <label hidden for="" class="modifyPro">수정</label>
+			                          <label hidden for="" class="deletePro">삭제</label>&nbsp;&nbsp;&nbsp;
 			                        </div>
 			                        <br>
 			                        <label class="font1">&nbsp;&nbsp;${ pp.projectTitle }</label><br>                    
@@ -279,21 +326,6 @@
 			                  </div>
 			                </div>
 			              </div>
-			              <!-- 
-			              <script>
-			              	$(function(){
-			              		ajaxSelectList();
-			              	})
-			              	function ajaxSelectList(){ // 프로젝트 인원수조회용 ajax
-			              		$.ajax({
-			              			data:{no:{p.projectNo}},
-			              			success:function(list){
-			              				console.log("ddd");
-			              			}
-			              		})
-			              	}
-			              </script>
-			               -->
 			              
 		              </c:forEach>
 		            </c:otherwise>

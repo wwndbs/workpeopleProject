@@ -5,6 +5,7 @@
 	<resultMap type="Project" id="projectResult">
 		<result column="project_no" property="projectNo"/>
 		<result column="proAdminNo" property="proAdminNo"/>
+		<result column="user_no" property="userNo"/>
 		<result column="project_title" property="projectTitle"/>
 		<result column="project_content" property="projectContent"/>
 		<result column="status" property="status"/>
@@ -14,6 +15,8 @@
 		<result column="pro_date" property="proDate"/>
 		<result column="userMemNo" property="userMemNo"/>
 		<result column="pro_approve" property="proApprove"/>
+		<result column="checkDep" property="checkDep"/>
+		<result column="countMember" property="countMember"/>
 	</resultMap>
 	
 	<resultMap type="ProMember" id="proMemberResult">
@@ -67,6 +70,17 @@
              , p.user_no as "proAdminNo"
 		     , p.category
              , p.dep_name
+             , (
+                 select count(*)
+                   from pro_member
+                  where project_no = p.project_no
+                    and user_no = #{userNo} <!-- 로그인한회원번호 -->
+               ) as "checkDep" <!-- 내가 참여했는지 아닌지 확인 -->
+             , (
+                 select count(*)
+                   from pro_member
+                  where project_no = p.project_no
+               ) as "countMember" <!-- 프로젝트 참여인원 구하기 -->                 
   		  from project p             
          where p.dep_name like '%'||#{depName}||'%'      
          order
@@ -87,25 +101,7 @@
          order
             by p.project_no desc
 	</select>
-	
-	<!-- 내가 프로젝트에 참여했는지 확인 -->
-	<select id="checkMeList" resultMap="proMemberResult">
-	    select
-               pm.project_no
-             , pm.user_no
-             , pm.pro_approve
-          from pro_member pm
-         where user_no = #{userNo}
-	</select>
-	
-	<!-- 프로젝트 참여자 조회 -->
-	<select id="countMember" resultMap="proMemberResult">
-		select
-               count(user_no) as "pmMemberCount"   
-          from pro_member
-         where project_no = #{projectNo}
-	</select>
-	
+		
 	<!-- 전체 프로젝트 조회 -->
 	<select id="selectTotalProject" resultMap="projectResult">
 		select
@@ -114,6 +110,18 @@
              , p.user_no as "proAdminNo"
 		     , p.category
              , p.dep_name
+             , p.pro_open
+             , (
+                 select count(*)
+                   from pro_member
+                  where project_no = p.project_no
+                    and user_no = #{userNo} <!-- 로그인한회원번호 -->
+               ) as "checkDep" <!-- 내가 참여했는지 아닌지 확인 -->
+             , (
+                 select count(*)
+                   from pro_member
+                  where project_no = p.project_no
+               ) as "countMember" <!-- 프로젝트 참여인원 구하기 -->   
   		  from project p                
          order
             by p.project_no desc
