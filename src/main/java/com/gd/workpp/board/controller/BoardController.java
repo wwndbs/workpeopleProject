@@ -298,4 +298,25 @@ public class BoardController {
 		return new Gson().toJson(map);
 		
 	}
+	
+	// 부서게시판 상세페이지
+	@RequestMapping("deptDetail.bo")
+	public String selectDeptBoard(int boardNo) {
+		
+		// 조회수 증가
+		int result = bService.increaseCount(boardNo);
+		
+		if(result > 0) {
+			
+			// 게시글 조회
+			
+		}else {
+			
+			// 에러페이지
+			
+		}
+		
+		return null;
+		
+	}
 }

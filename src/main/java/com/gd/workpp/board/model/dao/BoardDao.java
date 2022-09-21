@@ -89,5 +89,9 @@ public class BoardDao {
 	public Board selectSave(SqlSessionTemplate sqlSession, int boardNo) {
 		return sqlSession.selectOne("boardMapper.selectSave", boardNo);
 	}
+	
+	public int increaseCount(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.update("boardMapper.increaseCount", boardNo);
+	}
 
 }

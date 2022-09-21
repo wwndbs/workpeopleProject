@@ -83,6 +83,10 @@
     height: 80%;
 }
 
+.board-table .board{
+	cursor: pointer;
+}
+
 .board-table .table thead th{
     font-size: 15px;
     text-align: center;

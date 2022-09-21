@@ -34,4 +34,7 @@ public interface BoardService {
 	// 임시저장 게시글 조회
 	Board selectSave(int boardNo);
 	
+	// 게시판 상세페이지
+	int increaseCount(int boardNo);
+	
 }

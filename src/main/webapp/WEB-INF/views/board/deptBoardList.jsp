@@ -63,7 +63,7 @@
                         <tbody> <!-- 시간 다르게 표현하기 도전 -->
                         	<c:if test="${ not empty topList and pi.currentPage eq 1 }">
                        			<c:forEach var="t" items="${ topList }">
-                       				<tr class="notice" style="font-weight: 800;">
+                       				<tr class="notice board" style="font-weight: 800;">
                        					<input type="hidden" name="boardNo" value="${ t.boardNo }">
 			                            <!-- <td>${ t.boardOrder }</td>  -->
 			                            <td></td>
@@ -92,7 +92,7 @@
                         		</c:when>
                         		<c:otherwise> 
                         			<c:forEach var="b" items="${ list }">
-			                            <tr>
+			                            <tr class="board">
 			                            	<input type="hidden" name="boardNo" value="${ b.boardNo }">
 			                                <td>${ b.boardOrder }</td>
 			                                <td>
@@ -115,6 +115,14 @@
 		                    </c:choose>
                         </tbody>
                     </table>
+                    
+                    <script>
+                    	$(".board").click(function(){
+                    		let boardNo = $(this).children().eq(0).val();
+                    		
+                    		location.href="deptDetail.bo?boardNo=" + boardNo;
+                    	})
+                    </script>
                     
                     <c:if test="${ not empty loginUser }">
 	                    <div class="write-button">

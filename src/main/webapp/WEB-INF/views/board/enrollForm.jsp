@@ -404,7 +404,7 @@
                             <div class="editor" style="border:0px">
                               <button type="button" class="btn btn-sm btn-light" data-toggle="modal" data-target="#jyModal_confirm" onclick="saveList();" style="position:absolute; right:0; top:-20px">임시 저장된 글(0)</button>
                               <div class="go-editor" style="width:100%; padding-bottom:10px; padding-top:20px">
-                                <textarea id="summernote" name="boardContent" rows="10" style="resize: none;"><div id="sumDiv"></div></textarea>
+                                <textarea id="summernote" name="boardContent" rows="10" style="resize: none;"></textarea>
 
                                 <script>
                                   // summernote
@@ -425,7 +425,8 @@
 				                      ['table', ['table']],
 				                      ['view', ['fullscreen', 'codeview', 'help']]
 				                      ],
-				                      disableDragAndDrop: true
+				                      disableDragAndDrop: true,
+				                      disableResizeEditor: true // 크기 조절 기능 삭제
 				                     });
 				                  });
                                 </script>

@@ -366,5 +366,14 @@
 		   and status = 'Y'
 		   and save_status = 'Y'
 	</select>
+	
+	<!-- 조회수 증가 -->
+	<update id="increaseCount">
+		update
+		       board
+		   set count = count + 1
+		 where board_no = #{boardNo}
+		   and status = 'Y'
+	</update>
 
 </mapper>
