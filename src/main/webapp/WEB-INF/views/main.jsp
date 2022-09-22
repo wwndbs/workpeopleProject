@@ -59,7 +59,7 @@
                            <li onclick="boardStatus(3);" style="cursor : pointer;"><a>익명게시판</a></li>
                         </ul>
                         <span>
-                           <a href=""><i class="fas fa-ellipsis-h"></i></a>
+                           <a href="list.bo?no=1"><i class="fas fa-ellipsis-h"></i></a>
                         </span>
                      </div>
                      
@@ -272,6 +272,11 @@
    				error : function(){
    					console.log("메인페이지 게시판 게시글 조회 부분 ajax연결 실패");
    				}
+   			})
+   			
+   			// 게시글 상세조회
+   			$(document).on("click", ".notice-list li", function(){
+   				// TODO : 게시글 상세조회 기능 미구현상태임
    			})
    			
    			
