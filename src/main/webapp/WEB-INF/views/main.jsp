@@ -228,13 +228,21 @@
 	   						      +  	'<td>' + list[i].createDate + '</td>';
 	   						      
 					        if(list[i].progress == 0){
-								value += '<td><div class="tag-gray">대기</div></td>';
+								value += '<td><div class="tag-gray">대기</div></td>'
+								      +  '<input type="hidden" value="' + list[i].documentNo + '">'
+								      +  '<input type="hidden" value="' + list[i].documentForm + '">';
 					        }else if(list[i].progress == 1){
-					        	value += '<td><div class="tag-orange">진행중</div></td>';
+					        	value += '<td><div class="tag-orange">진행중</div></td>'
+								      +  '<input type="hidden" value="' + list[i].documentNo + '">'
+								      +  '<input type="hidden" value="' + list[i].documentForm + '">';
 					        }else if(list[i].progress == 2){
-					        	value += '<td><div class="tag-green">완료</div></td>';
+					        	value += '<td><div class="tag-green">완료</div></td>'
+								      +  '<input type="hidden" value="' + list[i].documentNo + '">'
+								      +  '<input type="hidden" value="' + list[i].documentForm + '">';
 					        }else{
-					        	value += '<td><div class="tag-red">반려</div></td>';
+					        	value += '<td><div class="tag-red">반려</div></td>'
+								      +  '<input type="hidden" value="' + list[i].documentNo + '">'
+								      +  '<input type="hidden" value="' + list[i].documentForm + '">';
 					        }
 					        value += '</tr>';
    						}
@@ -246,6 +254,12 @@
    					console.log("메인페이지 결재 조회 부분 ajax연결 실패");
    				}
    			})
+   			
+   			
+   			$(document).on("click", "#main-approval tbody tr", function(){
+   				location.href="approvalDetail.ap?no=" + $(this).children().eq(3).val() + "&form=" + $(this).children().eq(4).val();
+   			})
+   			
    			
    			// 읽지않은 메일 갯수 조회
     		$.ajax({
