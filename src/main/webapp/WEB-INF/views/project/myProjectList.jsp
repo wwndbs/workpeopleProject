@@ -31,7 +31,7 @@
       .font3{font-size: 90%; font-weight: bold; color:rgb(244, 217, 14); width:300%}
       .approval1{width: 98.5% !important; font-weight: bold; font-size: 15px;}
       .btn1{margin: 10px -1500px 0px 1500px; width: 70%;}
-      .box1{cursor : pointer; margin: 0px -5px 0px 0px;} 
+      .box11, .box1{cursor : pointer; margin: 0px -5px 0px 0px;} 
 	  .box1:hover{background-color : #f4f9fe;}
       .col-lg-3{max-width: 80%;}
 	  .container-fluid{margin-right: 0px !important;}
@@ -58,17 +58,6 @@
                 <input type="hidden" name="userNo" value="${ loginUser.userNo }">
                 <input type="hidden" name="userMemNo" value="${ pm.userMemNo }">             
                                 
-                <!-- 
-                <input type="hidden" name="projectNo" value="${ pp.projectNo }">
-	            <input type="hidden" name="projectNo" value="${ pm.projectNo }">
-                <input type="hidden" name="no" value="${ p.proBoardNo }">
-                <input type="hidden" name="pmMember" value="${ pmMember }">
-                <input type="hidden" name="userNo" value="${ loginUser.userNo }">
-                <input type="hidden" name="userMemNo" value="${ pm.userMemNo }">
-                <input type="hidden" name="proMemNo" value="${ pm.userMemNo }">
-                <input type="hidden" name="depName" value="${ loginUser.depName }">
-                 -->
-                
 	            <!-- 관리자에게만 보여지는 승인탭(팀장/부장) -->
 	            <c:if test="${ loginUser.jobName == '부장' || loginUser.jobName == '팀장'}">
 		            <div class="form-group">
@@ -164,70 +153,46 @@
 			              	<c:if test="${ pp.checkDep == 1 }">
 			                  <div class="color"></div>
 			                </c:if>
-			                <c:if test="${ pp.checkDep == 0 }">			                
+			                <c:if test="${ pp.checkDep == 0 and pp.proApprove == 'N' }">			                
 			                  <!-- 토스트 메시지 div -->
 			                  <div id="toast">
 			                    		                    
 			                  </div>
 			                </c:if>     
 			                
-			                <script>
-			                /*
-			                $('#approveTest').change(function(){
-				        		
-				        		let projectNo = $(this).children(":selected").val();
-				        		let userMemNo = $(this).children(":selected").attr("userNo");
-				        		let proApprove = $(this).children(":selected").attr("proApprove");
-				        		// 위의 두개는 모달 div안에 input type="hidden"요소에 value값으로 넣어야됨
-				        		let content = $(this).children(":selected").text();
-				        		// content는 모달 div안에 id가 modalContent요소에 text값으로 넣어야됨			        		
-				        		
-				        		$('input[name=projectNo]').attr('value', projectNo);
-				        		$('input[name=userMemNo]').attr('value', userMemNo);
-				        		$('input[name=proApprove]').attr('value', proApprove);
-								$('#modalContent').text(content);			        		
-				        		
-				        		//console.log(projectNo, userMemNo, content, proApprove);
-				        		
-			        			$('#approveAdd').modal('show');
-			        			
-				                <button type="button" class="mail-btn3" onclick="toast('토스트 알림 예시입니다. 필요하신 분 쓰세여');">
-			        			
-			        		})*/
-			        		
-			        		function chooseProject(){
-			                	let checkDep = $()
-			                	
-			                	if($(".toastShow").show(){
-			                		//$('.myPro').click(function(){
-				                    //	$('.myPro').attr("readonly", true);
-					        			toast("랄랄라");
-					        		//}else{
-					        		//	$('.myPro').attr("readonly", false);
-					        		//})
-			                	})
-			                }
-			                	
-			                //토스트
-			                let removeToast;
-	
-							function toast(string) {
-							    const toast = document.getElementById("toast");
+			                <script>			        		
+				        		function chooseProject(checkDep){
+				                				       
+				                	console.log(checkDep);
+				                	
+				                	if(checkDep == 0){
+				                		toast("승인받은 프로젝트만 참가 가능합니다.");
+				                	}else{
+				                		location.href='proList.pr?no=${pp.projectNo}';
+				                	}
+				                	
+				                }
+				                	
+				                //토스트
+				                let removeToast;
 		
-							    toast.classList.contains("reveal") ?
-							        (clearTimeout(removeToast), removeToast = setTimeout(function () {
-							            document.getElementById("toast").classList.remove("reveal")
-							        }, 1000)) :
-							        removeToast = setTimeout(function () {
-							            document.getElementById("toast").classList.remove("reveal")
-							        }, 1500)
-							    toast.classList.add("reveal"),
-							        toast.innerText = string
-							}
+								function toast(string) {
+								    const toast = document.getElementById("toast");
+			
+								    toast.classList.contains("reveal") ?
+								        (clearTimeout(removeToast), removeToast = setTimeout(function () {
+								            document.getElementById("toast").classList.remove("reveal")
+								        }, 1000)) :
+								        removeToast = setTimeout(function () {
+								            document.getElementById("toast").classList.remove("reveal")
+								        }, 1500)
+								    toast.classList.add("reveal"),
+								        toast.innerText = string
+								}
 			                </script>		                
 			                
-			                <div class="card mb-grid project w-100 box1" onclick="location.href='proList.pr?no=${pp.projectNo}'">
-			                <%-- chooseProject(); --%>
+			                <div class="card mb-grid project w-100 box1" onclick="chooseProject(${pp.checkDep});">
+			                <input type="hidden" name="checkDep" value="">
 			                
 			                  <div class="card-body d-flex flex-column">                                            
 			                    <div class="d-flex justify-content-between mb-3">
@@ -287,7 +252,7 @@
                    	<c:set var="depName" value="${ loginUser.depName }"/>	
 	                  <c:forEach var="pp" items="${ list2 }">       
 	                       
-	                     <div class="col-md-6 col-lg-3 d-flex">
+	                     <div class="col-md-6 col-lg-3 d-flex box11">
 			              	
 			              	<c:if test="${ proApprove == 'Y' }">
 			                </c:if>

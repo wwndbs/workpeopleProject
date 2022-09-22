@@ -29,8 +29,9 @@
  .font3{font-size: 90%; font-weight: bold; color:rgb(244, 217, 14); width:300%}
  .approval1{width: 98.5% !important; font-weight: bold; font-size: 15px;}
  .btn1{margin: 10px -1500px 0px 1500px; width: 70%;}
- .box1{cursor : pointer; margin: 0px -5px 0px 0px;} 
+ .box11, .box1{cursor : pointer; margin: 0px -5px 0px 0px;} 
  .box1:hover{background-color : #f4f9fe;}
+ .box11:hover{background-color : #f4f9fe;}
  .col-lg-3{max-width: 80%;}
  .container-fluid{margin-right: 0px !important;}
  .modifyPro, .deletePro{cursor : pointer}	
@@ -50,7 +51,7 @@
 	          <div class="container-fluid">
 	
 	            <div class="pb-3">
-	              <h5 style="font-weight: 400"><b>전체 프로젝트 조회</b></h2>
+	              <h5 style="font-weight: 400"><b>전체 프로젝트 조회</b></h2>	              
 	            </div>
 	
 	            <!--프로젝트 박스 시작-->
@@ -76,12 +77,17 @@
 			                  </div>
 			                </c:if>  
 			                
-			                <div class="card mb-grid project w-100 box1" onclick="location.href='proList.pr?no=${pp.projectNo}'">
+			                <c:if test="${ pp.checkDep == '1' }">
+			                  <div class="card mb-grid project w-100 box11" onclick="location.href='proList.pr?no=${pp.projectNo}'" name="projectNo">
+			                </c:if>
+			                <c:if test="${ pp.checkDep == '0' }">  
+			                  <div class="card mb-grid project w-100 box1" value="${ pp.projectNo }">
+			                </c:if>  
 			                  <div class="card-body d-flex flex-column">                                            
 			                    <div class="d-flex justify-content-between mb-3">
 			                      <h5 class="card-title mb-0">
 			                        <!-- 승인여부 -->
-			                        <c:if test="${ pp.proOpen == 'Y' }">
+			                        <c:if test="${ pp.checkDep == '1' }">
 			                          <div style="float:right; font-size: 70%; margin: 0px -230px 0px 0px;">
 			                            <div class="demo-icon-display">
 			                              <i data-feather="unlock" style="width: 25px; height:30px; margin: 0px 0px -5px 5px"></i>
@@ -90,18 +96,19 @@
 			                            <span>참여중</span>
 			                          </div>
 			                        </c:if>
-			                        <c:if test="${ pp.proOpen == 'N' }">
-			                          <div style="float:right; font-size: 70%; margin: 0px -230px 0px 0px;">
-			                            <div class="demo-icon-display">
+			                        <c:if test="${ pp.checkDep == '0' }">
+			                          <div style="float:right; font-size: 70%; margin: 0px -230px 0px 0px;" id="requestTest">
+			                            <div class="demo-icon-display">								  
 			                              <i data-feather="lock" style="width: 25px; height:30px; margin: 0px 0px 8px 13px"></i>
 			                              <br>
 			                              <span>승인필요</span>
 			                          </div>
 			                        </div>
 			                        </c:if>
+			                        <!-- 승인여부 복붙
+			                        <c:if test="${ pp.proOpen == 'Y' }"></c:if>
+			                         -->
 			                              
-			                              
-			                        
 			                        <br>
 			                        <label class="font1">&nbsp;&nbsp;${ pp.projectTitle }</label><br>                        
 			                        <label class="font2">&nbsp;&nbsp;${ pp.depName }</label><br>
@@ -129,7 +136,7 @@
 			                  </div>
 			                </div>
 			              </div>
-		              
+			              
 		              </c:forEach>
 		            </c:otherwise>  
 	              </c:choose>
@@ -141,7 +148,49 @@
 	            </div>
 	          </div>
 	        </div>
-	
+	        
+	        <input type="hidden" name="userMemNo" id="userMemNo" value="${ loginUser.userNo }">
+	        <input type="hidden" name="proApprove" id="userMemNo" value="${ loginUser.userNo }">
+	        
+			 <!-- 승인요청 모달 -->
+	       <div class="modal" id="appoveRequest">
+	           <div class="modal-dialog modal-dialog-centered">
+	               <div class="modal-content" style="height:230px; width: 370px;">
+             			<form action="approveRequest.pr" method="post">		
+		               	  <input type="hidden" name="projectNo" id="projectNo" value="">
+			              <input type="hidden" name="userMemNo" id="userMemNo" value="">
+						  <input type="hidden" name="proApprove" id="proApprove" value="">
+						  
+		                  <!-- Modal body -->
+		                  <div class="modal-body" style="text-align:center;">
+		                  	  <br><br>
+		                      <span id="modalContent"></span>
+		                      승인이 필요한 프로젝트입니다. <br>
+		                      가입 신청하시겠습니까?
+		                  </div>
+		                  <!-- Modal footer -->
+		                  <div class="modal-footer" style="justify-content:center;">
+			                <button type="submit" class="btn btn-jyok" id="holiday-give-btn">신청</button>	                
+			                <button type="button" class="btn btn-jycancle" data-dismiss="modal">취소</button>
+		                  </div>	        
+	    			  </form>
+	              </div>
+	           </div>
+	        </div>
+	        <script>
+	        	$('.box1').click(function(){
+	        		
+	        		let projectNo = $(this).attr('value');
+	        		let userMemNo = $('#userMemNo').val();
+	        		
+	        		$('input[name=projectNo]').attr('value', projectNo);
+	        		$('input[name=userMemNo]').attr('value', userMemNo);	        		
+					
+	        		console.log(projectNo, userMemNo);
+					
+	       			$('#appoveRequest').modal('show');	       			
+	       		})
+	        </script>
     <!-- bootstrap -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
@@ -150,3 +199,11 @@
     <script src="resources/bootstrap/dist/js/adminx.js"></script>
 </body>
 </html>
+
+
+
+
+
+
+
+

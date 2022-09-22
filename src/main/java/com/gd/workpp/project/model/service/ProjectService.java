@@ -68,5 +68,11 @@ public interface ProjectService {
 	
 	// 18. 내 프로젝트리스트조회2
 	ArrayList<Project> selectList2(String depName);
+	
+	// 19. 사용자 프로젝트 승인요청
+	int proApproveRequest(ProMember pm);
+	
+	// 20. 승인요청하는 사원 - 한명 모달조회
+	ProMember selectRequestMember(int projectNo, String userMemNo);
 
 }

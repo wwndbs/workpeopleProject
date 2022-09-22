@@ -21,6 +21,7 @@
 	
 	<resultMap type="ProMember" id="proMemberResult">
 		<result column="project_no" property="projectNo"/>
+		<result column="user_no" property="userNo"/>
 		<result column="user_no" property="userMemNo"/>
 		<result column="userMemNo" property="userMemNo"/>
 		<result column="pmMemberCount" property="pmMemberCount"/>
@@ -62,7 +63,7 @@
 		<result column="modify_date" property="rModifyDate"/>
 	</resultMap>
 	
-	<!-- 내팀의 프로젝트 리스트 조회 -->
+	<!-- [김은지] 내팀의 프로젝트 리스트 조회 -->
 	<select id="selectList" resultMap="projectResult">       
         select
                p.project_no
@@ -70,10 +71,12 @@
              , p.user_no as "proAdminNo"
 		     , p.category
              , p.dep_name
+             , pm.pro_approve         
              , (
                  select count(*)
-                   from pro_member
-                  where project_no = p.project_no
+                   from pro_member pm
+                  where pm.project_no = p.project_no
+                    and pm.pro_approve = 'Y'
                     and user_no = #{userNo} <!-- 로그인한회원번호 -->
                ) as "checkDep" <!-- 내가 참여했는지 아닌지 확인 -->
              , (
@@ -81,13 +84,15 @@
                    from pro_member
                   where project_no = p.project_no
                ) as "countMember" <!-- 프로젝트 참여인원 구하기 -->                 
-  		  from project p             
-         where p.dep_name like '%'||#{depName}||'%'      
+  		  from project p    
+  		  join pro_member pm on (p.project_no = pm.project_no)         
+         where p.dep_name like '%'||#{depName}||'%'
+           and pm.user_no = #{userNo} <!-- 로그인한 회원번호 -->      
          order
             by p.project_no desc
 	</select>
 	
-	<!-- 참여중인 프로젝트리스트 조회 | 위의 프로젝트리스트는 제외 -->
+	<!-- [김은지] 참여중인 프로젝트리스트 조회 | 위의 프로젝트리스트는 제외 -->
 	<select id="selectList2" resultMap="projectResult">
 	    select
                p.project_no
@@ -102,7 +107,7 @@
             by p.project_no desc
 	</select>
 		
-	<!-- 전체 프로젝트 조회 -->
+	<!-- [김은지] 전체 프로젝트 조회 -->
 	<select id="selectTotalProject" resultMap="projectResult">
 		select
                p.project_no
@@ -113,8 +118,9 @@
              , p.pro_open
              , (
                  select count(*)
-                   from pro_member
-                  where project_no = p.project_no
+                   from pro_member pm
+                  where pm.project_no = p.project_no
+                    and pm.pro_approve = 'Y'
                     and user_no = #{userNo} <!-- 로그인한회원번호 -->
                ) as "checkDep" <!-- 내가 참여했는지 아닌지 확인 -->
              , (
@@ -127,7 +133,7 @@
             by p.project_no desc
 	</select>	
 	
-	<!-- 프로젝트게시물 관리자조회 -->
+	<!-- [김은지] 프로젝트게시물 관리자조회 -->
 	<select id="selectAdmin" resultMap="projectResult">
 	    select
                p.project_no
@@ -140,7 +146,7 @@
          where p.project_no = #{projectNo}
 	</select>
 	
-	<!-- 프로젝트게시물 참여자 조회 -->
+	<!-- [김은지] 프로젝트게시물 참여자 조회 -->
 	<select id="selectMember" resultMap="proMemberResult">
 		select
                pm.user_no as "userMemNo"	
@@ -154,7 +160,7 @@
          where pm.project_no = #{projectNo}
 	</select>
 	
-	<!-- 프로젝트 등록 -->
+	<!-- [김은지] 프로젝트 등록 -->
 	<insert id="insertProject">
 		insert
 		  into project
@@ -183,7 +189,7 @@
 		  )	
 	</insert>
 	
-	<!-- 프로젝트 관리자 승인탭 -->
+	<!-- [김은지] 프로젝트 관리자 승인탭 -->
 	<select id="adminProApproveList" resultMap="projectResult">
 	    select pm.project_no
 		     , p.project_title
@@ -200,7 +206,7 @@
 		   and pro_approve = 'N'
 	</select>
 	
-	<!-- 프로젝트 관리자 승인 시 한명 모달조회 -->
+	<!-- [김은지] 프로젝트 관리자 승인 시 한명 모달조회 -->
 	<select id="adminApproveMember" resultMap="projectResult">
 		select
                p.project_no
@@ -217,7 +223,7 @@
            and pm.user_no = #{userMemNo}		
 	</select>
 	
-	<!-- 관리자 프로젝트 승인 -->
+	<!-- [김은지] 관리자 프로젝트 승인 -->
 	<update id="projectApprove">
 		update
 			   pro_member
@@ -225,8 +231,25 @@
 		 where project_no = #{projectNo}
            and user_no = #{userMemNo}
 	</update>
-			
-	<!-- 프로젝트게시물리스트 페이징처리 -->
+	
+	<!-- [김은지] 프로젝트 가입신청 -->
+	<insert id="proApproveRequest">
+	    insert
+		  into pro_member
+		  (
+		    project_no
+		  , user_no
+          , pro_approve
+		  )
+		  values
+		  (
+		    #{projectNo}
+          , #{userMemNo}
+          , 'N'
+		  )
+	</insert>	
+	
+	<!-- [김은지] 프로젝트게시물리스트 페이징처리 -->
 	<select id="selectListCount" resultType="_int">
 		select
 			   count(*)
@@ -235,7 +258,7 @@
 		   and project_no = #{projectNo}
 	</select>
 	
-	<!-- 프로젝트 상세리스트 조회 -->
+	<!-- [김은지] 프로젝트 상세리스트 조회 -->
 	<select id="selectProBoardList" resultMap="proBoardResult">
 		select
 		       pb.pro_board_no
@@ -260,7 +283,7 @@
 		    by pb.pro_board_no desc
 	</select>
 	
-	<!-- 프로젝트게시물 검색 -->
+	<!-- [김은지] 프로젝트게시물 검색 -->
 	<select id="selectSearchCount" resultType="_int">
 		select
 		       count(*)
@@ -280,7 +303,7 @@
 	   	  	like '%'||#{keyword}||'%'		    
 	</select>
 	
-	<!-- 프로젝트게시물 검색 (제목|내용|작성자) -->
+	<!-- [김은지] 프로젝트게시물 검색 (제목|내용|작성자) -->
 	<select id="selectSearchList" resultMap="proBoardResult">
 		select
 		       pb.pro_board_no
@@ -317,7 +340,7 @@
 		    by pb.pro_board_no desc
 	</select>
 	
-	<!-- 프로젝트게시물 조회수증가 -->
+	<!-- [김은지] 프로젝트게시물 조회수증가 -->
 	<update id="increaseCount">
 		update
 		       pro_board
@@ -326,7 +349,7 @@
 		   and status = 'Y'
 	</update>
 	
-	<!-- 프로젝트게시물 상세조회 -->
+	<!-- [김은지] 프로젝트게시물 상세조회 -->
 	<select id="selectDetailProBoard" resultMap="proBoardResult">
 		select
 			   pb.pro_board_no
@@ -347,7 +370,7 @@
 		 where pb.pro_board_no = #{proBoardNo}
 	</select>
 	
-	<!-- 프로젝트게시물 수정 -->
+	<!-- [김은지] 프로젝트게시물 수정 -->
 	<update id="updateProBoard">
 		update
 			   pro_board
@@ -363,7 +386,7 @@
 		 where pro_board_no = #{proBoardNo}
 	</update>
 	
-	<!-- 프로젝트게시물 삭제 -->
+	<!-- [김은지] 프로젝트게시물 삭제 -->
 	<update id="deleteProBoard">
 		update
 			   pro_board
@@ -371,7 +394,7 @@
 		 where pro_board_no = #{proBoardNo}  	   
 	</update>
 	
-	<!-- 프로젝트게시물 등록 -->
+	<!-- [김은지] 프로젝트게시물 등록 -->
 	<insert id="insertProBoard">
 		insert
 		  into pro_board
@@ -412,7 +435,7 @@
 		  )
 	</insert>
 	
-	<!-- ajax 프로젝트 게시물 댓글조회 -->
+	<!-- [김은지] ajax 프로젝트 게시물 댓글조회 -->
 	<select id="ajaxSelectReplyList" resultMap="proReplyResult">
 		select
 		       pr.pro_reply_no
@@ -431,7 +454,7 @@
 		    by pro_reply_no
 	</select>
 	
-	<!-- ajax 프로젝트 게시물 댓글입력 -->
+	<!-- [김은지] ajax 프로젝트 게시물 댓글입력 -->
 	<insert id="ajaxInsertReply">
 		insert
 		  into pro_reply

@@ -51,6 +51,20 @@ public class ProjectDao {
 		return sqlSession.update("projectMapper.projectApprove", pm);
 	}
 	
+	// [김은지] 사용자 가입신청 - 한명 모달조회
+	public ProMember selectRequestMember(SqlSessionTemplate sqlSession, int projectNo, String userMemNo) {
+		HashMap<String, Object> data = new HashMap<>();
+		data.put("userMemNo", userMemNo);
+		data.put("projectNo", projectNo);
+		
+		return sqlSession.selectOne("projectMapper.selectRequestMember", data);
+	}
+	
+	// [김은지] 프로젝트 사용자 가입신청
+	public int proApproveRequest(SqlSessionTemplate sqlSession, ProMember pm) {
+		return sqlSession.insert("projectMapper.proApproveRequest", pm);
+	}
+	
 	// [김은지] 프로젝트 등록
 	public int insertProject(SqlSessionTemplate sqlSession, Project p) {
 		return sqlSession.insert("projectMapper.insertProject", p);
@@ -95,11 +109,7 @@ public class ProjectDao {
 		data.put("condition", condition);
 		data.put("keyword", keyword);
 		data.put("no", projectNo);
-		
-		System.out.println(condition);
-		System.out.println(keyword);
-		System.out.println(projectNo);
-		
+				
 		return sqlSession.selectOne("projectMapper.selectSearchCount", data);
 	}
 	
@@ -110,8 +120,6 @@ public class ProjectDao {
 		data.put("keyword", keyword);
 		data.put("no", projectNo);
 		data.put("pi", pi);
-		
-		System.out.println(data);
 		
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();

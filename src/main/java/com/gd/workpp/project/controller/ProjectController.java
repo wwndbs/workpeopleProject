@@ -59,9 +59,7 @@ public class ProjectController {
 		  .addObject(list)
 		  .addObject(list2)
 		  .setViewName("project/myProjectList");		
-		
-		//System.out.println(list);
-		
+				
 		return mv;
 	}
 	
@@ -95,6 +93,7 @@ public class ProjectController {
 			return "common/errorPage";
 		}
 	}
+	
 		
 	// [김은지] 프로젝트 게시물리스트
 	@ResponseBody
@@ -243,9 +242,7 @@ public class ProjectController {
 			model.addAttribute("errorMsg", "게시물 수정 실패");
 			return "common/errorPage";
 		}
-		
-		
-		
+			
 	}
 	
 	// [김은지] 프로젝트 게시물 삭제요청
@@ -270,21 +267,47 @@ public class ProjectController {
 		
 	// 전체프로젝트 조회리스트
 	@RequestMapping("totalList.pr")
-	public ModelAndView selectTotalProject(ModelAndView mv, HttpSession session, Project pp) {
+	public ModelAndView selectTotalProject(ModelAndView mv, HttpSession session, Project pp, ProMember pm) {
+		
+		int projectNo = pm.getProjectNo();
 		
 		Member m = (Member)session.getAttribute("loginUser");
 		String depName = m.getDepName();
-		String userNo = m.getUserNo();
-		
-		ArrayList<Project> list = pService.selectTotalProject(depName, userNo);
+		String userNo = m.getUserNo();		
+		String userMemNo = m.getUserNo(); 
 				
+		ArrayList<Project> list = pService.selectTotalProject(depName, userNo);
+		int sizeList = list.size();
+			
 		mv.addObject("list", list)
+          .addObject("userMemNo", userMemNo)
+          .addObject("projectNo", projectNo)
 		  .addObject(list)
+		  .addObject("sizeList",sizeList)
 		  .setViewName("project/projectTotalList");
 		
 		return mv;
 	}	
 
+	// [김은지] 사용자 프로젝트 가입신청
+	@RequestMapping("approveRequest.pr")
+	public String proApproveRequest(ProMember pm, HttpSession session, Model model) {
+		int result = pService.proApproveRequest(pm);
+		int projectNo = pm.getProjectNo();
+		String userMemNo = pm.getUserMemNo();
+		
+		model.addAttribute(projectNo);
+		model.addAttribute(userMemNo);
+				
+		if(result > 0) {
+			session.setAttribute("alertMsg", "승인요청되었습니다.");
+			return "redirect:totalList.pr";
+		}else {
+			model.addAttribute("errorMsg", "요청실패");
+			return "common/errorpage";
+		}
+	}
+	
 }
 
 
