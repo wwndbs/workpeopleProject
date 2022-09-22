@@ -257,7 +257,6 @@
     		$.ajax({
    				url : "mainBoardList.main",
    				success : function(board){
-   					console.log(board);
    					value="";
    					for(let i = 0; i < 8; i++){
    						value += '<li style="cursor : pointer;">'
@@ -337,7 +336,6 @@
    					type : status
    				},
    				success : function(board){
-   					console.log(board);
    					value="";
    					if(board.length == 0){
    						value += '<li style="cursor : pointer;">조회된 게시물이 없습니다.</li>';

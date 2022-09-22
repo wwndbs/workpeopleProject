@@ -33,7 +33,6 @@ public class AjaxBoardController {
 			                    HttpSession session) {
 		String dept = ((Member) session.getAttribute("loginUser")).getDepName();
 		ArrayList<Board> list = bService.mainBoardList(type, dept);
-		System.out.println(list);
 
 		return new Gson().toJson(list);
 	}
