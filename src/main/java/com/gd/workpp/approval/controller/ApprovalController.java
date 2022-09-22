@@ -1,5 +1,6 @@
 package com.gd.workpp.approval.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
@@ -189,29 +190,39 @@ public class ApprovalController {
 		String userNo = m.getUserNo();
 		
 		document.setStatus(status);
-		
+
 		// 전달된 첨부파일 존재할 경우에 파일명 수정 후 업로드
 		if(!upfile.getOriginalFilename().equals("")) {
 			String changeName = FileUpload.saveFile(upfile, session, "resources/approval_upfiles/");
 			document.setOriginName(upfile.getOriginalFilename());
 			document.setChangeName(changeName);
+			if(document.getOriginName() != null) {
+				// 기존의 첨부파일 지우기
+				new File(session.getServletContext().getRealPath(document.getChangeName())).delete();
+				
+				// 넘어온 파일이 존재할 경우 새로 업로드
+				String newChangeName = FileUpload.saveFile(upfile, session, "resources/approval_upfiles/");
+				document.setOriginName(upfile.getOriginalFilename());
+				document.setChangeName(newChangeName);
+			}
 		}
 		
 		int result = apService.insertApprovalPlan(document, plan);
 		
 		if(result > 0) {
 			if(document.getStatus() == 2) {
-				session.setAttribute("alertMsg", "임시저장 완료");	
+				String msg = "임시저장 완료";
+				session.setAttribute("toastMsg", msg);
 				return "redirect:saveList.ap";
 			}else {
-				session.setAttribute("alertMsg", "결재상신 완료");				
+				session.setAttribute("toastMsg", "결재상신 완료");				
 				return "redirect:approvalList.ap";
 			}
 		}else {
 			if(document.getStatus() == 2) {
-				model.addAttribute("errorMsg", "임시저장 과정 중 오류 발생");
+				model.addAttribute("toastMsg", "임시저장 과정 중 오류 발생");
 			}else {
-				model.addAttribute("errorMsg", "결재상신 과정 중 오류 발생");			
+				model.addAttribute("toastMsg", "결재상신 과정 중 오류 발생");			
 			}
 			return "common/errorPage";
 		}
@@ -219,7 +230,7 @@ public class ApprovalController {
 	
 	/**
 	 * Author : 최영헌
-	 * 업무기안 결재 등록 요청을 처리하는 메소드
+	 * 연장근무 결재 등록 요청을 처리하는 메소드
 	 * @param document : 사용자가 입력한 결재문서 내용이 담겨있는 객체
 	 * @param planStart : 사용자가 입력한 시행일자
 	 * @param upfile : 사용자가 업로드한 파일
@@ -237,16 +248,26 @@ public class ApprovalController {
 			String changeName = FileUpload.saveFile(upfile, session, "resources/approval_upfiles/");
 			document.setOriginName(upfile.getOriginalFilename());
 			document.setChangeName(changeName);
+			
+			if(document.getOriginName() != null) {
+				// 기존의 첨부파일 지우기
+				new File(session.getServletContext().getRealPath(document.getChangeName())).delete();
+				
+				// 넘어온 파일이 존재할 경우 새로 업로드
+				String newChangeName = FileUpload.saveFile(upfile, session, "resources/approval_upfiles/");
+				document.setOriginName(upfile.getOriginalFilename());
+				document.setChangeName(newChangeName);
+			}
 		}
 		
 		int result = apService.insertApprovalOvertime(document, overtime);
 		
 		if(result > 0) {
 			if(document.getStatus() == 2) {
-				session.setAttribute("alertMsg", "임시저장 완료");	
+				session.setAttribute("toastMsg", "임시저장 완료");	
 				return "redirect:saveList.ap";
 			}else {
-				session.setAttribute("alertMsg", "결재상신 완료");				
+				session.setAttribute("toastMsg", "결재상신 완료");				
 				return "redirect:approvalList.ap";
 			}
 		}else {
@@ -261,7 +282,7 @@ public class ApprovalController {
 	
 	/**
 	 * Author : 최영헌
-	 * 업무기안 결재 등록 요청을 처리하는 메소드
+	 * 결근사유 결재 등록 요청을 처리하는 메소드
 	 * @param document : 사용자가 입력한 결재문서 내용이 담겨있는 객체
 	 * @param planStart : 사용자가 입력한 시행일자
 	 * @param upfile : 사용자가 업로드한 파일
@@ -279,16 +300,26 @@ public class ApprovalController {
 			String changeName = FileUpload.saveFile(upfile, session, "resources/approval_upfiles/");
 			document.setOriginName(upfile.getOriginalFilename());
 			document.setChangeName(changeName);
+			
+			if(document.getOriginName() != null) {
+				// 기존의 첨부파일 지우기
+				new File(session.getServletContext().getRealPath(document.getChangeName())).delete();
+				
+				// 넘어온 파일이 존재할 경우 새로 업로드
+				String newChangeName = FileUpload.saveFile(upfile, session, "resources/approval_upfiles/");
+				document.setOriginName(upfile.getOriginalFilename());
+				document.setChangeName(newChangeName);
+			}
 		}
 		
 		int result = apService.insertApprovalAbsence(document, absence);
 		
 		if(result > 0) {
 			if(document.getStatus() == 2) {
-				session.setAttribute("alertMsg", "임시저장 완료");	
+				session.setAttribute("toastMsg", "임시저장 완료");	
 				return "redirect:saveList.ap";
 			}else {
-				session.setAttribute("alertMsg", "결재상신 완료");				
+				session.setAttribute("toastMsg", "결재상신 완료");				
 				return "redirect:approvalList.ap";
 			}
 		}else {
@@ -303,7 +334,7 @@ public class ApprovalController {
 	
 	/**
 	 * Author : 최영헌
-	 * 업무기안 결재 등록 요청을 처리하는 메소드
+	 * 휴가신청 결재 등록 요청을 처리하는 메소드
 	 * @param document : 사용자가 입력한 결재문서 내용이 담겨있는 객체
 	 * @param planStart : 사용자가 입력한 시행일자
 	 * @param upfile : 사용자가 업로드한 파일
@@ -321,16 +352,26 @@ public class ApprovalController {
 			String changeName = FileUpload.saveFile(upfile, session, "resources/approval_upfiles/");
 			document.setOriginName(upfile.getOriginalFilename());
 			document.setChangeName(changeName);
+			
+			if(document.getOriginName() != null) {
+				// 기존의 첨부파일 지우기
+				new File(session.getServletContext().getRealPath(document.getChangeName())).delete();
+				
+				// 넘어온 파일이 존재할 경우 새로 업로드
+				String newChangeName = FileUpload.saveFile(upfile, session, "resources/approval_upfiles/");
+				document.setOriginName(upfile.getOriginalFilename());
+				document.setChangeName(newChangeName);
+			}
 		}
 		
 		int result = apService.insertApprovalVacation(document, vacation);
 		
 		if(result > 0) {
 			if(document.getStatus() == 2) {
-				session.setAttribute("alertMsg", "임시저장 완료");	
+				session.setAttribute("toastMsg", "임시저장 완료");	
 				return "redirect:saveList.ap";
 			}else {
-				session.setAttribute("alertMsg", "결재상신 완료");				
+				session.setAttribute("toastMsg", "결재상신 완료");				
 				return "redirect:approvalList.ap";
 			}
 		}else {
@@ -389,18 +430,18 @@ public class ApprovalController {
 			if(approvalCount == order) {
 				int result = apService.approvalOfApproval(approvalUser, documentNo);
 				if(result > 0) {
-					session.setAttribute("alertMsg", "승인 했습니다.");	
+					session.setAttribute("toastMsg", "승인 했습니다.");	
 					return "redirect:approvalDetail.ap?no=" + documentNo +"&form=" + form;
 				}else {
 					model.addAttribute("errorMsg", "결재승인 과정 중 오류 발생");
 					return "common/errorPage";
 				}
 			}else {
-				session.setAttribute("alertMsg", "결재 순서가 아닙니다.");	
+				session.setAttribute("toastMsg", "결재 순서가 아닙니다.");	
 				return "redirect:approvalDetail.ap?no=" + documentNo +"&form=" + form;
 			}
 		}else {
-			session.setAttribute("alertMsg", "결재자가 아닙니다.");	
+			session.setAttribute("toastMsg", "결재자가 아닙니다.");	
 			return "redirect:approvalDetail.ap?no=" + documentNo +"&form=" + form;
 		}
 	}
@@ -418,10 +459,7 @@ public class ApprovalController {
 		
 		Document document = apService.saveListModify(no, form, userNo);
 		Object obj = apService.approvalDetailForm(no, form);
-		System.out.println(no);
-		System.out.println(form);
-		System.out.println(document);
-		System.out.println(obj);
+
 		mv.addObject("document", document);
 		mv.addObject("obj", obj);
 		mv.addObject("member", m);
@@ -436,12 +474,15 @@ public class ApprovalController {
 	 * @param documentNo : 삭제하고자 하는 결재문서 번호
 	 */
 	@RequestMapping("deleteApproval.ap")
-	public String deleteApproval(int documentNo, HttpSession session, Model model) {
+	public String deleteApproval(int documentNo,String filePath , HttpSession session, Model model) {
 		
 		int result = apService.deleteApproval(documentNo);
 		
 		if(result > 0) {
-			session.setAttribute("alertMsg", "결재문서를 삭제 했습니다.");	
+			if(!filePath.equals("")) {
+				new File(session.getServletContext().getRealPath(filePath)).delete();
+			}
+			session.setAttribute("toastMsg", "결재문서를 삭제 했습니다.");	
 			return "redirect:approvalList.ap";
 		}else {
 			model.addAttribute("errorMsg", "결재문서 삭제 과정 중 오류 발생");
@@ -457,7 +498,7 @@ public class ApprovalController {
 		int result = apService.approvalFusal(documentNo, msg, userNo);
 				
 		if(result > 0) {
-			session.setAttribute("alertMsg", "결재문서를 반려처리 했습니다.");	
+			session.setAttribute("toastMsg", "결재문서를 반려처리 했습니다.");	
 			return "redirect:approvalList.ap";
 		}else {
 			model.addAttribute("errorMsg", "결재문서 반려처리 과정 중 오류 발생");

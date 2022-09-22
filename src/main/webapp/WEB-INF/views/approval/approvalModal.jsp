@@ -157,9 +157,9 @@
 			$(".member-list input").prop("checked", false);
 			
 			if(check > 3){
-				alert("최대 3명 선택 가능합니다.");
+				toast("최대 3명 선택 가능합니다.");
 			}else if(check <= 0){
-				alert("선택된 멤버가 없습니다.");
+				toast("선택된 멤버가 없습니다.");
 			}else{
 				let checkMember = "";
 				for(let i = 0; i < checkList.length; i++){
@@ -207,7 +207,7 @@
 			$(".member-list input").prop("checked", false);
 			
 			if(check <= 0){
-				alert("선택된 멤버가 없습니다.");
+				toast("선택된 멤버가 없습니다.");
 			}else{
 				let checkMember = "";
 				for(let i = 0; i < checkList.length; i++){
@@ -253,7 +253,7 @@
 			let unCheckList = $("#select-approval-line:not(:checked)"); // 체크가 안된 체크박스 리스트
 			
 			if(check <= 0){
-				alert("선택된 멤버가 없습니다.");
+				toast("선택된 멤버가 없습니다.");
 			}else{
 				let unCheckMember = "";
 				
@@ -300,7 +300,7 @@
 			let unCheckList = $("#select-reference-line:not(:checked)"); // 체크가 안된 체크박스 리스트
 			
 			if(check <= 0){
-				alert("선택된 멤버가 없습니다.");
+				toast("선택된 멤버가 없습니다.");
 			}else{
 				let unCheckMember = "";
 				
@@ -367,7 +367,7 @@
 			}
 			
 			if(approvalMember.length <= 0){
-				alert("결재자를 선택해 주세요.");
+				toast("결재자를 선택해 주세요.");
 			}else{
 				$.ajax({
 					url : "insertApprovalAndReference.ap",
@@ -377,9 +377,9 @@
 						documentNo : documentNo
 					},
 					success : function(){
-						alert("등록완료");
+						toast("등록완료");
 						$('.modal-background').css("display", "none");
-						location.reload();
+						setTimeout(reload, 1000);
 					},
 					error : function(){
 						console.log("결재선, 참조 멤버 등록 부분 ajax연결실패");
@@ -387,6 +387,12 @@
 				})					
 			}
 		})
+	</script>
+	
+	<script>
+		function reload(){
+			location.reload();
+		}
 	</script>
 </body>
 </html>

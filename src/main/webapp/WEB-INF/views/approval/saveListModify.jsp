@@ -23,7 +23,7 @@
 				<div class="container-fluid">
 
 					<!--메인페이지 컨텐츠-->
-					<form class="document-wrapper" action="insertApprovalOvertime.ap" method="post" enctype="multipart/form-data">
+					<form class="document-wrapper" method="post" enctype="multipart/form-data">
 						<div class="write-area">
 							<table class="table table-bordered">
 								<tr>
@@ -31,6 +31,7 @@
 										<br><br>
 										<h1><strong>${ document.documentForm }</strong></h1>
 										<input type="hidden" name="documentNo" value="${ document.documentNo }">	
+										<br>
 									</th>
 									<td colspan="4" id="approval-section">
 									<!-- ajax 조회 -->
@@ -56,7 +57,7 @@
 											<th>시행일자</th>
 											<td colspan="5">
 												<div class="date-form" style="display: flex;">
-													<input type="date" name="planStart" class="form-control form-control-sm" style="width: 150px;" value='${ obj.planStart }'>
+													<input type="date" name="planStart" class="form-control form-control-sm" style="width: 150px;" value="${ obj.planStart }">
 												</div>
 											</td>
 										</tr>
@@ -129,14 +130,35 @@
 								</tr>
 								<tr>
 									<th>첨부파일</th>
-									<td colspan="5">
-										<input type="file" name="upfile" class="form-control-file border" value="${ document.originName }">
+									<td colspan="5" style="text-align : left;">
+			                    		<input type="file" id="upfile" class="form-control-file border" name="upfile">
+			                            현재 업로드된 파일 : 
+			                            <a href="${ b.changeName }">${ document.originName }</a>
+										<input type="hidden" name="originName" value="${ document.originName }">
+										<input type="hidden" name="changeName" value="${ document.changeName }">
 									</td>
 								</tr>
 							</table>
 							<div class="btn-area">
 								<button type="button" class="btn btn-secondary btn-sm" onclick="history.back();">돌아가기</button>
-								<button type="submit" class="btn btn-primary btn-sm" id="approval" disabled>결재상신</button>																							
+								<c:choose>
+									<c:when test="${ document.documentForm eq '업무기안서' }">
+										<button type="submit" class="btn btn-primary btn-sm" id="save" name="status" value="2">임시저장</button>
+										<button type="submit" class="btn btn-primary btn-sm" id="approval" formaction="insertApprovalPlan.ap" formenctype="multipart/form-data" disabled>결재상신</button>
+									</c:when>
+									<c:when test="${ document.documentForm eq '휴가신청서' }">
+										<button type="submit" class="btn btn-primary btn-sm" id="approval" disabled>결재상신</button>
+										<button type="submit" class="btn btn-primary btn-sm" id="approval" formaction="insertApprovalVacation.ap" formenctype="multipart/form-data" disabled>결재상신</button>
+									</c:when>
+									<c:when test="${ document.documentForm eq '결근사유서' }">
+										<button type="submit" class="btn btn-primary btn-sm" id="approval" disabled>결재상신</button>
+										<button type="submit" class="btn btn-primary btn-sm" id="approval" formaction="insertApprovalAbsence.ap" formenctype="multipart/form-data" disabled>결재상신</button>
+									</c:when>
+									<c:otherwise>
+										<button type="submit" class="btn btn-primary btn-sm" id="approval" disabled>결재상신</button>				
+										<button type="submit" class="btn btn-primary btn-sm" id="approval" formaction="insertApprovalOvertime.ap" formenctype="multipart/form-data" disabled>결재상신</button>
+									</c:otherwise>
+								</c:choose>																						
 							</div>
 						</div>
 						<div class="approval-wrapper">
@@ -159,6 +181,8 @@
 			</div>
 		</div>
 	</div>
+
+	<jsp:include page="../common/commonToast.jsp" />
 
 	<jsp:include page="approvalModal.jsp" />
 

@@ -98,6 +98,8 @@
 		</div>
 	</div>
 
+	<jsp:include page="../common/commonToast.jsp" />
+
 	<jsp:include page="approvalModal.jsp" />
 
 	<jsp:include page="../common/footer.jsp" />

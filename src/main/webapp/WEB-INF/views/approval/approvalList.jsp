@@ -124,6 +124,8 @@
 		</div>
 	</div>
 
+	<jsp:include page="../common/commonToast.jsp" />
+
 	<script>
 	    // 문서 상세조회
 		$(".list-wrapper>table>tbody>tr").click(function(){
@@ -196,7 +198,5 @@
 	</script>
 	
 	<jsp:include page="../common/footer.jsp"/>
-	
-	<jsp:include page="../approval/approvalDetail.jsp" />
 </body>
 </html>
