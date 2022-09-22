@@ -14,8 +14,13 @@
     .adminx-main-content {
 		padding-top:5px !important;
     }
+    
+    .ui-datepicker {
+		width: 13em !important;
+	}
 
-  </style>
+  </style> 
+  
 </head>
 <body>
 
@@ -29,7 +34,7 @@
 		<jsp:include page="../common/menubar.jsp" />
 		
 		
-		      <!-- 컨텐츠 부분 wrapper -->
+	<!-- 컨텐츠 부분 wrapper -->
       <div class="adminx-content">
         <div class="adminx-main-content">
 
@@ -39,55 +44,101 @@
 
             <!--메인페이지 컨텐츠-->
             <div class="top-wrapper">
+            
               <!--DatePicker부분-->
               <div class="date-picker" style="width:100%; height:100%;">
                 
                 <div class="attendence-area">
                   
-                  <div class="date-picker-area" style="height:25vh; margin-top:15px; text-align:center;">
-                    달력 넣을 부분
+                  <!-- datePicker CDN -->
+                  <link rel="stylesheet" href="http://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+                  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/smoothness/jquery-ui.css">
+				  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+				  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+				  
+				  <!-- datePicker 관련 script -->	
+                  <script>
+                 	 $.datepicker.setDefaults({
+                 		 dateFormat: "yy/mm/dd",
+                 		 prevText: "이전 달",
+                 		 nextText: "다음 달",
+                 		 monthNames: ["1월", "2월", "3월", "4월", "5월", "6월","7월", "8월", "9월", "10월", "11월", "12월"],
+                 		 dayNames: ["일", "월", "화", "수", "목", "금", "토"],
+                 		 dayNamesMin: ["일", "월", "화", "수", "목", "금", "토"],
+                 		 showMonthAfterYear: true,
+                 		 yearSuffix: "년",
+                 		 maxDate: "2022/09/26",
+                 		 monthNamesShort: ["1월", "2월", "3월", "4월", "5월", "6월","7월", "8월", "9월", "10월", "11월", "12월"]
+                 		/*날짜가 선택되면 호출될 함수
+                 		  onSelect: function (dateText) {
+                 		    console.log(dateText)
+                 		  },*/                 		  
+                 	 });
+                  
+					 $(function() {
+					  $('#datepicker').datepicker({
+					    onSelect: function(dateText) {
+					 $('#datepicker2').datepicker("setDate", $(this).datepicker("getDate"));
+					    }
+					  });
+					});
+					
+					$(function() {
+					  $("#datepicker2").datepicker();
+					});
+	                	
+
+				  </script>
+                  
+                  <div class="date-picker-area" style="margin-top:15px; height:25vh; text-align:center;">
+                                      
+                    Date: <input type="text" id="datepicker2" disabled> <br>
+					<div id="datepicker" style="height:100%; margin-top:5px; margin-left:44.65%;"></div>
+                                        
                   </div>
+                  
 
                   <div class="commute-table-area">
 
-                    <div style="padding-left:15px; width:100%;">
-                      
+                    <div style="padding-left:15px; padding-bottom:2px; width:100%;">
+                      <!--  
                       <div style="display:inline-block; text-align:center;">
                         <strong>* 2022-09-05 출퇴근 현황</strong>
                       </div>
+                      -->
                       
                       <!-- 검색폼 -->
-                      <form action="" method="get" id="search-form">
-	                      <div style="display:flex; padding-top:10px;">
+
+	                      <div style="display:flex; padding-top:15px;">
 	
 	                        <div class="form-group">
-	                          <select class="form-control select1" id="select-dept" name="demoStyle" style="height:40px;">
-	                            <option value="default" class="op1">전체</option>
-	                            <option class="text-secondary" value="secondary"><label class="se-la">개발</label></option>
-	                            <option class="text-secondary" value="secondary"><label class="se-la">영업</label></option>
-	                            <option class="text-secondary" value="secondary"><label class="se-la">인사</label></option>
-	                            <option class="text-secondary" value="secondary"><label class="se-la">총무</label></option>
-	                            <option class="text-secondary" value="secondary"><label class="se-la">회계</label></option>
+	                          <select class="form-control select1" id="searchDep" name="searchDep" style="height:40px;">
+	                            <option value="dept0" class="op1" selected>전체</option>
+	                            <option class="text-secondary" value="dept1"><label class="se-la">개발</label></option>
+	                            <option class="text-secondary" value="dept2"><label class="se-la">영업</label></option>
+	                            <option class="text-secondary" value="dept3"><label class="se-la">인사</label></option>
+	                            <option class="text-secondary" value="dept4"><label class="se-la">총무</label></option>
+	                            <option class="text-secondary" value="dept5"><label class="se-la">회계</label></option>
 	                          </select>
 	                        </div>
 	                        <div class="search-div" style="width:20%; display:flex; ">
-	                          <input class="form-control mb-2 search1" type="text" placeholder="사원명을 입력해주세요." style="height:40px;">
-	                          <button type="submit" class="btn btn-sm btn-primary" style="height:40px;">검색</button>
+	                          <input class="form-control mb-2 search1" name="keyword" id="keyword" type="text" placeholder="사원명을 입력해주세요." style="height:40px;">
+	                          <button type="button" class="btn btn-sm btn-primary" style="height:40px;" onclick="selectSearchList(1);">검색</button>
 	                        </div>  
-	                        
-	                        <button type="button" class="btn btn-sm btn-danger" id="commute-modify-btn01" onclick="location.href='commuteMemUpdate.at'">출퇴근기록 수정요청 현황</button>
-	                        
+	                        	                        
                           </div>                      
-                       </form>                         
+                    
                       
                     </div>
                     
                     <!-- Table Seamless -->
-                      <div class="card mb-grid" style="margin-left:15px; margin-right:15px;">
+                      <div class="card mb-grid" style="margin-left:15px; margin-right:15px; ">
                         
-                        <table class="table table-hover mb-0" style="text-align:center;">
+                        <table class="table table-hover mb-0" id="commuteMemberTable" style="text-align:center;">
                           <thead>
                             <tr>
+                              <th scope="col">근무날짜</th>
+                              <th scope="col">요일</th>
                               <th scope="col">사원번호</th>
                               <th scope="col">부서</th>
                               <th scope="col">사원명</th>
@@ -98,116 +149,123 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                              <td>00000000</td>
-                              <td>개발</td>
-                              <td>홍길동</td>
-                              <td>대리</td>
-                              <td>09:00</td>
-                              <td>18:00</td>
-                              <td></td>
-                            </tr>
-                            <tr>
-                              <td>00000000</td>
-                              <td>개발</td>
-                              <td>강개똥</td>
-                              <td>사원</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>연차</td>
-                            </tr>
-                            <tr>
-                              <td>00000000</td>
-                              <td>영업</td>
-                              <td>홍길순</td>
-                              <td>부장</td>
-                              <td>09:00</td>
-                              <td>18:00</td>
-                              <td></td>
-                            </tr>
-                            <tr>
-                              <td>00000000</td>
-                              <td>회계</td>
-                              <td>홍길녀</td>
-                              <td>과장</td>
-                              <td>09:00</td>
-                              <td>18:00</td>
-                              <td></td>
-                            </tr>
-                            <tr>
-                              <td>00000000</td>
-                              <td>인사</td>
-                              <td>강개순</td>
-                              <td>팀장</td>
-                              <td>09:00</td>
-                              <td>18:00</td>
-                              <td></td>
-                            </tr>
-                            <tr>
-                              <td>00000000</td>
-                              <td>개발</td>
-                              <td>홍길동</td>
-                              <td>대리</td>
-                              <td>09:00</td>
-                              <td>18:00</td>
-                              <td></td>
-                            </tr>
-                            <tr>
-                              <td>00000000</td>
-                              <td>개발</td>
-                              <td>강개똥</td>
-                              <td>사원</td>
-                              <td>-</td>
-                              <td>-</td>
-                              <td>연차</td>
-                            </tr>
-                            <tr>
-                              <td>00000000</td>
-                              <td>영업</td>
-                              <td>홍길순</td>
-                              <td>부장</td>
-                              <td>09:00</td>
-                              <td>18:00</td>
-                              <td></td>
-                            </tr>
-                            <tr>
-                              <td>00000000</td>
-                              <td>회계</td>
-                              <td>홍길녀</td>
-                              <td>과장</td>
-                              <td>09:00</td>
-                              <td>18:00</td>
-                              <td></td>
-                            </tr>
-                            <tr>
-                              <td>00000000</td>
-                              <td>인사</td>
-                              <td>강개순</td>
-                              <td>팀장</td>
-                              <td>09:00</td>
-                              <td>18:00</td>
-                              <td></td>
-                            </tr>
+                          
+                          	  <!-- 리스트 조회 내용 올 곳 -->
+                   
                           </tbody>
                         </table>
-
-                        <div class="card-footer d-flex justify-content-end" style="justify-content:center !important;">
-                          <ul class="pagination pagination-clean pagination-sm mb-0">
-                            <li class="page-item disabled">
-                              <a class="page-link" href="#" tabindex="-1">‹</a>
-                            </li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link" href="#">5</a></li>
-                            <li class="page-item">
-                              <a class="page-link" href="#">›</a>
-                            </li>
-                          </ul>
+						
+						<!-- 페이징바 -->
+                        <div class="card-footer d-flex justify-content-end commute-pasing" style="justify-content:center !important;">
+              				
                         </div>
                       </div>
                     <!-- // Table seamless -->
+                    
+                    
+                    <!-- 검색시 ajax로 결과 리스트 조회 -->
+                    
+                    <script>
+                    	
+                    	$(function(){
+                    		
+                    		selectSearchList(1);
+                    		
+                    	})
+                    
+                    	function selectSearchList(cpage) {
+                    		console.log($("#keyword").val());
+                    		
+                    		$.ajax({
+                    			url:"commuteMemberList.at",
+                    			data : {
+                    				cpage:cpage,
+                    				searchDep:$("#searchDep option:selected").val(),
+                    				keyword:$("#keyword").val()
+                    			},
+                    			success:function(result){
+                    				let list = result.list;
+                    				let pi = result.pi;
+                    				let value = "";
+                    				let pageValue = "";
+                    				
+                    				console.log(pi);
+                    				console.log(list);
+                    				
+                    				if(list.length == 0) {
+                    					value += '<tr>'
+                          					  +    '<td colspan="9">조회 내역이 없습니다.</td>'
+                              			      +  '</tr>'
+                    				}else{
+                    					for(let i=0; i<list.length; i++){
+                    						value += '<tr>'
+			  			                          +    	 '<td>' + list[i].atDate + '</td>'
+			  			                          +    	 '<td>' + list[i].atDay + '</td>'
+			  			                          +   	 '<td>' + list[i].userNo + '</td>'
+			  			                          +   	 '<td>' + list[i].depName + '</td>'
+			  			                          +   	 '<td>' + list[i].userName + '</td>'
+			  			                          +   	 '<td>' + list[i].jobName + '</td>'
+			  			                          +   	 '<td>' + list[i].atStart + '</td>'
+			  			                          +    	 '<td>' + list[i].atEnd + '</td>'
+			  			                          +    	 '<td>' + list[i].atStatus + '</td>'
+			  			                          +  '</tr>';
+                    					};
+                    					
+                    					if(pi.currentPage = 1){
+                    						pageValue += '<ul class="pagination pagination-clean pagination-sm mb-0">'
+                                            		  +		'<li class="page-item disabled">'
+                      	                              +   	  '<a class="page-link" href="" tabindex="-1">‹</a>'
+                        	                          +  	'</li>'
+                    					}else{
+                    						pageValue +=  '<ul class="pagination pagination-clean pagination-sm mb-0">'
+                                      				  + 	'<li class="page-item">'
+            	                             		  +			'<a class="page-link" onclick="selectSearchList(' + (pi.currentPage - 1) + ')" tabindex="-1">‹</a>'
+            	                             		  +     '</li>'
+                    					}
+                    					
+                    					for(let p=pi.startPage; p<=pi.endPage; p++) { 
+                    						
+                    						if(p == pi.currentPage) { 
+                    							pageValue += '<li class="page-item active">'
+	              									  +	 	'<a class="page-link" disabled>' + p + '</a>'
+	              									  +  '</li>'                    							
+                    						}else {
+                    							pageValue += '<li class="page-item active">'
+		              									  +	 	'<a class="page-link" onclick="selectSearchList(' + p + ')">' + p + '</a>'
+		              									  +  '</li>'
+		                    						}                    						
+                    						
+                    					}
+                    					
+                    					 if(pi.currentPage = pi.maxPage) {
+                    						 pageValue += 	'<li class="page-item disabled">'
+             	                              		   +  		 '<a class="page-link" href="">›</a>'
+                	                            	   +  	'</li>'
+			                	                       +  '</ul>'
+			                                           +'</div>'                             					
+                                         }else {
+                                         	 pageValue += '<li class="page-item">'
+             	                             		   +   '<a class="page-link" onclick="selectSearchList(' + (pi.currentPage + 1) + ')">›</a>'
+             	                             		   +  '</li>'
+			                	                       +    '</ul>'
+			                                           +   '</div>'
+                              					
+                                         }         					       		
+                    					
+                    					
+                    				}
+                    				
+                    				$("#commuteMemberTable tbody").html(value);
+                                    $(".commute-pasing").html(pageValue); 
+                    				
+                    			}, error:function(){
+                    				console.log("조회 실패");
+                    			}		                  			
+                    		})
+                    	}
+                    
+                    </script>
+                    
 
                   </div>
 

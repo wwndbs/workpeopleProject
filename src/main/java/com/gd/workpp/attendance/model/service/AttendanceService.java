@@ -3,7 +3,7 @@ package com.gd.workpp.attendance.model.service;
 import java.util.ArrayList;
 
 import com.gd.workpp.attendance.model.vo.Attendance;
-import com.gd.workpp.holiday.model.vo.Schedule;
+import com.gd.workpp.common.model.vo.PageInfo;
 
 public interface AttendanceService {
 	
@@ -102,16 +102,13 @@ public interface AttendanceService {
 	// 6. 사원별 출퇴근 현황 조회 / commuteMemberList.jsp
 	
 	// 6-1. 출퇴근현황 표 페이징처리 listCount
-	
+	int commuteMemberListCount(String searchDep, String keyword);
 	
 	// 6-2. 출퇴근현황(날짜 클릭시)_사원번호/부서/사원명/직급/출근시간/퇴근시간/연장근무시간/비고(연차)
+	ArrayList<Attendance> commuteMemberList(PageInfo pi, String searchDep, String keyword);
 	
-	
-	// 7. 출퇴근 기록 수정요청 현황 / commuteMemberUpdate.jsp
-	
+	// 7. 출퇴근 기록 수정요청 현황 / commuteMemberUpdate.jsp	
 	// 7-1. 출퇴근 기록 수정요청 현황 표 페이징처리 listCount
-	
-	
 	// 7-2. 출퇴근 기록 수정요청 현황 표_근무날짜/사원번호/부서/사원명/직급/출퇴근시간/수정요청시간/승인내역
 	
 	
@@ -126,10 +123,10 @@ public interface AttendanceService {
 	// 9. 사원휴가관리 / atHolidayGiveList.jsp
 	
 	// 9-1. 사원휴가관리 표 페이징처리 listCount
-	
+	int atHolidayGiveListCount(String searchDep, String rank, String keyword);
 	
 	// 9-2. 사원휴가관리 표_사원번호/부서/사원명/직급/입사일/근속연수/잔여휴가일수
-	
+	ArrayList<Attendance> atHolidayGiveList(PageInfo pi, String searchDep, String rank, String keyword);
 	
 	// 9-3. 휴가지급 버튼 클릭시 update
 	
