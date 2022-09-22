@@ -1,11 +1,14 @@
 package com.gd.workpp.attendance.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.gd.workpp.attendance.model.vo.Attendance;
+import com.gd.workpp.common.model.vo.PageInfo;
 
 @Repository
 public class AttendanceDao {
@@ -115,16 +118,29 @@ public class AttendanceDao {
 	// 6. 사원별 출퇴근 현황 조회 / commuteMemberList.jsp
 	
 	// 6-1. 출퇴근현황 표 페이징처리 listCount
-	
+	public int commuteMemberListCount(SqlSessionTemplate sqlSession, String searchDep, String keyword) {
+		HashMap<String,Object> map = new HashMap<>();
+		map.put("searchDep", searchDep);
+		map.put("keyword", keyword);
+		
+		return sqlSession.selectOne("attendanceMapper.commuteMemberListCount", map);
+	}
 	
 	// 6-2. 출퇴근현황(날짜 클릭시)_사원번호/부서/사원명/직급/출근시간/퇴근시간/연장근무시간/비고(연차)
+	public ArrayList<Attendance> commuteMemberList(SqlSessionTemplate sqlSession, PageInfo pi, String searchDep, String keyword) {	
+		HashMap<String,Object> map = new HashMap<>();
+		map.put("searchDep", searchDep);
+		map.put("keyword", keyword);
+
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("attendanceMapper.commuteMemberList", map, rowBounds);		
+	}
 	
-	
-	// 7. 출퇴근 기록 수정요청 현황 / commuteMemberUpdate.jsp
-	
+	// 7. 출퇴근 기록 수정요청 현황 / commuteMemberUpdate.jsp	
 	// 7-1. 출퇴근 기록 수정요청 현황 표 페이징처리 listCount
-	
-	
 	// 7-2. 출퇴근 기록 수정요청 현황 표_근무날짜/사원번호/부서/사원명/직급/출퇴근시간/수정요청시간/승인내역
 	
 	
@@ -139,9 +155,29 @@ public class AttendanceDao {
 	// 9. 사원휴가관리 / atHolidayGiveList.jsp
 	
 	// 9-1. 사원휴가관리 표 페이징처리 listCount
-	
+	public int atHolidayGiveListCount(SqlSessionTemplate sqlSession, String searchDep, String rank, String keyword) {
+		
+		HashMap<String,Object> map = new HashMap<>();
+		map.put("searchDep", searchDep);
+		map.put("rank", rank);
+		map.put("keyword", keyword);
+		System.out.println(map);
+		return sqlSession.selectOne("attendanceMapper.atHolidayGiveListCount", map);
+	}
 	
 	// 9-2. 사원휴가관리 표_사원번호/부서/사원명/직급/입사일/근속연수/잔여휴가일수
+	public ArrayList<Attendance> atHolidayGiveList(SqlSessionTemplate sqlSession, PageInfo pi, String searchDep, String rank, String keyword) {	
+		HashMap<String,Object> map = new HashMap<>();
+		map.put("searchDep", searchDep);
+		map.put("rank", rank);
+		map.put("keyword", keyword);		
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("attendanceMapper.atHolidayGiveList", map, rowBounds);		
+	}
 	
 	
 	// 9-3. 휴가지급 버튼 클릭시 update

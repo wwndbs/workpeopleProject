@@ -27,4 +27,8 @@ public class Member {
 	private String userEmail;
 	private String userPwd;
 	private String birthday;
+	
+	// 장서원 추가
+	private String serviceYear;
+	private String vacationCount;
 }

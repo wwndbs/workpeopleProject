@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.gd.workpp.attendance.model.dao.AttendanceDao;
 import com.gd.workpp.attendance.model.vo.Attendance;
+import com.gd.workpp.common.model.vo.PageInfo;
 
 @Service
 public class AttendanceServiceImpl implements AttendanceService {
@@ -67,6 +68,29 @@ public class AttendanceServiceImpl implements AttendanceService {
 	public ArrayList<Attendance> selectWorkList(String userNo) {
 		return atDao.selectWorkList(sqlSession, userNo);
 	}
+
+	// 6. 사원별 출퇴근 현황 조회 / commuteMemberList.jsp
+	@Override
+	public int commuteMemberListCount(String searchDep, String keyword) {
+		return atDao.commuteMemberListCount(sqlSession, searchDep, keyword);
+	}
+	
+	@Override
+	public ArrayList<Attendance> commuteMemberList(PageInfo pi, String searchDep, String keyword) {
+		return atDao.commuteMemberList(sqlSession, pi, searchDep, keyword);
+	}
+	
+	// 9. 사원휴가관리 / atHolidayGiveList.jsp
+	@Override
+	public int atHolidayGiveListCount(String searchDep, String rank, String keyword) {
+		return atDao.atHolidayGiveListCount(sqlSession, searchDep, rank, keyword);
+	}
+
+	@Override
+	public ArrayList<Attendance> atHolidayGiveList(PageInfo pi, String searchDep, String rank, String keyword) {
+		return atDao.atHolidayGiveList(sqlSession, pi, searchDep, rank, keyword);
+	}
+	
 
 
 		

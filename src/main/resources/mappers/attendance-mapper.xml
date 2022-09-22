@@ -10,6 +10,7 @@
 		<result column="at_overtime" property="atOvertime" />
 		<result column="at_totaltime" property="atTotaltime" />
 		<result column="at_date" property="atDate" />
+		<result column="at_day" property="atDay" />
 		<result column="at_status" property="atStatus" />
 		<result column="at_late" property="atLate" />
 		<result column="user_name" property="userName" />
@@ -17,6 +18,8 @@
 		<result column="at_modifyend" property="atModifyEnd" />
 		<result column="at_modifystatus" property="atModifyStatus" />
 		<result column="at_modifydate" property="atModifyDate" />
+		<result column="dep_name" property="depName" />
+		<result column="job_name" property="jobName" />
 	</resultMap>
 	
 	<resultMap id="annualResult" type="Annual">
@@ -38,6 +41,16 @@
 		<result column="at_date" property="atDate" />
 		<result column="work_day" property="workDay" />
 		<result column="work_dateList" property="workDateList" />
+	</resultMap>
+	
+	<resultMap id="memberResult" type="Member">
+		<result column="user_no" property="userNo" />
+		<result column="dep_name" property="depName" />
+		<result column="user_name" property="userName" />
+		<result column="job_name" property="jobName" />
+		<result column="create_date" property="createDate" />
+		<result column="service_year" property="serviceYear" />
+		<result column="vacation_count" property="vacationCount" />
 	</resultMap>
 	
 	<!-- 1. 출퇴근기록 / commuteList.jsp -->
@@ -223,17 +236,75 @@
 	<!-- 6. 사원별 출퇴근 현황 조회 / commuteMemberList.jsp -->
 	
 	<!-- 6-1. 출퇴근현황 표 페이징처리 listCount -->
-	
+	<select id="commuteMemberListCount" resultType="_int">
+		select
+		       count(*)
+		  from attendance at
+		  join member m on (at.user_no = m.user_no)	
+		 where 
+		 <if test='searchDep == "dept0"'>
+		   (m.dep_name = '개발팀' or m.dep_name = '영업팀' or m.dep_name = '인사팀' or m.dep_name = '총무팀' or m.dep_name = '회계팀')
+		 </if>  
+		 <if test="searchDep == 'dept1'">
+		   m.dep_name = '개발팀'
+		 </if>  
+		 <if test="searchDep == 'dept2'">
+		   m.dep_name = '영업팀'
+		 </if>  
+		 <if test="searchDep == 'dept3'">
+		   m.dep_name = '인사팀'
+		 </if> 
+		 <if test="searchDep == 'dept4'">
+		   m.dep_name = '총무팀'
+		 </if> 
+		 <if test="searchDep == 'dept5'">
+		   m.dep_name = '회계팀' 
+		 </if> 
+		   and m.user_name like '%' || #{keyword} || '%'		
+	</select>
 	
 	<!-- 6-2. 출퇴근현황(날짜 클릭시)_사원번호/부서/사원명/직급/출근시간/퇴근시간/연장근무시간/비고(연차) -->
+	<select id="commuteMemberList" resultMap="attendanceResult">
+		select
+		       at_date
+		     , at_day
+		     , m.user_no 
+		     , m.dep_name
+		     , m.user_name
+		     , m.job_name
+		     , nvl(at_start, '-') as at_start
+		     , nvl(at_end, '-') as at_end
+		     , decode(at_status, 1, '정상',
+		                         2, '지각',
+		                         3, '휴가',
+		                         4, '결근') as at_status
+		  from attendance at
+		  join member m on (at.user_no = m.user_no)
+		 where 
+		 <if test="searchDep == 'dept0'">
+		   (m.dep_name = '개발팀' or m.dep_name = '영업팀' or m.dep_name = '인사팀' or m.dep_name = '총무팀' or m.dep_name = '회계팀')
+		 </if>  
+		 <if test="searchDep == 'dept1'">
+		   m.dep_name = '개발팀'
+		 </if>  
+		 <if test="searchDep == 'dept2'">
+		   m.dep_name = '영업팀'
+		 </if>  
+		 <if test="searchDep == 'dept3'">
+		   m.dep_name = '인사팀'
+		 </if> 
+		 <if test="searchDep == 'dept4'">
+		   m.dep_name = '총무팀'
+		 </if> 
+		 <if test="searchDep == 'dept5'">
+		   m.dep_name = '회계팀' 
+		 </if> 
+		   and m.user_name like '%' || #{keyword} || '%'
+		 order by at_date desc
+	</select>
 	
-	
-	
-	<!-- 7. 출퇴근 기록 수정요청 현황 / commuteMemberUpdate.jsp -->
-	
-	<!-- 7-1. 출퇴근 기록 수정요청 현황 표 페이징처리 listCount -->
-	
-	
+	<!-- 7. 출퇴근 기록 수정요청 현황 / commuteMemberUpdate.jsp -->	
+	<!-- 7-1. 출퇴근 기록 수정요청 현황 표 페이징처리 listCount -->	
 	<!-- 7-2. 출퇴근 기록 수정요청 현황 표_근무날짜/사원번호/부서/사원명/직급/출퇴근시간/수정요청시간/승인내역 -->
 	
 	
@@ -250,10 +321,113 @@
 	<!-- 9. 사원휴가관리 / atHolidayGiveList.jsp -->
 	
 	<!-- 9-1. 사원휴가관리 표 페이징처리 listCount -->
-	
+	<select id="atHolidayGiveListCount" resultType="_int">
+		select 
+		       count(*)
+		  from (
+				select
+				       distinct m.user_no
+				  from member m
+				  left join document do on(m.user_no = do.user_no)
+				  left join vacation v on(v.document_no = do.document_no) 
+				  where 
+				 <if test="searchDep == 'dept0'">
+				   (m.dep_name = '개발팀' or m.dep_name = '영업팀' or m.dep_name = '인사팀' or m.dep_name = '총무팀' or m.dep_name = '회계팀')
+				 </if>  
+				 <if test="searchDep == 'dept1'">
+				   m.dep_name = '개발팀'
+				 </if>  
+				 <if test="searchDep == 'dept2'">
+				   m.dep_name = '영업팀'
+				 </if>  
+				 <if test="searchDep == 'dept3'">
+				   m.dep_name = '인사팀'
+				 </if> 
+				 <if test="searchDep == 'dept4'">
+				   m.dep_name = '총무팀'
+				 </if> 
+				 <if test="searchDep == 'dept5'">
+				   m.dep_name = '회계팀' 
+				 </if> 
+				 
+				 <if test="rank == 'rank0'">
+				   and (m.job_name = '부장' or m.job_name = '팀장' or m.job_name = '과장' or m.job_name = '대리' or m.job_name = '사원')
+				 </if>  
+				 <if test="rank == 'rank1'">
+				   and m.job_name = '부장'
+				 </if>  
+				 <if test="rank == 'rank2'">
+				   and m.job_name = '팀장'
+				 </if>  
+				 <if test="rank == 'rank3'">
+				   and m.job_name = '과장'
+				 </if> 
+				 <if test="rank == 'rank4'">
+				   and m.job_name = '대리'
+				 </if> 
+				 <if test="rank == 'rank5'">
+				   and m.job_name = '사원' 
+				 </if> 
+				   and m.user_name like '%' || #{keyword} || '%'
+				   and m.status = 'N')
+	</select>
 	
 	<!-- 9-2. 사원휴가관리 표_사원번호/부서/사원명/직급/입사일/근속연수/잔여휴가일수 -->
-	
+	<select id="atHolidayGiveList" resultMap="memberResult">
+		select
+		       m.user_no
+		     , m.dep_name
+		     , m.user_name
+		     , m.job_name
+		     , m.create_date
+		     , trunc(months_between(sysdate, m.create_date)/12) as service_year
+		     , nvl(sum(vacation_count), 0) as vacation_count
+		  from member m
+		  left join document do on(m.user_no = do.user_no)
+		  left join vacation v on(v.document_no = do.document_no) 
+		 where 
+		 <if test="searchDep == 'dept0'">
+		   (m.dep_name = '개발팀' or m.dep_name = '영업팀' or m.dep_name = '인사팀' or m.dep_name = '총무팀' or m.dep_name = '회계팀')
+		 </if>  
+		 <if test="searchDep == 'dept1'">
+		   m.dep_name = '개발팀'
+		 </if>  
+		 <if test="searchDep == 'dept2'">
+		   m.dep_name = '영업팀'
+		 </if>  
+		 <if test="searchDep == 'dept3'">
+		   m.dep_name = '인사팀'
+		 </if> 
+		 <if test="searchDep == 'dept4'">
+		   m.dep_name = '총무팀'
+		 </if> 
+		 <if test="searchDep == 'dept5'">
+		   m.dep_name = '회계팀' 
+		 </if> 
+		 
+		 <if test="rank == 'rank0'">
+		   and (m.job_name = '부장' or m.job_name = '팀장' or m.job_name = '과장' or m.job_name = '대리' or m.job_name = '사원')
+		 </if>  
+		 <if test="rank == 'rank1'">
+		   and m.job_name = '부장'
+		 </if>  
+		 <if test="rank == 'rank2'">
+		   and m.job_name = '팀장'
+		 </if>  
+		 <if test="rank == 'rank3'">
+		   and m.job_name = '과장'
+		 </if> 
+		 <if test="rank == 'rank4'">
+		   and m.job_name = '대리'
+		 </if> 
+		 <if test="rank == 'rank5'">
+		   and m.job_name = '사원' 
+		 </if> 
+		   and m.user_name like '%' || #{keyword} || '%'
+		   and m.status = 'N'
+		   group by m.user_no, m.dep_name, m.user_name, m.job_name, m.create_date  
+		   order by user_no desc
+	</select>
 	
 	<!-- 9-3. 휴가지급 버튼 클릭시 update -->
 	

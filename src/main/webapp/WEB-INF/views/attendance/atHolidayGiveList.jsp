@@ -12,7 +12,7 @@
   <style>
 
     .adminx-main-content {
-      padding-top:5px !important;
+		padding-top:5px !important;
     }
 
   </style>
@@ -29,7 +29,7 @@
 		<jsp:include page="../common/menubar.jsp" />
 		
 		
-		      <!-- 컨텐츠 부분 wrapper -->
+	<!-- 컨텐츠 부분 wrapper -->
       <div class="adminx-content">
         <div class="adminx-main-content">
 
@@ -56,28 +56,28 @@
                         <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#holiday-bonus" data-backdrop="static" style="height:40px; margin-right:420px;">보너스 휴가지급</button>
 
                         <div class="form-group1">
-                          <select class="form-control select1" id="select-dept" name="dept" style="width:100px; height:40px;">
-                            <option value="default" class="op1">부서전체</option>
-                            <option class="text-secondary" value="secondary"><label class="se-la">개발</label></option>
-                            <option class="text-secondary" value="secondary"><label class="se-la">영업</label></option>
-                            <option class="text-secondary" value="secondary"><label class="se-la">인사</label></option>
-                            <option class="text-secondary" value="secondary"><label class="se-la">총무</label></option>
-                            <option class="text-secondary" value="secondary"><label class="se-la">회계</label></option>
+                          <select class="form-control select1" id="searchDep" name="searchDep" style="width:100px; height:40px;">
+                            <option value="dept0" class="op1" selected>부서전체</option>
+                            <option class="text-secondary" value="dept1"><label class="se-la">개발</label></option>
+                            <option class="text-secondary" value="dept2"><label class="se-la">영업</label></option>
+                            <option class="text-secondary" value="dept3"><label class="se-la">인사</label></option>
+                            <option class="text-secondary" value="dept4"><label class="se-la">총무</label></option>
+                            <option class="text-secondary" value="dept5"><label class="se-la">회계</label></option>
                           </select>
                         </div>
                         <div class="form-group2">
-                          <select class="form-control select2" id="select-rank" name="rank" style="width:100px; height:40px;">
-                            <option value="default" class="op2">직급전체</option>
-                            <option class="text-secondary" value="secondary"><label class="se-la">부장</label></option>
-                            <option class="text-secondary" value="secondary"><label class="se-la">팀장</label></option>
-                            <option class="text-secondary" value="secondary"><label class="se-la">과장</label></option>
-                            <option class="text-secondary" value="secondary"><label class="se-la">대리</label></option>
-                            <option class="text-secondary" value="secondary"><label class="se-la">사원</label></option>
+                          <select class="form-control select2" id="rank" name="rank" style="width:100px; height:40px;">
+                            <option value="rank0" class="op2" selected>직급전체</option>
+                            <option class="text-secondary" value="rank1"><label class="se-la">부장</label></option>
+                            <option class="text-secondary" value="rank2"><label class="se-la">팀장</label></option>
+                            <option class="text-secondary" value="rank3"><label class="se-la">과장</label></option>
+                            <option class="text-secondary" value="rank4"><label class="se-la">대리</label></option>
+                            <option class="text-secondary" value="rank5"><label class="se-la">사원</label></option>
                           </select>
                         </div>
                         <div class="search-div" style="width:20%; display:flex; ">
-                          <input class="form-control mb-2 search1" type="text" placeholder="사원명을 입력해주세요." style="height:40px;">
-                          <button type="submit" class="btn btn-sm btn-primary" style="width:60px; height:40px;">검색</button>
+                          <input class="form-control mb-2 search1" name="keyword" id="keyword" type="text" type="text" placeholder="사원명을 입력해주세요." style="height:40px;">
+                          <button type="button" class="btn btn-sm btn-primary" style="width:60px; height:40px;" onclick="selectSearchList(1);">검색</button>
                         </div>
 
                         <button type="button" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#service-year" data-backdrop="static" style="height:40px; margin-left:420px;">근속연수 조회</button>
@@ -90,7 +90,7 @@
                     <!-- Table Seamless -->
                       <div class="card mb-grid" style="margin-left:15px; margin-right:15px;">
                         
-                        <table class="table table-hover mb-0" style="text-align:center;">
+                        <table class="table table-hover mb-0" id="atHolidayGiveList" style="text-align:center;">
                           <thead>
                             <tr>
                               <th scope="col"><input type="checkbox" id="checkbox" name="checkbox"></th>
@@ -104,126 +104,117 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                              <td><input type="checkbox" id="checkbox" name="checkbox"></td>
-                              <td>00000000</td>
-                              <td>개발</td>
-                              <td>홍길동</td>
-                              <td>대리</td>
-                              <td>2020-02-03</td>
-                              <td>2</td>
-                              <td>10</td>
-                            </tr>
-                            <tr>
-                              <td><input type="checkbox" id="checkbox" name="checkbox"></td>
-                              <td>00000000</td>
-                              <td>개발</td>
-                              <td>홍길동</td>
-                              <td>대리</td>
-                              <td>2020-02-03</td>
-                              <td>2</td>
-                              <td>10</td>
-                            </tr>
-                            <tr>
-                              <td><input type="checkbox" id="checkbox" name="checkbox"></td>
-                              <td>00000000</td>
-                              <td>개발</td>
-                              <td>홍길동</td>
-                              <td>대리</td>
-                              <td>2020-02-03</td>
-                              <td>2</td>
-                              <td>10</td>
-                            </tr>
-                            <tr>
-                              <td><input type="checkbox" id="checkbox" name="checkbox"></td>
-                              <td>00000000</td>
-                              <td>개발</td>
-                              <td>홍길동</td>
-                              <td>대리</td>
-                              <td>2020-02-03</td>
-                              <td>2</td>
-                              <td>10</td>
-                            </tr>
-                            <tr>
-                              <td><input type="checkbox" id="checkbox" name="checkbox"></td>
-                              <td>00000000</td>
-                              <td>개발</td>
-                              <td>홍길동</td>
-                              <td>대리</td>
-                              <td>2020-02-03</td>
-                              <td>2</td>
-                              <td>10</td>
-                            </tr>
-                            <tr>
-                              <td><input type="checkbox" id="checkbox" name="checkbox"></td>
-                              <td>00000000</td>
-                              <td>개발</td>
-                              <td>홍길동</td>
-                              <td>대리</td>
-                              <td>2020-02-03</td>
-                              <td>2</td>
-                              <td>10</td>
-                            </tr>
-                            <tr>
-                              <td><input type="checkbox" id="checkbox" name="checkbox"></td>
-                              <td>00000000</td>
-                              <td>개발</td>
-                              <td>홍길동</td>
-                              <td>대리</td>
-                              <td>2020-02-03</td>
-                              <td>2</td>
-                              <td>10</td>
-                            </tr>
-                            <tr>
-                              <td><input type="checkbox" id="checkbox" name="checkbox"></td>
-                              <td>00000000</td>
-                              <td>개발</td>
-                              <td>홍길동</td>
-                              <td>대리</td>
-                              <td>2020-02-03</td>
-                              <td>2</td>
-                              <td>10</td>
-                            </tr>
-                            <tr>
-                              <td><input type="checkbox" id="checkbox" name="checkbox"></td>
-                              <td>00000000</td>
-                              <td>개발</td>
-                              <td>홍길동</td>
-                              <td>대리</td>
-                              <td>2020-02-03</td>
-                              <td>2</td>
-                              <td>10</td>
-                            </tr>
-                            <tr>
-                              <td><input type="checkbox" id="checkbox" name="checkbox"></td>
-                              <td>00000000</td>
-                              <td>개발</td>
-                              <td>홍길동</td>
-                              <td>대리</td>
-                              <td>2020-02-03</td>
-                              <td>2</td>
-                              <td>10</td>
-                            </tr>
+							 <!-- 조회 리스트 넣을 자리 -->
                           </tbody>
                         </table>
 
-                        <div class="card-footer d-flex justify-content-end" style="justify-content:center !important;">
-                          <ul class="pagination pagination-clean pagination-sm mb-0">
-                            <li class="page-item disabled">
-                              <a class="page-link" href="#" tabindex="-1">‹</a>
-                            </li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link" href="#">5</a></li>
-                            <li class="page-item">
-                              <a class="page-link" href="#">›</a>
-                            </li>
-                          </ul>
+                        <div class="card-footer d-flex justify-content-end commute-pasing" style="justify-content:center !important;">
+                         	 <!-- 페이징바 넣을 자리 -->
                         </div>
                       </div>
                     <!-- // Table seamless -->
+                    
+                    <!-- 검색시 ajax로 결과 리스트 조회 -->                    
+                    <script>
+                    	
+                    	$(function(){
+                    		
+                    		selectSearchList(1);
+                    		
+                    	})
+                    
+                    	function selectSearchList(cpage) {
+                    		console.log($("#keyword").val());
+                    		
+                    		$.ajax({
+                    			url:"atHolidayGiveList.at",
+                    			data : {
+                    				cpage:cpage,
+                    				searchDep:$("#searchDep option:selected").val(),
+                    				rank:$("#rank option:selected").val(),
+                    				keyword:$("#keyword").val()
+                    			},
+                    			success:function(result){
+                    				let list = result.list;
+                    				let pi = result.pi;
+                    				let value = "";
+                    				let pageValue = "";
+                    				
+                    				console.log(pi);
+                    				console.log(list);
+                    				
+                    				if(list.length == 0) {
+                    					value += '<tr>'
+                          					  +    '<td colspan="9">조회 내역이 없습니다.</td>'
+                              			      +  '</tr>'
+                    				}else{
+                    					for(let i=0; i<list.length; i++){
+                    						value += '<tr>'
+			  			                          +    	 '<td><input type="checkbox" id="checkbox" name="checkbox"></td>'
+			  			                          +    	 '<td>' + list[i].userNo + '</td>'
+			  			                          +   	 '<td>' + list[i].depName + '</td>'
+			  			                          +   	 '<td>' + list[i].userName + '</td>'
+			  			                          +   	 '<td>' + list[i].jobName + '</td>'
+			  			                          +   	 '<td>' + list[i].createDate + '</td>'
+			  			                          +   	 '<td>' + list[i].serviceYear + '</td>'
+			  			                          +    	 '<td>' + list[i].vacationCount + '</td>'
+			  			                          +  '</tr>';
+                    					};
+                    					
+                    					if(pi.currentPage = 1){
+                    						pageValue += '<ul class="pagination pagination-clean pagination-sm mb-0">'
+                                            		  +		'<li class="page-item disabled">'
+                      	                              +   	  '<a class="page-link" href="" tabindex="-1">‹</a>'
+                        	                          +  	'</li>'
+                    					}else{
+                    						pageValue +=  '<ul class="pagination pagination-clean pagination-sm mb-0">'
+                                      				  + 	'<li class="page-item">'
+            	                             		  +			'<a class="page-link" onclick="selectSearchList(' + (pi.currentPage - 1) + ')" tabindex="-1">‹</a>'
+            	                             		  +     '</li>'
+                    					}
+                    					
+                    					for(let p=pi.startPage; p<=pi.endPage; p++) { 
+                    						
+                    						if(p == pi.currentPage) { 
+                    							pageValue += '<li class="page-item active">'
+	              									  +	 	'<a class="page-link" disabled>' + p + '</a>'
+	              									  +  '</li>'                    							
+                    						}else {
+                    							pageValue += '<li class="page-item active">'
+		              									  +	 	'<a class="page-link" onclick="selectSearchList(' + p + ')">' + p + '</a>'
+		              									  +  '</li>'
+		                    						}                    						
+                    						
+                    					}
+                    					
+                    					 if(pi.currentPage = pi.maxPage) {
+                    						 pageValue += 	'<li class="page-item disabled">'
+             	                              		   +  		 '<a class="page-link" href="">›</a>'
+                	                            	   +  	'</li>'
+			                	                       +  '</ul>'
+			                                           +'</div>'                             					
+                                         }else {
+                                         	 pageValue += '<li class="page-item">'
+             	                             		   +   '<a class="page-link" onclick="selectSearchList(' + (pi.currentPage + 1) + ')">›</a>'
+             	                             		   +  '</li>'
+			                	                       +    '</ul>'
+			                                           +   '</div>'
+                              					
+                                         }         					       		
+                    					
+                    					
+                    				}
+                    				
+                    				$("#atHolidayGiveList tbody").html(value);
+                                    $(".commute-pasing").html(pageValue); 
+                    				
+                    			}, error:function(){
+                    				console.log("조회 실패");
+                    			}		                  			
+                    		})
+                    	}
+                    
+                    </script>
 
                   </div>
 
