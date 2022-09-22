@@ -16,21 +16,20 @@ import com.gd.workpp.project.model.vo.Project;
 @Repository
 public class ProjectDao {
 	
+	// [김은지] 메인화면 프로젝트리스트 조회
+	public ArrayList<Project> homeProjectList(SqlSessionTemplate sqlSession, String userNo){
+		return (ArrayList)sqlSession.selectList("projectMapper.homeProjectList", userNo);
+	}
+	
 	// [김은지] 내프로젝트조회 리스트 
 	public ArrayList<Project> selectList(SqlSessionTemplate sqlSession, String depName, String userNo){ 
 		HashMap<String, String> data = new HashMap<>();
-		data.put("dapName", depName);
+		data.put("depName", depName);
 		data.put("userNo", userNo);
 		
 		return (ArrayList)sqlSession.selectList("projectMapper.selectList", data);
 	}
-	
-	// [김은지] 내프로젝트조회 리스트 
-	/* 
-	public ArrayList<Project> selectList(SqlSessionTemplate sqlSession, String depName){
-		return (ArrayList)sqlSession.selectList("projectMapper.selectList", depName);
-	}*/
-	
+		
 	// [김은지] 내프로젝트조회 리스트2
 	public ArrayList<Project> selectList2(SqlSessionTemplate sqlSession, String depName){
 		return (ArrayList)sqlSession.selectList("projectMapper.selectList2", depName);
@@ -49,6 +48,20 @@ public class ProjectDao {
 	// [김은지] 프로젝트 관리자승인	
 	public int projectApprove(SqlSessionTemplate sqlSession, ProMember pm) {
 		return sqlSession.update("projectMapper.projectApprove", pm);
+	}
+	
+	// [김은지] 사용자 가입신청 - 한명 모달조회
+	public ProMember selectRequestMember(SqlSessionTemplate sqlSession, int projectNo, String userMemNo) {
+		HashMap<String, Object> data = new HashMap<>();
+		data.put("userMemNo", userMemNo);
+		data.put("projectNo", projectNo);
+		
+		return sqlSession.selectOne("projectMapper.selectRequestMember", data);
+	}
+	
+	// [김은지] 프로젝트 사용자 가입신청
+	public int proApproveRequest(SqlSessionTemplate sqlSession, ProMember pm) {
+		return sqlSession.insert("projectMapper.proApproveRequest", pm);
 	}
 	
 	// [김은지] 프로젝트 등록
@@ -95,11 +108,7 @@ public class ProjectDao {
 		data.put("condition", condition);
 		data.put("keyword", keyword);
 		data.put("no", projectNo);
-		
-		System.out.println(condition);
-		System.out.println(keyword);
-		System.out.println(projectNo);
-		
+				
 		return sqlSession.selectOne("projectMapper.selectSearchCount", data);
 	}
 	
@@ -110,8 +119,6 @@ public class ProjectDao {
 		data.put("keyword", keyword);
 		data.put("no", projectNo);
 		data.put("pi", pi);
-		
-		System.out.println(data);
 		
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();

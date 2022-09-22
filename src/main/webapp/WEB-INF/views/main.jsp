@@ -134,26 +134,39 @@
                   <div class="project-area">
                      <ul>
                         <li>프로젝트</li>
+                        <input type="hidden" name="userNo" value="${ loginUser.userNo }">
                         <li>
                            <a href="myProject.pr"><i class="fas fa-ellipsis-h"></i></a>
                         </li>
                      </ul>
                      <div class="project-container">
-                        <div class="project">
-                           <span>프로젝트명</span> <span><i class="fas fa-user-alt"></i>&nbsp;13</span>
-                        </div>
-                        <div class="project">
-                           <span>프로젝트명</span> <span><i class="fas fa-user-alt"></i>&nbsp;13</span>
-                        </div>
-                        <div class="project">
-                           <span>프로젝트명</span> <span><i class="fas fa-user-alt"></i>&nbsp;13</span>
-                        </div>
-                        <div class="project">
-                           <span>프로젝트명</span> <span><i class="fas fa-user-alt"></i>&nbsp;13</span>
-                        </div>
-                        <div class="project">
-                           <span>프로젝트명</span> <span><i class="fas fa-user-alt"></i>&nbsp;13</span>
-                        </div>
+                     	<c:choose>
+                     		<c:when test="${ not empty list }">                     			
+                     			<span style="margin: 100px -220px -90px 220px">현재 참여하고있는 프로젝트가 없습니다.</span>
+                     		</c:when>
+                     		<c:otherwise>
+                     			<c:forEach var="p" items="${ list }">
+			                        <div class="project">
+			                           <span>${ p.projectTitle }</span> <span><i class="fas fa-user-alt"></i>&nbsp;13</span>
+			                        </div>
+		                        </c:forEach>		                        
+		                        <div class="project">
+			                           <span>프로젝트명</span> <span><i class="fas fa-user-alt"></i>&nbsp;13</span>
+			                        </div>
+			                        <div class="project">
+			                           <span>프로젝트명</span> <span><i class="fas fa-user-alt"></i>&nbsp;13</span>
+			                        </div>
+			                        <div class="project">
+			                           <span>프로젝트명</span> <span><i class="fas fa-user-alt"></i>&nbsp;13</span>
+			                        </div>
+			                        <div class="project">
+			                           <span>프로젝트명</span> <span><i class="fas fa-user-alt"></i>&nbsp;13</span>
+			                        </div>
+			                        <div class="project">
+			                           <span>프로젝트명</span> <span><i class="fas fa-user-alt"></i>&nbsp;13</span>
+			                        </div>
+                        	</c:otherwise>
+                        </c:choose>                        
                      </div>
                      <div class="slide-btn">
                         <i class="fas fa-chevron-left" id="left-btn"></i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="fas fa-chevron-right" id="right-btn"></i>

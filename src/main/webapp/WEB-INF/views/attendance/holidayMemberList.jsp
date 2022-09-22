@@ -45,46 +45,48 @@
                 <div class="attendence-area">
                   
                   <div class="filter-area" style="height:22vh; margin-top:30px; margin-left:40%;">
-                    
-                    <form action="" method="get" id="search-form">
+                                        
                       <table>
                         <tr>
                           <td><b>기간조회</b></td>
-                          <td><input type="date" id="start-date">&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;<input type="date" id="end-date"></td>
+                          <td>
+                        	  <input type="date" id="startDate" name="startDate">&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;<input type="date" id="endDate" name="endDate">
+                          </td>
                           <td></td>
                         </tr>
                         <tr style="height:50px;">
                           <td><b>휴가종류</b></td>
                           <td style="padding-top:10px;">
-                            <input type="radio" id="status1" name="h-status" value="전체"><label name="status1" style="margin-left:5px;">전체</label>
-                            <input type="radio" id="status2" name="h-status" value="정상" style="margin-left:10px;"><label name="status2" style="margin-left:5px;">연차</label>
-                            <input type="radio" id="status3" name="h-status" value="지각" style="margin-left:10px;"><label name="status3" style="margin-left:5px;">병가</label>
-                            <input type="radio" id="status4" name="h-status" value="연차" style="margin-left:10px;"><label name="status4" style="margin-left:5px;">경조사</label>
-                            <input type="radio" id="status5" name="h-status" value="결근" style="margin-left:10px;"><label name="status5" style="margin-left:5px;">기타</label>
+                          	<div id="hCategory" name="hCategory" >
+	                           <label style="margin-left:5px;"><input type="radio" class="radio-value" id="status1" name="hCategory" value="hStatus0" checked>전체</label>
+	                           <label style="margin-left:5px;"><input type="radio" class="radio-value" id="status2" name="hCategory" value="hStatus1" style="margin-left:10px;">연차</label>
+	                           <label style="margin-left:5px;"><input type="radio" class="radio-value" id="status3" name="hCategory" value="hStatus2" style="margin-left:10px;">병가</label>
+	                           <label style="margin-left:5px;"><input type="radio" class="radio-value" id="status4" name="hCategory" value="hStatus3" style="margin-left:10px;">경조사</label>
+	                           <label style="margin-left:5px;"><input type="radio" class="radio-value" id="status5" name="hCategory" value="hStatus4" style="margin-left:10px;">기타</label>
+                          	</div>
                           </td>
                           <td></td>
                         </tr>
                         <tr style="height:50px;">
                           <td><b>부서명</b></td>
                           <td>
-                            <select class="form-control select1" id="select-dept" name="demoStyle" style="width:100px;">
-                              <option value="default" class="op1">전체</option>
-                              <option class="text-secondary" value="secondary"><label class="se-la">개발</label></option>
-                              <option class="text-secondary" value="secondary"><label class="se-la">영업</label></option>
-                              <option class="text-secondary" value="secondary"><label class="se-la">인사</label></option>
-                              <option class="text-secondary" value="secondary"><label class="se-la">총무</label></option>
-                              <option class="text-secondary" value="secondary"><label class="se-la">회계</label></option>
+                            <select class="form-control select1" id="searchDep" name="searchDep" style="width:100px;">
+                              <option value="dept0" class="op1" selected>전체</option>
+                              <option class="text-secondary" value="dept1"><label class="se-la">개발</label></option>
+                              <option class="text-secondary" value="dept2"><label class="se-la">영업</label></option>
+                              <option class="text-secondary" value="dept3"><label class="se-la">인사</label></option>
+                              <option class="text-secondary" value="dept4"><label class="se-la">총무</label></option>
+                              <option class="text-secondary" value="dept5"><label class="se-la">회계</label></option>
                             </select>
                           </td>
                           <td></td>
                         </tr>
                         <tr>
                           <td style="width:70px;"><b>사원명</b></td>
-                          <td><input class="form-control mb-2 search1" type="text" placeholder="사원명을 입력해주세요." style="margin-top:7px;"></td>
-                          <td><button type="submit" class="btn btn-sm btn-primary" style="height:40px;">조회</button></td>
+                          <td><input class="form-control mb-2 search1" name="keyword" id="keyword" type="text" placeholder="사원명을 입력해주세요." style="margin-top:7px;"></td>
+                          <td><button type="button" class="btn btn-sm btn-primary" style="height:40px;" onclick="selectSearchList(1);">조회</button></td>
                         </tr>
-                      </table>
-                    </form>
+                      </table>            
 
                   </div>
 
@@ -93,7 +95,7 @@
                     <div style="padding-left:15px; width:100%;">
                       
                       <div style="display:inline-block; text-align:center; margin-bottom:15px;">
-                        <strong>* 조회 결과 XX건</strong>
+                        <strong>* 조회 결과</strong>
                       </div>
                                                                   
                     </div>
@@ -101,7 +103,7 @@
                     <!-- Table Seamless -->
                       <div class="card mb-grid" style="margin-left:15px; margin-right:15px;">
                         
-                        <table class="table table-hover mb-0" style="text-align:center;">
+                        <table class="table table-hover mb-0" id="holidayMemberList" style="text-align:center;">
                           <thead>
                             <tr>
                               <th scope="col">휴가일</th>
@@ -114,116 +116,120 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                                <td>2022-09-05</td>
-                                <td>00000000</td>
-                                <td>개발</td>
-                                <td>홍길동</td>
-                                <td>대리</td>
-                                <td>연차</td>
-                                <td>승인완료</td>
-                            </tr>
-                            <tr>
-                                <td>2022-09-05</td>
-                                <td>00000000</td>
-                                <td>개발</td>
-                                <td>홍길동</td>
-                                <td>대리</td>
-                                <td>연차</td>
-                                <td>승인완료</td>
-                            </tr>
-                            <tr>
-                                <td>2022-09-05</td>
-                                <td>00000000</td>
-                                <td>개발</td>
-                                <td>홍길동</td>
-                                <td>대리</td>
-                                <td>연차</td>
-                                <td>승인완료</td>
-                            </tr>
-                            <tr>
-                                <td>2022-09-05</td>
-                                <td>00000000</td>
-                                <td>개발</td>
-                                <td>홍길동</td>
-                                <td>대리</td>
-                                <td>연차</td>
-                                <td>승인완료</td>
-                            </tr>
-                            <tr>
-                                <td>2022-09-05</td>
-                                <td>00000000</td>
-                                <td>개발</td>
-                                <td>홍길동</td>
-                                <td>대리</td>
-                                <td>연차</td>
-                                <td>승인완료</td>
-                            </tr>
-                            <tr>
-                                <td>2022-09-05</td>
-                                <td>00000000</td>
-                                <td>개발</td>
-                                <td>홍길동</td>
-                                <td>대리</td>
-                                <td>연차</td>
-                                <td>승인완료</td>
-                            </tr>
-                            <tr>
-                                <td>2022-09-05</td>
-                                <td>00000000</td>
-                                <td>개발</td>
-                                <td>홍길동</td>
-                                <td>대리</td>
-                                <td>연차</td>
-                                <td>승인완료</td>
-                            </tr>
-                            <tr>
-                                <td>2022-09-05</td>
-                                <td>00000000</td>
-                                <td>개발</td>
-                                <td>홍길동</td>
-                                <td>대리</td>
-                                <td>연차</td>
-                                <td>승인완료</td>
-                            </tr>
-                            <tr>
-                                <td>2022-09-05</td>
-                                <td>00000000</td>
-                                <td>개발</td>
-                                <td>홍길동</td>
-                                <td>대리</td>
-                                <td>연차</td>
-                                <td>승인완료</td>
-                            </tr>
-                            <tr>
-                                <td>2022-09-05</td>
-                                <td>00000000</td>
-                                <td>개발</td>
-                                <td>홍길동</td>
-                                <td>대리</td>
-                                <td>연차</td>
-                                <td>승인완료</td>
-                            </tr>
+                            <!-- 조회 리스트 넣을 자리 -->
                           </tbody>
                         </table>
 
-                        <div class="card-footer d-flex justify-content-end" style="justify-content:center !important;">
-                          <ul class="pagination pagination-clean pagination-sm mb-0">
-                            <li class="page-item disabled">
-                              <a class="page-link" href="#" tabindex="-1">‹</a>
-                            </li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link" href="#">5</a></li>
-                            <li class="page-item">
-                              <a class="page-link" href="#">›</a>
-                            </li>
-                          </ul>
+                        <div class="card-footer d-flex justify-content-end commute-pasing" style="justify-content:center !important;">
+                           <!-- 페이징바 넣을 자리 -->
                         </div>
                       </div>
                     <!-- // Table seamless -->
+                    
+                                        <!-- 검색시 ajax로 결과 리스트 조회 -->                    
+                    <script>
+                    	
+                    	$(function(){
+                    		
+                    		selectSearchList(1);
+                    		
+                    	})
+                    
+                    	function selectSearchList(cpage) {
+                    		console.log($("#keyword").val());
+                    		
+                    		$.ajax({
+                    			url:"holidayMemberAllList.at",
+                    			data : {
+                    				cpage:cpage,
+                    				hCategory:$(".radio-value:checked").val(),
+                    				searchDep:$("#searchDep option:selected").val(),
+                    				keyword:$("#keyword").val()
+                    			},
+                    			success:function(result){
+                    				let list = result.list;
+                    				let pi = result.pi;
+                    				let value = "";
+                    				let pageValue = "";
+                    				
+                    				console.log(pi);
+                    				console.log(list);
+                    				
+                    				if(list.length == 0) {
+                    					value += '<tr>'
+                          					  +    '<td colspan="9">조회 내역이 없습니다.</td>'
+                              			      +  '</tr>'
+                    				}else{
+                    					for(let i=0; i<list.length; i++){
+                    						value += '<tr>'
+			  			                          +    	 '<td>' + list[i].vacationDate + '</td>'
+			  			                          +   	 '<td>' + list[i].userNo + '</td>'
+			  			                          +   	 '<td>' + list[i].depName + '</td>'
+			  			                          +   	 '<td>' + list[i].userName + '</td>'
+			  			                          +   	 '<td>' + list[i].jobName + '</td>'
+			  			                          +   	 '<td>' + list[i].vacationCategory + '</td>'
+			  			                          +    	 '<td>' + list[i].apStatus + '</td>'
+			  			                          +  '</tr>';
+                    					};
+                    					
+                    					if(pi.currentPage = 1){
+                    						pageValue += '<ul class="pagination pagination-clean pagination-sm mb-0">'
+                                            		  +		'<li class="page-item disabled">'
+                      	                              +   	  '<a class="page-link" href="" tabindex="-1">‹</a>'
+                        	                          +  	'</li>'
+                    					}else{
+                    						pageValue +=  '<ul class="pagination pagination-clean pagination-sm mb-0">'
+                                      				  + 	'<li class="page-item">'
+            	                             		  +			'<a class="page-link" onclick="selectSearchList(' + (pi.currentPage - 1) + ')" tabindex="-1">‹</a>'
+            	                             		  +     '</li>'
+                    					}
+                    					
+                    					for(let p=pi.startPage; p<=pi.endPage; p++) { 
+                    						
+                    						if(p == pi.currentPage) { 
+                    							pageValue += '<li class="page-item active">'
+	              									  +	 	'<a class="page-link" disabled>' + p + '</a>'
+	              									  +  '</li>'                    							
+                    						}else {
+                    							pageValue += '<li class="page-item active">'
+		              									  +	 	'<a class="page-link" onclick="selectSearchList(' + p + ')">' + p + '</a>'
+		              									  +  '</li>'
+		                    						}                    						
+                    						
+                    					}
+                    					
+                    					 if(pi.currentPage = pi.maxPage) {
+                    						 pageValue += 	'<li class="page-item disabled">'
+             	                              		   +  		 '<a class="page-link" href="">›</a>'
+                	                            	   +  	'</li>'
+			                	                       +  '</ul>'
+			                                           +'</div>'                             					
+                                         }else {
+                                         	 pageValue += '<li class="page-item">'
+             	                             		   +   '<a class="page-link" onclick="selectSearchList(' + (pi.currentPage + 1) + ')">›</a>'
+             	                             		   +  '</li>'
+			                	                       +    '</ul>'
+			                                           +   '</div>'
+                              					
+                                         }         					       		
+                    					
+                    					
+                    				}
+                    				
+                    				$("#holidayMemberList tbody").html(value);
+                                    $(".commute-pasing").html(pageValue); 
+                    				
+                    			}, error:function(){
+                    				console.log("조회 실패");
+                    			}		                  			
+                    		})
+                    	}
+                    
+                    </script>
+                    
+                    
+                    
+                    
 
                   </div>
 

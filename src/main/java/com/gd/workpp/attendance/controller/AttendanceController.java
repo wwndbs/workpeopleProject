@@ -1,18 +1,21 @@
  package com.gd.workpp.attendance.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gd.workpp.attendance.model.service.AttendanceService;
 import com.gd.workpp.attendance.model.vo.Attendance;
-import com.gd.workpp.holiday.model.vo.Schedule;
+import com.gd.workpp.common.model.vo.PageInfo;
+import com.gd.workpp.common.template.Pagination;
 import com.gd.workpp.member.model.vo.Member;
 import com.google.gson.Gson;
 
@@ -185,16 +188,35 @@ public class AttendanceController {
 		return mv;
 
 	}
-	
-	
-	// 사원별 출퇴근 현황 조회 / commuteMemberList.jsp
+		
+	// 6. 사원별 출퇴근 현황 조회 / commuteMemberList.jsp
 	@RequestMapping("commuteMember.at")
-	public String commuteMemberList() {
+	public String commuteMember() {
 		return "attendance/commuteMemberList";
+	}	
+	
+	@ResponseBody
+	@RequestMapping(value="commuteMemberList.at", produces="application/json; charset=utf-8")
+	public String commuteMemberList(@RequestParam(value="cpage", defaultValue="1") int currentPage, String searchDep, String keyword) {	
+		
+		int listCount = atService.commuteMemberListCount(searchDep, keyword);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);		
+		ArrayList<Attendance> list = atService.commuteMemberList(pi, searchDep, keyword);
+		
+		HashMap<String,Object> map = new HashMap<>();
+		map.put("list", list);
+		map.put("pi", pi);
+		map.put("searchDep", searchDep);
+		map.put("keyword", keyword);
+		
+	    return new Gson().toJson(map);
+
 	}
 	
+	
 	// 출퇴근 기록 수정요청 현황 조회
-	// 6. 사원별 출퇴근 현황 조회 / commuteMemberList.jsp
+	// 출퇴근 기록 수정요청 현황 조회 / commuteUpdate.jsp
 	/*
 	@RequestMapping("commuteUpdateList.at")
 	public ModelAndView commuteUpdate(ModelAndView mv) {
@@ -208,11 +230,13 @@ public class AttendanceController {
 	}
 	*/	
 	
+	/*
 	// 출퇴근 기록 수정요청 현황 / commuteMemberUpdate.jsp
 	@RequestMapping("commuteMemUpdate.at")
 	public String commuteMemberUpdate() {
 		return "attendance/commuteMemberUpdate";
 	}
+	*/
 	
 	// 사원별 근태현황 조회
 	// 7. 출퇴근 기록 수정요청 현황 / commuteMemberUpdate.jsp
@@ -225,7 +249,6 @@ public class AttendanceController {
 	
 		// 7-2. 출퇴근 기록 수정요청 현황 표_근무날짜/사원번호/부서/사원명/직급/출퇴근시간/수정요청시간/승인내역
 		
-
 	}
 	*/	
 	
@@ -235,7 +258,6 @@ public class AttendanceController {
 		return "attendance/attendanceMemberList";
 	}
 	
-	// 사원휴가관리
 	// 8. 사원별 근태현황 조회 / attendanceMemberList.jsp
 	/*
 	@RequestMapping("attendanceMemberList.at")
@@ -254,6 +276,27 @@ public class AttendanceController {
 	@RequestMapping("atHolidayGive.at")
 	public String atHolidayGiveList() {
 		return "attendance/atHolidayGiveList";
+	}
+	
+	// 9. 사원휴가관리 / atHolidayGiveList.jsp
+	@ResponseBody
+	@RequestMapping(value="atHolidayGiveList.at", produces="application/json; charset=utf-8")
+	public String atHolidayGiveList(@RequestParam(value="cpage", defaultValue="1") int currentPage, String searchDep, String rank, String keyword) {	
+		
+		int listCount = atService.atHolidayGiveListCount(searchDep, rank, keyword);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);		
+		ArrayList<Attendance> list = atService.atHolidayGiveList(pi, searchDep, rank, keyword);
+		
+		HashMap<String,Object> map = new HashMap<>();
+		map.put("list", list);
+		map.put("pi", pi);
+		map.put("searchDep", searchDep);
+		map.put("rank", rank);
+		map.put("keyword", keyword);
+		
+	    return new Gson().toJson(map);
+
 	}
 	
 	// 사원 휴가내역 조회
@@ -289,18 +332,35 @@ public class AttendanceController {
 	}
 	
 	// 10. 사원 휴가내역 조회 / holidayMemberList.jsp
-	/*
-	@RequestMapping("holidayMemberAllList.at")
-	public ModelAndView holidayMemberAllList(ModelAndView mv) {
-
+	
+	@ResponseBody
+	@RequestMapping(value="holidayMemberAllList.at", produces="application/json; charset=utf-8")
+	public String holidayMemberAllList(@RequestParam(value="cpage", defaultValue="1") int currentPage, String startDate, String endDate, String hCategory, String searchDep, String keyword) {	
+		
 		// 10-1. 휴가내역 표 페이징처리 listCount
-	
-	
+		int listCount = atService.holidayMemberAllListCount(hCategory, searchDep, keyword);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);	
+		
 		// 10-2. 휴가내역 표_휴가일/사원번호/부서/사원명/직급/휴가종류/승인내역
-	
+		ArrayList<Attendance> list = atService.holidayMemberAllList(pi, hCategory, searchDep, keyword);
+		
+		HashMap<String,Object> map = new HashMap<>();
+		map.put("list", list);
+		map.put("pi", pi);
+		map.put("hCategory", hCategory);
+		map.put("searchDep", searchDep);
+		map.put("keyword", keyword);
+		
+	    return new Gson().toJson(map);
 
 	}
-	*/	
+
+		
+	
+	
+		
+
 	
 }
 	

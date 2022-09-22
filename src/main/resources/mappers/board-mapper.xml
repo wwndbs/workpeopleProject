@@ -12,6 +12,7 @@
 		<result column="create_date" property="createDate"/>
 		<result column="top_exp" property="topExp"/>
 		<result column="count" property="count"/>
+		<result column="dep_name" property="depName"/>
 		<result column="job_name" property="jobName"/>
 		<result column="user_name" property="userName"/>
 		<result column="like" property="like"/>
@@ -26,6 +27,18 @@
 		<result column="change_name" property="changeName"/>
 		<result column="upload_date" property="uploadDate"/>
 		<result column="file_status" property="fileStatus"/>
+	</resultMap>
+	
+	<resultMap id="replyResult" type="Reply">
+		<result column="reply_no" property="replyNo"/>
+		<result column="user_no" property="userNo"/>
+		<result column="ref_bno" property="refBoardNo"/>
+		<result column="ref_rno" property="refReplyNo"/>
+		<result column="reply_content" property="replyContent"/>
+		<result column="create_date" property="createDate"/>
+		<result column="user_name" property="userName"/>
+		<result column="job_name" property="jobName"/>
+		<result column="level" property="level"/>
 	</resultMap>
 
 	<!-- 게시판(공지, 익명) 글 개수 조회 -->
@@ -406,6 +419,25 @@
 		  join member using(user_no)
 		 where board_no = #{boardNo}
 		   and b.status = 'Y'
+	</select>
+	
+	<!-- 댓글 리스트 조회 -->
+	<select id="selectReplyList" resultMap="replyResult">
+		select
+		       reply_no
+		     , user_no
+		     , user_name
+		     , reply_content
+		     , r.create_date
+		     , job_name
+		     , level
+		  from reply r
+		  join member using(user_no)
+		 where ref_bno = #{boardNo}
+		   and r.status = 'Y'
+		 start with ref_rno = 0
+	   connect by prior reply_no = ref_rno
+		 order siblings by r.create_date desc
 	</select>
 
 </mapper>

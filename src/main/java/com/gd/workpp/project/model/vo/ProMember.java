@@ -18,6 +18,7 @@ public class ProMember {
 	private String pmMemberCount;
 	private String proApprove;
 	
+	private String userNo;
 	private int projectNo;
 	private String pbUserName;
 	private String pbJobName;

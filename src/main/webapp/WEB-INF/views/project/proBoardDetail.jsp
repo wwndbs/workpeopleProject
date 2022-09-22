@@ -109,7 +109,7 @@
 				                  </div>
 				                  <!-- Modal body -->
 				                  <div class="modal-body" style="text-align:center;">
-				                      게시물을 수정하시겠습니까?
+				                  	게시물을 수정하시겠습니까?
 				                  </div>
 				                  <!-- Modal footer -->
 				                  <div class="modal-footer" style="justify-content:center;">

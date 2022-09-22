@@ -20,6 +20,7 @@ public class Attendance {
 	private String atOvertime;
 	private String atTotaltime;
 	private String atDate;
+	private String atDay;
 	private String atStatus;
 	private String atLate;
 	private String userName;
@@ -40,5 +41,8 @@ public class Attendance {
 	private String vacationDate;
 	private int vacationCount;
 	private String apStatus;
+	
+	private String depName;
+	private String jobName;
 	
 }

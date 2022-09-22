@@ -3,6 +3,7 @@ package com.gd.workpp.board.model.service;
 import java.util.ArrayList;
 
 import com.gd.workpp.board.model.vo.Board;
+import com.gd.workpp.board.model.vo.Reply;
 import com.gd.workpp.common.model.vo.Attachment;
 import com.gd.workpp.common.model.vo.PageInfo;
 
@@ -37,5 +38,6 @@ public interface BoardService {
 	// 게시판 상세페이지
 	int increaseCount(int boardNo);
 	Board selectBoard(int boardNo);
+	ArrayList<Reply> selectReplyList(int boardNo);
 	
 }
