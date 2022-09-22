@@ -28,7 +28,7 @@
                 <br>
 
                 <div class="board-title">
-                    <h5>공지 게시판</h5>
+                    <h5>${ b.depName } 게시판</h5>
                 </div>
 
                 <br>
@@ -36,10 +36,12 @@
                 <div class="board-content">
 
                     <div class="write-button">
-                      <button type="button" class="btn btn-sm btn-primary">새글쓰기</button>
+                      <button type="button" class="btn btn-sm btn-primary" onclick="location.href='enrollForm.bo?no=2'">새글쓰기</button>
                       <button type="button" class="btn btn-sm btn-light">쪽지</button>
-                      <button type="button" class="btn btn-sm btn-light">수정</button>
-                      <button type="button" class="btn btn-sm btn-danger">삭제</button>
+                      <c:if test="${ loginUser.userNo eq b.userNo }">
+	                      <button type="button" class="btn btn-sm btn-light">수정</button>
+	                      <button type="button" class="btn btn-sm btn-danger">삭제</button>
+                      </c:if>
                     </div>
 
                     <div class="page-button">
@@ -49,30 +51,32 @@
                     </div>
 
                     <div class="content-header">
-                      <h5>퇴근하고싶다..</h5>
-                      <h5 class="re">[3]</h5>
+                      <h5>${ b.boardTitle }</h5>
+                      <h5 class="re">[${ b.reply }]</h5>
                       <div class="profile">
-                        <img src="workpeople-resources/images/defaultProfile.jpg" alt="">
-                        <div>김은주 대리</div>
-                        <div id="date">2022-08-22(월) 09:26</div>
+                        <img src="resources/images/defaultProfile.jpg" alt="">
+                        <div>${ b.userName } ${ b.jobName }</div>
+                        <div id="date">${ b.createDate }</div>
                       </div>
                     </div>
 
                     <div class="content-body">
-                      이제 출근한 지 30분도 안 된 거 실화인가요..? <br><br>
-
-                      믿기지 않아요...
+                      ${ b.boardContent }
                     </div>
 
                     <div class="content-icon">
-                      <i data-feather="message-circle"></i>
-                      <span>댓글 3개</span> | 
-                      <span>조회 13</span> | 
-                      <i data-feather="heart" class="heart" id="heart" onclick="heart();"></i>
-                      <span>좋아요 2개</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-circle"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                      <span>댓글 ${ b.reply }개</span> | 
+                      <span>조회 ${ b.count }</span> | 
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart heart" id="heart" onclick="heart();"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                      <span>좋아요 ${ b.like }개</span>
                     </div>
                     
                     <script>
+                      $(function(){
+                    	  // 내가 좋아요 눌렀으면 색 채워져있게
+                      })
+                    
                       function heart(){
                           if($("#heart").attr("fill") != "red"){
                             $("#heart").attr("fill", "red");
@@ -85,56 +89,124 @@
                     </script>
 
                     <div class="content-reply">
-                      <ul class="reply">
-                        <li>
-                          <div>
-                            <span class="photo"><img src="workpeople-resources/images/defaultProfile.jpg" alt=""></span>
-                            <div class="msg-wrap">
-                              <div class="info">
-                                <span class="name">김재현 부장</span>
-                                <span class="btn-wrap" id="reply">
-                                  <span><i data-feather="corner-down-right" stroke="grey"></i></span>
-                                  <span class="txt">댓글</span> <!-- 클릭 시 "취소"로 변경되도록 -->
-                                </span>
-                                <span class="date">6시간 전</span>
-                                <span class="message">쪽지</span>
-                              </div>
-                              <p>
-                                <span class="commentContent">저두요..</span>
-                              </p>
-                            </div>
-                          </div>
-                        </li>
-                        <li class="depth-in"> <!-- 안으로 들여쓰는 법 알아야 함 (sql구문으로 가능한지) -->
-                          <div>
-                            <span class="photo"><img src="workpeople-resources/images/defaultProfile.jpg" alt=""></span>
-                            <div class="msg-wrap">
-                              <div class="info">
-                                <span class="name">김은지 대리</span>
-                                <span class="date">6시간 전</span>
-                                <span class="message">쪽지</span>
-                              </div>
-                              <p>
-                                <span class="commentContent">어떻게 버티실 건가요..</span>
-                              </p>
-                            </div>
-                          </div>
-                        </li>
-                      </ul>
+                    	
+                    	<c:if test="${ not empty list }">
+                      
+	                      <ul class="reply">
+	                      
+	                      	<c:forEach var="r" items="${ list }">
+	                      		<c:choose>
+		                      		<c:when test="${ r.level eq 1 }">
+		                      			<li>
+		                      				<input type="hidden" id="replyNo" value="${ r.replyNo }">
+		                      		</c:when>
+		                      		<c:otherwise>
+		                      			<li class="depth-in">
+		                      				<input type="hidden" id="refRno" value="0">
+		                      		</c:otherwise>
+	                      		</c:choose>
+		                          <div>
+		                            <span class="photo"><img src="resources/images/defaultProfile.jpg" alt=""></span>
+		                            <div class="msg-wrap">
+		                              <div class="info">
+		                                <span class="name">${ r.userName } ${ r.jobName }</span>
+		                                <c:if test="${ r.level eq 1 }">
+			                                <span class="btn-wrap" id="reply">
+			                                  <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="grey" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-down-right"><polyline points="15 10 20 15 15 20"></polyline><path d="M4 4v7a4 4 0 0 0 4 4h12"></path></svg></span>
+			                                  <span class="txt" onclick="addReply(this);">댓글</span> <!-- 클릭 시 "취소"로 변경되도록 -->
+			                                </span>
+		                                </c:if>
+		                                <span class="date">${ r.createDate }</span>
+		                                <c:if test="${ loginUser.userNo ne r.userNo }">
+		                                	<span class="message">쪽지</span>
+		                                </c:if>
+		                              </div>
+		                              <p>
+		                                <span class="commentContent">${ r.replyContent }</span>
+		                              </p>
+		                            </div>
+		                          </div>
+		                        </li>	
+	                      	</c:forEach>
+	                        
+	                      </ul>
+                      
+                       </c:if>
 
                       <!-- 댓글 간 간격 조정하기 (프로필 사진 위치도 조정) -->
                       <div class="reply-create">
-                        <span class="photo"><img src="workpeople-resources/images/defaultProfile.jpg" alt=""></span>
+                        <span class="photo"><img src="resources/images/defaultProfile.jpg" alt=""></span>
                         <div class="msg-wrap">
                           <p class="form-wrap">
                             <span class="textarea-edit">
-                              <textarea name="reply" id=""></textarea>
+                              <textarea name="reply" id="newReply"></textarea>
                             </span>
-                            <button type="button" class="btn btn-sm btn-light">댓글 작성</button>
+                            <button type="button" class="btn btn-sm btn-light" onclick="reply();">댓글 작성</button>
                           </p>
                         </div>
                       </div>
                     </div>
+                    
+                    <script>
+                    
+                    	// 댓글 추가 ajax
+                    	function reply(){
+                    		
+	                    	$.ajax({
+	                    		url: "reply.bo",
+	                    		data: {
+	                    			userNo: "${loginUser.userNo}",
+	                    			refBoardNo: ${b.boardNo},
+	                    			refReplyNo: $
+	                    			replyContent: $("#newReply").val()
+	                    		},
+	                    		success: function(){
+	                    			console.log("댓글 추가 ajax 성공");
+	                    		},error: function(){
+	                    			console.log("댓글 추가 ajax 실패");
+	                    		}
+	                    	});
+	                    	
+                    	}
+                    
+                    	// 대댓글 작성폼
+                    	function addReply(tt){
+                    		
+                    		let dd = $(tt).text();
+                    		
+                    		if(dd == "취소"){
+                    			$(tt).text("댓글");
+                    			
+                    			$(tt).parent().parent().parent().parent().parent().next().remove();
+                    		}else{
+                    			$(tt).text("취소");
+                    			
+                    			let value = '<li class="depth-in">'
+                    						+	'<div class="newReply-create">'
+                    						+		'<span class="photo"><img src="resources/images/defaultProfile.jpg" alt=""></span>'
+                    						+		'<div class="msg-wrap">'
+                    						+			'<p class="form-wrap">'
+                    						+				'<span class="textarea-edit">'
+                    						+					'<textarea name="reply" id="newreReply"></textarea>'
+                    						+				'</span>'
+                    						+				'<button type="button" class="btn btn-sm btn-light" onclick="reReply(this);">댓글 작성</button>'
+                    						+			'</p>'
+                    						+		'</div>'
+                    						+	'</div>'
+                    						+'</li>';
+                    			
+                    			$(tt).parent().parent().parent().parent().parent().after(value);
+                    		}
+                    	}
+                    	
+                    	// 대댓글 추가 ajax
+                    	function reReply(btn){
+                    		
+                    		let bb = $(btn).parent().parent().parent().parent().prev().children().eq(0);
+                    		
+                    	}
+                    
+                    </script>
                     
                 </div>
               

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.gd.workpp.board.model.dao.BoardDao;
 import com.gd.workpp.board.model.vo.Board;
+import com.gd.workpp.board.model.vo.Reply;
 import com.gd.workpp.common.model.vo.Attachment;
 import com.gd.workpp.common.model.vo.PageInfo;
 
@@ -131,6 +132,12 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public Board selectBoard(int boardNo) {
 		return bDao.selectBoard(sqlSession, boardNo);
+	}
+
+	// 댓글 리스트 조회
+	@Override
+	public ArrayList<Reply> selectReplyList(int boardNo) {
+		return bDao.selectReplyList(sqlSession, boardNo);
 	}
 
 	

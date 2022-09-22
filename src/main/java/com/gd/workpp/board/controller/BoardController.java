@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.gd.workpp.board.model.service.BoardService;
 import com.gd.workpp.board.model.vo.Board;
+import com.gd.workpp.board.model.vo.Reply;
 import com.gd.workpp.common.model.vo.Attachment;
 import com.gd.workpp.common.model.vo.PageInfo;
 import com.gd.workpp.common.template.FileUpload;
@@ -303,7 +304,7 @@ public class BoardController {
 	
 	// 부서게시판 상세페이지
 	@RequestMapping("deptDetail.bo")
-	public String selectDeptBoard(int boardNo, Model model) {
+	public String selectDeptBoard(int boardNo, int cpage, Model model) {
 		
 		// 조회수 증가
 		int result = bService.increaseCount(boardNo);
@@ -313,7 +314,12 @@ public class BoardController {
 			// 게시글 조회
 			Board b = bService.selectBoard(boardNo);
 			
+			// 댓글 조회
+			ArrayList<Reply> list = bService.selectReplyList(boardNo);
+			
+			model.addAttribute("cpage", cpage);
 			model.addAttribute("b", b);
+			model.addAttribute("list", list);
 			return "board/deptDetail";
 			
 		}else {
@@ -322,6 +328,17 @@ public class BoardController {
 			return "common/errorPage";
 			
 		}
+		
+	}
+	
+	// 댓글 작성
+	@ResponseBody
+	@RequestMapping(value="reply.bo", produces="application/json; charset=UTF-8")
+	public String ajaxInsertReply(Reply r) {
+		
+		System.out.println(r);
+		
+		return null;
 		
 	}
 }
