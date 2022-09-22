@@ -90,6 +90,19 @@ public class AttendanceServiceImpl implements AttendanceService {
 	public ArrayList<Attendance> atHolidayGiveList(PageInfo pi, String searchDep, String rank, String keyword) {
 		return atDao.atHolidayGiveList(sqlSession, pi, searchDep, rank, keyword);
 	}
+
+	// 10. 사원 휴가내역 조회 / holidayMemberList.jsp
+	@Override
+	public int holidayMemberAllListCount(String hCategory, String searchDep,
+			String keyword) {
+		return atDao.holidayMemberAllListCount(sqlSession, hCategory, searchDep, keyword);
+	}
+
+	@Override
+	public ArrayList<Attendance> holidayMemberAllList(PageInfo pi, String hCategory,
+			String searchDep, String keyword) {
+		return atDao.holidayMemberAllList(sqlSession, pi, hCategory, searchDep, keyword);
+	}
 	
 
 

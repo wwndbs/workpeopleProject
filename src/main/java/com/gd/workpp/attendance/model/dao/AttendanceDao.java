@@ -63,8 +63,7 @@ public class AttendanceDao {
 	
 	
 	/*
-	// 3. 개인근태현황 / attendanceList.jsp
-	
+	// 3. 개인근태현황 / attendanceList.jsp	
 	// 3-1. 출근시간/퇴근시간/연장근무시간/근태상태
 	public ArrayList<Attendance> attendanceList(SqlSessionTemplate sqlSession, String userNo) {		
 		return (ArrayList)sqlSession.selectList("attendanceMapper.attendanceList", userNo);		
@@ -195,10 +194,31 @@ public class AttendanceDao {
 	// 10. 사원 휴가내역 조회 / holidayMemberList.jsp
 	
 	// 10-1. 휴가내역 표 페이징처리 listCount
-	
+	public int holidayMemberAllListCount(SqlSessionTemplate sqlSession, String hCategory, String searchDep,
+										 String keyword) {
+		
+		HashMap<String,Object> map = new HashMap<>();
+		map.put("hCategory", hCategory);
+		map.put("searchDep", searchDep);
+		map.put("keyword", keyword);
+		System.out.println(map);
+		return sqlSession.selectOne("attendanceMapper.holidayMemberAllListCount", map);
+	}
 	
 	// 10-2. 휴가내역 표_휴가일/사원번호/부서/사원명/직급/휴가종류/승인내역
-	
+	public ArrayList<Attendance> holidayMemberAllList(SqlSessionTemplate sqlSession, PageInfo pi, String hCategory, String searchDep,
+													  String keyword) {	
+		HashMap<String,Object> map = new HashMap<>();
+		map.put("hCategory", hCategory);
+		map.put("searchDep", searchDep);
+		map.put("keyword", keyword);		
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("attendanceMapper.holidayMemberAllList", map, rowBounds);		
+	}
 	
 	
 

@@ -214,8 +214,6 @@ public class AttendanceController {
 
 	}
 	
-	// 6-search. 사원별 출퇴근 현황 조회 검색 ajax
-	
 	
 	// 출퇴근 기록 수정요청 현황 조회
 	// 출퇴근 기록 수정요청 현황 조회 / commuteUpdate.jsp
@@ -334,18 +332,35 @@ public class AttendanceController {
 	}
 	
 	// 10. 사원 휴가내역 조회 / holidayMemberList.jsp
-	/*
-	@RequestMapping("holidayMemberAllList.at")
-	public ModelAndView holidayMemberAllList(ModelAndView mv) {
-
+	
+	@ResponseBody
+	@RequestMapping(value="holidayMemberAllList.at", produces="application/json; charset=utf-8")
+	public String holidayMemberAllList(@RequestParam(value="cpage", defaultValue="1") int currentPage, String startDate, String endDate, String hCategory, String searchDep, String keyword) {	
+		
 		// 10-1. 휴가내역 표 페이징처리 listCount
-	
-	
+		int listCount = atService.holidayMemberAllListCount(hCategory, searchDep, keyword);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);	
+		
 		// 10-2. 휴가내역 표_휴가일/사원번호/부서/사원명/직급/휴가종류/승인내역
-	
+		ArrayList<Attendance> list = atService.holidayMemberAllList(pi, hCategory, searchDep, keyword);
+		
+		HashMap<String,Object> map = new HashMap<>();
+		map.put("list", list);
+		map.put("pi", pi);
+		map.put("hCategory", hCategory);
+		map.put("searchDep", searchDep);
+		map.put("keyword", keyword);
+		
+	    return new Gson().toJson(map);
 
 	}
-	*/	
+
+		
+	
+	
+		
+
 	
 }
 	

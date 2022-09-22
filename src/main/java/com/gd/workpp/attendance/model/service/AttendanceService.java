@@ -141,12 +141,12 @@ public interface AttendanceService {
 	
 	
 	// 10. 사원 휴가내역 조회 / holidayMemberList.jsp
-	
+
 	// 10-1. 휴가내역 표 페이징처리 listCount
-	
+	int holidayMemberAllListCount(String hCategory, String searchDep, String keyword);	
 	
 	// 10-2. 휴가내역 표_휴가일/사원번호/부서/사원명/직급/휴가종류/승인내역
-	
+	ArrayList<Attendance> holidayMemberAllList(PageInfo pi, String hCategory, String searchDep, String keyword);	
 	
 	
 	
