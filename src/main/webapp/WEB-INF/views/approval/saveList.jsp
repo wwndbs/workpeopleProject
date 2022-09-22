@@ -24,9 +24,6 @@
 
 					<div class="search-wrapper">
 						<span>임시저장 문서</span>
-						<form class="search-area">
-							<input type="text" placeholder="임시저장문서 제목 검색" class="form-control" id="search">
-						</form>
 					</div>
 
 					<div class="menu-wrapper"></div>
@@ -108,11 +105,13 @@
 		</div>
 	</div>
 	
+	<jsp:include page="../common/commonToast.jsp" />
+	
 	<script>
 		// 문서 상세조회
-		$(".list-wrapper>table>tbody>tr").click(function(){
-			let approvalNo = $(this).children().eq(1).text();
-			let approvalForm = $(this).children().eq(2).text();
+		$(".list-wrapper>table>tbody>tr").children().eq(3).click(function(){
+			let approvalNo = $(this).parents().children().eq(1).text();
+			let approvalForm = $(this).parents().children().eq(2).text();
 			
 			location.href="saveListModify?no=" + approvalNo + "&form=" + approvalForm;
 		})
@@ -246,8 +245,8 @@
 							changeName : fileName
 						},
 						success : function(msg){
-							location.reload();
-							alert(msg);
+							toast(msg);
+							setTimeout(reload, 1000);
 							
 						},
 						error : function(){
@@ -259,6 +258,12 @@
 				alert("선택된 목록이 없습니다.");				
 			}
 		})
+	</script>
+	
+	<script>
+		function reload(){
+			location.reload();
+		}
 	</script>
 	
 	<jsp:include page="../common/footer.jsp" />
