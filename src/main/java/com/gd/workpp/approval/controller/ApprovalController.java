@@ -427,8 +427,7 @@ public class ApprovalController {
 			                         @RequestParam(value="vacationEnd", defaultValue="1")String vacationEnd,
 			                         String approvalUser, int order, int approvalCount, String form, int documentNo, String userName, HttpSession session, Model model) {
 		Member m = (Member)session.getAttribute("loginUser");
-		System.out.println(approvalUser);
-		System.out.println(m.getUserName());
+
 		if(m.getUserName().equals(approvalUser)) {
 			if(approvalCount == order) {
 				int result = apService.approvalOfApproval(approvalUser, documentNo, vacationStart, vacationEnd, userName);

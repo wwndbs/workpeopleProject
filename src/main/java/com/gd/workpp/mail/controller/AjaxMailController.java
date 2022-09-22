@@ -11,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.gd.workpp.common.model.vo.Attachment;
 import com.gd.workpp.common.template.FileUpload;
@@ -28,6 +30,21 @@ public class AjaxMailController {
 	@Autowired
 	private MailServiceImpl mService;
 
+	@ResponseBody
+	@RequestMapping(value="mailCount.main", produces="application/json; charset=UTF-8")
+	public String mailCount(@RequestParam(value="cpage", defaultValue="1") int currentPage, 
+			                @RequestParam(value="boxType", defaultValue="1") int boxType,
+			                ModelAndView mv, HttpSession session){
+		
+		Member mem = (Member)session.getAttribute("loginUser");
+		String email = mem.getEmail();
+		
+		// 읽지 않은 메일 개수 조회
+		int mailCount = mService.selectNotReadCount(boxType, email);
+		
+		return new Gson().toJson(mailCount);
+	}
+	
 	/**
 	 * Author : 정주윤
 	 * 사원별 태그 리스트 조회 메소드

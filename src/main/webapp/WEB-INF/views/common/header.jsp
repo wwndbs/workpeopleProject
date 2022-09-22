@@ -124,7 +124,7 @@
 			<!-- 상단 메뉴 프로필 -->
 			<li class="nav-item dropdown">
 				<a class="nav-link avatar-with-name" id="navbarDropdownMenuLink" data-toggle="dropdown" href="#">
-					<img src="resources/images/profile.jpg" alt=""><!--프로필이미지-->
+					<img src="${ loginUser.profImg }" alt="프로필 이미지"><!--프로필이미지-->
 				</a>
 				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
 					<a class="dropdown-item" href="updateForm.me">정보수정</a>

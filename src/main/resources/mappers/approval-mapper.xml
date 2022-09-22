@@ -149,7 +149,7 @@
 	   join member m on(a.user_no = m.user_no)
 	  where a.user_no = #{userNo}
 	    and reference_status is null
-	    and progress = 1
+	    and progress = 0
 	  order by a.document_no desc
 	</select>
 	

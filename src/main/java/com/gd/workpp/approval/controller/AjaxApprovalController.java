@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.gd.workpp.approval.model.service.ApprovalServiceImpl;
 import com.gd.workpp.approval.model.vo.Approval;
@@ -24,6 +25,26 @@ import com.google.gson.Gson;
 public class AjaxApprovalController {
 	@Autowired
 	private ApprovalServiceImpl apService;
+	
+	/**
+	 * Author : 최영헌
+	 * 메인페이지 결재 조회 요청을 처리하는 메소드
+	 * @param category : 조회하고자하는 카테고리
+	 */
+	@ResponseBody
+	@RequestMapping(value="mainApprovalList.main", produces="application/json; charset=UTF-8")
+	public String mainApprovalList(@RequestParam(value="cpage", defaultValue="1")int currentPage,
+                                   @RequestParam(value="category", defaultValue="4")int category,
+                                   HttpSession session) {
+		Member m = (Member)session.getAttribute("loginUser");
+		String userNo = m.getUserNo();
+		
+		int listCount = apService.selectApprovalCount(category, userNo);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		ArrayList<Document> list = apService.selectApprovalList(pi, category, userNo);
+
+		return new Gson().toJson(list);
+	}
 	
 	/**
 	 * Author : 최영헌

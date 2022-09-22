@@ -36,19 +36,15 @@
                   <!--프로필 부분-->
                   <div class="profile-alert-wrapper">
                      <div class="profile-area">
-                        <img src="resources/images/defaultProfile.jpg" alt="프로필이미지"><br> <span id="profile-name">홍길동</span><br> <span id="department-name">인사부서/대리</span>
+                        <img src="${ loginUser.profImg }" alt="프로필이미지"><br> <span id="profile-name">${ loginUser.userName }</span><br> <span id="department-name">${ loginUser.depName } / ${ loginUser.jobName }</span>
                      </div>
    
                      <!--알림 부분-->
                      <div class="alert-area">
                         <div class="alert-item">
-                           <span>메일</span><br> <span><a href="">0</a></span>
-                        </div>
-                        <div class="alert-item">
-                           <span>쪽지</span><br> <span><a href="">12</a></span>
-                        </div>
-                        <div class="alert-item">
-                           <span>채팅</span><br> <span><a href="">23</a></span>
+                           <i class="fas fa-envelope"></i>&nbsp;
+                           <span>메일</span>&nbsp;&nbsp;
+                           <span><a href="box.ma">0</a></span>
                         </div>
                      </div>
                   </div>
@@ -86,59 +82,21 @@
                      <div class="approval-menu">
                         <ul>
                            <li>결재</li>
-                           <li><a href="">진행</a></li>
-                           <li><a href="">완료</a></li>
-                           <li><a href="">반려</a></li>
-                           <li><a href="">대기</a></li>
                         </ul>
                         <span>
                            <a href="approvalList.ap"><i class="fas fa-ellipsis-h"></i></a>
                         </span>
                      </div>
-                     <table class="table table-hover" style="text-align: center;">
+                     <table id="main-approval" class="table table-hover" style="text-align: center;">
                         <thead>
                            <tr>
                               <th style="text-align: left;">제목</th>
                               <th width="150">작성일</th>
-                              <th width="70">첨부</th>
+                              <th width="70">결재상태</th>
                            </tr>
                         </thead>
                         <tbody>
-                           <tr>
-                              <td style="text-align: left;">휴가신청서(휴가)</td>
-                              <td>2022-22-22</td>
-                              <td>
-                                 <i class="fas fa-file-download"></i>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td style="text-align: left;">휴가신청서(휴가)</td>
-                              <td>2022-22-22</td>
-                              <td>
-                                 <i class="fas fa-file-download"></i>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td style="text-align: left;">휴가신청서(휴가)</td>
-                              <td>2022-22-22</td>
-                              <td>
-                                 <i class="fas fa-file-download"></i>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td style="text-align: left;">휴가신청서(휴가)</td>
-                              <td>2022-22-22</td>
-                              <td>
-                                 <i class="fas fa-file-download"></i>
-                              </td>
-                           </tr>
-                           <tr>
-                              <td style="text-align: left;">휴가신청서(휴가)</td>
-                              <td>2022-22-22</td>
-                              <td>
-                                 <i class="fas fa-file-download"></i>
-                              </td>
-                           </tr>
+							<!-- ajax조회 -->
                         </tbody>
                      </table>
                   </div>
@@ -177,7 +135,7 @@
                      <ul>
                         <li>프로젝트</li>
                         <li>
-                           <a href=""><i class="fas fa-ellipsis-h"></i></a>
+                           <a href="myProject.pr"><i class="fas fa-ellipsis-h"></i></a>
                         </li>
                      </ul>
                      <div class="project-container">
@@ -207,19 +165,16 @@
                      <div class="todo-menu">
                         <ul>
                            <li>To-Do</li>
-                           <li><a href="">할 일</a></li>
-                           <li><a href="">진행중</a></li>
-                           <li><a href="">완료</a></li>
+                           <li onclick="todoStatus(1);"><a style="cursor : pointer;">할 일</a></li>
+                           <li onclick="todoStatus(2);"><a style="cursor : pointer;">진행중</a></li>
+                           <li onclick="todoStatus(3);"><a style="cursor : pointer;">완료</a></li>
                         </ul>
                         <span>
                            <a href="todoList.td"><i class="fas fa-ellipsis-h"></i></a>
                         </span>
                      </div>
-                     <ul class="todo-list">
-                        <li>오늘의 할 일은 뭐지?</li>
-                        <li>오늘의 할 일은 뭐지?</li>
-                        <li>오늘의 할 일은 뭐지?</li>
-                        <li>오늘의 할 일은 뭐지?</li>
+                     <ul class="todo-list" style="height:300px;overflow:auto;">
+						<!-- ajax 조회 -->
                      </ul>
                   </div>
                </div>
@@ -227,6 +182,107 @@
          </div>
       </div>
    </div>
+   
+	<script>
+		$(function(){
+   			// 할 일 조회
+   			$.ajax({
+   				url : "todoListView.td",
+   				success : function(todolist){
+					value="";
+   					for(let i = 0; i < 5; i++){
+   						if(todolist[i].status == 1){
+   							value += '<li>' + todolist[i].todoContent + '</li>';		
+   						}
+   						$(".todo-list").html(value);
+   					}   						
+   				},
+   				error : function(){
+   					console.log("메인페이지 할 일 조회 부분 ajax연결 실패");
+   				}
+   			})
+   			
+   			// 결재 조회
+    		$.ajax({
+   				url : "mainApprovalList.main",
+   				success : function(list){
+   					value="";
+
+   					for(let i = 0; i < 5; i++){
+   						if(i < 6){
+	   						value += '<tr>'
+	   							  +  	'<td style="text-align : left;">' + list[i].documentTitle + '</td>'
+	   						      +  	'<td>' + list[i].createDate + '</td>';
+	   						      
+					        if(list[i].progress == 0){
+								value += '<td><div class="tag-gray">대기</div></td>';
+					        }else if(list[i].progress == 1){
+					        	value += '<td><div class="tag-orange">진행중</div></td>';
+					        }else if(list[i].progress == 2){
+					        	value += '<td><div class="tag-green">완료</div></td>';
+					        }else{
+					        	value += '<td><div class="tag-red">반려</div></td>';
+					        }
+					        value += '</tr>';
+   						}
+   					}
+   					
+   					$("#main-approval tbody").html(value);
+   				},
+   				error : function(){
+   					console.log("메인페이지 결재 조회 부분 ajax연결 실패");
+   				}
+   			})
+   			
+   			// 읽지않은 메일 갯수 조회
+    		$.ajax({
+   				url : "mailCount.main",
+   				success : function(mailCount){
+   					$(".alert-item span a").text(mailCount);
+   				},
+   				error : function(){
+   					console.log("메인페이지 메일 갯수 조회 부분 ajax연결 실패");
+   				}
+   			})
+   		})
+	</script>
+
+   
+   
+   <script>
+		function todoStatus(status){
+				// 상태별 할 일 조회
+				$.ajax({
+					url : "todoListView.td",
+					success : function(todolist){
+					value="";
+					for(let i = 0; i < todolist.length; i++){
+	   					switch(status){
+		   					case 1 :
+	   	   						if(todolist[i].status == 1){
+	   	   							value += '<li>' + todolist[i].todoContent + '</li>';
+		   						}
+		   	   					break;
+		   					case 2 :
+	   	   						if(todolist[i].status == 2){
+	   	   							value += '<li>' + todolist[i].todoContent + '</li>';
+		   						}
+		   	   					break;
+		   					case 3 :
+	   	   						if(todolist[i].status == 3){
+	   	   							value += '<li>' + todolist[i].todoContent + '</li>';
+		   						}
+		   	   					break;
+	   					}
+					}
+		   				$(".todo-list").html(value);
+					},
+					error : function(){
+						console.log("메인페이지 상태별 할 일 조회 부분 ajax연결 실패");
+					}
+				})
+			}
+   </script>
    
    <script>
       // 프로젝트 슬라이드
@@ -336,8 +392,6 @@
 			</div>
 		</div>
     </form>
-   
-   
    <jsp:include page="common/footer.jsp"/>
 </body>
 </html>

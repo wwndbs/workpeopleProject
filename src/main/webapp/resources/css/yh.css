@@ -77,6 +77,16 @@ textarea:focus{
 
 .profile-alert-wrapper .alert-item{
     border-style: none;
+    font-size : 25px;
+    display : flex;
+    margin-top : 10px;
+    color : #808080;
+}
+
+.profile-alert-wrapper .alert-item a{
+    text-decoration: none;
+        font-size : 30px;
+        line-height : 25px;
 }
 
 .profile-alert-wrapper .alert-item a:hover{
