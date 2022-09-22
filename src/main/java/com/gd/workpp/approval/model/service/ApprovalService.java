@@ -114,7 +114,7 @@ public interface ApprovalService {
 //-----------------------------------
 	
 	// 결재 승인
-	int approvalOfApproval(String approvalUser, int documentNo);
+	int approvalOfApproval(String approvalUser, int documentNo, String vacationStart, String vacationEnd, String userName);
 	
 	// 결재 반려
 	int approvalFusal(int documentNo, String msg, String userNo);

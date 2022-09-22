@@ -46,6 +46,49 @@
 		<result column="name" property="name" />
 	</resultMap>
 	
+	<select id="selectTagList" resultMap="tagResult">
+		select
+			   tag_no
+			 , tag_name
+			 , tag_color
+		  from mail_tag
+		 where user_mail = #{email}
+		 order
+		    by tag_no
+	</select>
+	
+	<insert id="insertTag">
+		insert 
+		  into mail_tag 
+		     (
+		       tag_no
+		     , user_mail
+		     , tag_name
+		     , tag_color)
+		values 
+		     (
+		       seq_tag.nextval
+		     , #{userMail}
+		     , #{tagName} 
+		     , #{tagColor}
+		     )
+	</insert>
+	
+	<update id="updateTag">
+		update
+			   mail_tag
+		   set 
+		   	   tag_name = #{tagName}
+		     , tag_color = #{tagColor}
+		 where tag_no = #{tagNo}
+	</update>
+	
+	<delete id="deleteTag">
+		delete
+	      from mail_tag
+	     where tag_no = #{tagNo}
+	</delete>
+	
 	<insert id="insertMail">
 		insert
 		  into mail
@@ -385,5 +428,79 @@
 		     , #{sender}
 		     )
 	</insert>
+	
+	<select id="selectSentbox" resultMap="mailResult">
+		select 
+		       mail_no
+		     , mail_title
+		     , to_char(send_date, 'yy-mm-dd hh24:mi') as "send_date"
+		     , receiver
+		     , mail_read
+		     , mail_important
+		     , t.tag_no
+		     , t.tag_name
+		     , t.tag_color
+		  from mail m
+		  join mail_status s using (mail_no)
+		  left join member mem on (sender = email)
+		  left join mail_tag t on (s.tag_no = t.tag_no)
+		 where s.user_mail = #{email}
+		   and mail_type = 2
+		   and mail_delete = 'N'
+		 order by mail_no desc
+	</select>
+	
+	<select id="selectMailByNo" resultMap="mailResult">
+		select
+			   mail_title
+			 , mail_content
+			 , sender
+			 , m.user_name as "sender_name" 
+		  from mail
+		  left join member m on (sender = email)
+		 where mail_no = #{mailNo}
+	</select>
+
+	<select id="selectOutbox" resultMap="mailResult">
+		select 
+		       mail_no
+		     , mail_title
+		     , to_char(send_date, 'yy-mm-dd hh24:mi') as "send_date"
+		     , receiver
+		  from mail
+		 where sender = #{email}
+		   and send_status = 'N'
+		 order by mail_no desc
+	</select>
+	
+	<select id="selectOutboxListcount" resultType="_int">
+		select 
+		       count(*)
+		  from mail
+		 where sender = #{email}
+		   and send_status = 'N'
+	</select>
+		
+	<update id="updateTagChange">
+		update
+		       mail_status
+		   set tag_no = 
+		   <choose>
+		   	<when test='type == "적용"'>
+		   		#{tagNo}
+		   	</when>
+		   	<when test='type == "해제"'>
+		   		''
+		   	</when>
+		   </choose>
+		 where mail_no in
+		  <foreach collection="noArr" item='no' index='i' open="(" close=")" separator=",">
+           #{no}
+         </foreach>
+		   and user_mail = #{email}
+		   <if test='type == "해제"'>
+		   and tag_no = #{tagNo}
+		   </if>
+	</update>
 	
 </mapper>

@@ -423,12 +423,15 @@ public class ApprovalController {
 	 * @param documentNo : 결재문서 번호
 	 */
 	@RequestMapping("approvalOfApproval.ap")
-	public String approvalOfApproval(String approvalUser, int order, int approvalCount, String form, int documentNo, HttpSession session, Model model) {
+	public String approvalOfApproval(@RequestParam(value="vacationStart", defaultValue="1")String vacationStart,
+			                         @RequestParam(value="vacationEnd", defaultValue="1")String vacationEnd,
+			                         String approvalUser, int order, int approvalCount, String form, int documentNo, String userName, HttpSession session, Model model) {
 		Member m = (Member)session.getAttribute("loginUser");
-		
+		System.out.println(approvalUser);
+		System.out.println(m.getUserName());
 		if(m.getUserName().equals(approvalUser)) {
 			if(approvalCount == order) {
-				int result = apService.approvalOfApproval(approvalUser, documentNo);
+				int result = apService.approvalOfApproval(approvalUser, documentNo, vacationStart, vacationEnd, userName);
 				if(result > 0) {
 					session.setAttribute("toastMsg", "승인 했습니다.");	
 					return "redirect:approvalDetail.ap?no=" + documentNo +"&form=" + form;
@@ -489,7 +492,13 @@ public class ApprovalController {
 			return "common/errorPage";
 		}
 	}
-		
+	
+	/**
+	 * Author : 최영헌
+	 * 결재 반려 요청을 처리하는 메소드
+	 * @param documentNo : 반려처리할 결재문서 번호
+	 * @param msg : 사용자가 입력한 반려 메세지
+	 */
 	@RequestMapping("approvalFusal.ap")
 	public String approvalFusal(int documentNo, String msg, HttpSession session, Model model) {
 		Member m = (Member)session.getAttribute("loginUser");

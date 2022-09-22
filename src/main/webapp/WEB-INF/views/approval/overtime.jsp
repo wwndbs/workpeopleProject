@@ -30,7 +30,8 @@
 									<th colspan="2">
 										<br><br>
 										<h1><strong>${ document.documentForm }</strong></h1>
-										<input type="hidden" name="documentNo" value="${ document.documentNo }">	
+										<input type="hidden" name="documentNo" value="${ document.documentNo }">
+										<br>
 									</th>
 									<td colspan="4" id="approval-section">
 									<!-- ajax 조회 -->

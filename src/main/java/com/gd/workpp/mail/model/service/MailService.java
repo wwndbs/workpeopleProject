@@ -8,10 +8,21 @@ import com.gd.workpp.common.model.vo.PageInfo;
 import com.gd.workpp.mail.model.vo.Mail;
 import com.gd.workpp.mail.model.vo.MailStatus;
 import com.gd.workpp.mail.model.vo.SplitEmail;
+import com.gd.workpp.mail.model.vo.Tag;
 
 public interface MailService {
 	
 	// 사이드바 태그 리스트 조회 서비스
+	ArrayList<Tag> selectTagList(String email);
+	
+	// 태그 추가 서비스
+	int insertTag(Tag t);
+	
+	// 태그 수정 서비스
+	int updateTag(Tag t);
+
+	// 태그 삭제 서비스
+	int deleteTag(int tagNo);
 	
 	// 메일 작성하기 서비스
 	int insertMail(Mail m, ArrayList<Attachment> atList);
@@ -33,10 +44,10 @@ public interface MailService {
 	// 임시저장한 메일 수정 서비스
 	int updateSaveMail(Mail m, ArrayList<Attachment> atList);
 	
-	// 메일함별 전체 메일 개수
+	// 받은메일함/보낸메일함 전체 메일 개수
 	int selectListCount(int boxType, String email);
 	
-	// 메일함별 안 읽은 메일 개수
+	// 받은메일함/보낸메일함 안 읽은 메일 개수
 	int selectNotReadCount(int boxType, String email);
 	
 	// 받은메일함 리스트 조회 서비스
@@ -63,10 +74,24 @@ public interface MailService {
 	// 스팸 주소 등록 서비스
 	int insertSpam(List<String> senderList, String email);
 	
+	// 보낸메일함 리스트 조회 서비스
+	ArrayList<Mail> selectSentbox(PageInfo pi, String email);
+
+	// 메일번호로 메일 조회 서비스
+	Mail selectMailByNo(int mailNo);
+	
+	// 메일 태그 적용,해제 서비스
+	//int updateTagChange(String type, String checkMailNo, String email);
+	int updateTagAdd(int tagNo, String checkMailNo, String email);
+	int updateTagRemove(int tagNo, String checkMailNo, String email);
+	int updateTagChange(String type, int tagNo, String checkMailNo, String email);
 	
 	// 내게쓴메일함 리스트 페이지 서비스
 	
-	
+	// 임시보관함 전체 메일 개수
+	int selectOutboxListcount(String email);
+	ArrayList<Mail> selectOutbox(PageInfo pi, String email);
+
 	// 임시보관함 리스트 페이지 서비스
 	
 }

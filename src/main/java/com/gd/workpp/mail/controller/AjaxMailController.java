@@ -18,13 +18,82 @@ import com.gd.workpp.common.model.vo.Attachment;
 import com.gd.workpp.common.template.FileUpload;
 import com.gd.workpp.mail.model.service.MailServiceImpl;
 import com.gd.workpp.mail.model.vo.Mail;
+import com.gd.workpp.mail.model.vo.Tag;
 import com.gd.workpp.member.model.vo.Member;
+import com.google.gson.Gson;
 
 @Controller
 public class AjaxMailController {
 
 	@Autowired
 	private MailServiceImpl mService;
+
+	/**
+	 * Author : 정주윤
+	 * 사원별 태그 리스트 조회 메소드
+	 */
+	@ResponseBody
+	@RequestMapping(value="selectTag.ma", produces="application/json; charset=UTF-8")
+	public String selectTagList(HttpSession session) {
+
+		Member mem = (Member)session.getAttribute("loginUser");
+		String email = mem.getEmail();
+		
+		ArrayList<Tag> list = mService.selectTagList(email);
+
+		return new Gson().toJson(list); 
+		
+	}
+	
+	/**
+	 * Author : 정주윤
+	 * 사원별 태그 추가 요청을 처리해 주는 메소드
+	 * @param t : 추가할 내용이 담긴 tag 객체
+	 */
+	@ResponseBody
+	@RequestMapping(value="insertTag.ma", produces="text/html; charset=UTF-8")
+	public String insertTag(Tag t, HttpSession session) {
+
+		Member mem = (Member)session.getAttribute("loginUser");
+		String email = mem.getEmail();
+		
+		t.setUserMail(email);
+		
+		int result = mService.insertTag(t);
+		
+		return result > 0 ? "success" : "fail";
+		
+	}
+	
+	/**
+	 * Author : 정주윤
+	 * 사원별 태그 수정 요청을 처리해 주는 메소드
+	 * @param t : 수정할 내용이 담긴 tag 객체
+	 */
+	@ResponseBody
+	@RequestMapping(value="updateTag.ma", produces="text/html; charset=UTF-8")
+	public String updateTag(Tag t, HttpSession session) {
+		
+		int result = mService.updateTag(t);
+		
+		return result > 0 ? "success" : "fail";
+		
+	}
+	
+	/**
+	 * Author : 정주윤
+	 * 사원별 태그 수정 요청을 처리해 주는 메소드
+	 * @param t : 수정할 내용이 담긴 tag 객체
+	 */
+	@ResponseBody
+	@RequestMapping(value="deleteTag.ma", produces="text/html; charset=UTF-8")
+	public String deleteTag(int tagNo, HttpSession session) {
+		
+		int result = mService.deleteTag(tagNo);
+		
+		return result > 0 ? "success" : "fail";
+		
+	}
 	
 	/**
 	 * Author : 정주윤
@@ -171,6 +240,26 @@ public class AjaxMailController {
 		return result1 > 0 ? "success" : "fail";
 		
 	}
-	
+
+	/**
+	 * Author : 정주윤
+	 * 체크박스로 선택된 메일들에 태그 적용/적용해제 처리 해주는 메소드
+	 * @param type : {"적용": 태그 적용, "해제": 태그 해제}
+	 * @param tagNo : 적용할 태그번호. 빈 문자열 넘어올 시 컬럼값 null로 변경
+	 * @param checkMailNo : 선택된 메일번호들
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="tagChange.ma", produces="text/html; charset=UTF-8")
+	public String updateTagChange(String type, int tagNo, String checkMailNo, HttpSession session) {
+
+		Member mem = (Member)session.getAttribute("loginUser");
+		String email = mem.getEmail();
+		
+		int result = mService.updateTagChange(type, tagNo, checkMailNo, email);
+		
+		
+		return result > 0 ? "success" : "fail";
+	}
 	
 }

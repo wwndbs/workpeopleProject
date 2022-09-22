@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +9,12 @@
 <!-- favicon 설정 -->
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 <link rel="icon" href="resources/images/favicon.ico" type="image/x-icon">
+<style>
+.mail-table-list .d4 span{
+    margin-left: 10px !important;
+}
+
+</style>
 </head>
 <body>
 
@@ -30,53 +37,46 @@
               <div class="mail-main-form">
               	<!-- 제목 + 버튼 + 리스트 div 시작 -->
 				<div class="mail-main-form-list">                
-	                <span class="mail-h">받은 메일함</span>
+	                <span class="mail-h">보낸 메일함</span>
 	                <span>전체 메일 <span id="allCount">${ listCount }</span> / 안 읽은 메일 <span id="notReadCount">${ notReadCount }</span> </span>
 	
 	                <form action="">
 	                  <!-- 상단 버튼 박스 시작 -->
-	                  <div class="mail-btn-content" style="width: 580px;">
+	                  <div class="mail-btn-content" style="width: 480px;">
 	                    <input type="checkbox" id="checkAll" style="margin-right: 10px;">
-	
-	                    <button type="button" class="mail-btn4" id="spamBtn">
-	                      <ion-icon name="ban-sharp" style="margin-top:5px; font-size: 20px;"></ion-icon>
-	                      <span>&nbsp;&nbsp;스팸신고</span>
-	                    </button>
 	                    
 	                    <button type="button" class="mail-btn5" id="replyBtn">
 	                      <ion-icon name="return-down-forward-outline" style="margin-top:5px; font-size: 20px;"></ion-icon>
-	                      <span>&nbsp;&nbsp;답장</span>
+	                      <span style="margin-top: 0px;">&nbsp;&nbsp;답장</span>
 	                    </button>                    
 	                    
 	                    <button type="button" class="mail-btn5" id="deleteBtn">
 	                      <ion-icon name="trash-outline" style="margin-top:5px; font-size: 19px;"></ion-icon>
-	                      <span>&nbsp;&nbsp;삭제</span>
+	                      <span style="margin-top: 0px;">&nbsp;&nbsp;삭제</span>
 	                    </button>    
 	
 	                    <button type="button" class="mail-btn5 dropdown">
 	                      <i class="fas fa-tag" style="margin-top:8px; font-size: 16px;"></i>
-	                      <span>&nbsp;&nbsp;태그</span>
+	                      <span style="margin-top: 0px;">&nbsp;&nbsp;태그</span>
 	                      <!--태그 드롭다운-->
 	                      <div class="dropdown-tagList">
 	                        <table style="width: 100%;" id="tagDropArea">
-	                        
-
 
 	                        </table>
 	                      </div>
 	                    </button>  
 	
-	                    <button type="button" class="mail-btn5" id="relayBtn">
+	                    <button type="button" class="mail-btn5">
 	
 	                      <i class="material-icons-sharp" style="margin-top:3px; font-size: 25px;">
 	                        arrow_right_alt
 	                      </i>
-	                      <span>&nbsp;&nbsp;전달</span>
+	                      <span style="margin-top: 0px;">&nbsp;&nbsp;전달</span>
 	                    </button>
 	                    
 	                    <button type="button" class="mail-btn5" id="readBtn">
 	                      <ion-icon name="mail-open-outline" style="margin-top:5px; font-size: 20px;"></ion-icon>
-	                      <span>&nbsp;&nbsp;읽음</span>
+	                      <span style="margin-top: 0px;">&nbsp;&nbsp;읽음</span>
 	                    </button>
 	                  </div>
 	                  <!-- 상단 버튼 박스 끝 -->
@@ -86,22 +86,21 @@
 	
 	                   <table class="mail-table-list">
 	                     <tr class="mail-list-division">
-	                      <!-- <td colspan="3">최근 메일</td> -->
-	                      <td colspan="6"><hr></td>
+	                      <td colspan="3">최근 메일</td>
+	                      <td colspan="3"><hr></td>
 	                     </tr>
 	                    
 	                    <c:choose>
 	                		<c:when test="${ empty list }">
 	                			<tr>
-	                				<td colspan="5" class="noList">현재 받은 메일이 없습니다.</td>
+	                				<td colspan="5" class="noList">현재 보낸 메일이 없습니다.</td>
 	                			</tr>
 	                		</c:when>
 	                		<c:otherwise>
 	                			<c:forEach var="m" items="${ list }">
 									<tr>
-				                      <td class="d1">				                      
+				                      <td class="d1">
 				                      	  <input type="checkbox" name="check" value="${ m.mailNo }">
-					                      <input type="hidden" name="tag" value="${ m.tag.tagNo }">
 				                      </td>
 				                      <td class="d2">
 				                      	<c:choose>
@@ -124,14 +123,14 @@
 				                        </c:choose>
 				                      </td>
 				                      <td class="d4">
-				                      	<c:choose>
-				                      		<c:when test="${ empty m.senderName }">
-				                      			<span>${ m.sender }</span>
-				                      		</c:when>
-				                      		<c:otherwise>
-						                        <span>${ m.senderName }</span>
-				                      		</c:otherwise>
-				                      	</c:choose>
+				                      		<c:choose>
+				                      			<c:when test="${ fn:length(fn:split(m.receiver, ',')) eq 1 }">
+				                      				<span>${ m.receiver }</span>
+				                      			</c:when>
+				                      			<c:otherwise>
+				                      				<span>${ fn:split(m.receiver, ',')[0] } 외 ${ fn:length(fn:split(m.receiver, ',')) -1 }명</span>
+				                      			</c:otherwise>
+				                      		</c:choose>
 				                      </td>
 				                      <td class="d5">
 				                      	<c:choose>
@@ -149,17 +148,15 @@
 						</c:choose>
 	                   </table>
 						
-				 	   <!--toast div-->
-				       <div id="toast">
-					   </div>
+					<!--toast div-->
+					<div id="toast">
+					</div>
 					
 						<script>
-							let tagArr = [];
 							$(function(){
-								
 								// 메일 상세조회 페이지 요청
 			            		$(".d5>span").click(function(){
-			            			location.href = 'detail.ma?no=' + $(this).parent().siblings().eq(0).children().val();
+			            			location.href = 'detail.ma?no=' + $(this).parent().siblings().eq(0).children().val() + '&boxType=2';
 								})
 			            	
 	            				// 상단 체크박스로 전체 선택, 전체 해제 
@@ -186,72 +183,17 @@
 									}
 								})
 								
-								
-								/*
+	                            // 체크박스 클릭 시 메일번호 담기
+	                            let checkMailNo = "";
 								$("input:checkbox").change(function(){
 									
-									checkMailNo = ""; // 초기화
-									
-									$("input:checkbox[name=check]:checked").each(function(){
-										
-										checkMailNo += ($(this).val()) + ","; // 체크된 것만 메일번호 뽑기 "2,3,4,"
-										
-		                            })
-		                            
-		                            for(let i in tagArr){
-		                            	let tagTrSelector = "#tag" + tagArr[i];
-		                            	
-		                            	if($(tagTrSelector).find(".removeA").length == 0){
-			                            	$(tagTrSelector).append(removeBtn);		                            		
-		                            	}
-		                            	
-		                            }
-		                            
-		                            checkMailNo = checkMailNo.substring(0,checkMailNo.lastIndexOf(",")); // 맨 뒤 콤마 삭제
-		                             
-								})    
-								*/
-								
-								
-								let map = {};
-								let checkMailNo = "";								
-								$("input:checkbox").change(function(){
-									
-									// 체크박스 클릭 시마다 메일번호 담기
-									checkMailNo = ""; // 초기화
+									checkMailNo = "";
 									$("input:checkbox[name=check]:checked").each(function(){
 										checkMailNo += ($(this).val()) + ","; // 체크된 것만 메일번호 뽑기 "2,3,4,"
 		                            })
 		                            checkMailNo = checkMailNo.substring(0,checkMailNo.lastIndexOf(",")); // 맨 뒤 콤마 삭제
-
 									
-		                            // 체크박스 클릭 시마다 태그 드롭다운 내부에 적용,해제 버튼 변경
-									let mailNo = $(this).val();
-									let tagNo = $(this).next().val();
-									
-									if($(this).prop("checked")){ // 체크됨
-										map[mailNo] = tagNo;
-									}else{
-										delete(map[mailNo]);
-									}
-									console.log(map);
-									
-									$("#tagDropArea").find(".removeBtn").remove();
-									
-									let removeTd = '<td class="removeBtn">'
-			   								   +		'<a class="mail-a-taglist tagBtn">해제</a>'
-			   								   +	'</td>';
-									
-									for(let key in map){
-										
-										let tagTrSelector = "#tag" + map[key];
-										if($(tagTrSelector).find(".removeBtn").length == 0){
-			                            	$(tagTrSelector).append(removeTd);		                            		
-		                            	}
-									}
-									
-								})
-								
+								})        
 								
 								// 메일 읽음 기능 (체크박스로 선택하여 읽음 버튼 클릭 시)
 								$("#readBtn").click(function(){
@@ -279,68 +221,12 @@
 									})
 									
 								})
-								
-				            	// 스팸 신고 버튼 클릭 시 토스트나 모달 출력
-				            	$("#spamBtn").click(function(){
-	
-									if(checkMailNo == ''){
-										toast("선택된 메일이 없습니다.");
-										return;
-									}
-				            		
-				            		 $('#jyModal_confirm').modal('show'); 
-				            		 
-				            	})
-				            	
-				            	// 스팸 신고 요청 (스팸메일함 이동, 스팸주소 등록)
-				            	$("#realSpam").click(function(){
-				            		
-				            		$.ajax({
-	                                    url:"updateStatus.ma",
-	                                    data:{checkMailNo:checkMailNo,
-	                                    	  type:"mail_spam"},
-	                                    success:function(result){
-	                        				if(result == "success"){
-		                                        toast("스팸처리 되었습니다.");
-												setTimeout(reload, 1000);
-	                        				}else{
-	                        					toast("스팸 신고에 실패하였습니다.");
-	                        				}
-	                                    },
-	                                    error:function(){
-	                                        console.log("스팸 신고 ajax통신 실패")
-	                                    }
-					            	})
-				       
-				            	})
-				            	
-				            	// 답장
-				            	$("#replyBtn").click(function(){
-	
-									if(checkMailNo == ''){
-										toast("선택된 메일이 없습니다.");
-										return;
-									}
-									
-									if($("input[name=check]:checked").length != 1){
-										toast("하나의 메일만 답장 가능합니다.");
-										return;
-									}
-										
-									location.href = 'reply.ma?no=' + checkMailNo;
-				            		 
-				            	})
 				            	
 				            	// 메일 선택 삭제 요청 (휴지통 이동)
 				            	$("#deleteBtn").click(function(){
-
-									if(checkMailNo == ''){
-										toast("선택된 메일이 없습니다.");
-										return;
-									}
 				            		
 				            		$.ajax({
-	                                    url:"updateMailStatus.ma",
+	                                    url:"updateStatus.ma",
 	                                    data:{checkMailNo:checkMailNo,
 	                                    	  type:"mail_delete"},
 	                                    success:function(result){
@@ -352,59 +238,12 @@
 	                        				}
 	                                    },
 	                                    error:function(){
-	                                        console.log("메일 삭제 ajax통신 실패")
+	                                        console.log("스팸 신고 ajax통신 실패")
 	                                    }
 					            	})
 				       
 				            	})
 								
-				            	// 태그 적용/해제 요청
-				            	$(document).on("click", ".tagBtn", function(){
-
-									if(checkMailNo == ''){
-										toast("선택된 메일이 없습니다.");
-										return;
-									}
-									
-									let tagNo = "";
-									if($(this).text() == '적용'){
-										tagNo = $(this).prev().val();
-									}else{
-										tagNo = $(this).parent().prev().children().eq(0).val();
-									}
-									
-				            		$.ajax({
-				            			url:"tagChange.ma",
-				            			data:{type:$(this).text(),
-				            				  checkMailNo:checkMailNo,
-										   	  tagNo:tagNo	            				
-				            			},
-				            			success:function(result){
-		                                      reload();
-				            			},
-				            			error:function(){
-				            				
-				            			}
-				            		})
-				            	
-				            	})
-				            	
-				            	// 전달
-				            	$("#relayBtn").click(function(){
-	
-									if(checkMailNo == ''){
-										toast("선택된 메일이 없습니다.");
-										return;
-									}
-									
-									if($("input[name=check]:checked").length != 1){
-										toast("하나의 메일만 전달 가능합니다.");
-										return;
-									}
-										
-									location.href = 'relay.ma?no=' + checkMailNo;
-				            		 
-				            	})
 				            	
 							})
 							
@@ -461,18 +300,14 @@
 			            			},
 			            			context: this,
 			            			success:function(result){
-	
-			            				if(result == "success"){
-			            					// 아이콘 변경, 안 읽은 메일 수 변경
-			            					if($(this).attr("name") == "mail"){
-			            						$("#notReadCount").text( parseInt($("#notReadCount").text()) - 1 );
-												$(this).attr("name", "mail-open-outline");
-			            					}else{
-			            						$("#notReadCount").text( parseInt($("#notReadCount").text()) + 1 );
-			            						$(this).attr("name", "mail");
-			            					}
-										}
-										
+		            					// 아이콘 변경, 안 읽은 메일 수 변경
+		            					if($(this).attr("name") == "mail"){
+		            						$("#notReadCount").text( parseInt($("#notReadCount").text()) - 1 );
+											$(this).attr("name", "mail-open-outline");
+		            					}else{
+		            						$("#notReadCount").text( parseInt($("#notReadCount").text()) + 1 );
+		            						$(this).attr("name", "mail");
+		            					}
 			            			},
 			            			error:function(){
 										console.log("메일 중요여부 변경 ajax통신 실패");
@@ -481,7 +316,6 @@
 			            		
 			            	})
 			            	
-			            	// 페이지 재요청
 							function reload(){
 								location.reload();
 							}
@@ -548,13 +382,13 @@
 			                    </c:when>
 								<c:otherwise>                    
 			                    	<li class="page-item">
-				                      <a class="page-link" href="box.ma?cpage=${ pi.currentPage - 1 }" tabindex="-1">‹</a>
+				                      <a class="page-link" href="box.ma?cpage=${ pi.currentPage - 1 }&boxType=2" tabindex="-1">‹</a>
 				                    </li>
                 				</c:otherwise>
 		                    </c:choose>
 		                    
 		                	<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">    
-		                    	<li class="page-item"><a class="page-link" href="box.ma?cpage=${ p }">${ p }</a></li>
+		                    	<li class="page-item"><a class="page-link" href="box.ma?cpage=${ p }&boxType=2">${ p }</a></li>
 		                	</c:forEach>
 		                	
 		                    <c:choose>
@@ -565,7 +399,7 @@
 			                	</c:when>
 			                    <c:otherwise>
 			                    	<li class="page-item">
-				                      <a class="page-link" href="box.ma?cpage=${ pi.currentPage + 1 }">›</a>
+				                      <a class="page-link" href="box.ma?cpage=${ pi.currentPage + 1 }&boxType=2">›</a>
 				                    </li>
 								</c:otherwise>
 		                    </c:choose>
