@@ -33,6 +33,7 @@
 		<typeAlias type="com.gd.workpp.company.model.vo.Department" alias="Department" />
 		<typeAlias type="com.gd.workpp.company.model.vo.Job" alias="Job" />
 		<typeAlias type="com.gd.workpp.attendance.model.vo.Attendance" alias="Annual" />
+		<typeAlias type="com.gd.workpp.board.model.vo.Reply" alias="Reply" />
 	</typeAliases>
 	
 	 <mappers>
