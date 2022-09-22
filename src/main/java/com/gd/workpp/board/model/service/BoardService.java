@@ -43,4 +43,7 @@ public interface BoardService {
 	Board selectBoard(int boardNo);
 	ArrayList<Reply> selectReplyList(int boardNo);
 	
+	// 댓글 작성
+	int insertReply(Reply r);
+	
 }

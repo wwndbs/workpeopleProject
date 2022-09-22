@@ -149,6 +149,13 @@ public class BoardServiceImpl implements BoardService {
 		return bDao.selectReplyList(sqlSession, boardNo);
 	}
 
+
+	// 댓글 작성
+	@Override
+	public int insertReply(Reply r) {
+		return bDao.insertReply(sqlSession, r);
+	}
+
 	
 	
 	

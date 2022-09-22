@@ -149,6 +149,8 @@
                     
                     <script>
                     
+                    	// 댓글 조회도 ajax로 해야할 듯..^^
+                    
                     	// 댓글 추가 ajax
                     	function reply(){
                     		
@@ -157,7 +159,6 @@
 	                    		data: {
 	                    			userNo: "${loginUser.userNo}",
 	                    			refBoardNo: ${b.boardNo},
-	                    			refReplyNo: $
 	                    			replyContent: $("#newReply").val()
 	                    		},
 	                    		success: function(){

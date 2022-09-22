@@ -336,9 +336,12 @@ public class BoardController {
 	@RequestMapping(value="reply.bo", produces="application/json; charset=UTF-8")
 	public String ajaxInsertReply(Reply r) {
 		
-		System.out.println(r);
+		int result = bService.insertReply(r);
 		
-		return null;
+		JSONObject jObj = new JSONObject();
+		jObj.put("result", result);
+		
+		return jObj.toJSONString();
 		
 	}
 }

@@ -465,5 +465,24 @@
 	   connect by prior reply_no = ref_rno
 		 order siblings by r.create_date desc
 	</select>
+	
+	<!-- 댓글 작성 -->
+	<insert id="insertReply">
+		insert
+		  into reply
+		  (
+		    reply_no
+		  , user_no
+		  , ref_bno
+		  , reply_content
+		  )
+		  values
+		  (
+		    seq_reply.nextval
+		  , #{userNo}
+		  , #{refBoardNo}
+		  , #{replyContent}
+		  )
+	</insert>
 
 </mapper>
