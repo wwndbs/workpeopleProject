@@ -104,7 +104,16 @@
 	                  <tr>
 	                    <th class="fixedCol1">
 	                      받는 사람
-	                      <input type="text" name="receiver" id="receiver" value="" hidden>
+						  <c:choose>
+						  	<c:when test="${ not empty m }">
+		                        <!-- 답장일 경우 -->
+						  		<input type="text" name="receiver" id="receiver" value="${ m.sender }" hidden>
+						  	</c:when>
+						  	<c:otherwise>
+						  		<input type="text" name="receiver" id="receiver" value="" hidden>
+						  	</c:otherwise>
+						  </c:choose>
+	                      
 	                    </th>
 	                    <td class="fixedCol2">
 	                      <input type="checkbox" id="toMe" style="vertical-align:-8px;">
@@ -115,7 +124,17 @@
 	                    	<div class="mail-input-wrap">
 	                        <div id="toAddrWrap" class="mail-input-div">
 	                          <ul>
-	                          
+	                          	<!-- 답장일 경우 -->
+	                            <c:if test="${ not empty m }">
+		                            <li class="mail-addr-out to-li">
+			                          <span class="addr-block">
+			                           ${ m.sender }
+			                          </span>
+			                          <span class="btn-addr-remove">
+			                          <ion-icon name="close-outline"></ion-icon>
+			                          </span>
+			                        </li>
+	                            </c:if>
 								<!-- mail-addr-out 출력될 자리 -->
 								
 	                            <li class="mail-addr-create">
@@ -386,7 +405,17 @@
 	                    <th>제목</th>
 	                    <td></td>
 	                    <td>
-	                      <input type="text" name="mailTitle" style="width: 100%;">
+	                    <c:choose>
+	                      <c:when test="${ type eq 'reply' }">
+	                      	<input type="text" name="mailTitle" value="Re : ${ m.mailTitle }" style="width: 100%;">
+	                      </c:when>
+	                      <c:when test="${ type eq 'relay' }">
+	                      	<input type="text" name="mailTitle" value="Fwd : ${ m.mailTitle }" style="width: 100%;">
+	                      </c:when>
+	                      <c:otherwise>
+	                     	 <input type="text" name="mailTitle" style="width: 100%;" value="${ type }">
+	                      </c:otherwise>
+	                    </c:choose>
 	                    </td>
 	                    <td></td>
 	                  </tr>
@@ -525,7 +554,7 @@
 		                
                    		// 파일 드래그 앤 드랍
 		                $(function(){
-                    		
+		                	
                     		$("#dropZone").on("dragenter", function(e){
                     	        e.preventDefault();
                     	        e.stopPropagation();
@@ -585,7 +614,7 @@
 	
 	                  <tr>
 	                    <th colspan="3" style="padding-top: 20px">
-	                     <textarea name="mailContent" id="summernote" rows="10" style="resize: none;"></textarea>
+	                     <textarea name="mailContent" id="summernote" rows="10" style="resize: none;" code=${ m.mailContent }></textarea>
 	                    </th>
 	                    <td></td>
 	                  </tr>

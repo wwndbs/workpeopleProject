@@ -13,6 +13,7 @@ import com.gd.workpp.mail.model.dao.MailDao;
 import com.gd.workpp.mail.model.vo.Mail;
 import com.gd.workpp.mail.model.vo.MailStatus;
 import com.gd.workpp.mail.model.vo.SplitEmail;
+import com.gd.workpp.mail.model.vo.Tag;
 
 @Service
 public class MailServiceImpl implements MailService {
@@ -22,7 +23,27 @@ public class MailServiceImpl implements MailService {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
+	
+	@Override
+	public ArrayList<Tag> selectTagList(String email) {
+		return mDao.selectTagList(sqlSession, email);
+	}
 
+	@Override
+	public int insertTag(Tag t) {
+		return mDao.insertTag(sqlSession, t);
+	}
+	
+	@Override
+	public int updateTag(Tag t) {
+		return mDao.updateTag(sqlSession, t);
+	}
+
+	@Override
+	public int deleteTag(int tagNo) {
+		return mDao.deleteTag(sqlSession, tagNo);
+	}
+	
 	@Override
 	public int insertMail(Mail m, ArrayList<Attachment> atList) {
 		int result1 = mDao.insertMail(sqlSession, m);
@@ -150,5 +171,41 @@ public class MailServiceImpl implements MailService {
 		}
 		return result;
 	}
+
+	@Override
+	public ArrayList<Mail> selectSentbox(PageInfo pi, String email) {
+		return mDao.selectSentbox(sqlSession, pi, email);
+	}
+
+	@Override
+	public Mail selectMailByNo(int mailNo) {
+		return mDao.selectMailByNo(sqlSession, mailNo);
+	}
+
+	@Override
+	public int selectOutboxListcount(String email) {
+		return mDao.selectOutboxListCount(sqlSession, email);
+	}
+
+	@Override
+	public ArrayList<Mail> selectOutbox(PageInfo pi, String email) {
+		return mDao.selectOutbox(sqlSession, pi, email);
+	}
+
+	@Override
+	public int updateTagAdd(int tagNo, String checkMailNo, String email) {
+		return mDao.updateTagAdd(sqlSession, tagNo, checkMailNo, email);
+	}
+
+	@Override
+	public int updateTagRemove(int tagNo, String checkMailNo, String email) {
+		return mDao.updateTagRemove(sqlSession, tagNo, checkMailNo, email);
+	}
+
+	@Override
+	public int updateTagChange(String type, int tagNo, String checkMailNo, String email) {
+		return mDao.updateTagChange(sqlSession, type, tagNo, checkMailNo, email);
+	}
+
 
 }

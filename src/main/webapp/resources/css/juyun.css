@@ -52,7 +52,13 @@
 .mail-sidebar .sidebar3 a{
     color: black;
     text-decoration: none;
-    margin-left: 7px;
+    margin-left: 10px;
+}
+
+.mail-sidebar .sidebar3 .add{
+    color: gray; 
+    font-size: 14px; 
+    margin: 20px;
 }
 
 .mail-btn-enroll{
@@ -81,22 +87,22 @@
     border: none;
 }
 
-.mailbox-list>li{
+.mailbox-list li{
     display: flex;
     justify-content: space-between;
     margin-bottom : 5px;
 }
 
-.sidebar3 .tag-list>li{
+.sidebar3 .tag-list li{
     list-style: none;
     margin-left: 10px;
     margin-bottom : 6px;
-    
+    height: 25px;
     display: flex;
     justify-content: space-between;
 }
 
-.sidebar3 .tag-list>li>ion-icon{
+.sidebar3 .tag-list li ion-icon{
     margin-top: 5px;
 }
 
@@ -185,29 +191,66 @@
     cursor:pointer;
 }
 
-.dropdown { /*공통 드롭다운*/
+.mail-btn4 span,
+.mail-btn5 span{
+    margin-top: 0px;
+}
+
+.dropdown{ /*공통 드롭다운*/
     position: relative;
     display: inline-block;
   }
 
-.dropdown-tagList { /*태그버튼 적용 드롭다운*/
+.dropdown:hover .dropdown-tagList,
+.dropdown:hover .dropdown-tagEtc {
+    display: block;
+}
+
+.tag-list .dropdown{
+    border: none;
+    background: fixed;
+}
+
+.dropdown>span{
+	vertical-align: 5px;
+}
+
+.dropdown>i{
+	vertical-align:3px;
+}
+
+.dropdown-tagList{ /*상단 태그버튼 적용 드롭다운*/
     display: none;
     position: absolute;
     background-color: #f9f9f9;
-    min-width: 180px;
+    min-width: max-content;
+    box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.2);
+    padding: 7px 10px 7px 10px;
+    z-index: 1;
+    border-radius: 7px;
+    overflow:auto;
+}
+
+.dropdown-tagEtc { /*사이드바 더보기 버튼 적용 드롭다운*/
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 100px;
     box-shadow: 0px 2px 10px 0px rgba(0,0,0,0.2);
     padding: 7px 7px 7px 7px;
     z-index: 1;
+    border-radius: 5px;
 }
 
-.dropdown:hover .dropdown-tagList {
-    display: block;
+.dropdown-tagList i{
+	margin-top: 6px;
+	font-size: 16px;
 }
 
 .mail-a-taglist{
     display: inline-block;
     line-height: 19px;
-    width: 35px;
+    width: 30px;
     height: 20px;
     background-color: white;
     border : 1px solid gray;
@@ -217,9 +260,25 @@
 }
 
 .dropdown-tagList .tagName{
-    margin-left: 3px;
-    margin-right: 5px;
+    margin-left: 7px;
+    margin-right: 8px;
     font-size: 14px;
+}
+
+.mail-a-taglist:hover{
+	background-color: #0087EF;
+    color: white;
+    border: none;
+    text-decoration:none;
+}
+
+.dropdown-tagEtc>span{
+    font-size: 13px;
+    line-height: 25px;
+}
+
+.dropdown-tagEtc>span:hover{
+    cursor: pointer;
 }
 
 /*메일쓰기*/
@@ -497,6 +556,7 @@
 .mail-detail-content .header ion-icon{
 	vertical-align: -3px;
 	font-size: 20px;
+	cursor: pointer;
 }
 
 .mail-detail-content .header i{
@@ -574,18 +634,21 @@
     border-radius: 15px;
 }
 
-.mail-address-form
-
 /*modal*/
 .modal-header .modal_close{
     float: right;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 700;
     line-height: 1;
     color: #000;
     text-shadow: 0 1px 0 #fff;
     opacity: .5;
-    border: none;
+	border:1px solid rgb(190, 190, 190) !important;
+}
+
+.modal-header .modal-title{
+	font-weight: 600;
+	font-size: 16px;
 }
 
 .modal-footer .btn-jycancle{
@@ -606,6 +669,83 @@
     border: 1px solid #06283D;
     color: white;
     font-size: 15px;
+}
+
+/*사이드바 태그 modal*/
+
+.tagModal .modal-content{
+    width: 53%;
+}
+
+.tagModal .modal-body{
+    padding-left: 30px;
+}
+
+.tagModal .modal-body p,
+.tagModal .modal-body input{
+    font-size: 15px;
+    margin-bottom: 0.5rem;
+    width: 190px;
+}
+
+.pallete-wrap{
+    display: inline-block;
+    width: 220px;
+    height: 22px;
+    padding: 0;
+}
+
+.pallete-wrap a{
+    display: block;
+    float: left;
+    width: 22px;
+    height: 22px;
+    text-indent: -3000em;
+    margin: 0 4px 4px 0;
+}
+
+.pallete-wrap a:hover, 
+.pallete-wrap a.active {
+    border: 3px solid #333;
+    width: 20px;
+    height: 20px;
+}
+
+.pallete-wrap .color-1{
+    background: rgb(250, 87, 60);
+    border: 1px solid rgb(250, 87, 60);
+}
+.pallete-wrap .color-2{
+    background: rgb(255, 173, 70);
+    border: 1px solid rgb(255, 173, 70);
+}
+.pallete-wrap .color-3{
+    background: rgb(251, 233, 131);
+    border: 1px solid rgb(251, 233, 131);
+}
+.pallete-wrap .color-4{
+    background: rgb(123, 209, 72);
+    border: 1px solid rgb(123, 209, 72);
+}
+.pallete-wrap .color-5{
+    background: rgb(102, 145, 229);
+    border: 1px solid rgb(102, 145, 229);
+}
+.pallete-wrap .color-6{
+    background: rgb(185, 154, 255);
+    border: 1px solid rgb(185, 154, 255);
+}
+.pallete-wrap .color-7{
+    background: rgb(246, 145, 178);
+    border: 1px solid rgb(246, 145, 178);
+}
+.pallete-wrap .color-8{
+    background: rgb(144, 83, 20);
+    border: 1px solid rgb(144, 83, 20);
+}
+
+.tagModal .modal-footer{
+    justify-content: center;
 }
 
 /*toast*/

@@ -32,7 +32,7 @@
               <!-- 메일 내용 시작 -->
               <div class="mail-main-form">
               
-                <span class="mail-h">받은 메일함</span>
+                <span class="mail-h">보낸 메일함</span>
 
                 <form action="">
                 

@@ -13,10 +13,27 @@ import com.gd.workpp.common.model.vo.PageInfo;
 import com.gd.workpp.mail.model.vo.Mail;
 import com.gd.workpp.mail.model.vo.MailStatus;
 import com.gd.workpp.mail.model.vo.SplitEmail;
+import com.gd.workpp.mail.model.vo.Tag;
 
 @Repository
 public class MailDao {
 
+	public ArrayList<Tag> selectTagList(SqlSessionTemplate sqlSession, String email){
+		return (ArrayList)sqlSession.selectList("mailMapper.selectTagList", email);
+	}
+	
+	public int insertTag(SqlSessionTemplate sqlSession, Tag t) {
+		return sqlSession.insert("mailMapper.insertTag", t);
+	}
+	
+	public int updateTag(SqlSessionTemplate sqlSession, Tag t) {
+		return sqlSession.update("mailMapper.updateTag", t);
+	}
+	
+	public int deleteTag(SqlSessionTemplate sqlSession, int tagNo) {
+		return sqlSession.delete("mailMapper.deleteTag", tagNo);
+	}
+	
 	public int insertMail(SqlSessionTemplate sqlSession, Mail m) {
 		return sqlSession.insert("mailMapper.insertMail", m);
 	}
@@ -147,5 +164,64 @@ public class MailDao {
 		return sqlSession.insert("mailMapper.insertSpam", data);
 	}
 	
+	public ArrayList<Mail> selectSentbox(SqlSessionTemplate sqlSession, PageInfo pi, String email){
 
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("mailMapper.selectSentbox", email, rowBounds);
+	}
+	
+	public Mail selectMailByNo(SqlSessionTemplate sqlSession, int mailNo) {
+		return sqlSession.selectOne("mailMapper.selectMailByNo", mailNo);
+	}
+	
+	public int selectOutboxListCount(SqlSessionTemplate sqlSession, String email) {
+		return sqlSession.selectOne("mailMapper.selectOutboxListcount", email);
+	}
+	
+	public ArrayList<Mail> selectOutbox(SqlSessionTemplate sqlSession, PageInfo pi, String email){
+
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("mailMapper.selectOutbox", email, rowBounds);
+	}
+	
+	public int updateTagAdd(SqlSessionTemplate sqlSession, int tagNo, String checkMailNo, String email) {
+		String[] noArr = checkMailNo.split(",");
+		
+		HashMap<String, Object> data = new HashMap<>();
+		data.put("tagNo", tagNo);
+		data.put("noArr", noArr);
+		data.put("email", email);
+		
+		return sqlSession.update("mailMapper.updateTagAdd", data);
+	}	
+	
+	public int updateTagRemove(SqlSessionTemplate sqlSession, int tagNo, String checkMailNo, String email) {
+		String[] noArr = checkMailNo.split(",");
+		
+		HashMap<String, Object> data = new HashMap<>();
+		data.put("tagNo", tagNo);
+		data.put("noArr", noArr);
+		data.put("email", email);
+		
+		return sqlSession.update("mailMapper.updateTagRemove", data);
+	}
+	
+	public int updateTagChange(SqlSessionTemplate sqlSession, String type, int tagNo, String checkMailNo, String email) {
+		String[] noArr = checkMailNo.split(",");
+		
+		HashMap<String, Object> data = new HashMap<>();
+		data.put("type", type);
+		data.put("tagNo", tagNo);
+		data.put("noArr", noArr);
+		data.put("email", email);
+		
+		return sqlSession.update("mailMapper.updateTagChange", data);
+	}
+	
 }
