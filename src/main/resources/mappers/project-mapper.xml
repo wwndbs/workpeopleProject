@@ -266,18 +266,18 @@
 		       count(*)
 		  from pro_board pb
 		  join member m on (m.user_no = pb.user_no)
-		 where pb.project_no = #{projectNo}
+		 where pb.project_no = #{no}
 		   and pb.status = 'Y'
 	   	  <if test="condition == 'writer'">
-		   and m.user_name
+		   	and m.user_name
 	   	  </if>		
           <if test="condition == 'title'">
-           and pb.pro_title
+           	and pb.pro_title
           </if>
           <if test="condition == 'content'">
-           and pb.pro_content	   
+           	and pb.pro_content	   
           </if>
-	   	  like '%'||#{keyword}||'%'
+	   	  	like '%'||#{keyword}||'%'		    
 	</select>
 	
 	<!-- 프로젝트게시물 검색 (제목|내용|작성자) -->
@@ -299,7 +299,7 @@
 		     , pb.attach_modify
 		  from pro_board pb
 		  join member m on (m.user_no = pb.user_no)
-		 where pb.project_no = #{projectNo}
+		 where pb.project_no = #{no}
 		   and pb.status = 'Y'
 		   <choose>
 		   	  <when test="condition == 'writer'">
@@ -308,9 +308,9 @@
            	  <when test="condition == 'title'">
                  and pb.pro_title
            	  </when>
-           	  <otherwise>
+           	  <when test="condition == 'content'">
                  and pb.pro_content	   
-           	  </otherwise>
+           	  </when>
 		   </choose>
 		   		like '%'||#{keyword}||'%'
 		 order

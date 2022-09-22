@@ -108,10 +108,11 @@
 					<form action="search.pr" method="get">
 		                <div class="form-group formgroup">
 		                  <input type="hidden" name="cpage" value="1">
+		                  <input type="hidden" name="no" value="${ no }">
 		                  <select class="form-control select1" id="demoStyle" name="condition" style="height:40px;">
-		                    <option value="default title" class="op1">제목</option>
-		                    <option class="text-secondary" value="secondary content"><label class="se-la">내용</label></option>
-		                    <option class="text-secondary" value="secondary writer"><label class="se-la">작성자</label></option>
+		                    <option value="title" class="op1">제목</option>
+		                    <option class="text-secondary" value="content"><label class="se-la">내용</label></option>
+		                    <option class="text-secondary" value="writer"><label class="se-la">작성자</label></option>
 		                  </select>
 		                </div>
 		                <div class="search-div" style="width:30%; display:flex; ">

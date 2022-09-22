@@ -56,7 +56,7 @@
                 <input type="hidden" name="no" value="${ p.proBoardNo }">
                 <input type="hidden" name="pmMember" value="${ pmMember }">
                 <input type="hidden" name="userNo" value="${ loginUser.userNo }">
-                <input type="hidden" name="userMemNo" value="${ pm.userMemNo }">                
+                <input type="hidden" name="userMemNo" value="${ pm.userMemNo }">             
                                 
                 <!-- 
                 <input type="hidden" name="projectNo" value="${ pp.projectNo }">
@@ -167,7 +167,7 @@
 			                <c:if test="${ pp.checkDep == 0 }">			                
 			                  <!-- 토스트 메시지 div -->
 			                  <div id="toast">
-			                    <span id="toastShow" class="close" style="color: white">sss</span>			                    
+			                    		                    
 			                  </div>
 			                </c:if>     
 			                
@@ -196,6 +196,8 @@
 			        		})*/
 			        		
 			        		function chooseProject(){
+			                	let checkDep = $()
+			                	
 			                	if($(".toastShow").show(){
 			                		//$('.myPro').click(function(){
 				                    //	$('.myPro').attr("readonly", true);

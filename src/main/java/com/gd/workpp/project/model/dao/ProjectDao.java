@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
-import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -92,20 +91,33 @@ public class ProjectDao {
 	
 	// [김은지] 프로젝트게시물 검색
 	public int selectSearchCount(SqlSessionTemplate sqlSession, String condition, String keyword, int projectNo) {
-		return sqlSession.selectOne("projectMapper.selectSearchCount", projectNo);
+		HashMap<String, Object> data = new HashMap<>();
+		data.put("condition", condition);
+		data.put("keyword", keyword);
+		data.put("no", projectNo);
+		
+		System.out.println(condition);
+		System.out.println(keyword);
+		System.out.println(projectNo);
+		
+		return sqlSession.selectOne("projectMapper.selectSearchCount", data);
 	}
 	
 	// [김은지] 프로젝트게시물 검색
 	public ArrayList<ProBoard> selectSearchList(SqlSessionTemplate sqlSession, String condition, String keyword, PageInfo pi, int projectNo) {
-		//HashMap<String, String> map = new HashMap<>();
-		//map.put("condition", condition);
-		//map.put("keyword", keyword);
+		HashMap<String, Object> data = new HashMap<>();
+		data.put("condition", condition);
+		data.put("keyword", keyword);
+		data.put("no", projectNo);
+		data.put("pi", pi);
+		
+		System.out.println(data);
 		
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlSession.selectList("projectMapper.selectSearchList", projectNo, rowBounds);
+		return (ArrayList)sqlSession.selectList("projectMapper.selectSearchList", data, rowBounds);
 	}
 	
 	// [김은지] 프로젝트게시물 조회수증가

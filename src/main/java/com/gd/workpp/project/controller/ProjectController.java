@@ -120,18 +120,25 @@ public class ProjectController {
 	}
 	
 	// [김은지] 프로젝트 검색기능
-	@ResponseBody
 	@RequestMapping("search.pr")
 	public ModelAndView selectSearchList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, String keyword, String condition, int no) {
 		int listCount = pService.selectSearchCount(condition, keyword, no);
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
 		ArrayList<ProBoard> list = pService.selectSearchList(condition, keyword, pi, no);
-		System.out.println(no);
+		ArrayList<Project> pList = pService.selectAdmin(no);
+		ArrayList<ProMember> pmList = pService.selectMember(no);
+		
+		System.out.println(pi);
+		System.out.println(list);
 		
 		mv.addObject("pi", pi)
 		  .addObject("list", list)
 		  .addObject("no", no)
+		  .addObject("condition",condition)
+		  .addObject("keyword", keyword)
+		  .addObject("pList", pList)
+		  .addObject("pmList", pmList)
 		  .setViewName("project/projectDetailList");
 		
 		
@@ -151,7 +158,7 @@ public class ProjectController {
 	public ModelAndView proBoardModifyForm(int no, ModelAndView mv) { 
 		
 		int result = pService.increaseCount(no);
-		
+				
 		if(result > 0) {
 			ProBoard pb = pService.selectDetailProBoard(no);
 			mv.addObject("pb", pb)
@@ -192,9 +199,7 @@ public class ProjectController {
 	public ModelAndView proBoardDetail(int no, ModelAndView mv) {
 		
 		int result = pService.increaseCount(no);
-		
-		System.out.println(no);
-					
+								
 		if(result > 0) {
 			ProBoard pb = pService.selectDetailProBoard(no);
 			mv.addObject("pb", pb)
@@ -204,6 +209,8 @@ public class ProjectController {
 			mv.addObject("errorMsg", "상세조회 실패").setViewName("common/errorPage");	
 		}
 		
+		//System.out.println(no);
+		
 		return mv;		
 
 	}	
@@ -211,7 +218,7 @@ public class ProjectController {
 	// [김은지] 프로젝트 게시물 수정
 	@RequestMapping("updateBoard.pr")
 	public String updateProBoard(ProBoard pb, MultipartFile reupfile, HttpSession session, Model model) {
-		
+						
 		// 새로 넘어온 첨부파일이 있을 경우
 		if(!reupfile.getOriginalFilename().equals("")) {
 			
@@ -228,7 +235,7 @@ public class ProjectController {
 		}
 		
 		int result = pService.updateProBoard(pb);
-		
+				
 		if(result > 0) {
 			//session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다.");
 			return "redirect:boardDetail.pr?no=" + pb.getProBoardNo();
@@ -236,6 +243,8 @@ public class ProjectController {
 			model.addAttribute("errorMsg", "게시물 수정 실패");
 			return "common/errorPage";
 		}
+		
+		
 		
 	}
 	
@@ -273,8 +282,6 @@ public class ProjectController {
 		  .addObject(list)
 		  .setViewName("project/projectTotalList");
 		
-		System.out.println(list);
-						
 		return mv;
 	}	
 
