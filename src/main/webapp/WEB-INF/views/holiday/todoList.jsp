@@ -65,6 +65,8 @@
 	<!-- 드래그 제이쿼리 -->
 	<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 	
+	<jsp:include page="../common/commonToast.jsp" />
+	
 	<!-- 할 일 리스트 조회 ajax -->
 	<script>
 		$(function(){

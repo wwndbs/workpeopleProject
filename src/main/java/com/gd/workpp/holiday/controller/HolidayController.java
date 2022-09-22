@@ -37,14 +37,15 @@ public class HolidayController {
 	 * @param userNo : 로그인한 사용자 번호
 	 */
 	@RequestMapping("insertTodo.td")
-	public ModelAndView insertTodo(String todoContent, String userNo, ModelAndView mv) {
+	public String insertTodo(String todoContent, String userNo, Model model, HttpSession session) {
 		int result = hService.insertTodo(todoContent, userNo);
 		if(result > 0) {
-			mv.setViewName("holiday/todoList");
+			session.setAttribute("toastMsg", "할 일을 추가 했습니다.");
+			return "redirect:todoList.td";
 		}else {
-			
+			model.addAttribute("errorMsg", "할 일 삭제를 실패 했습니다.");
+			return "common/errorPage";
 		}
-		return mv;
 	}
 	
 	/**
@@ -57,7 +58,7 @@ public class HolidayController {
 		int result = hService.deleteTodo(no);
 		
 		if(result > 0) {
-			session.setAttribute("alertMsg", "할 일을 삭제 했습니다.");
+			session.setAttribute("toastMsg", "할 일을 삭제 했습니다.");
 			return "redirect:todoList.td";
 		}else {
 			model.addAttribute("errorMsg", "할 일 삭제를 실패 했습니다.");
