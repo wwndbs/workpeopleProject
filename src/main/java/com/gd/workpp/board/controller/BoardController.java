@@ -227,10 +227,8 @@ public class BoardController {
 			
 			int boardNo = Integer.parseInt(b.getBoardNo());
 			
-			// 첨부파일이 있을 경우 FileUpload클래스로 파일 변환 후 Board 객체에 담기
-			// 기존파일은 삭제하기
-			if(!file.getOriginalFilename().equals("")) {
-				
+			// 삭제할 번호가 넘어온 경우
+			if(delFile != null) {
 				// 글번호로 등록된 첨부파일 삭제하기
 				// db에서 해당 첨부파일 삭제
 				int result = bService.deleteAttachment(boardNo);
@@ -239,6 +237,10 @@ public class BoardController {
 					// 서버에 저장된 파일 삭제
 					new File(session.getServletContext().getRealPath(changeName)).delete();
 				}
+			}
+			
+			// 첨부파일이 있을 경우 FileUpload클래스로 파일 변환 후 Board 객체에 담기
+			if(!file.getOriginalFilename().equals("")) {
 			  
 				// 새로운 첨부파일 업로드
 				String saveFilePath = FileUpload.saveFile(file, session,"resources/board_upfiles/");
@@ -301,7 +303,7 @@ public class BoardController {
 	
 	// 부서게시판 상세페이지
 	@RequestMapping("deptDetail.bo")
-	public String selectDeptBoard(int boardNo) {
+	public String selectDeptBoard(int boardNo, Model model) {
 		
 		// 조회수 증가
 		int result = bService.increaseCount(boardNo);
@@ -311,7 +313,8 @@ public class BoardController {
 			// 게시글 조회
 			Board b = bService.selectBoard(boardNo);
 			
-			return null;
+			model.addAttribute("b", b);
+			return "board/deptDetail";
 			
 		}else {
 			
