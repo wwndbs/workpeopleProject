@@ -192,11 +192,12 @@ public class ApprovalDao {
 		
 		int approvalResult = 0; // 결재선 insert결과값
 		int referenceResult = 0; // 참조 isnert결과값
+		int approvalArrLength = approvalArr.length;
 		
 		if(approvalArr.length > 0) {
 			for(int i = approvalArr.length; i > 0; i--) {
 				data.put("approval", approvalArr[i - 1]);
-				data.put("order", String.valueOf(i));
+				data.put("order", String.valueOf((approvalArrLength - i) + 1));				
 				
 				approvalResult += sqlSession.insert("approvalMapper.insertApproval", data);
 				
@@ -279,9 +280,6 @@ public class ApprovalDao {
 		data.put("document", document);
 		data.put("overtime", overtime);
 		
-		System.out.println(overtime.getWorkStart());
-		System.out.println(overtime.getWorkEnd());
-		
 		int result1;
 		int result2;
 		
@@ -325,9 +323,8 @@ public class ApprovalDao {
 		int result2;
 		
 		int approvalCountCheck = sqlSession.selectOne("approvalMapper.approvalStatusCheck", data);
-		System.out.println(approvalCountCheck);
+
 		if(approvalCountCheck == 1) {
-			System.out.println("ASdddddddddddd");
 			result1 = sqlSession.update("approvalMapper.updateDocumentApprovalCount", data);
 			result2 = sqlSession.update("approvalMapper.updateApprovalStatus", data);
 			sqlSession.update("approvalMapper.updateProgress", data);

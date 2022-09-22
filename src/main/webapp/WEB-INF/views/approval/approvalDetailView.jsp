@@ -170,15 +170,16 @@
 		</div>
 	</div>
 
-	<jsp:include page="approvalModal.jsp" />
-
+	<jsp:include page="../common/commonToast.jsp" />
+	
 	<jsp:include page="../common/footer.jsp" />
 	
 	<script>
 		function deleteApproval(){
 			if(confirm("삭제하시겠습니까?")){
 				let documentNo = '${document.documentNo}';
-				location.href="deleteApproval.ap?documentNo=" + documentNo;
+				let filePath = '${document.changeName}'
+				location.href="deleteApproval.ap?documentNo=" + documentNo + "&filePath=" + filePath;
 			}
 		}
 	</script>
