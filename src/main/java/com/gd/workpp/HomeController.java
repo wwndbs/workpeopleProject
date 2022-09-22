@@ -29,11 +29,13 @@ public class HomeController {
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		
+		// [김은지] 메인화면에 로그인한 회원의 프로젝트리스트 뿌려주기
+		
 		String formattedDate = dateFormat.format(date);
 		
 		model.addAttribute("serverTime", formattedDate );
 		
 		return "home";
 	}
-	
+
 }

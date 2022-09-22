@@ -25,6 +25,11 @@ public class ProjectServiceImpl implements ProjectService {
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
+	public ArrayList<Project> homeProjectList(String userNo) {
+		return pDao.homeProjectList(sqlSession, userNo);
+	}	
+	
+	@Override
 	public ArrayList<Project> selectList(String depName, String userNo) {
 		return pDao.selectList(sqlSession, depName, userNo);
 	}	
@@ -142,7 +147,8 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public ProMember selectRequestMember(int projectNo, String userMemNo) {
 		return pDao.selectRequestMember(sqlSession, projectNo, userMemNo);
-	}	
+	}
+
 	
 }
 

@@ -50,13 +50,14 @@
 	      <div class="adminx-content">
 	        <div class="adminx-main-content">
 	          <div class="container-fluid">
-	            
+	          		            
 	            <input type="hidden" name="projectNo" value="${ pp.projectNo }">
 	            <input type="hidden" name="projectNo" value="${ pm.projectNo }">
                 <input type="hidden" name="no" value="${ p.proBoardNo }">
                 <input type="hidden" name="pmMember" value="${ pmMember }">
                 <input type="hidden" name="userNo" value="${ loginUser.userNo }">
-                <input type="hidden" name="userMemNo" value="${ pm.userMemNo }">             
+                <input type="hidden" name="userMemNo" value="${ pm.userMemNo }">          
+                <input type="hidden" name="depName" value="${ loginUser.depName }">   
                                 
 	            <!-- 관리자에게만 보여지는 승인탭(팀장/부장) -->
 	            <c:if test="${ loginUser.jobName == '부장' || loginUser.jobName == '팀장'}">
@@ -193,7 +194,7 @@
 			                
 			                <div class="card mb-grid project w-100 box1" onclick="chooseProject(${pp.checkDep});">
 			                <input type="hidden" name="checkDep" value="">
-			                
+			                			                
 			                  <div class="card-body d-flex flex-column">                                            
 			                    <div class="d-flex justify-content-between mb-3">
 			                      <h5 class="card-title mb-0">
@@ -222,7 +223,7 @@
 				                        </c:if>	
 			                        </div>		                        			                        			                        
 			                      </h5>
-			                      <i data-feather="user" style="margin: 230px -17px -20px 200px; float: right; width:27px !important"></i>
+			                      <i data-feather="user" style="margin: 230px -17px -20px 200px; float: right; width:8% !important"></i>
 			                      <span for="" style="margin: 230px 0px -20px 21px;" id="pcount">${ pp.countMember }</span]>
 			                    </div>
 			                  </div>
@@ -234,6 +235,8 @@
 	              </c:choose>
 	              	              
 	            </div>
+	
+	
 	
 	            <hr>
 	
@@ -287,7 +290,7 @@
 				                        </c:if>	
 			                        </div>		                        			                        			                        
 			                      </h5>
-			                      <i data-feather="user" style="margin: 230px -17px -20px 200px; float: right; width:27px !important"></i>
+			                      <i data-feather="user" style="margin: 230px -17px -20px 200px; float: right; width:8% !important"></i>
 			                      <span for="" style="margin: 230px 0px -20px 21px;" id="pcount">${ pp.pmMemberCount }</span]>
 			                    </div>
 			                  </div>

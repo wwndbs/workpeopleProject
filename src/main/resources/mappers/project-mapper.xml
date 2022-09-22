@@ -63,6 +63,28 @@
 		<result column="modify_date" property="rModifyDate"/>
 	</resultMap>
 	
+	<!-- [김은지] 메인화면 프로젝트리스트 조회 -->
+	<select id="homeProjectList" resultMap="projectResult">
+	    select
+               p.project_no
+		     , p.project_title
+             , p.user_no as "proAdminNo"
+		     , p.category
+             , p.dep_name
+             , pm.pro_approve         
+             , (
+                 select count(*)
+                   from pro_member
+                  where project_no = p.project_no
+               ) as "countMember" <!-- 프로젝트 참여인원 구하기 -->                 
+  		  from project p    
+  		  join pro_member pm on (p.project_no = pm.project_no)                 
+           and pm.user_no = #{userNo} <!-- 로그인한 회원번호 -->      
+           and pro_approve = 'Y'
+         order
+            by p.project_no desc
+	</select>
+	
 	<!-- [김은지] 내팀의 프로젝트 리스트 조회 -->
 	<select id="selectList" resultMap="projectResult">       
         select

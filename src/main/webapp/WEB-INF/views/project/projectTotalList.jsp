@@ -155,7 +155,7 @@
 			 <!-- 승인요청 모달 -->
 	       <div class="modal" id="appoveRequest">
 	           <div class="modal-dialog modal-dialog-centered">
-	               <div class="modal-content" style="height:230px; width: 370px;">
+	               <div class="modal-content" style="height:200px; width: 370px;">
              			<form action="approveRequest.pr" method="post">		
 		               	  <input type="hidden" name="projectNo" id="projectNo" value="">
 			              <input type="hidden" name="userMemNo" id="userMemNo" value="">
@@ -163,7 +163,7 @@
 						  
 		                  <!-- Modal body -->
 		                  <div class="modal-body" style="text-align:center;">
-		                  	  <br><br>
+		                  	  <br>
 		                      <span id="modalContent"></span>
 		                      승인이 필요한 프로젝트입니다. <br>
 		                      가입 신청하시겠습니까?

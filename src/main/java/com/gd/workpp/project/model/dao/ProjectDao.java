@@ -16,21 +16,20 @@ import com.gd.workpp.project.model.vo.Project;
 @Repository
 public class ProjectDao {
 	
+	// [김은지] 메인화면 프로젝트리스트 조회
+	public ArrayList<Project> homeProjectList(SqlSessionTemplate sqlSession, String userNo){
+		return (ArrayList)sqlSession.selectList("projectMapper.homeProjectList", userNo);
+	}
+	
 	// [김은지] 내프로젝트조회 리스트 
 	public ArrayList<Project> selectList(SqlSessionTemplate sqlSession, String depName, String userNo){ 
 		HashMap<String, String> data = new HashMap<>();
-		data.put("dapName", depName);
+		data.put("depName", depName);
 		data.put("userNo", userNo);
 		
 		return (ArrayList)sqlSession.selectList("projectMapper.selectList", data);
 	}
-	
-	// [김은지] 내프로젝트조회 리스트 
-	/* 
-	public ArrayList<Project> selectList(SqlSessionTemplate sqlSession, String depName){
-		return (ArrayList)sqlSession.selectList("projectMapper.selectList", depName);
-	}*/
-	
+		
 	// [김은지] 내프로젝트조회 리스트2
 	public ArrayList<Project> selectList2(SqlSessionTemplate sqlSession, String depName){
 		return (ArrayList)sqlSession.selectList("projectMapper.selectList2", depName);

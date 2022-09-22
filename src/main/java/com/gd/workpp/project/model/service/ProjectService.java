@@ -11,6 +11,10 @@ import com.gd.workpp.project.model.vo.Project;
 public interface ProjectService {
 	
 	// 작성자 김은지
+	
+	// 0. 메인화면 프로젝트리스트 조회
+	ArrayList<Project> homeProjectList(String userNo);
+	
 	// 1. 내 프로젝트 리스트 조회
 	ArrayList<Project> selectList(String depName, String userNo);
 	
