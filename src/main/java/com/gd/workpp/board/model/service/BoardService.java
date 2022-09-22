@@ -9,6 +9,9 @@ import com.gd.workpp.common.model.vo.PageInfo;
 
 public interface BoardService {
 
+	// Author : 최영헌 / 메인페이지 게시글 조회
+	ArrayList<Board> mainBoardList(int type, String dept);
+	
 	// 게시판 목록 조회
 	int selectListCount(int no, String depName);
 	ArrayList<Board> selectList(PageInfo pi, int no, String depName);

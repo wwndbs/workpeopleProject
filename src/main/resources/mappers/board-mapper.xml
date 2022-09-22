@@ -41,6 +41,32 @@
 		<result column="level" property="level"/>
 	</resultMap>
 
+	<!-- Author : 최영헌 -->
+	<select id="mainBoardList" resultMap="boardResult">
+		select board_no
+		     , user_no
+		     , board_type
+		     , board_title
+		     , create_date
+		     , count
+		     , dep_name
+		  from board
+		  <choose>
+		  	<when test='type == "1"'>
+		 where board_type = 1
+		  	</when>
+		  	<when test='type == "2"'>
+		 where board_type = 2
+		   and dep_name = #{dept}
+		  	</when>
+		  	<when test='type == "3"'>
+		 where board_type = 3
+		  	</when>
+		  </choose>
+		   and status = 'Y'
+		  order by create_date desc
+	</select>
+
 	<!-- 게시판(공지, 익명) 글 개수 조회 -->
 	<select id="selectListCount" resultType="_int">
 		select

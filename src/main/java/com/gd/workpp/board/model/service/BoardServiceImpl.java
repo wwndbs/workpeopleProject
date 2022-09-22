@@ -21,6 +21,15 @@ public class BoardServiceImpl implements BoardService {
 	@Autowired
 	private BoardDao bDao;
 	
+	/**
+	 * Author : 최영헌
+	 */
+	@Override
+	public ArrayList<Board> mainBoardList(int type, String dept) {
+		return bDao.mainBoardList(sqlSession, type, dept);
+	}
+
+	
 	@Override
 	public int selectListCount(int no, String depName) {
 		return bDao.selectListCount(sqlSession, no, depName);

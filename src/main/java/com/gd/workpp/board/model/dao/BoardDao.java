@@ -2,6 +2,7 @@
 package com.gd.workpp.board.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -14,6 +15,17 @@ import com.gd.workpp.common.model.vo.PageInfo;
 
 @Repository
 public class BoardDao {
+	
+	/**
+	 * Author : 최영헌
+	 */
+	public ArrayList<Board> mainBoardList(SqlSessionTemplate sqlSession, int type, String dept){
+		HashMap<String, String> data = new HashMap<>();
+		data.put("type", String.valueOf(type));
+		data.put("dept", dept);
+
+		return (ArrayList)sqlSession.selectList("boardMapper.mainBoardList", data);
+	}
 	
 	public int selectListCount(SqlSessionTemplate sqlSession, int no, String depName) {
 		

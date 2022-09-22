@@ -2,6 +2,8 @@ package com.gd.workpp.board.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.gd.workpp.board.model.service.BoardService;
 import com.gd.workpp.board.model.vo.Board;
+import com.gd.workpp.member.model.vo.Member;
 import com.google.gson.Gson;
 
 @Controller
@@ -27,8 +30,11 @@ public class AjaxBoardController {
 	@ResponseBody
 	@RequestMapping(value="mainBoardList.main", produces="application/json; charset=UTF-8")
 	public String mainBoardList(@RequestParam(value="type", defaultValue="1")int type,
-			                    @RequestParam(value="dept", defaultValue="")String dept) {
+			                    HttpSession session) {
+		String dept = ((Member) session.getAttribute("loginUser")).getDepName();
 		ArrayList<Board> list = bService.mainBoardList(type, dept);
+		System.out.println(list);
+
 		return new Gson().toJson(list);
 	}
 }

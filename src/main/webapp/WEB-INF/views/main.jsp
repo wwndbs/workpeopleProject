@@ -54,9 +54,9 @@
                      <div class="notice-menu">
                         <ul>
                            <li>게시판</li>
-                           <li><a href="">공지사항</a></li>
-                           <li><a href="">부서게시판</a></li>
-                           <li><a href="">익명게시판</a></li>
+                           <li onclick="boardStatus(1);" style="cursor : pointer;"><a>공지사항</a></li>
+                           <li onclick="boardStatus(2);" style="cursor : pointer;"><a>부서게시판</a></li>
+                           <li onclick="boardStatus(3);" style="cursor : pointer;"><a>익명게시판</a></li>
                         </ul>
                         <span>
                            <a href=""><i class="fas fa-ellipsis-h"></i></a>
@@ -66,14 +66,7 @@
                      <hr>
                      
                      <ul class="notice-list">
-                        <li><span><a href="">2022년도 서울특별시 외국인 명예시민(Honorary Citizenship of Seoul)</a></span><span>2022-22-22</span></li>
-                        <li><span><a href="">안심소득 시범사업 참여가구 모집 1차 선정결과 공고</a></span><span>2022-22-22</span></li>
-                        <li><span><a href=""> 문화비축기지 장소지원 프로젝트 (아트랩-Art Lab) 모집공고</a></span><span>2022-22-22</span></li>
-                        <li><span><a href=""> 서울특별시 남부여성발전센터, 북부여성발전센터 운영 수탁기관 선정 결과공고</a></span><span>2022-22-22</span></li>
-                        <li><span><a href="">2022년도 서울특별시 외국인 명예시민(Honorary Citizenship of Seoul)</a></span><span>2022-22-22</span></li>
-                        <li><span><a href="">안심소득 시범사업 참여가구 모집 1차 선정결과 공고</a></span><span>2022-22-22</span></li>
-                        <li><span><a href=""> 문화비축기지 장소지원 프로젝트 (아트랩-Art Lab) 모집공고</a></span><span>2022-22-22</span></li>
-                        <li><span><a href=""> 서울특별시 남부여성발전센터, 북부여성발전센터 운영 수탁기관 선정 결과공고</a></span><span>2022-22-22</span></li>
+						<!-- ajax조회 -->
                      </ul>
                   </div>
    
@@ -255,9 +248,30 @@
    				}
    			})
    			
-   			
+   			// 결재내역 상세조회
    			$(document).on("click", "#main-approval tbody tr", function(){
    				location.href="approvalDetail.ap?no=" + $(this).children().eq(3).val() + "&form=" + $(this).children().eq(4).val();
+   			})
+   			
+   			// 게시판 게시글 조회
+    		$.ajax({
+   				url : "mainBoardList.main",
+   				success : function(board){
+   					console.log(board);
+   					value="";
+   					for(let i = 0; i < 8; i++){
+   						value += '<li style="cursor : pointer;">'
+   						      +  	'<span>'
+   						      +     	'<a>' + board[i].boardTitle + '</a>'
+   						      +     '</span>'
+   						      +      '<span>' + board[i].createDate + '</span>'
+   						      +  '</li>';
+   					}
+   					$(".notice-list").html(value);
+   				},
+   				error : function(){
+   					console.log("메인페이지 게시판 게시글 조회 부분 ajax연결 실패");
+   				}
    			})
    			
    			
@@ -309,6 +323,36 @@
 					}
 				})
 			}
+		
+		function boardStatus(status){
+   			// 게시판 게시글 조회
+    		$.ajax({
+   				url : "mainBoardList.main",
+   				data : {
+   					type : status
+   				},
+   				success : function(board){
+   					console.log(board);
+   					value="";
+   					if(board.length == 0){
+   						value += '<li style="cursor : pointer;">조회된 게시물이 없습니다.</li>';
+   					}else{
+	   					for(let i = 0; i < 8; i++){
+	   						value += '<li style="cursor : pointer;">'
+	   						      +  	'<span>'
+	   						      +     	'<a>' + board[i].boardTitle + '</a>'
+	   						      +     '</span>'
+	   						      +      '<span>' + board[i].createDate + '</span>'
+	   						      +  '</li>';
+	   					}	
+   					}
+   					$(".notice-list").html(value);
+   				},
+   				error : function(){
+   					console.log("메인페이지 게시판 게시글 조회 부분 ajax연결 실패");
+   				}
+   			})
+		}
    </script>
    
    <script>
