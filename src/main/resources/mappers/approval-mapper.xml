@@ -714,6 +714,59 @@
    		 where document_no = #{documentNo}
    </update>
 
+	<insert id="insertVacationDate">
+		    insert into
+		attendance (
+		           at_no
+		         , user_no
+		         , at_date
+		         , at_status
+		         , at_day
+		           )           
+		    values (
+		           seq_attendance.nextval
+		         , (select user_no from member where user_name = #{userName})
+		         , #{vacationEnd}
+		         , '4'
+		         , to_char(to_date(#{vacationEnd}, 'YYYY-MM-DD'), 'dy')
+		           )
+	</insert>
+	
+	<insert id="insertVacationStart">
+		    insert into
+		attendance (
+		           at_no
+		         , user_no
+		         , at_date
+		         , at_status
+		         , at_day
+		           )           
+		    values (
+		           seq_attendance.nextval
+		         , (select user_no from member where user_name = #{userName})
+		         , #{vacationStart}
+		         , '4'
+		         , to_char(to_date(#{vacationStart}, 'YYYY-MM-DD'), 'dy')
+		           )
+	</insert>
+	
+	<insert id="insertVacationEnd">
+		    insert into
+		attendance (
+		           at_no
+		         , user_no
+		         , at_date
+		         , at_status
+		         , at_day
+		           )           
+		    values (
+		           seq_attendance.nextval
+		         , (select user_no from member where user_name = #{userName})
+		         , #{vacationEnd}
+		         , '4'
+		         , to_char(to_date(#{vacationEnd}, 'YYYY-MM-DD'), 'dy')
+		           )
+	</insert>
  
  
  

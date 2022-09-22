@@ -42,16 +42,16 @@
 													<table align="right">
 					                                	<tr>
 					                                    	<th width="120">${ list.userNo }&nbsp;&nbsp; ${ list.jobName }</th>
-					                                    </tr>
-					                                    <tr style="cursor : pointer;" onclick="location.href='approvalOfApproval.ap?approvalUser=${ list.userNo }&order=${list.approvalOrder}&approvalCount=${ document.approvalCount }&form=${ document.documentForm }&documentNo=${ document.documentNo }'">
-					                                    	<td>
-					                                    	<br>
-						                                    	<c:if test="${ list.status != 0 }">
-						                                    		${ list.userNo }
-						                                    	</c:if>
-					                                    	<br><br>
-					                                    	</td>
-					                                    </tr>
+					                                    </tr>			                                    
+				                                    		<tr style="cursor : pointer;" onclick="location.href='approvalOfApproval.ap?approvalUser=${list.userNo}&order=${list.approvalOrder}&approvalCount=${document.approvalCount}&form=${document.documentForm}&documentNo=${document.documentNo}&userName=${document.userNo}&vacationStart=${obj.vacationStart}&vacationEnd=${obj.vacationEnd}'">
+						                                    	<td>
+						                                    	<br>
+							                                    	<c:if test="${ list.status != 0 }">
+							                                    		${ list.userNo }
+							                                    	</c:if>
+						                                    	<br><br>
+						                                    	</td>
+				                                    		</tr>
 					                                </table>
 					                            </c:forEach>
 											</c:otherwise>
@@ -68,7 +68,7 @@
 									<th>부서</th>
 									<td>${ document.depName }</td>
 									<th>기안자</th>
-									<td>${ document.userNo }</td>
+									<td id="user-name">${ document.userNo }</td>
 									<th>작성일</th>
 									<td>${ document.createDate }</td>
 								</tr>
@@ -157,7 +157,7 @@
 							        <button class="btn btn-danger btn-sm" onclick="deleteApproval();">삭제</button>
 						        </c:if>
 						        <c:forEach var="i" items="${ list }">
-							        <c:if test="${ i.userNo eq m.userName}">
+							        <c:if test="${ i.userNo eq m.userName && i.status == 0}">
 					                	<button class="btn btn-danger btn-sm" onclick="approvalreFusal();">반려</button>
 					              	</c:if>
 				              	</c:forEach>
@@ -178,7 +178,8 @@
 		function deleteApproval(){
 			if(confirm("삭제하시겠습니까?")){
 				let documentNo = '${document.documentNo}';
-				let filePath = '${document.changeName}'
+				let filePath = '${document.changeName}';
+				
 				location.href="deleteApproval.ap?documentNo=" + documentNo + "&filePath=" + filePath;
 			}
 		}
@@ -209,6 +210,7 @@
 				$(function(){
 					$("#document-content").css('height', "300px");
 					$("#document-content").html('내용이 없습니다.');
+					console.log('${obj}');
 				})
 			</script>
 		</c:when>
@@ -218,6 +220,7 @@
 				$(function(){
 					$("#document-content").css('height', "300px");
 					$("#document-content").html('${document.documentContent}');
+					console.log('${obj}');
 				})
 			</script>
 		</c:otherwise>

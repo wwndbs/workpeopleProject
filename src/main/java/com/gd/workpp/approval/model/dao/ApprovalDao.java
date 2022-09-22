@@ -314,20 +314,28 @@ public class ApprovalDao {
 		return (ArrayList)sqlSession.selectList("approvalMapper.approvalDetailLine", no);
 	}
 	
-	public int approvalOfApproval(SqlSessionTemplate sqlSession, String approvalUser, int documentNo) {
+	public int approvalOfApproval(SqlSessionTemplate sqlSession, String approvalUser, int documentNo, String vacationStart, String vacationEnd, String userName) {
 		HashMap<String, Object> data = new HashMap<>();
 		data.put("approvalUser", approvalUser);
 		data.put("documentNo", documentNo);
+		data.put("vacationStart", vacationStart);
+		data.put("vacationEnd", vacationEnd);
+		data.put("userName", userName);
 		
 		int result1;
 		int result2;
-		
+		System.out.println("유저명 : " + userName);
 		int approvalCountCheck = sqlSession.selectOne("approvalMapper.approvalStatusCheck", data);
-
 		if(approvalCountCheck == 1) {
 			result1 = sqlSession.update("approvalMapper.updateDocumentApprovalCount", data);
 			result2 = sqlSession.update("approvalMapper.updateApprovalStatus", data);
 			sqlSession.update("approvalMapper.updateProgress", data);
+			if(vacationStart.equals(vacationEnd)) {
+				sqlSession.insert("approvalMapper.insertVacationDate", data);
+			}else {
+				sqlSession.insert("approvalMapper.insertVacationStart", data);
+				sqlSession.insert("approvalMapper.insertVacationEnd", data);
+			}
 		}else {
 			result1 = sqlSession.update("approvalMapper.updateDocumentApprovalCount", data);
 			result2 = sqlSession.update("approvalMapper.updateApprovalStatus", data);
