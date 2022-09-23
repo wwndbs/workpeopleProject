@@ -57,7 +57,30 @@ public class AjaxProjectController {
 		return new Gson().toJson(plist);
 	}
 	
+	// [김은지] 프로젝트 게시판 진행도별로 조회
+	/*
+	@ResponseBody
+	@RequestMapping(value="proBoardList.pr", produces="application/json; charset=UTF-8")
+	public String ajaxSelectBoardList(ModelAndView mv, HttpSession session) {
+		
+	}*/
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
