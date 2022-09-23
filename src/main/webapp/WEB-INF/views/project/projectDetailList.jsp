@@ -123,7 +123,7 @@
 	              </div>
 	              
 	              <!-- 게시글 시작 -->
-	              <h5 style="font-weight: 400; font-size: 16px; margin: -30px -100px 0px 100px; width: 1000px;"><b>전체 업무</b>&nbsp;<b>(20)</b></h2>
+	              <h5 style="font-weight: 400; font-size: 16px; margin: -30px -100px 0px 100px; width: 1000px;"><b>전체 업무</b></h2>
 	              <div class="notice-area div4">
 	                <table class="pro-table table-hover mb-0" id="proList">
 	                  <thead>
@@ -152,13 +152,13 @@
 			                      <td></td>
 			                      <td class="no">${ pb.proBoardNo }</td>
 			                      <c:if test="${ pb.proBoardStatus == 1}">
-				                      <td><div class="btn btn-sm btn-success btn2">진행</div></td>		                      
+				                      <td><div class="btn btn-sm btn-success btn2" onclick="proBoardList('진행');">진행</div></td>		                      
 			                      </c:if>
 			                      <c:if test="${ pb.proBoardStatus == 3}">
-			                      	<td><div class="btn btn-sm btn-warning btn2" style="color:white">보류</div></td>
+			                      	<td><div class="btn btn-sm btn-warning btn2" style="color:white" onclick="proBoardList('보류');">보류</div></td>
 			                      </c:if>
 			                      <c:if test="${ pb.proBoardStatus == 2}">
-			                      	<td><div class="btn btn-sm btn-primary btn2">완료</div></td>
+			                      	<td><div class="btn btn-sm btn-primary btn2" onclick="proBoardList('완료');">완료</div></td>
 			                      </c:if>
 			                      <c:if test="${ pb.proBoardLevel == 6}">
 				                      <td>낮음</td>		                      
@@ -180,12 +180,20 @@
 	                    </c:choose>
 	                </table>
 	                <script>
+	                	// 게시물 상세조회
 	                	$(function(){
 	                		$("#proList>tbody>tr").click(function(){
 	                			console.log("클릭");
 	                			location.href = 'boardDetail.pr?no=' + $(this).children(".no").text();
 	                		})
 	                	})
+	                	
+	                	// 진행도별로 리스트조회
+	                	function proBoardList(status){
+	                		$.ajax({
+	                			url ; 
+	                		})
+	                	}
 	                </script>
 	                <br>
 	                <!-- 페이징처리 -->

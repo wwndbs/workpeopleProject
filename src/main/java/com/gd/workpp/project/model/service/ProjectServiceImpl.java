@@ -145,8 +145,13 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public ProMember selectRequestMember(int projectNo, String userMemNo) {
-		return pDao.selectRequestMember(sqlSession, projectNo, userMemNo);
+	public int ajaxSelectListCount(int projectNo, String condition, String keyword) {
+		return pDao.ajaxSelectListCount(sqlSession, projectNo, condition, keyword);
+	}
+
+	@Override
+	public ArrayList<ProBoard> ajaxSelectBoardList(int projectNo, PageInfo pi, String condition, String keyword) {
+		return pDao.ajaxSelectBoardList(sqlSession, projectNo, pi, condition, keyword);
 	}
 
 	

@@ -100,9 +100,23 @@ public class ProjectDao {
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
 		return (ArrayList)sqlSession.selectList("projectMapper.selectProBoardList", projectNo, rowBounds);
+	}	
+	
+	// [김은지] ajax 진행도별로 프로젝트게시물리스트 페이징
+	public int ajaxSelectListCount(SqlSessionTemplate sqlSession, int projectNo, String condition, String keyword) {
+		return sqlSession.selectOne("projectMapper.ajaxSelectListCount", projectNo);
+	}	
+	
+	// [김은지] ajax 진행도별로 프로젝트게시물리스트 조회
+	public ArrayList<ProBoard> ajaxSelectBoardList(SqlSessionTemplate sqlSession, int projectNo, PageInfo pi, String condition, String keyword){
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("projectMapper.ajaxSelectBoardList", projectNo, rowBounds);
 	}
 	
-	// [김은지] 프로젝트게시물 검색
+	// [김은지] 프로젝트게시물 검색 페이징
 	public int selectSearchCount(SqlSessionTemplate sqlSession, String condition, String keyword, int projectNo) {
 		HashMap<String, Object> data = new HashMap<>();
 		data.put("condition", condition);

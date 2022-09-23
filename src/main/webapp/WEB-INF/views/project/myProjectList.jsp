@@ -170,6 +170,8 @@
 				                		toast("승인받은 프로젝트만 참가 가능합니다.");
 				                	}else{
 				                		location.href='proList.pr?no=${pp.projectNo}';
+				                		//location.href='proList.pr?no=${pp.projectNo}'">
+				                		//location.href='proList.pr?no=' + $(this).children("#projectNo").val();
 				                	}
 				                	
 				                }
@@ -193,6 +195,7 @@
 			                </script>		                
 			                
 			                <div class="card mb-grid project w-100 box1" onclick="chooseProject(${pp.checkDep});">
+			                <input type="hidden" id="projectNo" name="projectNo" value="8">
 			                <input type="hidden" name="checkDep" value="">
 			                			                
 			                  <div class="card-body d-flex flex-column">                                            
