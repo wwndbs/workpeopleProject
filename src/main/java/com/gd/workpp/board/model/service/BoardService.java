@@ -46,4 +46,10 @@ public interface BoardService {
 	// 댓글 작성
 	int insertReply(Reply r);
 	
+	// 대댓글 작성
+	int insertreReply(Reply r);
+	
+	// 댓글 수정
+	int updateReply(Reply r);
+	
 }

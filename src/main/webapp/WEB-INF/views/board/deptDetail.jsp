@@ -5,6 +5,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<style>
+	.adminx-container {
+		height: 100% !important;
+	}
+</style>
 </head>
 <body>
 
@@ -37,7 +42,7 @@
 
                     <div class="write-button">
                       <button type="button" class="btn btn-sm btn-primary" onclick="location.href='enrollForm.bo?no=2'">새글쓰기</button>
-                      <button type="button" class="btn btn-sm btn-light">쪽지</button>
+                      <!-- <button type="button" class="btn btn-sm btn-light">쪽지</button> -->
                       <c:if test="${ loginUser.userNo eq b.userNo }">
 	                      <button type="button" class="btn btn-sm btn-light">수정</button>
 	                      <button type="button" class="btn btn-sm btn-danger">삭제</button>
@@ -73,9 +78,7 @@
                     </div>
                     
                     <script>
-                      $(function(){
                     	  // 내가 좋아요 눌렀으면 색 채워져있게
-                      })
                     
                       function heart(){
                           if($("#heart").attr("fill") != "red"){
@@ -89,49 +92,12 @@
                     </script>
 
                     <div class="content-reply">
-                    	
-                    	<c:if test="${ not empty list }">
                       
 	                      <ul class="reply">
-	                      
-	                      	<c:forEach var="r" items="${ list }">
-	                      		<c:choose>
-		                      		<c:when test="${ r.level eq 1 }">
-		                      			<li>
-		                      				<input type="hidden" id="replyNo" value="${ r.replyNo }">
-		                      		</c:when>
-		                      		<c:otherwise>
-		                      			<li class="depth-in">
-		                      				<input type="hidden" id="refRno" value="0">
-		                      		</c:otherwise>
-	                      		</c:choose>
-		                          <div>
-		                            <span class="photo"><img src="resources/images/defaultProfile.jpg" alt=""></span>
-		                            <div class="msg-wrap">
-		                              <div class="info">
-		                                <span class="name">${ r.userName } ${ r.jobName }</span>
-		                                <c:if test="${ r.level eq 1 }">
-			                                <span class="btn-wrap" id="reply">
-			                                  <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="grey" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-down-right"><polyline points="15 10 20 15 15 20"></polyline><path d="M4 4v7a4 4 0 0 0 4 4h12"></path></svg></span>
-			                                  <span class="txt" onclick="addReply(this);">댓글</span> <!-- 클릭 시 "취소"로 변경되도록 -->
-			                                </span>
-		                                </c:if>
-		                                <span class="date">${ r.createDate }</span>
-		                                <c:if test="${ loginUser.userNo ne r.userNo }">
-		                                	<span class="message">쪽지</span>
-		                                </c:if>
-		                              </div>
-		                              <p>
-		                                <span class="commentContent">${ r.replyContent }</span>
-		                              </p>
-		                            </div>
-		                          </div>
-		                        </li>	
-	                      	</c:forEach>
+	                        
+	                        
 	                        
 	                      </ul>
-                      
-                       </c:if>
 
                       <!-- 댓글 간 간격 조정하기 (프로필 사진 위치도 조정) -->
                       <div class="reply-create">
@@ -150,6 +116,12 @@
                     <script>
                     
                     	// 댓글 조회도 ajax로 해야할 듯..^^
+                    	$(function(){
+                    		
+                    		selectReplyList();
+                    		
+                    	})
+                    	
                     
                     	// 댓글 추가 ajax
                     	function reply(){
@@ -161,8 +133,16 @@
 	                    			refBoardNo: ${b.boardNo},
 	                    			replyContent: $("#newReply").val()
 	                    		},
-	                    		success: function(){
-	                    			console.log("댓글 추가 ajax 성공");
+	                    		success: function(result){
+	                    			if(result.result > 0){
+	                    				
+	                    				selectReplyList();
+	                    				
+	                    				$("#newReply").val("");
+	                    				
+	                    			}else{
+	                    				console.log("댓글 작성 실패");
+	                    			}
 	                    		},error: function(){
 	                    			console.log("댓글 추가 ajax 실패");
 	                    		}
@@ -203,9 +183,180 @@
                     	// 대댓글 추가 ajax
                     	function reReply(btn){
                     		
-                    		let bb = $(btn).parent().parent().parent().parent().prev().children().eq(0);
+                    		let bb = $(btn).parent().parent().parent().parent().prev().children().eq(0).val();
+                    		
+                    		$.ajax({
+                    			url: "reReply.bo",
+                    			data: {
+                    				userNo: "${loginUser.userNo}",
+	                    			refBoardNo: ${b.boardNo},
+	                    			refReplyNo: bb,
+	                    			replyContent: $(btn).prev().children().eq(0).val()
+                    			},
+                    			success: function(result){
+                    				
+                    				if(result.result > 0){
+                    					
+                    					selectReplyList();
+                    					
+                    				}else{
+                    					console.log("대댓글 작성 실패");
+                    				}
+                    				
+                    			},error: function(){
+                    				console.log("대댓글 추가 ajax 실패");
+                    			}
+                    		});
                     		
                     	}
+                    	
+                    	// 댓글 조회
+                    	function selectReplyList(){
+                    		
+                    		$.ajax({
+                    			url: "rlist.bo",
+                    			data: {boardNo: ${b.boardNo}},
+                    			success: function(list){
+                    				
+                    				let userNo = '${loginUser.userNo}';
+                    				
+                    				let value = "";
+                    				
+                    				if(list != null){
+                    					
+                    					for(let i=0; i<list.length; i++){
+                    						if(list[i].level == 1){
+                    							value += '<li>'
+                    									+	'<input type="hidden" id="replyNo" value="' + list[i].replyNo + '">'
+                    									+	'<input type="hidden" id="level" value="' + list[i].level + '">';
+                    						}else{
+                    							value += '<li class="depth-in">'
+                    									+	'<input type="hidden" id="replyNo" value="' + list[i].replyNo + '">'
+                    									+	'<input type="hidden" id="level" value="' + list[i].level + '">';
+                    						}
+                    						
+                    						value += '<div>'
+                    								+	'<span class="photo"><img src="resources/images/defaultProfile.jpg" alt=""></span>'
+                    								+	'<div class="msg-wrap">'
+                    								+		'<div class="info">'
+                    								+			'<span class="name">' + list[i].userName + ' ' + list[i].jobName + '</span>';
+                    						
+                    						if(list[i].level == 1){
+                    							value += '<span class="btn-wrap" id="reply">'
+                    									+	'<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="grey" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-down-right"><polyline points="15 10 20 15 15 20"></polyline><path d="M4 4v7a4 4 0 0 0 4 4h12"></path></svg></span>'
+                    									+	'<span class="txt" onclick="addReply(this);">댓글</span>'
+                    									+'</span>';
+                    						}
+                    						
+                    						value += 			'<span class="date">' + list[i].createDate + '</span>';
+                    						
+                    						if(userNo != list[i].userNo){
+                    							value += '<span class="message">쪽지</span>';
+                    						}else{
+                    							value += '<span class="editRe" onclick="editForm(this);">수정</span>'
+                    									+'<span class="deleteRe" onclick="deleteRe(this);">삭제</span>';
+                    						}
+                    						
+                    						value +=		'</div>'
+                    								+		'<p>'
+                    								+			'<span class="commentContent">' + list[i].replyContent + '</span>'
+                    								+		'</p>'
+                    								+	'</div>'
+                    								+'</div>'
+                    								+'</li>';
+                    					}
+                    					
+                    				}
+                    				
+                    				
+                    				$('.reply').html(value);
+                    				
+                    				
+                    			},error: function(){
+                    				console.log("댓글 조회 ajax 실패");
+                    			}
+                    		});
+                    		
+                    	}
+                    	
+                    	// 댓글 수정폼
+                    	function editForm(btn){
+                    		
+                    		let $p = $(btn).parent().next();
+                    		
+                    		
+                    		
+                    		let value = '<p class="form-wrap newReply-create" style="margin-right: 100px;">'
+                    				  +		'<span class="textarea-edit">'
+        							  +			'<textarea name="reply" id="editReplyForm">' + $p.children().eq(0).text() + '</textarea>'
+        							  +		'</span>'
+        							  +		'<button type="button" class="btn btn-sm btn-light editRe" style="top: 37px;">댓글 작성</button>'
+        							  + '</p>';
+        							  
+        					$p.html(value);
+                    		
+                    	}
+                    	
+                    	// 댓글 수정 등록
+                    	$(document).on("click", ".editRe", function(){
+                    		
+                    		let rNo = $(this).parent().parent().parent().parent().prev().prev().val();
+                    		
+                    		let rContent = $(this).prev().children().val();
+                    		
+                    		$.ajax({
+                    			url: "editReply.bo",
+                    			data: {
+                    				replyNo: rNo,
+                    				replyContent: rContent
+                    			},
+                    			success: function(r){
+                    				
+                    				if(r.result > 0){
+                    					
+                    					selectReplyList();
+                    					
+                    				}else{
+                    					console.log("댓글 수정 실패");
+                    				}
+                    				
+                    			},error: function(){
+                    				console.log("댓글 수정 ajax 실패");
+                    			}
+                    		});
+                    		
+                    	})
+                    	
+                    	// 댓글 삭제
+                    	function deleteRe(btn){
+                    		
+                    		let level = $(btn).parent().parent().parent().prev().val();
+                    		let rNo = $(btn).parent().parent().parent().prev().prev().val();
+                    		
+                    		if(level == 1){ // 댓글 삭제
+                    			
+                    			value = '<li>'
+                    					+	'<p>'
+                    					+		'<span class="commentContent delComment" style="color: #888; font-size: 14px;">삭제된 댓글입니다.</span>'
+                    					+	'</p>'
+                    					+'</li>';
+                    			
+                    			$(btn).parent().parent().parent().parent().html(value);
+                    			
+                    		}
+                    		
+                    		$.ajax({
+                    			url: "deleteReply.bo",
+                    			data: {replyNo: rNo},
+                    			success: function(){
+                    				console.log("댓글 삭제 ajax 성공");
+                    			},error: function(){
+                    				console.log("댓글 삭제 ajax 실패");
+                    			}
+                    		});
+                    		
+                    	}
+                    		
                     
                     </script>
                     

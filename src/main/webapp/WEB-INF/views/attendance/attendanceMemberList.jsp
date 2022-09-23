@@ -175,7 +175,7 @@
 			  			                          +   	 '<td>' + list[i].jobName + '</td>'
 			  			                          +   	 '<td>' + list[i].atStart + '</td>'
 			  			                          +    	 '<td>' + list[i].atEnd + '</td>'
-			  			                          +    	 '<td>' + list[i].workUse + '</td>'
+			  			                          +    	 '<td>' + list[i].atOvertime + '</td>'
 			  			                          +    	 '<td>' + list[i].atTotaltime + '</td>'
 			  			                          +    	 '<td>' + list[i].atStatus + '</td>'	  			                  
 			  			                          +  '</tr>';

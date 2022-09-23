@@ -67,7 +67,7 @@
 
                     <hr>
                     <!--게시판 부분-->
-                    <div id="dep-area" style="width: 1200px; padding:20px;">
+                    <div id="dep-area" style="width: 1500px; padding:20px;">
                         <h2>부서 관리</h2>
                         <br>
                         <div id="dep2">
@@ -81,7 +81,7 @@
                                         <th style="width: 60px">사원수</th>
                                         <th style="width: 100px;">부서등록일</th>
                                         <th style="width: 80px;">활성화 여부</th>
-                                        <th style="width: 40px;">부서 삭제</th>
+										<!-- <th style="width: 80px;">삭제하기</th> -->
                                       </tr>
                                     </thead>
                                     <tbody>
@@ -101,10 +101,11 @@
 			                                            <td>${d.userCount } 명</td>
 			                                            <td>${d.createDate }</td>
 			                                            <td>${d.status}</td>
+			                                           <!--  
 			                                            <td id="depbtn">
 			                                                <a style="color:white;" data-id="${d.depName}" id="deletebtn" class="btn btn-danger" data-toggle="modal" data-target="#delModal">삭제하기</a>
 			                                            </td>
-			                                            
+			                                            -->
 			                                        </tr>
                                                     <script>
 											         	$(document).on("click", "#deletebtn", function () {
