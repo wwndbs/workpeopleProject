@@ -89,31 +89,49 @@ public class ProjectDao {
 	}
 		
 	// [김은지] 프로젝트게시물리스트 페이징
-	public int selectListCount(SqlSessionTemplate sqlSession, int projectNo) {
-		return sqlSession.selectOne("projectMapper.selectListCount", projectNo);
+	public int selectListCount(SqlSessionTemplate sqlSession, int projectNo, String proBoardStatus) {
+		HashMap<String, Object> data = new HashMap<>();
+		data.put("projectNo", projectNo);
+		data.put("proBoardStatus", proBoardStatus);
+		
+		return sqlSession.selectOne("projectMapper.selectListCount", data);
 	}
 	
 	// [김은지] 프로젝트게시물리스트 조회
-	public ArrayList<ProBoard> selectProBoardList(SqlSessionTemplate sqlSession, int projectNo, PageInfo pi){
+	public ArrayList<ProBoard> selectProBoardList(SqlSessionTemplate sqlSession, int projectNo, String proBoardStatus, PageInfo pi){
+		HashMap<String, Object> data = new HashMap<>();
+		data.put("projectNo", projectNo);
+		data.put("proBoardStatus", proBoardStatus);
+		data.put("pi", pi);
+		
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlSession.selectList("projectMapper.selectProBoardList", projectNo, rowBounds);
+		return (ArrayList)sqlSession.selectList("projectMapper.selectProBoardList", data, rowBounds);
 	}	
 	
 	// [김은지] ajax 진행도별로 프로젝트게시물리스트 페이징
-	public int ajaxSelectListCount(SqlSessionTemplate sqlSession, int projectNo, String condition, String keyword) {
-		return sqlSession.selectOne("projectMapper.ajaxSelectListCount", projectNo);
+	public int ajaxSelectListCount(SqlSessionTemplate sqlSession, int projectNo, String condition) {
+		HashMap<String, Object> data = new HashMap<>();
+		data.put("condition", condition);
+		data.put("no", projectNo);
+		
+		return sqlSession.selectOne("projectMapper.ajaxSelectListCount", data);
 	}	
 	
 	// [김은지] ajax 진행도별로 프로젝트게시물리스트 조회
-	public ArrayList<ProBoard> ajaxSelectBoardList(SqlSessionTemplate sqlSession, int projectNo, PageInfo pi, String condition, String keyword){
+	public ArrayList<ProBoard> ajaxSelectBoardList(SqlSessionTemplate sqlSession, int projectNo, PageInfo pi, String condition){
+		HashMap<String, Object> data = new HashMap<>();
+		data.put("condition", condition);
+		data.put("no", projectNo);
+		data.put("pi", pi);
+		
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlSession.selectList("projectMapper.ajaxSelectBoardList", projectNo, rowBounds);
+		return (ArrayList)sqlSession.selectList("projectMapper.ajaxSelectBoardList", data, rowBounds);
 	}
 	
 	// [김은지] 프로젝트게시물 검색 페이징

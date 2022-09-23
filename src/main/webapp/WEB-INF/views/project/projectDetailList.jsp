@@ -90,15 +90,15 @@
 	
 	                <!-- 상태로 선택하는 부분 -->
 	                <h5 style="font-weight: 400; font-size: 16px; margin: 10px 0px 0px 0px;"><b>상태</b></h2>
-	                <div class="alert-area div2">
+	                <div class="alert-area div2" name="bCategory">
 	                  <div class="alert-item" style="margin: 10px -30px 0px 30px;">
-	                    <input class="form-check-input" name="gridRadios" id="gridRadios1" type="radio" value="option1" checked>진행<br>
+	                    <input class="form-check-input" name="condition" name="condition" type="radio" value="1" checked onclick="proBoardList(1);">진행<br>
 	                  </div>
 	                  <div class="alert-item" style="margin: 57px 35px 0px -55px;">
-	                    <input class="form-check-input" name="gridRadios" id="gridRadios1" type="radio" value="option1" checked>완료<br>
+	                    <input class="form-check-input" name="condition" name="condition" type="radio" value="2" onclick="proBoardList(2);">완료<br>
 	                  </div>
 	                  <div class="alert-item" style="margin: 107px 130px 0px -120px;">
-	                    <input class="form-check-input" name="gridRadios" id="gridRadios1" type="radio" value="option1" checked>보류<br>
+	                    <input class="form-check-input" name="condition" name="condition" type="radio" value="3" onclick="proBoardList(3);">보류<br>
 	                  </div>
 	                </div>
 	              </div>
@@ -152,13 +152,13 @@
 			                      <td></td>
 			                      <td class="no">${ pb.proBoardNo }</td>
 			                      <c:if test="${ pb.proBoardStatus == 1}">
-				                      <td><div class="btn btn-sm btn-success btn2" onclick="proBoardList('진행');">진행</div></td>		                      
+				                      <td><div class="btn btn-sm btn-success btn2">진행</div></td>		                      
 			                      </c:if>
 			                      <c:if test="${ pb.proBoardStatus == 3}">
-			                      	<td><div class="btn btn-sm btn-warning btn2" style="color:white" onclick="proBoardList('보류');">보류</div></td>
+			                      	<td><div class="btn btn-sm btn-warning btn2" style="color:white">보류</div></td>
 			                      </c:if>
 			                      <c:if test="${ pb.proBoardStatus == 2}">
-			                      	<td><div class="btn btn-sm btn-primary btn2" onclick="proBoardList('완료');">완료</div></td>
+			                      	<td><div class="btn btn-sm btn-primary btn2">완료</div></td>
 			                      </c:if>
 			                      <c:if test="${ pb.proBoardLevel == 6}">
 				                      <td>낮음</td>		                      
@@ -187,13 +187,6 @@
 	                			location.href = 'boardDetail.pr?no=' + $(this).children(".no").text();
 	                		})
 	                	})
-	                	
-	                	// 진행도별로 리스트조회
-	                	function proBoardList(status){
-	                		$.ajax({
-	                			url ; 
-	                		})
-	                	}
 	                </script>
 	                <br>
 	                <!-- 페이징처리 -->
@@ -205,6 +198,7 @@
 							</c:when>
 							<c:otherwise>
 								<li class="page-item"><a class="page-link" href="proList.pr?no=8&cpage=${ pi.currentPage-1 }"><</a></li>
+								<%-- <li class="page-item"><a class="page-link" href="proList.pr?no=8&cpage=${ pi.currentPage-1 }&status=${status}"><</a></li> --%>
 							</c:otherwise>	
 	                    </c:choose>
 	                    
