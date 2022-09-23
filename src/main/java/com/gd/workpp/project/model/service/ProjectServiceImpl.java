@@ -40,13 +40,13 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 	
 	@Override
-	public int selectListCount(int projectNo) {
-		return pDao.selectListCount(sqlSession, projectNo);
+	public int selectListCount(int projectNo, String proBoardStatus) {
+		return pDao.selectListCount(sqlSession, projectNo, proBoardStatus);
 	}
 	
 	@Override
-	public ArrayList<ProBoard> selectProBoardList(int projectNo, PageInfo pi) {
-		return pDao.selectProBoardList(sqlSession, projectNo, pi);
+	public ArrayList<ProBoard> selectProBoardList(int projectNo, String proBoardStatus, PageInfo pi) {
+		return pDao.selectProBoardList(sqlSession, projectNo, proBoardStatus, pi);
 	}
 
 	@Override
@@ -143,17 +143,6 @@ public class ProjectServiceImpl implements ProjectService {
 	public int proApproveRequest(ProMember pm) {
 		return pDao.proApproveRequest(sqlSession, pm);
 	}
-
-	@Override
-	public int ajaxSelectListCount(int projectNo, String condition, String keyword) {
-		return pDao.ajaxSelectListCount(sqlSession, projectNo, condition, keyword);
-	}
-
-	@Override
-	public ArrayList<ProBoard> ajaxSelectBoardList(int projectNo, PageInfo pi, String condition, String keyword) {
-		return pDao.ajaxSelectBoardList(sqlSession, projectNo, pi, condition, keyword);
-	}
-
 	
 }
 

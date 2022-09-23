@@ -98,11 +98,12 @@ public class ProjectController {
 	// [김은지] 프로젝트 게시물리스트
 	@ResponseBody
 	@RequestMapping("proList.pr")
-	public ModelAndView projectList(@RequestParam(value="cpage", defaultValue="1") int currentPage, int no, ModelAndView mv, Model model, ProBoard pb) {
-		int listCount = pService.selectListCount(no);
+	public ModelAndView projectList(@RequestParam(value="cpage", defaultValue="1") int currentPage, int no, String status, ModelAndView mv, Model model, ProBoard pb) {
+		
+		int listCount = pService.selectListCount(no, status); //넘어간 status로 sql문에 조건 추가해서갯수 조회
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);		
-		ArrayList<ProBoard> list = pService.selectProBoardList(no, pi);
+		ArrayList<ProBoard> list = pService.selectProBoardList(no, status, pi); // 넘어간 status로 sql문에 조건 추가해서 리스트조회
 		ArrayList<Project> pList = pService.selectAdmin(no);
 		ArrayList<ProMember> pmList = pService.selectMember(no);
 				
@@ -113,6 +114,7 @@ public class ProjectController {
 		  .addObject("pList", pList)
 		  .addObject("pmList", pmList)
 		  .addObject(list)
+		  .addObject("status", status)
 		  .setViewName("project/projectDetailList");
 		
 		return mv;
@@ -228,6 +230,8 @@ public class ProjectController {
 		}
 		
 		int result = pService.updateProBoard(pb);
+		
+		System.out.println(result);
 				
 		if(result > 0) {
 			//session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다.");
@@ -236,7 +240,7 @@ public class ProjectController {
 			model.addAttribute("errorMsg", "게시물 수정 실패");
 			return "common/errorPage";
 		}
-			
+		
 	}
 	
 	// [김은지] 프로젝트 게시물 삭제요청

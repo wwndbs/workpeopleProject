@@ -116,6 +116,7 @@
 			                  </div>
 			              </div>
 			           </div>
+			           <input type="hidden" name="attachModify" value="${ pb.attachModify }">
 			        </div>
 
 			        <!-- 게시물 삭제 모달 -->

@@ -170,8 +170,7 @@
 				                		toast("승인받은 프로젝트만 참가 가능합니다.");
 				                	}else{
 				                		location.href='proList.pr?no=${pp.projectNo}';
-				                		//location.href='proList.pr?no=${pp.projectNo}'">
-				                		//location.href='proList.pr?no=' + $(this).children("#projectNo").val();
+				                		//location.href='proList.pr?no=${pp.projectNo}&status=1';
 				                	}
 				                	
 				                }

@@ -7,11 +7,15 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.gd.workpp.common.model.vo.PageInfo;
+import com.gd.workpp.common.template.Pagination;
 import com.gd.workpp.member.model.vo.Member;
 import com.gd.workpp.project.model.service.ProjectService;
+import com.gd.workpp.project.model.vo.ProBoard;
 import com.gd.workpp.project.model.vo.ProReply;
 import com.gd.workpp.project.model.vo.Project;
 import com.google.gson.Gson;
@@ -56,14 +60,6 @@ public class AjaxProjectController {
 		
 		return new Gson().toJson(plist);
 	}
-	
-	// [김은지] 프로젝트 게시판 진행도별로 조회
-	/*
-	@ResponseBody
-	@RequestMapping(value="proBoardList.pr", produces="application/json; charset=UTF-8")
-	public String ajaxSelectBoardList(ModelAndView mv, HttpSession session) {
-		
-	}*/
 	
 }
 

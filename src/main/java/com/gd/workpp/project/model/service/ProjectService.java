@@ -22,8 +22,8 @@ public interface ProjectService {
 	int insertProject(Project p);
 	
 	// 3. 프로젝트 게시물 리스트조회, 검색
-	int selectListCount(int projectNo);
-	ArrayList<ProBoard> selectProBoardList(int projectNo, PageInfo pi);
+	int selectListCount(int projectNo, String proBoardStatus);
+	ArrayList<ProBoard> selectProBoardList(int projectNo, String proBoardStatus, PageInfo pi);
 	
 	// 4. 프로젝트 삭제
 	int deleteProject(int projectNo);
@@ -76,8 +76,4 @@ public interface ProjectService {
 	// 19. 사용자 프로젝트 승인요청
 	int proApproveRequest(ProMember pm);
 	
-	// 20. 프로젝트 게시물리스트 진행도별로 조회 (ajax)
-	int ajaxSelectListCount(int projectNo, String condition, String keyword);
-	ArrayList<ProBoard> ajaxSelectBoardList(int projectNo, PageInfo pi, String condition, String keyword);
-
 }
