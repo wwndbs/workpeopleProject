@@ -190,6 +190,7 @@
     		$.ajax({
    				url : "mainApprovalList.main",
    				success : function(list){
+   					
    					value="";
 					if(list.length == 0){
 						value += '<tr><td colspan="3">조회된 결재 문서가 없습니다.</td></tr>';
@@ -228,33 +229,7 @@
    					console.log("메인페이지 결재 조회 부분 ajax연결 실패");
    				}
    			})
-   			
-   			// 프로젝트 조회
-   			$.ajax({
-   				url : "homeList.pr",
-   				data : {
-   					//userNo : ${pp.userNo}
-   					//projectTitle : ${pp.projectTitle}
-   				},
-   				success : function(plist){
-   					
-   					console.log(plist);
-   					
-   					value="";
-   					for(let i = 0; i < 5; i++){
-   						if(i < 6){
-   							value += '<div class="project">'
-   								   + 	'<span>' + plist[i].projectTitle + '</span> <span><i class="fas fa-user-alt"></i>&nbsp;'+ 'ss' +'</span>'
-   								   + '</div>';
-   						}
-   					}
-   					   										
-   					$(".project-container").html(value);
-   				},error : function(){
-   					console.log("프로젝트 조회 ajax연결 실패");
-   				}
-   			})
-   			
+   			   			
    			// 결재내역 상세조회
    			$(document).on("click", "#main-approval tbody tr", function(){
    				location.href="approvalDetail.ap?no=" + $(this).children().eq(3).val() + "&form=" + $(this).children().eq(4).val();
@@ -299,6 +274,32 @@
    				error : function(){
    					console.log("메인페이지 메일 갯수 조회 부분 ajax연결 실패");
    				}
+   			})
+   			
+   			// 프로젝트 조회
+   			$.ajax({
+   				url : "homeList.pr",  
+   				success : function(plist){
+   					
+   					value="";
+   					for(let i = 0; i < 4; i++){
+   						if(i < 5){
+   							value += '<div class="project" style="text-align: right">'
+   								   +    '<input type="hidden" value="' + plist[i].projectNo + '">'
+   								   + 	'<span style="text-align:left">' + plist[i].projectTitle + '</span> <span><i class="fas fa-user-alt"></i>&nbsp;'+ plist[i].countMember +'</span>'
+   								   + '</div>';
+   						}
+   					}
+   					   										
+   					$(".project-container").html(value);
+   				},error : function(){
+   					console.log("프로젝트 조회 ajax연결 실패");
+   				}
+   			})
+   			
+   			// 프로젝트 상세조회
+   			$(document).on('click', "project-container div", function(){
+   				location.href="proList.pr?no=8";
    			})
    		})
 	</script>

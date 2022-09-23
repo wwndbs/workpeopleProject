@@ -54,8 +54,6 @@ public class AjaxProjectController {
 		  .addObject("pp", pp)
 		  .addObject(plist);
 		
-		System.out.println(plist);
-
 		return new Gson().toJson(plist);
 	}
 	
