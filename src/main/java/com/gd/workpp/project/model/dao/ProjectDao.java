@@ -176,6 +176,7 @@ public class ProjectDao {
 	
 	// [김은지] 프로젝트게시물 업데이트요청
 	public int updateProBoard(SqlSessionTemplate sqlSession, ProBoard pb) {
+		//System.out.println(pb);
 		return sqlSession.update("projectMapper.updateProBoard", pb);
 	}
 	

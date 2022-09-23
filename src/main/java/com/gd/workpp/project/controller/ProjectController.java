@@ -231,6 +231,7 @@ public class ProjectController {
 		
 		int result = pService.updateProBoard(pb);
 		
+		System.out.println(pb);
 		System.out.println(result);
 				
 		if(result > 0) {

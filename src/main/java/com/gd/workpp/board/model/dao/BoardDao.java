@@ -118,5 +118,13 @@ public class BoardDao {
 	public int insertReply(SqlSessionTemplate sqlSession, Reply r) {
 		return sqlSession.insert("boardMapper.insertReply", r);
 	}
+	
+	public int insertreReply(SqlSessionTemplate sqlSession, Reply r) {
+		return sqlSession.insert("boardMapper.insertreReply", r);
+	}
+	
+	public int updateReply(SqlSessionTemplate sqlSession, Reply r) {
+		return sqlSession.update("boardMapper.updateReply", r);
+	}
 
 }

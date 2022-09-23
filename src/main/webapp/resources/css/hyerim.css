@@ -236,6 +236,15 @@
 .board-content .msg-wrap .message{
     font-size: 13px;
     color: rgb(0, 135, 239);
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.board-content .msg-wrap .editRe, .board-content .msg-wrap .deleteRe{
+	font-size: 13px;
+    color: #999;
+    margin-left: 5px;
+    cursor: pointer;
 }
 
 .board-content .reply-create{
