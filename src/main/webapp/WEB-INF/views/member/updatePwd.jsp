@@ -152,7 +152,7 @@
 									    $("#email").val(email);
 										$("#findPwdModal").modal("show");
 			                        }else{
-			                            alert("일치하는 이메일 정보가 없습니다");
+			                            alert("인증번호가 잘못되었습니다");
 			                            location.reload();
 			                        }
 			                    })

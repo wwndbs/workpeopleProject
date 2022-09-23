@@ -97,6 +97,7 @@
 		from department d
 		join member m on d.dep_name = m.dep_name
 		where job_name='부장'
+		order by d.dep_name desc
 	</select>
 	
 	<insert id="createDepartment">

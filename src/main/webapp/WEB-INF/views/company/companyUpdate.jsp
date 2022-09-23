@@ -76,6 +76,7 @@
                                 </table>
 
                                 <br>
+                                <!-- 
                                 <div>
                                     <button class="btn btn-secondary">사업자 등록증 이미지 등록</button>
                                     <br>
@@ -84,7 +85,7 @@
                                         <img alt="image" name="comImg" class="img-fluid rounded" src="<c:out value='${co.comImg}' default='resources/profile_images/defaultProfile.jpg' />">
                                     </div>
                                 </div>
-
+								 -->
 
                                 <br>
                                 <div align="right">
