@@ -79,7 +79,7 @@
                ) as "countMember" <!-- 프로젝트 참여인원 구하기 -->                 
   		  from project p    
   		  join pro_member pm on (p.project_no = pm.project_no)                 
-           and pm.user_no = #{userNo} <!-- 로그인한 회원번호 -->      
+           and pm.user_no = '00014' <!-- 로그인한 회원번호 -->      
            and pro_approve = 'Y'
          order
             by p.project_no desc

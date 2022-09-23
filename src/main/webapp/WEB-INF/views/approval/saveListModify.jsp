@@ -133,7 +133,7 @@
 									<td colspan="5" style="text-align : left;">
 			                    		<input type="file" id="upfile" class="form-control-file border" name="upfile">
 			                            현재 업로드된 파일 : 
-			                            <a href="${ b.changeName }">${ document.originName }</a>
+			                            <a href="${ document.changeName }" download="${ document.originName }">${ document.originName }</a>
 										<input type="hidden" name="originName" value="${ document.originName }">
 										<input type="hidden" name="changeName" value="${ document.changeName }">
 									</td>

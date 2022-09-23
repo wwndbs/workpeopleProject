@@ -11,7 +11,7 @@
 	<div class="adminx-sidebar expand-hover push">
 		<ul class="sidebar-nav">
 			<li class="sidebar-nav-item">
-				<a href="index.html" class="sidebar-nav-link active">
+				<a href="main.wp" class="sidebar-nav-link active">
 					<span class="sidebar-nav-icon"><i class="fas fa-home"></i></span>
 					<span class="sidebar-nav-name"> 대시보드 </span> <span class="sidebar-nav-end"></span>
 				</a>

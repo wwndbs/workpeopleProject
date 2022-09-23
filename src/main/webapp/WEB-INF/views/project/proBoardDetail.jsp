@@ -77,52 +77,46 @@
 	            </div>
 	            
 	              <div class="card mb-grid div3" style="color:rgb(79, 79, 79);">
-	                <form class="form1">
-	                  <!-- 제목쪽 div -->
-	                  <div class="h5div">
-				        <input type="hidden" name="no" value="${ pb.proBoardNo }">
-				        <input type="hidden" name="boardWriterNo" value="${ pb.boardWriterNo }">
-	                    <h5 class="h5-1" style="font-weight: 400;"><b>${ pb.proTitle }</b></h5>
-	                    
-	                    <!-- 수정|삭제|목록가기 -->
-	                    <div class="ssm">
-	                    
-	                      <c:if test="${ loginUser.userNo eq pb.boardWriterNo }">                   	                    
-		                    <span type="button" data-toggle="modal" data-target="#modify" data-backdrop="static" class="modify1" style="margin: 0px 0px 0px 0px;">수정</span>&nbsp;
-		                    <span type="button" data-toggle="modal" data-target="#delete" data-backdrop="static" class="delete1" style="margin: 0px 0px 0px 0px;">삭제</span>&nbsp;&nbsp;
-	                      </c:if>
-	                                     
-	                      <button type="button" onclick="location.href='proList.pr?no=8'" class="btn btn-sm btn-secondary btn2">목록으로</button>
-	                    </div>
-	                  </div>
-	                  <hr width="850px" style="margin: 13px 10px 0px 10px">
+                  <!-- 제목쪽 div -->
+                  <div class="h5div">
+			        <input type="hidden" name="no" value="${ pb.proBoardNo }">
+			        <input type="hidden" name="boardWriterNo" value="${ pb.boardWriterNo }">
+                    <h5 class="h5-1" style="font-weight: 400;"><b>${ pb.proTitle }</b></h5>
+                    
+                    <!-- 수정|삭제|목록가기 -->
+                    <div class="ssm">
+                    
+                      <c:if test="${ loginUser.userNo eq pb.boardWriterNo }">                   	                    
+	                    <span type="button" data-toggle="modal" data-target="#modify" data-backdrop="static" class="modify1" style="margin: 0px 0px 0px 0px;">수정</span>&nbsp;
+	                    <span type="button" data-toggle="modal" data-target="#delete" data-backdrop="static" class="delete1" style="margin: 0px 0px 0px 0px;">삭제</span>&nbsp;&nbsp;
+                      </c:if>
+                                     
+                      <button type="button" onclick="location.href='proList.pr?no=8'" class="btn btn-sm btn-secondary btn2">목록으로</button>
+                    </div>
+                  </div>
+                  <hr width="850px" style="margin: 13px 10px 0px 10px">
 	                  
-			        <!-- 게시물 수정 모달 -->
-			        <form action="" method="post">
-				       <div class="modal" id="modify">
-				           <div class="modal-dialog modal-dialog-centered">
-				               <div class="modal-content">
-				                  <!-- Modal Header -->
-				                  <div class="modal-header">
-				                     <h6 class="modal-title">게시물 수정</h6>
-				                     <button hidden type="button" class="modal_close" data-dismiss="modal">&times;</button>
-				                  </div>
-				                  <!-- Modal body -->
-				                  <div class="modal-body" style="text-align:center;">
-				                  	게시물을 수정하시겠습니까?
-				                  </div>
-				                  <!-- Modal footer -->
-				                  <div class="modal-footer" style="justify-content:center;">
-					                <button class="btn btn-jyok" id="holiday-give-btn" onclick="location.href='modifyBoard.pr?no=${no}'">수정</button>	                
-					                <button type="button" class="btn btn-jycancle" data-dismiss="modal">취소</button>
-				                  </div>
-				              </div>
-				           </div>
-				        </div>
-				        <form id="postForm" action="" method="post">
-				        	<input type="hidden" name="attachModify" value="${ pb.attachModify }">
-				        </form>
-			        </form>	   
+			       <!-- 게시물 수정 모달 -->			       
+			       <div class="modal" id="modify">
+			           <div class="modal-dialog modal-dialog-centered">
+			               <div class="modal-content">
+			                  <!-- Modal Header -->
+			                  <div class="modal-header">
+			                     <h6 class="modal-title">게시물 수정</h6>
+			                     <button hidden type="button" class="modal_close" data-dismiss="modal">&times;</button>
+			                  </div>
+			                  <!-- Modal body -->
+			                  <div class="modal-body" style="text-align:center;">
+			                  	게시물을 수정하시겠습니까?
+			                  </div>
+			                  <!-- Modal footer -->
+			                  <div class="modal-footer" style="justify-content:center;">
+				                <button class="btn btn-jyok" id="holiday-give-btn" onclick="location.href='modifyBoard.pr?no=${no}'">수정</button>	                
+				                <button type="button" class="btn btn-jycancle" data-dismiss="modal">취소</button>
+			                  </div>
+			              </div>
+			           </div>
+			        </div>
 
 			        <!-- 게시물 삭제 모달 -->
 			        <form action="" method="POST">
