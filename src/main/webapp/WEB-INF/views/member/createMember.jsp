@@ -103,9 +103,9 @@
                                     </tr>
 
                                     <tr>
-                                        <td>
+                                        <td style="width:380px;">
                                             <select id="depName" class="form-control" name="depName" style="height:40px; width:100%" required>
-                                                <option value="${m.depName}">${m.depName}</option>
+                                                <option value="부서">부서</option>
                                                 <c:choose>
 							                		<c:when test="${ empty deplist }">
 							                			<tr>
@@ -123,7 +123,7 @@
                                         
                                         <td>
                                             <select id="jobName" class="form-control" name="jobName" style="height:40px; width:100%" required>
-                                                <option value="${m.jobName}">${m.jobName}</option>
+                                                <option value="직책">직책</option>
                                                 <c:choose>
 							                		<c:when test="${ empty joblist }">
 							                			<tr>

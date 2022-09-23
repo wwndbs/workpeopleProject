@@ -99,6 +99,11 @@
 			   count(*)
 		  from member
 		 where status = 'N'
+		 <choose>
+		 	<when test="dep!=''">
+		 		and dep_name = #{dep}
+		 	</when>
+		 </choose>
   </select>
 	
   <select id="modifyList" resultMap="memberResult">
@@ -111,6 +116,11 @@
 			 , status
 		  from member
 		 where status = 'N'
+		 <choose>
+		 	<when test="dep!=''">
+		 		and dep_name = #{dep}
+		 	</when>
+		 </choose>
 		 order 
 		    by user_no desc
   </select>

@@ -23,8 +23,8 @@ public interface MemberService {
 	int createMember(Member m);
 	
 	// 사원 정보 수정 리스트 페이지 서비스 (페이징)
-	int modifyListCount();
-	ArrayList<Member> modifyList(PageInfo pi);
+	int modifyListCount(String dep);
+	ArrayList<Member> modifyList(PageInfo pi,String dep);
 	
 	// 사원수정 상세조회 서비스
 	Member selectmodifyMember(int userNo);

@@ -86,7 +86,8 @@ height: 100%;
 #list-area{
     width:2000px;
     padding:30px;
-    margin:30px;             
+    margin:30px;
+    height:900px;           
 }
 
 #member-wrapper{
@@ -162,4 +163,8 @@ height: 100%;
   padding-left: 10px;
   background-color: rgb(233, 233, 233);
 }
-
+.sangpagingArea{
+	  position: absolute;
+	  left: 90%;
+	  transform: translateX(-50%);
+}

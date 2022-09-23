@@ -92,7 +92,7 @@
                                     </tr>
                                     
                                     <tr>
-                                        <td style="font-weight:800;">개인이메일</td>
+                                        <td style="font-weight:800; height:40px;">개인이메일</td>
                                     </tr>
 
                                     <tr>
@@ -112,7 +112,7 @@
                                     </tr>
 
 									<tr>
-                                        <td>
+                                        <td style="width:380px;">
                                             <select id="depName" class="form-control" name="depName" style="height:40px; width:100%" required>
                                                 <option value="${m.depName}">${m.depName}</option>
                                                 <c:choose>

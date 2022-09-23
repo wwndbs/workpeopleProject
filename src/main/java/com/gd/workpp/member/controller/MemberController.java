@@ -95,17 +95,19 @@ public class MemberController {
 	}
 	
 	@RequestMapping("modifyList.me")
-	public ModelAndView modifyList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv) {
+	public ModelAndView modifyList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv,@RequestParam(value="dep", defaultValue="") String dep) {
 		
-		int listCount = mService.modifyListCount();
+		int listCount = mService.modifyListCount(dep);
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
-		ArrayList<Member> list = mService.modifyList(pi);
-		
+		ArrayList<Member> list = mService.modifyList(pi,dep);
+		ArrayList<Department> deplist = cService.departmentList();
 		
 
 		mv.addObject("pi", pi)
 		  .addObject("list", list)
+		  .addObject("dep",dep)
+		  .addObject("deplist", deplist)
 		  .setViewName("member/modifyMemberList");
 		
 		return mv;
@@ -145,7 +147,7 @@ public class MemberController {
 	}
 	
 	
-	@ResponseBody // 응답데이터를 보내주지 않아서 붙임
+	@ResponseBody
 	@RequestMapping("uploadProfile.me")
 	public void ajaxUploadProfile(MultipartFile uploadFile, Member m,String originalFile, HttpSession session) {
 		
@@ -171,7 +173,6 @@ public class MemberController {
 	}
 	
 	
-	// 비밀번호 수정
 	@RequestMapping("updatePwd.me")
 	public String updatePwd(Member m,HttpSession session,String updatePwd,String userPwd) {
 		
@@ -195,33 +196,7 @@ public class MemberController {
 			session.setAttribute("alertMsg", "현재 비밀번호가 일치하지 않습니다.");
 			return "redirect:updateForm.me";
 		}
-		
-		
-		/*
-		if(bcryptPasswordEncoder.matches(userPwd, loginUser.getUserPwd())) {
-			String encPwd = bcryptPasswordEncoder.encode(updatePwd);
-			m.setUserPwd(encPwd);
-			int result = mService.updatePwd(m);
-			if(result > 0) {
-				// > 변경 성공 시
-		           //- 갱신된 회원 객체 조회해서 session에 덮어씌우기
-		           //- 마이페이지가 보여질 수 있도록 처리 (이때 alert로 성공 알림)
-				session.setAttribute("loginUser",mService.loginMember(m));
-				session.setAttribute("alertMsg", "성공적으로 비밀번호가 변경되었습니다.");
-				return "redirect:myPage.me";
-				
-			}else {
-		        //> 변경 실패 시
-		           //- 마이페이지가 보여질 수 있도록 처리 (이때 alert로 실패 알림)
-				session.setAttribute("alertMsg", "비밀번호 변경에 실패하였습니다.");
-				return "redirect:myPage.me";
-				
-			}
-		}else {
-			session.setAttribute("alertMsg", "현재 비밀번호가 일치하지 않습니다.");
-			return "redirect:myPage.me";
-		}
-		*/
+
 	}
 	
 	// 사원 계정 생성 창 이동

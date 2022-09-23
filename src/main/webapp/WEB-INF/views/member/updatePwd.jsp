@@ -111,14 +111,14 @@
                 <form id="loginForm" method="post" action="" enctype="multipart/form-data">
                     <table id="loginTable" align="center">
                         <tr>
-                            <td colspan="2" align="center"><input type="text" id="findemail" class="form-control" name="findemail" style="height:30px;" placeholder="이메일" required></td>
+                            <td colspan="2" align="center"><input type="text" id="findemail" class="form-control" name="findemail" style="height:40px; width:100%;" placeholder="이메일" required></td>
                         </tr>
                         <tr >
                             <td><input type="text" id="inputPhoneNumber" class="form-control" name="phoneNumber" style="height:40px; width:100%" placeholder="전화번호" required></td>
                             <td><button type="button" class="btn btn-primary" id="sendPhoneNumber" style="height:40px; width:100%; margin-left: 5px;">인증번호 받기</button></td>
                         </tr>
                         <tr>
-                            <td colspan="2" align="center"><input type="text" id="inputCertifiedNumber" class="form-control" name="inputCertifiedNumber" style="height:30px;" placeholder="인증번호"></td>
+                            <td colspan="2" align="center"><input type="text" id="inputCertifiedNumber" class="form-control" name="inputCertifiedNumber" style="height:40px; width:100%;" placeholder="인증번호"></td>
                         </tr>
                     </table>
                     <br>
@@ -175,14 +175,14 @@
                 <!-- Modal Body -->
                 <div class="modal-body">
                     <label for="userPwd" class="mr-sm-2"></label>
-                    <input type="text" class="form-control mb-2 mr-sm-2" id="email" name="email" readonly style="width:150px; height:30px;" >
+                    <input type="text" class="form-control mb-2 mr-sm-2" id="email" name="email" placeholder="변경될 이메일" readonly >
                     <input type="password" class="form-control mb-2 mr-sm-2" placeholder="변경할 비밀번호" id="updatePwd" name="updatePwd">
                 </div>
                 
                 <!-- Modal footer -->
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">변경</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
                 </div>
             </form>
             </div>

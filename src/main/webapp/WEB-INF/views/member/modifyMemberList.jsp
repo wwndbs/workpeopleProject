@@ -46,12 +46,17 @@
 	                            
 	                            <form id="list_2">
 	                                <ul>
-	                                    <li style="width: 80px;"><a href="">전체</a></li>
-	                                    <li style="width: 80px;"><a href="">인사부</a></li>
-	                                    <li style="width: 80px;"><a href="">총무부</a></li>
-	                                    <li style="width: 80px;"><a href="">개발부</a></li>
-	                                    <li style="width: 80px;"><a href="">영업부</a></li>
-	                                    <li style="width: 80px;"><a href="">회계부</a></li>
+	                                    <li style="width: 80px;"><a href="modifyList.me">전체</a></li>
+			                            <c:choose>
+					                			<c:when test="${ empty deplist }">
+				                					<li>${dep}</li>
+					                			</c:when>
+					                		<c:otherwise>
+					                			<c:forEach var="d" items="${ deplist }">
+					                				<li style="width: 80px;"><a href="modifyList.me?dep=${d.depName }">${d.depName }</a></li>
+					                    		</c:forEach>
+			                    			</c:otherwise>
+										</c:choose>
 	                                </ul>
 	                            </form>
 	                            <hr>
@@ -61,7 +66,6 @@
 	                                <table border="1px" id="listTable" class="table table-hover" align="center">
 	                                    <thead>
 	                                      <tr>
-	                                        <th style="width: 10px;"></th>
 	                                        <th style="width: 50px;">사원번호</th>
 	                                        <th style="width: 80px;">사원명</th>
 	                                        <th style="width: 80px;">부서명</th>
@@ -74,13 +78,12 @@
 	                                        <c:choose>
 						                		<c:when test="${ empty list }">
 						                			<tr>
-						                				<td colspan="6">현재 게시글이 없습니다.</td>
+						                				<td colspan="6">현재 사원이 없습니다.</td>
 						                			</tr>
 						                		</c:when>
 						                		<c:otherwise>
 						                			<c:forEach var="m" items="${ list }">
 								                    <tr>
-								                    	<td><input type="checkbox" name=""></td>
 								                        <td class="no">${ m.userNo }</td>
 								                        <td>${ m.userName }</td>
 								                        <td>${ m.depName }</td>
@@ -102,35 +105,67 @@
 						            </script>
 	                                
 	                                <br>
-	                                <div id="pagingArea">
-						                <ul class="pagination">
-						                	
-						                	<c:choose>
-						                		<c:when test="${ pi.currentPage eq 1 }">
-						                    		<li class="page-item disabled"><a class="page-link">Previous</a></li>
-						                    	</c:when>
-						                    	<c:otherwise>
-						                    		<li class="page-item"><a class="page-link" href="modifyList.me?cpage=${ pi.currentPage-1 }">Previous</a></li>
-						                    	</c:otherwise>
-						                    </c:choose>
-						                    
-						                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-						                    	<li class="page-item"><a class="page-link" href="modifyList.me?cpage=${ p }">${ p }</a></li>
-						                    </c:forEach>
-						                    
-						                    <c:choose>
-						                    	<c:when test="${ pi.currentPage eq pi.maxPage }">
-						                    		<li class="page-item disabled"><a class="page-link">Next</a></li>
-						                    	</c:when>
-						                    	<c:otherwise>
-						                    		<li class="page-item"><a class="page-link" href="modifyList.me?cpage=${ pi.currentPage+1 }">Next</a></li>
-						                    	</c:otherwise>
-						                    </c:choose>
-						                </ul>
-						            </div>
-	                                <div align="right">
-	                                    <button type="submit" id="loginbtn" class="btn btn-secondary" >선택 회원 삭제</button>
-	                                </div>
+	                                <c:choose>
+						            <c:when test="${dep!=''}">
+					                    <div id="pagingArea" class="sangpagingArea">
+							                <ul class="pagination">
+							                	
+							                	<c:choose>
+							                		<c:when test="${ pi.currentPage eq 1 }">
+							                    		<li class="page-item disabled"><a class="page-link">Previous</a></li>
+							                    	</c:when>
+							                    	<c:otherwise>
+							                    		<li class="page-item"><a class="page-link" href="modifyList.me?dep=${dep}&cpage=${ pi.currentPage-1 }">Previous</a></li>
+							                    	</c:otherwise>
+							                    </c:choose>
+							                    
+							                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+						                   			<li class="page-item"><a class="page-link" href="modifyList.me?dep=${dep}&cpage=${ p }">${ p }</a></li>
+							                    </c:forEach>
+							                    
+							                    <c:choose>
+							                    	<c:when test="${ pi.currentPage eq pi.maxPage }">
+							                    		<li class="page-item disabled"><a class="page-link">Next</a></li>
+							                    	</c:when>
+							                    	<c:otherwise>
+							                    		<li class="page-item"><a class="page-link" href="modifyList.me?dep=${dep}&cpage=${ pi.currentPage+1 }">Next</a></li>
+							                    	</c:otherwise>
+							                    </c:choose>
+							                </ul>
+							            </div>
+						            </c:when>
+
+						            <c:otherwise>
+						            	<div id="pagingArea" class="sangpagingArea">
+							                <ul class="pagination">
+							                	
+							                	<c:choose>
+							                		<c:when test="${ pi.currentPage eq 1 }">
+							                    		<li class="page-item disabled"><a class="page-link">Previous</a></li>
+							                    	</c:when>
+							                    	<c:otherwise>
+							                    		<li class="page-item"><a class="page-link" href="modifyList.me?cpage=${ pi.currentPage-1 }">Previous</a></li>
+							                    	</c:otherwise>
+							                    </c:choose>
+							                    
+							                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+						                   			<li class="page-item"><a class="page-link" href="modifyList.me?cpage=${ p }">${ p }</a></li>
+							                    </c:forEach>
+							                    
+							                    <c:choose>
+							                    	<c:when test="${ pi.currentPage eq pi.maxPage }">
+							                    		<li class="page-item disabled"><a class="page-link">Next</a></li>
+							                    	</c:when>
+							                    	<c:otherwise>
+							                    		<li class="page-item"><a class="page-link" href="modifyList.me?cpage=${ pi.currentPage+1 }">Next</a></li>
+							                    	</c:otherwise>
+							                    </c:choose>
+								                </ul>
+								            </div>
+						            
+							            </c:otherwise>
+					            	</c:choose>	
+	                                
 	                            </form>
 	                        </div>
 	
