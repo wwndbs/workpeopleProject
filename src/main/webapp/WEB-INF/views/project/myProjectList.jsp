@@ -251,7 +251,7 @@
 	              <!-- 내가 참여한 프로젝트2  -->
 	              <c:choose>
 	              	<c:when test="${ empty list2 }">
-	              		<span style="margin: 0px 0px 0px 730px"><br><br><br><br><br>현재 팀에서 진행하고 있는 프로젝트가 없습니다.</span>
+	              		<span style="margin: 0px 0px 0px 730px"><br><br><br><br><br>현재 진행하고 있는 프로젝트가 없습니다.</span>
 	              	</c:when>	
 	              	<c:otherwise>
                    	<c:set var="depName" value="${ loginUser.depName }"/>	
@@ -293,7 +293,7 @@
 			                        </div>		                        			                        			                        
 			                      </h5>
 			                      <i data-feather="user" style="margin: 230px -17px -20px 200px; float: right; width:8% !important"></i>
-			                      <span for="" style="margin: 230px 0px -20px 21px;" id="pcount">${ pp.pmMemberCount }</span]>
+			                      <span for="" style="margin: 230px 0px -20px 21px;" id="pcount">${ pp.countMember }</span]>
 			                    </div>
 			                  </div>
 			                </div>

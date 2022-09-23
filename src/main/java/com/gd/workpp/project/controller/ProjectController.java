@@ -45,7 +45,7 @@ public class ProjectController {
 		ArrayList<Project> list = pService.selectList(depName, userNo);	
 		ArrayList<Project> appList = pService.adminProApproveList(userNo);
 		Project approveP = pService.adminApproveMember(projectNo);		
-		ArrayList<Project> list2 = pService.selectList2(depName);
+		ArrayList<Project> list2 = pService.selectList2(depName, userNo);
 				
 		mv.addObject("list", list)
 		  .addObject("depName", depName)
@@ -59,6 +59,7 @@ public class ProjectController {
 		  .addObject(list)
 		  .addObject(list2)
 		  .setViewName("project/myProjectList");
+		
 								
 		return mv;
 	}
@@ -98,12 +99,14 @@ public class ProjectController {
 	// [김은지] 프로젝트 게시물리스트
 	@ResponseBody
 	@RequestMapping("proList.pr")
-	public ModelAndView projectList(@RequestParam(value="cpage", defaultValue="1") int currentPage, int no, String status, ModelAndView mv, Model model, ProBoard pb) {
+	public ModelAndView projectList(@RequestParam(value="cpage", defaultValue="1") int currentPage, int no, String status, ModelAndView mv, Model model, ProBoard pb, Project p) {
 		
 		int listCount = pService.selectListCount(no, status); //넘어간 status로 sql문에 조건 추가해서갯수 조회
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);		
 		ArrayList<ProBoard> list = pService.selectProBoardList(no, status, pi); // 넘어간 status로 sql문에 조건 추가해서 리스트조회
+		String projectTitle = p.getProjectTitle();
+		
 		ArrayList<Project> pList = pService.selectAdmin(no);
 		ArrayList<ProMember> pmList = pService.selectMember(no);
 				
@@ -230,10 +233,7 @@ public class ProjectController {
 		}
 		
 		int result = pService.updateProBoard(pb);
-		
-		System.out.println(pb);
-		System.out.println(result);
-				
+						
 		if(result > 0) {
 			//session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다.");
 			return "redirect:boardDetail.pr?no=" + pb.getProBoardNo();

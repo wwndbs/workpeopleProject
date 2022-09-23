@@ -71,7 +71,7 @@ public interface ProjectService {
 	ArrayList<Project> selectTotalProject(String depName, String userNo);
 	
 	// 18. 내 프로젝트리스트조회2
-	ArrayList<Project> selectList2(String depName);
+	ArrayList<Project> selectList2(String depName, String userNo);
 	
 	// 19. 사용자 프로젝트 승인요청
 	int proApproveRequest(ProMember pm);

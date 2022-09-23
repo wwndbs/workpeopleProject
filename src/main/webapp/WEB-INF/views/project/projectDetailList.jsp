@@ -53,7 +53,7 @@
 	            <!-- 상단 카테고리명 -->
 	            <div class="pb-3" style="margin: -11px 0px 0px 0px">
 	              <h5 style="font-weight: 400">
-	              	<b>프로젝트명</b>
+	              	<b>프로젝트</b>
 	              		<input type="hidden" name="projectNo" value="${ no }">
 	              		<button type="submit" class="btn btn-primary btn1" id="insert" style="width: 7%; height: 40px;">게시물 등록</button>
 	              </h5>	              	
@@ -91,18 +91,18 @@
 	                <!-- 상태로 선택하는 부분 -->
 	                <h5 style="font-weight: 400; font-size: 16px; margin: 10px 0px 0px 0px;"><b>상태</b></h2>
 	                <div class="alert-area div2" name="bCategory">
-	                  <div class="alert-item" style="margin: 10px -30px 0px 30px;">
-	                    <input class="form-check-input" name="condition" name="condition" type="radio" value="1" checked onclick="proBoardList(1);">진행<br>
+	                  <div class="alert-item" style="margin: 10px -30px 0px 30px; font-size:16px">
+	                    <input class="form-check-input" name="gridRadios" id="gridRadios1" type="radio" value="option1" checked>진행<br>
 	                  </div>
-	                  <div class="alert-item" style="margin: 57px 35px 0px -55px;">
-	                    <input class="form-check-input" name="condition" name="condition" type="radio" value="2" onclick="proBoardList(2);">완료<br>
+	                  <div class="alert-item" style="margin: 57px 35px 0px -55px; font-size:16px">
+	                    <input class="form-check-input" name="gridRadios" id="gridRadios1" type="radio" value="option1">완료<br>
 	                  </div>
-	                  <div class="alert-item" style="margin: 107px 130px 0px -120px;">
-	                    <input class="form-check-input" name="condition" name="condition" type="radio" value="3" onclick="proBoardList(3);">보류<br>
+	                  <div class="alert-item" style="margin: 107px 130px 0px -120px; font-size:16px">
+	                    <input class="form-check-input" name="gridRadios" id="gridRadios1" type="radio" value="option1">보류<br>
 	                  </div>
 	                </div>
 	              </div>
-	
+		
 	              <!-- 검색영역 -->
 	              <div style="display:flex; padding-top:10px; border:none" class="searchForm">
 					<form action="search.pr" method="get">
@@ -149,31 +149,31 @@
 	                  		<c:otherwise>
 	                  			<c:forEach var="pb" items="${ list }">
 			                    <tr>
-			                      <td></td>
-			                      <td class="no">${ pb.proBoardNo }</td>
+			                      <td height="20px !important"></td>
+			                      <td height="20px !important" class="no">${ pb.proBoardNo }</td>
 			                      <c:if test="${ pb.proBoardStatus == 1}">
-				                      <td><div class="btn btn-sm btn-success btn2">진행</div></td>		                      
+				                      <td height="20px !important"><div class="btn btn-sm btn-success btn2">진행</div></td>		                      
 			                      </c:if>
 			                      <c:if test="${ pb.proBoardStatus == 3}">
-			                      	<td><div class="btn btn-sm btn-warning btn2" style="color:white">보류</div></td>
+			                      	<td height="20px !important"><div class="btn btn-sm btn-warning btn2" style="color:white">보류</div></td>
 			                      </c:if>
 			                      <c:if test="${ pb.proBoardStatus == 2}">
-			                      	<td><div class="btn btn-sm btn-primary btn2">완료</div></td>
+			                      	<td height="20px !important"><div class="btn btn-sm btn-primary btn2">완료</div></td>
 			                      </c:if>
 			                      <c:if test="${ pb.proBoardLevel == 6}">
-				                      <td>낮음</td>		                      
+				                      <td height="20px !important">낮음</td>		                      
 			                      </c:if>
 			                      <c:if test="${ pb.proBoardLevel == 5}">
-				                      <td>보통</td>		                      
+				                      <td height="20px !important">보통</td>		                      
 			                      </c:if>
 			                      <c:if test="${ pb.proBoardLevel == 4}">
-				                      <td>높음</td>		                      
+				                      <td height="20px !important">높음</td>		                      
 			                      </c:if>
-			                      <td>${ pb.proTitle }</td>
-			                      <td>${ pb.pbUserName }${ pb.pbJobName }</td>
-			                      <td>${ pb.createDate }</td>
-			                      <td>${ pb.modifyDate }</td>
-			                      <td>${ pb.startDate } ~ ${ pb.endDate }</td>
+			                      <td height="20px !important">${ pb.proTitle }</td>
+			                      <td height="20px !important">${ pb.pbUserName }${ pb.pbJobName }</td>
+			                      <td height="20px !important">${ pb.createDate }</td>
+			                      <td height="20px !important">${ pb.modifyDate }</td>
+			                      <td height="20px !important">${ pb.startDate } ~ ${ pb.endDate }</td>
 			                    </tr>
 			                    </c:forEach>
 		                    </c:otherwise>
