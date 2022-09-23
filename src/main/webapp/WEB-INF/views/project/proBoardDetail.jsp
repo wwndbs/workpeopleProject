@@ -117,6 +117,7 @@
 			              </div>
 			           </div>
 			           <input type="hidden" name="attachModify" value="${ pb.attachModify }">
+			           <input type="hidden" name="attachOrigin" value="${ pb.attachOrigin }">
 			        </div>
 
 			        <!-- 게시물 삭제 모달 -->

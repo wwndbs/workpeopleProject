@@ -185,7 +185,7 @@
 	                  <div class="file1" style="text-align:left">
 	                  	<c:if test="${ not empty pb.attachOrigin }">
 		                    <label for="upfile" style="float: left"><b></b></label>	
-	                        <td><input type="file" id="upfile" class="form-control-file border" name="reupfile" value="">	                        	
+	                        <td><input type="file" id="upfile" class="form-control-file border" name="reupfile" value="${ pb.attachOrigin }">	                        	
 	                        	<label style="margin: 5px 0px 15px 83px; font-size:14px">${ pb.attachOrigin }</label>
 	                        </td>
                         </c:if>
