@@ -29,7 +29,7 @@
 		<jsp:include page="../common/menubar.jsp" />
 		
 		
-		      <!-- 컨텐츠 부분 wrapper -->
+	<!-- 컨텐츠 부분 wrapper -->
       <div class="adminx-content">
         <div class="adminx-main-content">
 
@@ -57,7 +57,7 @@
                         <tr style="height:50px;">
                           <td><b>휴가종류</b></td>
                           <td style="padding-top:10px;">
-                          	<div id="hCategory" name="hCategory" >
+                          	<div id="hCategory" name="hCategory">
 	                           <label style="margin-left:5px;"><input type="radio" class="radio-value" id="status1" name="hCategory" value="hStatus0" checked>전체</label>
 	                           <label style="margin-left:5px;"><input type="radio" class="radio-value" id="status2" name="hCategory" value="hStatus1" style="margin-left:10px;">연차</label>
 	                           <label style="margin-left:5px;"><input type="radio" class="radio-value" id="status3" name="hCategory" value="hStatus2" style="margin-left:10px;">병가</label>
@@ -126,7 +126,7 @@
                       </div>
                     <!-- // Table seamless -->
                     
-                                        <!-- 검색시 ajax로 결과 리스트 조회 -->                    
+                    <!-- 검색시 ajax로 결과 리스트 조회 -->                    
                     <script>
                     	
                     	$(function(){

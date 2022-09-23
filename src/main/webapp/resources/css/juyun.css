@@ -308,6 +308,37 @@
     cursor: pointer;
 }
 
+.mail-table-write .help{
+    display: inline-block;
+    position: relative;
+    width: 16px;
+    height: 16px;
+    margin-left: 1px;
+    cursor: pointer;
+    vertical-align: middle;
+    line-height: 1;
+    z-index: 1;
+}
+
+
+.mail-table-write .help svg{
+    width: 100%;
+    height: 100%;
+}
+
+.mail-table-write .help>span{
+    z-index: 3;
+    display: none;
+    font-size: 12px;
+    background-color: rgba(24, 23, 23, .6);
+    color: white;
+    border-radius: 3px;
+    padding: 13px;
+    font-weight: 400;
+    margin-left: 22px;
+    line-height: 10px;
+}
+
 .mail-btn-file{
     width: 60px;
     height: 23px;
@@ -333,6 +364,12 @@
 }
 
 .mail-filebox .each-file{
+    text-align: left;
+    font-size: 13px;
+    line-height: 22px;
+}
+
+.mail-filebox .old-each-file{
     text-align: left;
     font-size: 13px;
     line-height: 22px;

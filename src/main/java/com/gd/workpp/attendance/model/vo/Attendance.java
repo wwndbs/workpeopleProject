@@ -45,4 +45,8 @@ public class Attendance {
 	private String depName;
 	private String jobName;
 	
+	private String workingDay;
+	private String workingName;
+	private String workUse;
+	
 }
