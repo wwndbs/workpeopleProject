@@ -196,25 +196,25 @@
 						value += '<tr><td colspan="3">조회된 결재 문서가 없습니다.</td></tr>';
 					}else{
 	   					for(let i = 0; i < list.length; i++){
-	   						if(i < 6){
+	   						if(i < 5){
 		   						value += '<tr>'
 		   							  +  	'<td style="text-align : left;">' + list[i].documentTitle + '</td>'
 		   						      +  	'<td>' + list[i].createDate + '</td>';
 		   						      
 						        if(list[i].progress == 0){
-									value += '<td><div class="tag-gray">대기</div></td>'
+									value += '<td><div class="tag-gray" style="font-size : 14px;">대기</div></td>'
 									      +  '<input type="hidden" value="' + list[i].documentNo + '">'
 									      +  '<input type="hidden" value="' + list[i].documentForm + '">';
 						        }else if(list[i].progress == 1){
-						        	value += '<td><div class="tag-orange">진행중</div></td>'
+						        	value += '<td><div class="tag-orange" style="font-size : 14px;">진행중</div></td>'
 									      +  '<input type="hidden" value="' + list[i].documentNo + '">'
 									      +  '<input type="hidden" value="' + list[i].documentForm + '">';
 						        }else if(list[i].progress == 2){
-						        	value += '<td><div class="tag-green">완료</div></td>'
+						        	value += '<td><div class="tag-green" style="font-size : 14px;">완료</div></td>'
 									      +  '<input type="hidden" value="' + list[i].documentNo + '">'
 									      +  '<input type="hidden" value="' + list[i].documentForm + '">';
 						        }else{
-						        	value += '<td><div class="tag-red">반려</div></td>'
+						        	value += '<td><div class="tag-red" style="font-size : 14px;">반려</div></td>'
 									      +  '<input type="hidden" value="' + list[i].documentNo + '">'
 									      +  '<input type="hidden" value="' + list[i].documentForm + '">';
 						        }
