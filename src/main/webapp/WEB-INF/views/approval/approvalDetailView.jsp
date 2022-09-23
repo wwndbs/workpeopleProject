@@ -42,16 +42,31 @@
 													<table align="right">
 					                                	<tr>
 					                                    	<th width="120">${ list.userNo }&nbsp;&nbsp; ${ list.jobName }</th>
-					                                    </tr>			                                    
-				                                    		<tr style="cursor : pointer;" onclick="location.href='approvalOfApproval.ap?approvalUser=${list.userNo}&order=${list.approvalOrder}&approvalCount=${document.approvalCount}&form=${document.documentForm}&documentNo=${document.documentNo}&userName=${document.userNo}&vacationStart=${obj.vacationStart}&vacationEnd=${obj.vacationEnd}'">
-						                                    	<td>
-						                                    	<br>
-							                                    	<c:if test="${ list.status != 0 }">
-							                                    		${ list.userNo }
-							                                    	</c:if>
-						                                    	<br><br>
-						                                    	</td>
-				                                    		</tr>
+					                                    </tr>		
+					                                    <c:choose>
+					                                    	<c:when test="${document.documentForm eq '휴가신청서'}">
+					                                    		<tr style="cursor : pointer;" onclick="location.href='approvalOfApproval.ap?approvalUser=${list.userNo}&order=${list.approvalOrder}&approvalCount=${document.approvalCount}&form=${document.documentForm}&documentNo=${document.documentNo}&userName=${document.userNo}&vacationStart=${obj.vacationStart}&vacationEnd=${obj.vacationEnd}'">
+							                                    	<td>
+							                                    	<br>
+								                                    	<c:if test="${ list.status != 0 }">
+								                                    		${ list.userNo }
+								                                    	</c:if>
+							                                    	<br><br>
+							                                    	</td>
+					                                    		</tr>					                                    	
+					                                    	</c:when>
+					                                    	<c:otherwise>
+					                                    		<tr style="cursor : pointer;" onclick="location.href='approvalOfApproval.ap?approvalUser=${list.userNo}&order=${list.approvalOrder}&approvalCount=${document.approvalCount}&form=${document.documentForm}&documentNo=${document.documentNo}&userName=${document.userNo}'">
+							                                    	<td>
+							                                    	<br>
+								                                    	<c:if test="${ list.status != 0 }">
+								                                    		${ list.userNo }
+								                                    	</c:if>
+							                                    	<br><br>
+							                                    	</td>
+					                                    		</tr>					                                    						                                    	
+					                                    	</c:otherwise>
+					                                    </c:choose>	                                    
 					                                </table>
 					                            </c:forEach>
 											</c:otherwise>
@@ -152,7 +167,7 @@
 								</c:if>
 							</table>
 				              <div class="btn-area" align="right">
-				                <button class="btn btn-secondary btn-sm" onclick="history.back();">돌아가기</button>
+						      <button class="btn btn-secondary btn-sm" onclick="history.back();">돌아가기</button>
 				                <c:if test="${ list[0].status == 0 && document.userNo == m.userName || not empty document.message}">
 							        <button class="btn btn-danger btn-sm" onclick="deleteApproval();">삭제</button>
 						        </c:if>
