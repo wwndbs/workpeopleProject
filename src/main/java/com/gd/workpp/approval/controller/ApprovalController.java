@@ -49,6 +49,7 @@ public class ApprovalController {
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		ArrayList<Document> list = apService.selectApprovalList(pi, category, userNo);
 		
+		mv.addObject("category", category);
 		mv.addObject("list", list);
 		mv.addObject("pi", pi);
 		mv.setViewName("approval/approvalList");

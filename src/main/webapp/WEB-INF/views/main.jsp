@@ -170,12 +170,16 @@
    				url : "todoListView.td",
    				success : function(todolist){
 					value="";
-   					for(let i = 0; i < 5; i++){
-   						if(todolist[i].status == 1){
-   							value += '<li>' + todolist[i].todoContent + '</li>';		
-   						}
-   						$(".todo-list").html(value);
-   					}   						
+					if(todolist.length == 0){
+						value += '<li style="text-align : center;">조회된 할 일이 없습니다.</li>';
+					}else{
+	   					for(let i = 0; i < 5; i++){
+	   						if(todolist[i].status == 1){
+	   							value += '<li>' + todolist[i].todoContent + '</li>';		
+	   						}
+	   					}   												
+					}
+					$(".todo-list").html(value);
    				},
    				error : function(){
    					console.log("메인페이지 할 일 조회 부분 ajax연결 실패");
@@ -187,33 +191,36 @@
    				url : "mainApprovalList.main",
    				success : function(list){
    					value="";
-
-   					for(let i = 0; i < 5; i++){
-   						if(i < 6){
-	   						value += '<tr>'
-	   							  +  	'<td style="text-align : left;">' + list[i].documentTitle + '</td>'
-	   						      +  	'<td>' + list[i].createDate + '</td>';
-	   						      
-					        if(list[i].progress == 0){
-								value += '<td><div class="tag-gray">대기</div></td>'
-								      +  '<input type="hidden" value="' + list[i].documentNo + '">'
-								      +  '<input type="hidden" value="' + list[i].documentForm + '">';
-					        }else if(list[i].progress == 1){
-					        	value += '<td><div class="tag-orange">진행중</div></td>'
-								      +  '<input type="hidden" value="' + list[i].documentNo + '">'
-								      +  '<input type="hidden" value="' + list[i].documentForm + '">';
-					        }else if(list[i].progress == 2){
-					        	value += '<td><div class="tag-green">완료</div></td>'
-								      +  '<input type="hidden" value="' + list[i].documentNo + '">'
-								      +  '<input type="hidden" value="' + list[i].documentForm + '">';
-					        }else{
-					        	value += '<td><div class="tag-red">반려</div></td>'
-								      +  '<input type="hidden" value="' + list[i].documentNo + '">'
-								      +  '<input type="hidden" value="' + list[i].documentForm + '">';
-					        }
-					        value += '</tr>';
-   						}
-   					}
+					if(list.length == 0){
+						value += '<tr><td colspan="3">조회된 결재 문서가 없습니다.</td></tr>';
+					}else{
+	   					for(let i = 0; i < 5; i++){
+	   						if(i < 6){
+		   						value += '<tr>'
+		   							  +  	'<td style="text-align : left;">' + list[i].documentTitle + '</td>'
+		   						      +  	'<td>' + list[i].createDate + '</td>';
+		   						      
+						        if(list[i].progress == 0){
+									value += '<td><div class="tag-gray">대기</div></td>'
+									      +  '<input type="hidden" value="' + list[i].documentNo + '">'
+									      +  '<input type="hidden" value="' + list[i].documentForm + '">';
+						        }else if(list[i].progress == 1){
+						        	value += '<td><div class="tag-orange">진행중</div></td>'
+									      +  '<input type="hidden" value="' + list[i].documentNo + '">'
+									      +  '<input type="hidden" value="' + list[i].documentForm + '">';
+						        }else if(list[i].progress == 2){
+						        	value += '<td><div class="tag-green">완료</div></td>'
+									      +  '<input type="hidden" value="' + list[i].documentNo + '">'
+									      +  '<input type="hidden" value="' + list[i].documentForm + '">';
+						        }else{
+						        	value += '<td><div class="tag-red">반려</div></td>'
+									      +  '<input type="hidden" value="' + list[i].documentNo + '">'
+									      +  '<input type="hidden" value="' + list[i].documentForm + '">';
+						        }
+						        value += '</tr>';
+	   						}
+	   					}	
+					}
    					
    					$("#main-approval tbody").html(value);
    				},
@@ -258,13 +265,17 @@
    				url : "mainBoardList.main",
    				success : function(board){
    					value="";
-   					for(let i = 0; i < 8; i++){
-   						value += '<li style="cursor : pointer;">'
-   						      +  	'<span>'
-   						      +     	'<a>' + board[i].boardTitle + '</a>'
-   						      +     '</span>'
-   						      +      '<span>' + board[i].createDate + '</span>'
-   						      +  '</li>';
+   					if(board.length == 0){
+   						value += '<li style="cursor : pointer;">조회된 게시물이 없습니다.</li>';
+   					}else{
+	   					for(let i = 0; i < 8; i++){
+	   						value += '<li style="cursor : pointer;">'
+	   						      +  	'<span>'
+	   						      +     	'<a>' + board[i].boardTitle + '</a>'
+	   						      +     '</span>'
+	   						      +      '<span>' + board[i].createDate + '</span>'
+	   						      +  '</li>';
+	   					}   						
    					}
    					$(".notice-list").html(value);
    				},
@@ -301,26 +312,30 @@
 					url : "todoListView.td",
 					success : function(todolist){
 					value="";
-					for(let i = 0; i < todolist.length; i++){
-	   					switch(status){
-		   					case 1 :
-	   	   						if(todolist[i].status == 1){
-	   	   							value += '<li>' + todolist[i].todoContent + '</li>';
-		   						}
-		   	   					break;
-		   					case 2 :
-	   	   						if(todolist[i].status == 2){
-	   	   							value += '<li>' + todolist[i].todoContent + '</li>';
-		   						}
-		   	   					break;
-		   					case 3 :
-	   	   						if(todolist[i].status == 3){
-	   	   							value += '<li>' + todolist[i].todoContent + '</li>';
-		   						}
-		   	   					break;
-	   					}
+					if(todolist.length == 0){
+						value += '<li style="text-align : center;">조회된 할 일이 없습니다.</li>';
+					}else{
+						for(let i = 0; i < todolist.length; i++){
+		   					switch(status){
+			   					case 1 :
+		   	   						if(todolist[i].status == 1){
+		   	   							value += '<li>' + todolist[i].todoContent + '</li>';
+			   						}
+			   	   					break;
+			   					case 2 :
+		   	   						if(todolist[i].status == 2){
+		   	   							value += '<li>' + todolist[i].todoContent + '</li>';
+			   						}
+			   	   					break;
+			   					case 3 :
+		   	   						if(todolist[i].status == 3){
+		   	   							value += '<li>' + todolist[i].todoContent + '</li>';
+			   						}
+			   	   					break;
+		   					}
+						}
 					}
-		   				$(".todo-list").html(value);
+		   			$(".todo-list").html(value);
 					},
 					error : function(){
 						console.log("메인페이지 상태별 할 일 조회 부분 ajax연결 실패");

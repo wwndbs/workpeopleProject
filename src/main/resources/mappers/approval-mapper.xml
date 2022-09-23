@@ -129,28 +129,32 @@
 	</select>
 	
 	<select id="selectApprovalList" resultMap="documentResult">
-	    select a.document_no
-	      , a.user_no
-	      , user_name
-	      , document_form
-	      , document_title
-	      , to_char(d.create_date, 'YYYY-MM-DD') as "CREATE_DATE"
-	      , document_content
-	      , progress
-	      , d.status
-	      , message
-	      , origin_name
-	      , change_name
-	      , file_path
-	      , approval_count
-	      , approval_order
-	   from approval a
-	   join document d on(a.document_no = d.document_no)
-	   join member m on(a.user_no = m.user_no)
-	  where a.user_no = #{userNo}
-	    and reference_status is null
-	    and progress = 0
-	  order by a.document_no desc
+	     select a.document_no
+		      , d.user_no
+		      , (select user_name
+	               from document
+	               join member using(user_no)
+	              where document_no = d.document_no
+	            ) as "user_name"
+		      , document_form
+		      , document_title
+		      , to_char(d.create_date, 'YYYY-MM-DD') as "CREATE_DATE"
+		      , document_content
+		      , progress
+		      , d.status
+		      , message
+		      , origin_name
+		      , change_name
+		      , file_path
+		      , approval_count
+		      , approval_order
+		   from approval a
+		   join document d on(a.document_no = d.document_no)
+		   join member m on(a.user_no = m.user_no)
+		  where a.user_no = #{userNo}
+		    and reference_status is null
+		    and progress = 1
+		  order by a.document_no desc
 	</select>
 	
 	<select id="searchApprovalCount" resultType="_int">

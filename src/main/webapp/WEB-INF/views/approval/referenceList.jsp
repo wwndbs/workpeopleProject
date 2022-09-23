@@ -24,9 +24,6 @@
 
 					<div class="search-wrapper">
 						<span>참조문서</span>
-						<form class="search-area">
-							<input type="text" placeholder="참조문서 검색" class="form-control" id="search">
-						</form>
 					</div>
 
 					<div class="menu-wrapper"></div>

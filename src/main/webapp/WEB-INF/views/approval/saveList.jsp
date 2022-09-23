@@ -54,7 +54,7 @@
 									        </td>
 									        <td>${ list.documentNo }</td>
 									        <td>${ list.documentForm }</td>
-									        <td>${ list.documentTitle }</td>
+									        <td id="detail-view">${ list.documentTitle }</td>
 									        <td>${ list.userNo }</td>
 									        <td>${ list.createDate }</td>
 									        <td>
@@ -109,10 +109,10 @@
 	
 	<script>
 		// 문서 상세조회
-		$(".list-wrapper>table>tbody>tr").children().eq(3).click(function(){
+		$(document).on("click", "#detail-view", function(){
 			let approvalNo = $(this).parents().children().eq(1).text();
 			let approvalForm = $(this).parents().children().eq(2).text();
-			
+				
 			location.href="saveListModify?no=" + approvalNo + "&form=" + approvalForm;
 		})
 	</script>
