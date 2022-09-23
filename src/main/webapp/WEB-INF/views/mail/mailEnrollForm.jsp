@@ -349,8 +349,6 @@
 			              	$("#receiver").val(currToArr.join()); // "aaa.com, ccc.com"
 			              	
 			              	toLimit();
-			              	
-			              	console.log($("#receiver").val());
 		                
 		                })
 		                
@@ -429,7 +427,7 @@
 							// 배열 순서를 뒤집어서 최근 주소부터 정렬
 							let recentAddr = emailArr.reverse(); // ["이메일", "이메일"]
 							
-							// 출력
+							// 최대 5개까지 출력
 							value = "";
 							for(let i=0; i<recentAddr.length; i++){
 								
@@ -564,6 +562,7 @@
 				                  	})
 	                  			</script>
 	                        </c:if>
+	                        
 	                      </div>
 	                    </td>
 	                    <td></td>
@@ -606,9 +605,9 @@
 			                for(var i=0; i<obj.files.length; i++){
 			                  
 			                  value += '<div class="each-file">'
-			                       + '<span class="btn-file-remove"><ion-icon name="close-outline" index="' + i + '" class="new"></ion-icon></span>'
-			                       + '<span>' + obj.files[i].name + '</span>'
-			                       + '</div>';
+			                         + 	'<span class="btn-file-remove"><ion-icon name="close-outline" index="' + i + '" class="new"></ion-icon></span>'
+			                         + 	'<span>' + obj.files[i].name + '</span>'
+			                         + '</div>';
 			
 			                }
 			                                    
@@ -653,12 +652,13 @@
 				            fileArr.splice($(this).attr("index"), 1);
 				            
 				            settingFile();
-			              	
-					        $(".each-file").remove();
-					        //if(fileArr.length == 0){ => 이렇게 하면 전달 시에 문제 생김
+					        
+					        //if(fileArr.length == 0){ //=> 이렇게 하면 메일 전달 기능 시에 문제 생김
 					        if($(".btn-file-remove").length == 0){
-			                	 $(".file-empty").css("display", "block");
+						        $(".each-file").remove();
+			                	$(".file-empty").css("display", "block");
 					        }else{
+						        $(".each-file").remove();
 				               selectFileList(document.querySelector("input[name=upfile]"));				            	
 					        }
 					        
@@ -776,7 +776,14 @@
 	
 	                  <tr>
 	                    <td colspan="3" style="padding-top: 20px; text-align: initial;">
-	                     <textarea name="mailContent" id="summernote" rows="10" style="resize: none;">${ m.mailContent }</textarea>
+		                    <c:choose>
+		                      <c:when test="${ type eq 'relay' }">
+		                      	<textarea name="mailContent" id="summernote" rows="10" style="resize: none;">${ m.mailContent }</textarea>
+		                      </c:when>
+		                      <c:otherwise>
+		                     	 <textarea name="mailContent" id="summernote" rows="10" style="resize: none;"></textarea>
+		                      </c:otherwise>
+		                    </c:choose>
 	                    </td>
 	                    <td></td>
 	                  </tr>
