@@ -64,13 +64,27 @@
         height: 100%;
     }
     #loginbtn{
-        width: 100%;
-        height: 30px;
+        width: 600px;
+        height: 40px;
         color:white;
         background-color:rgb(45, 130, 235);
         border-color:rgb(45, 130, 235);
     }
-    
+    .form-control {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + 0.75rem + 2px);
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color;
+    }
     
     </style>
 <!-- favicon 설정 -->
@@ -108,14 +122,15 @@
                 <form id="loginForm" method="post" action="login.me" enctype="multipart/form-data">
                     <table id="loginTable" align="center">
                         <tr>
-                            <td align="center"><input type="text" id="email" class="form-control" name="email" style="height:30px;" placeholder="이메일" required></td>
+                            <td align="center"><input type="text" id="email" class="form-control" name="email" style="height:40px;" placeholder="이메일" required></td>
                         </tr>
                         <tr>
-                            <td align="center"><input type="password" id="userPwd" class="form-control" name="userPwd" style="height:30px;" placeholder="비밀번호" required></td>
+                            <td align="center"><input type="password" id="userPwd" class="form-control" name="userPwd" style="height:40px;" placeholder="비밀번호" required></td>
                         </tr>
+                        
                     </table>
                     
-                    <a href="findPwd.me" id="find-pwd" style="font-size: 10px; ">비밀번호 찾기</a>
+                    <a href="findPwd.me" id="find-pwd" style="font-size: 13px; ">비밀번호 찾기</a>
                     <br><br>
 
                     <div align="center">
