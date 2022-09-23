@@ -314,12 +314,9 @@ public class BoardController {
 			// 게시글 조회
 			Board b = bService.selectBoard(boardNo);
 			
-			// 댓글 조회
-			ArrayList<Reply> list = bService.selectReplyList(boardNo);
 			
 			model.addAttribute("cpage", cpage);
 			model.addAttribute("b", b);
-			model.addAttribute("list", list);
 			return "board/deptDetail";
 			
 		}else {
@@ -328,6 +325,17 @@ public class BoardController {
 			return "common/errorPage";
 			
 		}
+		
+	}
+	
+	// 댓글 조회
+	@ResponseBody
+	@RequestMapping(value="rlist.bo", produces="application/json; charset=UTF-8")
+	public String ajaxSelectReplyList(int boardNo) {
+		
+		ArrayList<Reply> list = bService.selectReplyList(boardNo);
+		
+		return new Gson().toJson(list);
 		
 	}
 	
@@ -342,6 +350,43 @@ public class BoardController {
 		jObj.put("result", result);
 		
 		return jObj.toJSONString();
+		
+	}
+	
+	// 대댓글 작성
+	@ResponseBody
+	@RequestMapping(value="reReply.bo", produces="application/json; charset=UTF-8")
+	public String ajaxInsertreReply(Reply r) {
+		
+		int result = bService.insertreReply(r);
+		
+		JSONObject jObj = new JSONObject();
+		jObj.put("result", result);
+		
+		return jObj.toJSONString();
+		
+	}
+	
+	// 댓글 수정
+	@ResponseBody
+	@RequestMapping(value="editReply.bo", produces="application/json; charset=UTF-8")
+	public String ajaxUpdateReply(Reply r) {
+		
+		int result = bService.updateReply(r);
+		
+		JSONObject jObj = new JSONObject();
+		jObj.put("result", result);
+		
+		return jObj.toJSONString();
+		
+	}
+	
+	// 댓글 삭제
+	@ResponseBody
+	@RequestMapping(value="deleteReply.bo", produces="application/json; charset=UTF-8")
+	public String ajaxDeleteReply(Reply r) {
+		
+		return null;
 		
 	}
 }

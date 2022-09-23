@@ -156,7 +156,17 @@ public class BoardServiceImpl implements BoardService {
 		return bDao.insertReply(sqlSession, r);
 	}
 
-	
+	// 대댓글 작성
+	@Override
+	public int insertreReply(Reply r) {
+		return bDao.insertreReply(sqlSession, r);
+	}
+
+	// 댓글 수정
+	@Override
+	public int updateReply(Reply r) {
+		return bDao.updateReply(sqlSession, r);
+	}
 	
 	
 	
