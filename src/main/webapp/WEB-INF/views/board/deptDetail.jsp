@@ -42,7 +42,7 @@
 
                     <div class="write-button">
                       <button type="button" class="btn btn-sm btn-primary" onclick="location.href='enrollForm.bo?no=2'">새글쓰기</button>
-                      <button type="button" class="btn btn-sm btn-light">쪽지</button>
+                      <!-- <button type="button" class="btn btn-sm btn-light">쪽지</button> -->
                       <c:if test="${ loginUser.userNo eq b.userNo }">
 	                      <button type="button" class="btn btn-sm btn-light">수정</button>
 	                      <button type="button" class="btn btn-sm btn-danger">삭제</button>
@@ -137,6 +137,8 @@
 	                    			if(result.result > 0){
 	                    				
 	                    				selectReplyList();
+	                    				
+	                    				$("#newReply").val("");
 	                    				
 	                    			}else{
 	                    				console.log("댓글 작성 실패");

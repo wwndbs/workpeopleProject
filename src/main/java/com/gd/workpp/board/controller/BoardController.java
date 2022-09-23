@@ -384,8 +384,10 @@ public class BoardController {
 	// 댓글 삭제
 	@ResponseBody
 	@RequestMapping(value="deleteReply.bo", produces="application/json; charset=UTF-8")
-	public String ajaxDeleteReply(Reply r) {
+	public String ajaxDeleteReply(int replyNo) {
 		
+		System.out.println(replyNo);
+		 
 		return null;
 		
 	}
