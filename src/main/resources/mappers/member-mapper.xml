@@ -206,7 +206,13 @@
 			    by user_no desc
 	</select>
 
-
+	<select id="checkPhone" resultType="_int">
+		select
+		    count(*)
+	    from member
+	    where email=#{email}
+	    and phone= #{phone}
+	</select>
 	
 	
 </mapper>	  

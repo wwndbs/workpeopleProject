@@ -42,6 +42,7 @@ public interface MemberService {
 	int telListCount(String dep);
 	ArrayList<Member> telList(PageInfo pi,String dep);
 	
-	
+	// 비밀번호 찾기 서비스
+	int checkPhone(Member m);
 	
 }

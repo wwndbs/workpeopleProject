@@ -83,7 +83,7 @@
                                     </tr>
 
                                     <tr style="height:50px;">
-                                        <td style="font-weight:800;">휴대폰</td>
+                                        <td style="font-weight:800;">휴대폰 (-를 제외한 숫자만 입력해주세요)</td>
                                     </tr>
 
                                     <tr>

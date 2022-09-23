@@ -132,7 +132,7 @@
 	                                    </tr>
 	
 	                                    <tr>
-	                                        <td style="font-weight:800; height:50px;">휴대폰</td>
+	                                        <td style="font-weight:800; height:50px;">휴대폰 (-를 제외한 숫자만 입력해주세요)</td>
 	                                    </tr>
 	
 	                                    <tr>
@@ -148,7 +148,7 @@
 	                                    </tr>
 	                                    
 	                                    <tr>
-	                                        <td style="font-weight:800; height:50px;">생년월일</td>
+	                                        <td style="font-weight:800; height:50px;">생년월일 (YY-MM-DD)</td>
 	                                    </tr>
 	
 	                                    <tr>

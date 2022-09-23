@@ -84,7 +84,7 @@
                                     </tr>
 
                                     <tr>
-                                        <td style="font-weight:800; height:50px;">휴대폰 (010-0000-0000)</td>
+                                        <td style="font-weight:800; height:50px;">휴대폰 (-를 제외한 숫자만 입력해주세요)</td>
                                     </tr>
 
                                     <tr>

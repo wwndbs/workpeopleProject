@@ -104,6 +104,12 @@ public class MemberServiceImpl implements MemberService{
 		return mDao.searchTelList(sqlSession, pi, keyword);
 	}
 
+
+	@Override
+	public int checkPhone(Member m) {
+		return mDao.checkPhone(sqlSession,m);
+	}
+
 	
 
 	

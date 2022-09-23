@@ -96,4 +96,9 @@ public class MemberDao {
 		return (ArrayList)sqlSession.selectList("memberMapper.selectTelList", dep, rowBounds);
 	}
 	
+	public int checkPhone(SqlSessionTemplate sqlSession, Member m) {
+		System.out.println(m);
+		return sqlSession.selectOne("memberMapper.checkPhone",m);
+	}
+	
 }

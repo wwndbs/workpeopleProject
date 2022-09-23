@@ -77,7 +77,13 @@
 <link rel="icon" href="resources/images/favicon.ico" type="image/x-icon">
 </head>
 <body>
-
+	<c:if test="${ not empty alertMsg }">
+		<script>
+			alert("${ alertMsg }");
+		</script>
+		<c:remove var="alertMsg" scope="session" />
+	</c:if>
+	
     <div id="header">
         <div id="header1">
             <div id="header1-1">
@@ -108,7 +114,7 @@
                         </tr>
                     </table>
                     
-                    <a href="" id="find-pwd" style="font-size: 10px; ">비밀번호 찾기</a>
+                    <a href="findPwd.me" id="find-pwd" style="font-size: 10px; ">비밀번호 찾기</a>
                     <br><br>
 
                     <div align="center">
