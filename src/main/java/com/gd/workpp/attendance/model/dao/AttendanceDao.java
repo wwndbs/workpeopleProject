@@ -146,10 +146,31 @@ public class AttendanceDao {
 	// 8. 사원별 근태현황 조회 / attendanceMemberList.jsp
 	
 	// 8-1. 사원별 근태현황 표 페이징처리 listCount
-	
+	public int attendanceMemberListCount(SqlSessionTemplate sqlSession, String atCategory, String searchDep,
+			 String keyword) {
+
+		HashMap<String,Object> map = new HashMap<>();
+		map.put("atCategory", atCategory);
+		map.put("searchDep", searchDep);
+		map.put("keyword", keyword);
+		System.out.println(map);
+		return sqlSession.selectOne("attendanceMapper.attendanceMemberListCount", map);
+	}
 	
 	// 8-2. 사원별 근태현황 표_근무날짜/사원번호/부서/사원명/직급/출근시간/퇴근시간/연장근무시간/총근무시간/근무상태
-	
+	public ArrayList<Attendance> attendanceMemberList(SqlSessionTemplate sqlSession, PageInfo pi, String atCategory, String searchDep,
+			  String keyword) {	
+		HashMap<String,Object> map = new HashMap<>();
+		map.put("atCategory", atCategory);
+		map.put("searchDep", searchDep);
+		map.put("keyword", keyword);		
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("attendanceMapper.attendanceMemberList", map, rowBounds);		
+	}	
 	
 	// 9. 사원휴가관리 / atHolidayGiveList.jsp
 	
@@ -160,7 +181,7 @@ public class AttendanceDao {
 		map.put("searchDep", searchDep);
 		map.put("rank", rank);
 		map.put("keyword", keyword);
-		System.out.println(map);
+		
 		return sqlSession.selectOne("attendanceMapper.atHolidayGiveListCount", map);
 	}
 	
@@ -188,9 +209,6 @@ public class AttendanceDao {
 	// 9-5. 휴가회수 버튼 클릭시 update(전사원 휴가 초기화)
 	
 	
-	// 9-6. 표 페이징처리 listCount
-	
-	
 	// 10. 사원 휴가내역 조회 / holidayMemberList.jsp
 	
 	// 10-1. 휴가내역 표 페이징처리 listCount
@@ -201,7 +219,6 @@ public class AttendanceDao {
 		map.put("hCategory", hCategory);
 		map.put("searchDep", searchDep);
 		map.put("keyword", keyword);
-		System.out.println(map);
 		return sqlSession.selectOne("attendanceMapper.holidayMemberAllListCount", map);
 	}
 	

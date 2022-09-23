@@ -115,10 +115,10 @@ public interface AttendanceService {
 	// 8. 사원별 근태현황 조회 / attendanceMemberList.jsp
 	
 	// 8-1. 사원별 근태현황 표 페이징처리 listCount
-	
+	int  attendanceMemberListCount(String atCategory, String searchDep, String keyword);	
 	
 	// 8-2. 사원별 근태현황 표_근무날짜/사원번호/부서/사원명/직급/출근시간/퇴근시간/연장근무시간/총근무시간/근무상태
-	
+	ArrayList<Attendance>  attendanceMemberList(PageInfo pi, String atCategory, String searchDep, String keyword);
 	
 	// 9. 사원휴가관리 / atHolidayGiveList.jsp
 	

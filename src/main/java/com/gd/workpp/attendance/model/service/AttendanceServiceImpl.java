@@ -80,6 +80,18 @@ public class AttendanceServiceImpl implements AttendanceService {
 		return atDao.commuteMemberList(sqlSession, pi, searchDep, keyword);
 	}
 	
+	// 8. 사원별 근태현황 조회 / attendanceMemberList.jsp
+	@Override
+	public int attendanceMemberListCount(String atCategory, String searchDep, String keyword) {
+		return atDao.attendanceMemberListCount(sqlSession, atCategory, searchDep, keyword);
+	}
+
+	@Override
+	public ArrayList<Attendance> attendanceMemberList(PageInfo pi, String atCategory, String searchDep, String keyword) {
+		return atDao.attendanceMemberList(sqlSession, pi, atCategory, searchDep, keyword);
+	}
+	
+	
 	// 9. 사원휴가관리 / atHolidayGiveList.jsp
 	@Override
 	public int atHolidayGiveListCount(String searchDep, String rank, String keyword) {
@@ -103,7 +115,7 @@ public class AttendanceServiceImpl implements AttendanceService {
 			String searchDep, String keyword) {
 		return atDao.holidayMemberAllList(sqlSession, pi, hCategory, searchDep, keyword);
 	}
-	
+
 
 
 		

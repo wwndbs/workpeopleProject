@@ -215,7 +215,6 @@ public class AttendanceController {
 	}
 	
 	
-	// 출퇴근 기록 수정요청 현황 조회
 	// 출퇴근 기록 수정요청 현황 조회 / commuteUpdate.jsp
 	/*
 	@RequestMapping("commuteUpdateList.at")
@@ -243,12 +242,8 @@ public class AttendanceController {
 	/*
 	@RequestMapping("commuteMemberUpdateList.at")
 	public ModelAndView commuteMemberUpdateList(ModelAndView mv) {
-
-		// 7-1. 출퇴근 기록 수정요청 현황 표 페이징처리 listCount
-	
-	
-		// 7-2. 출퇴근 기록 수정요청 현황 표_근무날짜/사원번호/부서/사원명/직급/출퇴근시간/수정요청시간/승인내역
-		
+		// 7-1. 출퇴근 기록 수정요청 현황 표 페이징처리 listCount	
+		// 7-2. 출퇴근 기록 수정요청 현황 표_근무날짜/사원번호/부서/사원명/직급/출퇴근시간/수정요청시간/승인내역		
 	}
 	*/	
 	
@@ -257,20 +252,32 @@ public class AttendanceController {
 	public String attendanceMemberList() {
 		return "attendance/attendanceMemberList";
 	}
-	
-	// 8. 사원별 근태현황 조회 / attendanceMemberList.jsp
-	/*
-	@RequestMapping("attendanceMemberList.at")
-	public ModelAndView attendanceMemberList(ModelAndView mv) {
 
+	// 8. 사원별 근태현황 조회 / attendanceMemberList.jsp
+
+	@ResponseBody
+	@RequestMapping(value="attendanceMemberList.at", produces="application/json; charset=utf-8")
+	public String attendanceMemberList(@RequestParam(value="cpage", defaultValue="1") int currentPage, String atCategory, String searchDep, String keyword) {	
+		
 		// 8-1. 사원별 근태현황 표 페이징처리 listCount
-	
-	
+		int listCount = atService. attendanceMemberListCount(atCategory, searchDep, keyword);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);	
+		
 		// 8-2. 사원별 근태현황 표_근무날짜/사원번호/부서/사원명/직급/출근시간/퇴근시간/연장근무시간/총근무시간/근무상태
+		ArrayList<Attendance> list = atService. attendanceMemberList(pi, atCategory, searchDep, keyword);
+		
+		HashMap<String,Object> map = new HashMap<>();
+		map.put("list", list);
+		map.put("pi", pi);
+		map.put("atCategory", atCategory);
+		map.put("searchDep", searchDep);
+		map.put("keyword", keyword);
+		
+	    return new Gson().toJson(map);
+
+	}		
 	
-	
-	}
-	*/		
 	
 	// 사원휴가관리 / atHolidayGiveList.jsp
 	@RequestMapping("atHolidayGive.at")
@@ -335,7 +342,7 @@ public class AttendanceController {
 	
 	@ResponseBody
 	@RequestMapping(value="holidayMemberAllList.at", produces="application/json; charset=utf-8")
-	public String holidayMemberAllList(@RequestParam(value="cpage", defaultValue="1") int currentPage, String startDate, String endDate, String hCategory, String searchDep, String keyword) {	
+	public String holidayMemberAllList(@RequestParam(value="cpage", defaultValue="1") int currentPage, String hCategory, String searchDep, String keyword) {	
 		
 		// 10-1. 휴가내역 표 페이징처리 listCount
 		int listCount = atService.holidayMemberAllListCount(hCategory, searchDep, keyword);

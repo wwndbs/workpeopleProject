@@ -20,6 +20,9 @@
 		<result column="at_modifydate" property="atModifyDate" />
 		<result column="dep_name" property="depName" />
 		<result column="job_name" property="jobName" />
+		<result column="working_day" property="workingDay" />
+		<result column="working_name" property="workingName" />
+		<result column="work_use" property="workUse" />
 	</resultMap>
 	
 	<resultMap id="annualResult" type="Annual">
@@ -92,19 +95,11 @@
 	
 	
 	
-	<!-- 2. 출퇴근기록 수정요청 / commuteUpdate.jsp -->
-	
-	<!-- 2-1. 이번달 시작일~종료일 출력(조회) -->
-	
-	
+	<!-- 2. 출퇴근기록 수정요청 / commuteUpdate.jsp -->	
+	<!-- 2-1. 이번달 시작일~종료일 출력(조회) -->	
 	<!-- 2-2. 출퇴근기록 표_페이징처리 listCount -->
-	
-	
 	<!-- 2-3. 출퇴근기록 표_근무일자/요일/출근시간/퇴근시간/근무상태/수정상태 -->
-	
-	
 	<!-- 2-4. 수정요청 update -->
-	
 	
 	
 	<!-- 3. 개인근태현황 / attendanceList.jsp -->
@@ -312,13 +307,39 @@
 	
 	
 	
-	<!-- 8. 사원별 근태현황 조회 / attendanceMemberList.jsp -->
-	
+	<!-- 8. 사원별 근태현황 조회 / attendanceMemberList.jsp -->	
 	<!-- 8-1. 사원별 근태현황 표 페이징처리 listCount -->
-	
+	<select id="attendanceMemberListCount" resultType="_int">
+		select 
+		       count(*)
+		  from attendance at
+		  join member m on(m.user_no = at.user_no)
+		  join document d on (d.user_no = at.user_no)
+		  join work wo on (wo.document_no = d.document_no)
+	</select>
 	
 	<!-- 8-2. 사원별 근태현황 표_근무날짜/사원번호/부서/사원명/직급/출근시간/퇴근시간/연장근무시간/총근무시간/근무상태 -->
-	
+	<select id="attendanceMemberList" resultMap="attendanceResult">
+		select 
+		       at_date
+		     , at_day
+		     , m.user_no
+		     , m.dep_name
+		     , m.user_name
+		     , m.job_name
+		     , nvl(at.at_start, '-') as at_start
+		     , nvl(at.at_end, '-') as at_end
+		     , wo.work_use
+		     , at_totaltime
+		     , DECODE(AT_STATUS, 1, '정상',
+		                         2, '지각',
+		          			     3, '휴가',
+                                '결근') AS AT_STATUS
+          from attendance at
+		  join member m on(m.user_no = at.user_no)
+		  join document d on (d.user_no = at.user_no)
+		  join work wo on (wo.document_no = d.document_no)
+	</select>
 	
 	
 	<!-- 9. 사원휴가관리 / atHolidayGiveList.jsp -->

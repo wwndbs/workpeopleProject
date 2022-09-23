@@ -51,9 +51,9 @@
                       <!-- 검색폼 -->
                       <div style="display:flex; padding-top:30px; padding-bottom:30px; margin:0 auto;">
 
-                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#holiday-give" data-backdrop="static" style="height:40px; margin-right:15px;">전사원 휴가지급</button>
-
-                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#holiday-bonus" data-backdrop="static" style="height:40px; margin-right:420px;">보너스 휴가지급</button>
+                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#holiday-give" data-backdrop="static" style="height:40px; margin-right:5px;">휴가 지급</button>
+						<button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#holiday-recall" data-backdrop="static" style="height:40px; margin-left:5px; margin-right:10px;">휴가 초기화</button>
+                        <!--<button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#holiday-bonus" data-backdrop="static" style="height:40px; margin-right:420px;">보너스 휴가지급</button>-->
 
                         <div class="form-group1">
                           <select class="form-control select1" id="searchDep" name="searchDep" style="width:100px; height:40px;">
@@ -79,10 +79,10 @@
                           <input class="form-control mb-2 search1" name="keyword" id="keyword" type="text" type="text" placeholder="사원명을 입력해주세요." style="height:40px;">
                           <button type="button" class="btn btn-sm btn-primary" style="width:60px; height:40px;" onclick="selectSearchList(1);">검색</button>
                         </div>
-
+						<!--  
                         <button type="button" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#service-year" data-backdrop="static" style="height:40px; margin-left:420px;">근속연수 조회</button>
                         <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#holiday-recall" data-backdrop="static" style="height:40px; margin-left:15px; margin-right:15px;">휴가 초기화</button>
-
+						-->
                       </div>
                       
                     </div>
