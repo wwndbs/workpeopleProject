@@ -426,26 +426,28 @@ public class ApprovalController {
 	@RequestMapping("approvalOfApproval.ap")
 	public String approvalOfApproval(@RequestParam(value="vacationStart", defaultValue="1")String vacationStart,
 			                         @RequestParam(value="vacationEnd", defaultValue="1")String vacationEnd,
+			                         @RequestParam(value="absenceDate", defaultValue="1")String absenceDate,
 			                         String approvalUser, int order, int approvalCount, String form, int documentNo, String userName, HttpSession session, Model model) {
 		Member m = (Member)session.getAttribute("loginUser");
-
+		
 		if(m.getUserName().equals(approvalUser)) {
 			if(approvalCount == order) {
-				int result = apService.approvalOfApproval(approvalUser, documentNo, vacationStart, vacationEnd, userName);
+				int result = apService.approvalOfApproval(approvalUser, documentNo, vacationStart, vacationEnd, absenceDate, userName, form);
 				if(result > 0) {
-					session.setAttribute("toastMsg", "승인 했습니다.");	
-					return "redirect:approvalDetail.ap?no=" + documentNo +"&form=" + form;
+					session.setAttribute("toastMsg", "승인 했습니다.");
+					return "redirect:approvalDetail.ap?form=" + form + "&documentNo=" + documentNo;
 				}else {
 					model.addAttribute("errorMsg", "결재승인 과정 중 오류 발생");
 					return "common/errorPage";
 				}
 			}else {
 				session.setAttribute("toastMsg", "결재 순서가 아닙니다.");	
-				return "redirect:approvalDetail.ap?no=" + documentNo +"&form=" + form;
+				return "redirect:approvalDetail.ap?form=" + form + "&documentNo=" + documentNo;
 			}
 		}else {
-			session.setAttribute("toastMsg", "결재자가 아닙니다.");	
-			return "redirect:approvalDetail.ap?no=" + documentNo +"&form=" + form;
+			session.setAttribute("toastMsg", "결재자가 아닙니다.");
+			System.out.println(form);
+			return "redirect:approvalDetail.ap?form=" + form + "&documentNo=" + documentNo;
 		}
 	}
 	

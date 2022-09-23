@@ -173,10 +173,10 @@
 					if(todolist.length == 0){
 						value += '<li style="text-align : center;">조회된 할 일이 없습니다.</li>';
 					}else{
-	   					for(let i = 0; i < 5; i++){
-	   						if(todolist[i].status == 1){
-	   							value += '<li>' + todolist[i].todoContent + '</li>';		
-	   						}
+	   					for(let i = 0; i < todolist.length; i++){
+		   						if(todolist[i].status == 1){
+		   							value += '<li>' + todolist[i].todoContent + '</li>';		
+		   						}	   							
 	   					}   												
 					}
 					$(".todo-list").html(value);
@@ -195,7 +195,7 @@
 					if(list.length == 0){
 						value += '<tr><td colspan="3">조회된 결재 문서가 없습니다.</td></tr>';
 					}else{
-	   					for(let i = 0; i < 5; i++){
+	   					for(let i = 0; i < list.length; i++){
 	   						if(i < 6){
 		   						value += '<tr>'
 		   							  +  	'<td style="text-align : left;">' + list[i].documentTitle + '</td>'
@@ -243,13 +243,15 @@
    					if(board.length == 0){
    						value += '<li style="cursor : pointer;">조회된 게시물이 없습니다.</li>';
    					}else{
-	   					for(let i = 0; i < 8; i++){
-	   						value += '<li style="cursor : pointer;">'
-	   						      +  	'<span>'
-	   						      +     	'<a>' + board[i].boardTitle + '</a>'
-	   						      +     '</span>'
-	   						      +      '<span>' + board[i].createDate + '</span>'
-	   						      +  '</li>';
+	   					for(let i = 0; i < board.length; i++){
+	   						if(i < 8){
+		   						value += '<li style="cursor : pointer;">'
+		   						      +  	'<span>'
+		   						      +     	'<a>' + board[i].boardTitle + '</a>'
+		   						      +     '</span>'
+		   						      +      '<span>' + board[i].createDate + '</span>'
+		   						      +  '</li>';	   							
+	   						}
 	   					}   						
    					}
    					$(".notice-list").html(value);
@@ -356,13 +358,15 @@
    					if(board.length == 0){
    						value += '<li style="cursor : pointer;">조회된 게시물이 없습니다.</li>';
    					}else{
-	   					for(let i = 0; i < 8; i++){
-	   						value += '<li style="cursor : pointer;">'
-	   						      +  	'<span>'
-	   						      +     	'<a>' + board[i].boardTitle + '</a>'
-	   						      +     '</span>'
-	   						      +      '<span>' + board[i].createDate + '</span>'
-	   						      +  '</li>';
+	   					for(let i = 0; i < board.length; i++){
+	   						if(i < 8){
+		   						value += '<li style="cursor : pointer;">'
+		   						      +  	'<span>'
+		   						      +     	'<a>' + board[i].boardTitle + '</a>'
+		   						      +     '</span>'
+		   						      +      '<span>' + board[i].createDate + '</span>'
+		   						      +  '</li>';	   							
+	   						}
 	   					}	
    					}
    					$(".notice-list").html(value);

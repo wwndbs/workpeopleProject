@@ -55,6 +55,17 @@
 							                                    	</td>
 					                                    		</tr>					                                    	
 					                                    	</c:when>
+					                                    	<c:when test="${document.documentForm eq '결근사유서'}">
+					                                    		<tr style="cursor : pointer;" onclick="location.href='approvalOfApproval.ap?approvalUser=${list.userNo}&order=${list.approvalOrder}&approvalCount=${document.approvalCount}&form=${document.documentForm}&documentNo=${document.documentNo}&userName=${document.userNo}&absenceDate=${obj.absenceDate}'">
+							                                    	<td>
+							                                    	<br>
+								                                    	<c:if test="${ list.status != 0 }">
+								                                    		${ list.userNo }
+								                                    	</c:if>
+							                                    	<br><br>
+							                                    	</td>
+					                                    		</tr>					                                    	
+					                                    	</c:when>
 					                                    	<c:otherwise>
 					                                    		<tr style="cursor : pointer;" onclick="location.href='approvalOfApproval.ap?approvalUser=${list.userNo}&order=${list.approvalOrder}&approvalCount=${document.approvalCount}&form=${document.documentForm}&documentNo=${document.documentNo}&userName=${document.userNo}'">
 							                                    	<td>
@@ -173,7 +184,7 @@
 						        </c:if>
 						        <c:forEach var="i" items="${ list }">
 							        <c:if test="${ i.userNo eq m.userName && i.status == 0}">
-					                	<button class="btn btn-danger btn-sm" onclick="approvalreFusal();">반려</button>
+					                	<button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#commute-start-modal" data-backdrop="static">반려</button>
 					              	</c:if>
 				              	</c:forEach>
 				              </div>
@@ -183,6 +194,29 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- 반려메세지 모달 출력 -->
+	<form action="approvalFusal.ap" method="POST">
+		<div class="modal" id="commute-start-modal">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<!-- Modal body -->
+					<div class="modal-body" style="text-align:center;"><br>
+					    반려 메세지를 입력해주세요.
+					</div>
+					<div class="modal-body" style="text-align:center;">
+					    <input type="text" name="msg" class="form-control form-control-sm">
+					    <input type="hidden" name="documentNo" value="${ document.documentNo }">
+					</div>
+					<!-- Modal footer -->
+					<div class="modal-footer" style="justify-content:center;">
+						<button type="submit" class="btn btn-jyok" id="commute-start-btn">반려</button>
+						<button type="button" class="btn btn-jycancle" data-dismiss="modal">취소</button>					
+					</div>
+				</div>
+			</div>
+		</div>
+    </form>
 
 	<jsp:include page="../common/commonToast.jsp" />
 	
@@ -199,24 +233,6 @@
 		}
 	</script>
 	
-	<script>
-		function approvalreFusal(){
-			
-			let fusalMsg = prompt("반려메세지");
-			let documentNo = '${document.documentNo}';
-			
-			if(fusalMsg == null){
-				alert("반려메세지를 입력해 주세요.");
-			}else{
-				if(fusalMsg.length == 0){
-					alert("반려메세지를 입력해 주세요.");					
-				}else{
-					location.href="approvalFusal.ap?documentNo=" + documentNo + "&msg=" + fusalMsg;					
-				}
-			}
-		}
-	</script>
-	
 	<c:choose>
 		<c:when test="${ document.documentContent eq null}">
 			<script>
@@ -224,7 +240,6 @@
 				$(function(){
 					$("#document-content").css('height', "300px");
 					$("#document-content").html('내용이 없습니다.');
-					console.log('${obj}');
 				})
 			</script>
 		</c:when>
@@ -234,7 +249,6 @@
 				$(function(){
 					$("#document-content").css('height', "300px");
 					$("#document-content").html('${document.documentContent}');
-					console.log('${obj}');
 				})
 			</script>
 		</c:otherwise>

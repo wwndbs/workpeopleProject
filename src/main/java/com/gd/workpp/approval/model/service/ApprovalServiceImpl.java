@@ -167,8 +167,8 @@ public class ApprovalServiceImpl implements ApprovalService {
 	}
 
 	@Override
-	public int approvalOfApproval(String approvalUser, int documentNo, String vacationStart, String vacationEnd, String userName) {
-		return apDao.approvalOfApproval(sqlSession, approvalUser, documentNo, vacationStart, vacationEnd, userName);
+	public int approvalOfApproval(String approvalUser, int documentNo, String vacationStart, String vacationEnd, String absenceDate, String userName, String form) {
+		return apDao.approvalOfApproval(sqlSession, approvalUser, documentNo, vacationStart, vacationEnd, absenceDate, userName, form);
 	}
 
 	@Override

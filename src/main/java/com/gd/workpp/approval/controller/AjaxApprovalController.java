@@ -38,7 +38,7 @@ public class AjaxApprovalController {
                                    HttpSession session) {
 		Member m = (Member)session.getAttribute("loginUser");
 		String userNo = m.getUserNo();
-		
+
 		int listCount = apService.selectApprovalCount(category, userNo);
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		ArrayList<Document> list = apService.selectApprovalList(pi, category, userNo);

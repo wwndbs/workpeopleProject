@@ -314,31 +314,45 @@ public class ApprovalDao {
 		return (ArrayList)sqlSession.selectList("approvalMapper.approvalDetailLine", no);
 	}
 	
-	public int approvalOfApproval(SqlSessionTemplate sqlSession, String approvalUser, int documentNo, String vacationStart, String vacationEnd, String userName) {
-		HashMap<String, Object> data = new HashMap<>();
+	public int approvalOfApproval(SqlSessionTemplate sqlSession, String approvalUser, int documentNo, String vacationStart, String vacationEnd, String absenceDate, String userName, String form) {
+		HashMap<String, String> data = new HashMap<>();
 		data.put("approvalUser", approvalUser);
-		data.put("documentNo", documentNo);
+		data.put("documentNo", String.valueOf(documentNo));
 		data.put("vacationStart", vacationStart);
 		data.put("vacationEnd", vacationEnd);
+		data.put("absenceDate", absenceDate);
 		data.put("userName", userName);
 		
 		int result1;
 		int result2;
-		System.out.println("유저명 : " + userName);
+		
+		// 결재문서 결재자수 확인
 		int approvalCountCheck = sqlSession.selectOne("approvalMapper.approvalStatusCheck", data);
+		
+		// 결재문서 결재자수가 1일 경우 해당 조건문 안에서 처리 후 progress값 수정
 		if(approvalCountCheck == 1) {
-			result1 = sqlSession.update("approvalMapper.updateDocumentApprovalCount", data);
-			result2 = sqlSession.update("approvalMapper.updateApprovalStatus", data);
-			sqlSession.update("approvalMapper.updateProgress", data);
-			if(vacationStart.equals(vacationEnd)) {
-				sqlSession.insert("approvalMapper.insertVacationDate", data);
-			}else {
-				sqlSession.insert("approvalMapper.insertVacationStart", data);
-				sqlSession.insert("approvalMapper.insertVacationEnd", data);
+			result1 = sqlSession.update("approvalMapper.updateDocumentApprovalCount", data);// 결재문서 결재자 수 1차감 수정
+			result2 = sqlSession.update("approvalMapper.updateApprovalStatus", data);// 결재자 결재 여부 수정
+			sqlSession.update("approvalMapper.updateProgress", data);// 결재문서 상태 수정
+			
+			// 휴가 시작일, 종료일이 1이 아닐 경우
+			if(!vacationStart.equals("1") && !vacationEnd.equals("1")) {
+				// 휴가일수가 1일인 경우
+				if(vacationStart.equals(vacationEnd)) {
+					sqlSession.insert("approvalMapper.insertVacationDate", data);//
+				}else {
+					sqlSession.insert("approvalMapper.insertVacationStart", data);//
+					sqlSession.insert("approvalMapper.insertVacationEnd", data);//
+				}				
+			}
+			
+			// 결재완료 하려는 양식이 결근사유서 일 경우
+			if(form.equals("결근사유서") && !absenceDate.equals("1")) {
+				sqlSession.insert("approvalMapper.insertAbsenceStatus", data);
 			}
 		}else {
-			result1 = sqlSession.update("approvalMapper.updateDocumentApprovalCount", data);
-			result2 = sqlSession.update("approvalMapper.updateApprovalStatus", data);
+			result1 = sqlSession.update("approvalMapper.updateDocumentApprovalCount", data); // 결재문서 결재자 수 1차감 수정
+			result2 = sqlSession.update("approvalMapper.updateApprovalStatus", data);// 결재자 결재 여부 수정
 		}
 		
 		return result1 * result2; // 1 or 0

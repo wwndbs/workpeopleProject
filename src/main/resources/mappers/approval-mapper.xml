@@ -731,7 +731,7 @@
 		           seq_attendance.nextval
 		         , (select user_no from member where user_name = #{userName})
 		         , #{vacationEnd}
-		         , '4'
+		         , '3'
 		         , to_char(to_date(#{vacationEnd}, 'YYYY-MM-DD'), 'dy')
 		           )
 	</insert>
@@ -749,7 +749,7 @@
 		           seq_attendance.nextval
 		         , (select user_no from member where user_name = #{userName})
 		         , #{vacationStart}
-		         , '4'
+		         , '3'
 		         , to_char(to_date(#{vacationStart}, 'YYYY-MM-DD'), 'dy')
 		           )
 	</insert>
@@ -767,8 +767,24 @@
 		           seq_attendance.nextval
 		         , (select user_no from member where user_name = #{userName})
 		         , #{vacationEnd}
-		         , '4'
+		         , '3'
 		         , to_char(to_date(#{vacationEnd}, 'YYYY-MM-DD'), 'dy')
+		           )
+	</insert>
+	
+	<insert id="insertAbsenceStatus">
+		    insert into
+		attendance (
+		           at_no
+		         , user_no
+		         , at_date
+		         , at_status
+		           )           
+		    values (
+		           seq_attendance.nextval
+		         , (select user_no from member where user_name = #{userName})
+		         , #{absenceDate}
+		         , '4'
 		           )
 	</insert>
  
