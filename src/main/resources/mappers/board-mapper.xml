@@ -484,5 +484,35 @@
 		  , #{replyContent}
 		  )
 	</insert>
+	
+	<!-- 대댓글 작성 -->
+	<insert id="insertreReply">
+		insert
+		  into reply
+		  (
+		    reply_no
+		  , user_no
+		  , ref_bno
+		  , ref_rno
+		  , reply_content
+		  )
+		  values
+		  (
+		    seq_reply.nextval
+		  , #{userNo}
+		  , #{refBoardNo}
+		  , #{refReplyNo}
+		  , #{replyContent}
+		  )
+	</insert>
+	
+	<!-- 댓글 수정 -->
+	<update id="updateReply">
+		update
+		       reply
+		   set reply_content = #{replyContent}
+		 where reply_no = #{replyNo}
+		   and status = 'Y'
+	</update>
 
 </mapper>
