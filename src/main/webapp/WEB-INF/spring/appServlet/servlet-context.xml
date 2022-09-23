@@ -23,6 +23,69 @@
 	
 	<context:component-scan base-package="com.gd.workpp" />
 	
-	
+	<interceptors>
+	 	<interceptor>
+	 		<mapping path="/login.me"/>
+			<mapping path="/updateForm.me"/>
+			<mapping path="/update.me"/>
+			<mapping path="/updatePwd.me"/>
+			<mapping path="/uploadProfile.me"/>
+			<mapping path="/createForm.me"/>
+			<mapping path="/create.me"/>
+			<mapping path="/modifyList.me"/>
+			<mapping path="/modify.me"/>
+			<mapping path="/modifyMember.me"/>
+			<mapping path="/delete.me"/>
+			<mapping path="/tel.me"/>
+			<mapping path="/searchTel.me"/>
+			<mapping path="/logout.me"/>
+			<mapping path="/orgchart.co"/>
+			<mapping path="/updateOrgChartForm.co"/>
+			<mapping path="/addOrgChart.co"/>
+			<mapping path="/deleteOrgChart.co"/>
+			<mapping path="/updateDepForm.co"/>
+			<mapping path="/createDep.co"/>
+			<mapping path="/deleteDep.co"/>
+			<mapping path="/companyUpdateForm.co"/>
+			<mapping path="/updateCom.co"/>
+			<mapping path="/box.ma"/>
+			<mapping path="/enrollForm.ma"/>
+			<mapping path="/insert.ma"/>
+			<mapping path="/save.ma"/>
+			<mapping path="/detail.ma"/>
+			<mapping path="/updateImp.ma"/>
+			<mapping path="/updateRead.ma"/>
+			<mapping path="/updateStatus.ma"/>
+			<mapping path="/reply.ma"/>
+			<mapping path="/relay.ma"/>
+			<mapping path="/insertRelay.ma"/>
+			<mapping path="/selectTag.ma"/>
+			<mapping path="/insertTag.ma"/>
+			<mapping path="/updateTag.ma"/>
+			<mapping path="/deleteTag.ma"/>
+			<mapping path="/tagChange.ma"/>
+			<mapping path="/outbox.ma"/>
+			<mapping path="/commute.at"/>
+			<mapping path="/commuteList.at"/>
+			<mapping path="/commuteUpdate.at"/>
+			<mapping path="/attendance.at"/>
+			<mapping path="/holiday.at"/>
+			<mapping path="/work.at"/>
+			<mapping path="/commuteMember.at"/>
+			<mapping path="/commuteMemberList.at"/>
+			<mapping path="/commuteMemUpdate.at"/>
+			<mapping path="/attendanceMember.at"/>
+			<mapping path="/attendanceMemberList.at"/>
+			<mapping path="/atHolidayGive.at"/>
+			<mapping path="/atHolidayGiveList.at"/>
+			<mapping path="/holidayMemberList.at"/>
+			<mapping path="/holidayMemberAllList.at"/>
+			<mapping path="/schedule.sc"/>
+			<mapping path="/scheduleList.sc"/>
+			<mapping path="/scheduleEnrollForm.sc"/>
+			
+	 		<beans:bean class="com.br.spring.common.interceptor.LoginInterceptor" id="loginInterceptor" />
+	 	</interceptor>
+	 </interceptors>
 	
 </beans:beans>
