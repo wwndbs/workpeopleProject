@@ -84,7 +84,7 @@
 			<mapping path="/scheduleList.sc"/>
 			<mapping path="/scheduleEnrollForm.sc"/>
 			
-	 		<beans:bean class="com.br.spring.common.interceptor.LoginInterceptor" id="loginInterceptor" />
+	 		<beans:bean class="com.gd.workpp.common.interceptor.LoginInterceptor" id="loginInterceptor" />
 	 	</interceptor>
 	 </interceptors>
 	
