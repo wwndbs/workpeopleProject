@@ -52,10 +52,8 @@ public class AjaxMemberController {
 		
 		m.setPhone(phoneNumber);
 		m.setEmail(email);
-		System.out.println(m);
 		int result = 0;
 		result = mService.checkPhone(m);
-		System.out.println(result);
 		if( result > 0) {
 	        Random rand  = new Random();
 	        String numStr = "";
@@ -70,7 +68,6 @@ public class AjaxMemberController {
 	        return numStr;
 	        
 		}else {
-			session.setAttribute("alertMsg", "정보가 일치하는 이메일이 존재하지 않습니다."); 
 			return "";
 		}
     }

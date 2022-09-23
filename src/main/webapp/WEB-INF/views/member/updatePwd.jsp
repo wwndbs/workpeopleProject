@@ -142,18 +142,21 @@
 		                    "email" : $('#findemail').val()
 		                },
 		                success: function(res){
-		                    $('#checkBtn').click(function(){
-		                    	console.log(res);
-		                        if($.trim(res) ==$('#inputCertifiedNumber').val()){
-		                        	var email = $('#findemail').val();
-								    $("#email").val(email);
-									console.log(email);
-									$("#findPwdModal").modal("show");
-		                        }else{
-		                            alert("인증에 실패하였습니다");
-		                        }
-		                    })
-		
+		                    if(res==""){
+		                    	alert("일치하는 이메일 정보가 없습니다");
+		                    	location.reload();
+		                    }else{
+			                	$('#checkBtn').click(function(){
+			                    	if($.trim(res) ==$('#inputCertifiedNumber').val()){
+			                        	var email = $('#findemail').val();
+									    $("#email").val(email);
+										$("#findPwdModal").modal("show");
+			                        }else{
+			                            alert("일치하는 이메일 정보가 없습니다");
+			                            location.reload();
+			                        }
+			                    })
+		                    }
 		
 		                }
 		            })
