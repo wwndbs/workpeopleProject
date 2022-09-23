@@ -310,17 +310,16 @@
 	<!-- 8. 사원별 근태현황 조회 / attendanceMemberList.jsp -->	
 	<!-- 8-1. 사원별 근태현황 표 페이징처리 listCount -->
 	<select id="attendanceMemberListCount" resultType="_int">
-		select 
+        select 
 		       count(*)
-		  from attendance at
+          from attendance at
 		  join member m on(m.user_no = at.user_no)
-		  join document d on (d.user_no = at.user_no)
-		  join work wo on (wo.document_no = d.document_no)
+		 where m.status = 'N'
 	</select>
 	
 	<!-- 8-2. 사원별 근태현황 표_근무날짜/사원번호/부서/사원명/직급/출근시간/퇴근시간/연장근무시간/총근무시간/근무상태 -->
 	<select id="attendanceMemberList" resultMap="attendanceResult">
-		select 
+        select 
 		       at_date
 		     , at_day
 		     , m.user_no
@@ -329,7 +328,7 @@
 		     , m.job_name
 		     , nvl(at.at_start, '-') as at_start
 		     , nvl(at.at_end, '-') as at_end
-		     , wo.work_use
+		     , nvl(at_overtime, '0') as at_overtime
 		     , at_totaltime
 		     , DECODE(AT_STATUS, 1, '정상',
 		                         2, '지각',
@@ -337,8 +336,8 @@
                                 '결근') AS AT_STATUS
           from attendance at
 		  join member m on(m.user_no = at.user_no)
-		  join document d on (d.user_no = at.user_no)
-		  join work wo on (wo.document_no = d.document_no)
+		 where m.status = 'N'
+          order by at_date desc
 	</select>
 	
 	
