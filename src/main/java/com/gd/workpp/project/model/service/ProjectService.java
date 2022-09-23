@@ -12,7 +12,7 @@ public interface ProjectService {
 	
 	// 작성자 김은지
 	
-	// 0. 메인화면 프로젝트리스트 조회
+	// 0. 메인화면 프로젝트리스트 조회 (ajax)
 	ArrayList<Project> homeProjectList(String userNo);
 	
 	// 1. 내 프로젝트 리스트 조회

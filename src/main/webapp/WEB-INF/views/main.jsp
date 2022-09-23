@@ -132,34 +132,8 @@
                            <a href="myProject.pr"><i class="fas fa-ellipsis-h"></i></a>
                         </li>
                      </ul>
-                     <div class="project-container">
-                     	<c:choose>
-                     		<c:when test="${ not empty list }">                     			
-                     			<span style="margin: 100px -220px -90px 220px">현재 참여하고있는 프로젝트가 없습니다.</span>
-                     		</c:when>
-                     		<c:otherwise>
-                     			<c:forEach var="p" items="${ list }">
-			                        <div class="project">
-			                           <span>${ p.projectTitle }</span> <span><i class="fas fa-user-alt"></i>&nbsp;13</span>
-			                        </div>
-		                        </c:forEach>		                        
-		                        <div class="project">
-			                           <span>프로젝트명</span> <span><i class="fas fa-user-alt"></i>&nbsp;13</span>
-			                        </div>
-			                        <div class="project">
-			                           <span>프로젝트명</span> <span><i class="fas fa-user-alt"></i>&nbsp;13</span>
-			                        </div>
-			                        <div class="project">
-			                           <span>프로젝트명</span> <span><i class="fas fa-user-alt"></i>&nbsp;13</span>
-			                        </div>
-			                        <div class="project">
-			                           <span>프로젝트명</span> <span><i class="fas fa-user-alt"></i>&nbsp;13</span>
-			                        </div>
-			                        <div class="project">
-			                           <span>프로젝트명</span> <span><i class="fas fa-user-alt"></i>&nbsp;13</span>
-			                        </div>
-                        	</c:otherwise>
-                        </c:choose>                        
+                     <div class="project-container">		                        
+                        <!-- ajax 조회부분 -->                                            
                      </div>
                      <div class="slide-btn">
                         <i class="fas fa-chevron-left" id="left-btn"></i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="fas fa-chevron-right" id="right-btn"></i>
@@ -245,6 +219,32 @@
    				},
    				error : function(){
    					console.log("메인페이지 결재 조회 부분 ajax연결 실패");
+   				}
+   			})
+   			
+   			// 프로젝트 조회
+   			$.ajax({
+   				url : "homeList.pr",
+   				data : {
+   					//userNo : ${pp.userNo}
+   					//projectTitle : ${pp.projectTitle}
+   				},
+   				success : function(plist){
+   					
+   					console.log(plist);
+   					
+   					value="";
+   					for(let i = 0; i < 5; i++){
+   						if(i < 6){
+   							value += '<div class="project">'
+   								   + 	'<span>' + plist[i].projectTitle + '</span> <span><i class="fas fa-user-alt"></i>&nbsp;'+ 'ss' +'</span>'
+   								   + '</div>';
+   						}
+   					}
+   					   										
+   					$(".project-container").html(value);
+   				},error : function(){
+   					console.log("프로젝트 조회 ajax연결 실패");
    				}
    			})
    			
