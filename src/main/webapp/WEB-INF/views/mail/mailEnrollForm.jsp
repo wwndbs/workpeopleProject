@@ -201,42 +201,6 @@
 	                  </tr>
 	                  
 	                  <script>
-	                  	
-	                		// 쿠키에서 최근주소 불러오기
-							$(function(){
-								
-								let emailArr = [];
-								
-								// document.cookie => "사번=이메일_이메일; key=value; key=value; key=value" (모든 쿠키)
-								
-								let cookieStrArr = document.cookie.split("; "); // ["사번=이메일_이메일_이메일", "사번=이메일_이메일", "key=value"];
-								
-								for(let i in cookieStrArr){
-									let cookie = cookieStrArr[i].split("="); // ["사번", "이메일_이메일"]
-									
-									if(cookie[0] == "${loginUser.userNo}"){ // 키값(사번)이 로그인한 사원의 사번과 동일한 경우
-										emailArr = cookie[1].split("_");
-									}
-								}
-								
-								// 배열 순서를 뒤집어서 최근 주소부터 정렬
-								let recentAddr = emailArr.reverse(); // ["이메일", "이메일"]
-								
-								value = "";
-								for(let i=0; i<recentAddr.length; i++){
-									
-									if(i < 5){
-										value += '<option value="' + recentAddr[i] + '">' + recentAddr[i] + '</option>';
-									}
-								
-								}
-								$("select[name=recent_address]").append(value);
-								
-							})
-
-						</script>
-	                  
-	                  <script>
 	                  	// 나에게 체크박스
 	                  	$("#toMe").change(function(){
 	                  		
@@ -385,6 +349,8 @@
 			              	$("#receiver").val(currToArr.join()); // "aaa.com, ccc.com"
 			              	
 			              	toLimit();
+			              	
+			              	console.log($("#receiver").val());
 		                
 		                })
 		                
@@ -442,6 +408,74 @@
 			              	}
 		                }
 		                
+		                
+                		// 쿠키에서 최근주소 불러오기
+						$(function(){
+							
+							let emailArr = [];
+							
+							// document.cookie => "사번=이메일_이메일; key=value; key=value; key=value" (모든 쿠키)
+							
+							let cookieStrArr = document.cookie.split("; "); // ["사번=이메일_이메일_이메일", "사번=이메일_이메일", "key=value"];
+							
+							for(let i in cookieStrArr){
+								let cookie = cookieStrArr[i].split("="); // ["사번", "이메일_이메일"]
+								
+								if(cookie[0] == "${loginUser.userNo}"){ // 키값(사번)이 로그인한 사원의 사번과 동일한 경우
+									emailArr = cookie[1].split("_");
+								}
+							}
+							
+							// 배열 순서를 뒤집어서 최근 주소부터 정렬
+							let recentAddr = emailArr.reverse(); // ["이메일", "이메일"]
+							
+							// 출력
+							value = "";
+							for(let i=0; i<recentAddr.length; i++){
+								
+								if(i < 5){
+									value += '<option value="' + recentAddr[i] + '">' + recentAddr[i] + '</option>';
+								}
+							
+							}
+							$("select[name=recent_address]").append(value);
+							
+							// 최근 주소에서 옵션 선택 시 받는사람에 추가
+	                		$(document).on("change", "select[name=recent_address]", function(){
+	                			
+	                			if( $("#receiver").val().indexOf($(this).val()) == -1 ){
+	                				
+		                			// 주소 li요소로 추가
+		                  			let value="";
+		                            value +='<li class="mail-addr-out toMe to-li">'
+		                                   + '<span class="addr-block">' 
+		                                   + $(this).val()
+		                                   + '</span>'
+		                                   + '<span class="btn-addr-remove">'
+		                                   + '<ion-icon name="close-outline"></ion-icon>'
+		                                   + '</span>'
+		                                   + '</li>';
+		                                   
+		                            $("#toAddrWrap .mail-addr-create").before(value);
+	
+					                // input value에 주소값 추가
+						            let currTo = $("#receiver").val();
+						            if(currTo == ''){ // 처음 주소 추가 시
+						            	$("#receiver").val($(this).val());
+						            }else{
+						            	$("#receiver").val(currTo + "," + $(this).val());
+						            }
+	                				
+	                			}else{
+	                				toast("이미 추가되어 있는 주소입니다.");
+	                			}
+								
+	                			// 다시 "최근주소" 옵션이 선택 되어 있도록 변경
+	                			$("select[name=recent_address] option:eq(0)"). prop("selected", true);
+	                			
+	                		})
+	                		
+						})
 	                  </script>
 	                    
 	                  <tr>

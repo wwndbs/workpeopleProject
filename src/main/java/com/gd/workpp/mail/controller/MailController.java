@@ -210,20 +210,11 @@ public class MailController {
 			}
 			
 			// 삭제하지 않은 원글파일만 refNo currval로 insert
-			/*
-			for(int i=0; i<exist.length; i++) {
-				
-				// 원글 첨부파일의 파일번호가 삭제하지 않은 첨부파일의 번호와 일치할 경우
-				if( originFile.get(i).getFileNo() == Integer.parseInt(exist[i]) ) {
-					atList.add(new Attachment(originFile.get(i).getOriginName(), originFile.get(i).getChangeName()));
-				}
-						
-			}*/
-			
 			for(int i=0; i<originFile.size(); i++) {
 				
 				if(i < exist.length) {
-					if(originFile.get(i).getFileNo() == Integer.parseInt(exist[i])) {
+					// 원글 첨부파일의 파일번호가 삭제하지 않은 첨부파일의 번호와 일치할 경우
+					if(originFile.get(i).getFileNo() == Integer.parseInt(exist[i])) { 
 						atList.add(new Attachment(originFile.get(i).getOriginName(), originFile.get(i).getChangeName()));
 					}
 				}
