@@ -305,7 +305,7 @@
 		
 		// 태그 삭제 요청
 		$(document).on("click", "#deleteTagBtn", function(){
-		
+			console.log($(this).next().val());
 			$.ajax({
     			url: "deleteTag.ma",
     			data: {
@@ -313,9 +313,11 @@
     			},
     			success:function(result){
     				if(result == 'success'){
+    					console.log("성공");
         				toast("태그 삭제 성공하였습니다.");
         				setTimeout(reload, 1000);
     				}else{
+    					console.log("실패");
     					toast("태그 삭제 실패하였습니다.");
     				}
     			},

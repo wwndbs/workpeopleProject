@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,7 +53,7 @@
 </style>
 </head>
 <body>
-
+	
 	<div class="adminx-container">
 	
 		<jsp:include page="../common/header.jsp" />
@@ -72,11 +73,32 @@
 	              <span class="mail-h">메일 쓰기</span>
 	              <br>
 	              
-	              <form action="insert.ma" id="mailForm" method="post" enctype="multipart/form-data">
-	              	<input type="text" name="sender" value="${ loginUser.email }" hidden>
+	              <c:choose>
+	              	<c:when test="${ type eq 'relay' }"> <!-- 전달 발송 -->
+	              		<form action="insertRelay.ma" id="mailForm" method="post" enctype="multipart/form-data">
+	              	</c:when>
+	              	<c:otherwise> <!-- 일반 메일 발송 -->
+	             		<form action="insert.ma" id="mailForm" method="post" enctype="multipart/form-data">
+	              	</c:otherwise>
+	              </c:choose>
+	              
+	              	<input type="hidden" name="sender" value="${ loginUser.email }"> 
+	              	
+	              	<c:choose>
+	              		<c:when test="${ type eq 'relay' }">
+	              			<input type="hidden" name="originMailNo" value="${ m.mailNo }">  <!-- 메일 전달시 원글의 메일번호가 담겨있음 -->
+	              		</c:when>
+	              		<c:otherwise>
+	              			<input type="hidden" name="mailNo"> <!-- 임시저장 성공시 해당 메일번호 담음. 임시저장 여부 구분 가능 -->
+	              		</c:otherwise>
+	              	</c:choose>
+	               
+	                <input type="hidden" name="existFileNo" value="">
+	                <input type="hidden" name="originFile">
+	              	
 	                <!-- 상단 버튼 박스 시작 -->
 	                <div class="mail-btn-content">
-	                  <button type="button" class="mail-btn1" data-toggle="modal" data-target="#jyModal_confirm">
+	                  <button type="button" class="mail-btn1">
 	                    <ion-icon name="paper-plane-outline" style="margin-top: 8px; font-size: 17px;"></ion-icon>
 	                    &nbsp;&nbsp;보내기
 	                  </button>
@@ -97,15 +119,13 @@
 	                  </button>
 	                </div>
 	                <!-- 상단 버튼 박스 끝 -->
-	                
-	                <input type="hidden" name="mailNo"> <!-- 임시저장 여부 구분하기 위한 메일번호 -->
 	
 	                <table class="mail-table-write">
 	                  <tr>
 	                    <th class="fixedCol1">
 	                      받는 사람
 						  <c:choose>
-						  	<c:when test="${ not empty m }">
+						  	<c:when test="${ type eq 'reply' }">
 		                        <!-- 답장일 경우 -->
 						  		<input type="text" name="receiver" id="receiver" value="${ m.sender }" hidden>
 						  	</c:when>
@@ -125,7 +145,7 @@
 	                        <div id="toAddrWrap" class="mail-input-div">
 	                          <ul>
 	                          	<!-- 답장일 경우 -->
-	                            <c:if test="${ not empty m }">
+	                            <c:if test="${ type eq 'reply' }">
 		                            <li class="mail-addr-out to-li">
 			                          <span class="addr-block">
 			                           ${ m.sender }
@@ -146,11 +166,6 @@
 	                        </div>
 	                        <select name="recent_address" class="select-recent-addr">
 	                          <option disabled selected>최근 주소</option>
-	                          <option value="">kimbabo@workpp.com</option>
-	                          <option value="">jungmalddong@workpp.com</option>
-	                          <option value="">gamja@workpp.com</option>
-	                          <option value="">boramsarang@workpp.com</option>
-	                          <option value="">hiwork@workpp.com</option>
 	                        </select>
 	                  	  </div>  
 	                    </td>
@@ -180,18 +195,46 @@
 	                            </li>
 	                          </ul>
 	                        </div>
-	                        <select name="recent_address" class="select-recent-addr">
-	                          <option disabled selected>최근 주소</option>
-	                          <option value="">kimbabo@workpp.com</option>
-	                          <option value="">jungmalddong@workpp.com</option>
-	                          <option value="">gamja@workpp.com</option>
-	                          <option value="">boramsarang@workpp.com</option>
-	                          <option value="">hiwork@workpp.com</option>
-	                        </select>
 	                      </div>  
 	                    </td>
 	                    <td></td>
 	                  </tr>
+	                  
+	                  <script>
+	                  	
+	                		// 쿠키에서 최근주소 불러오기
+							$(function(){
+								
+								let emailArr = [];
+								
+								// document.cookie => "사번=이메일_이메일; key=value; key=value; key=value" (모든 쿠키)
+								
+								let cookieStrArr = document.cookie.split("; "); // ["사번=이메일_이메일_이메일", "사번=이메일_이메일", "key=value"];
+								
+								for(let i in cookieStrArr){
+									let cookie = cookieStrArr[i].split("="); // ["사번", "이메일_이메일"]
+									
+									if(cookie[0] == "${loginUser.userNo}"){ // 키값(사번)이 로그인한 사원의 사번과 동일한 경우
+										emailArr = cookie[1].split("_");
+									}
+								}
+								
+								// 배열 순서를 뒤집어서 최근 주소부터 정렬
+								let recentAddr = emailArr.reverse(); // ["이메일", "이메일"]
+								
+								value = "";
+								for(let i=0; i<recentAddr.length; i++){
+									
+									if(i < 5){
+										value += '<option value="' + recentAddr[i] + '">' + recentAddr[i] + '</option>';
+									}
+								
+								}
+								$("select[name=recent_address]").append(value);
+								
+							})
+
+						</script>
 	                  
 	                  <script>
 	                  	// 나에게 체크박스
@@ -420,7 +463,8 @@
 	                    <td></td>
 	                  </tr>
 	                  <tr>
-	                    <th>파일첨부</th>
+	                    <th>파일첨부
+	                    </th>
 	                    <td style="margin-right: 5px;" id="td-filebtn">
 	                    	<ion-icon id="btn-filebox" name="caret-up-circle-outline"></ion-icon>
 	                    </td>
@@ -436,17 +480,61 @@
 	                    <td></td>
 	                    <td>
 	                      <div class="mail-filebox open" id="dropZone">
+	                      
 	                        <a class="file-empty" >
 	                          <i class="material-icons-sharp" style="font-size: 16px; vertical-align: -3px;">
 	                            attach_file
 	                          </i>
 	                          여기에 첨부파일을 끌어오세요. 또는 <b onclick="chooseFile();"><u>파일 선택</u></b>
+	                          <span class="help" onmouseover="over();" onmouseout="out();">
+                               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle"><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="17" x2="12" y2="17"></line></svg>
+                              	<span class="tool-tip top" style="width: 210px; height: 35px;">
+                                   첨부파일은 최대 10개 등록 가능합니다.
+                               	</span>
+                                <script>
+                                   function over(){
+                                       $(".tool-tip").css("display", "inline-block");
+                                   }
+
+                                   function out(){
+                                       $(".tool-tip").css("display", "none");
+                                   }
+                                </script>
+                           	  </span>
 	                        </a>
 	                        
+	                        <!-- 전달로 넘어온 첨부파일 있는 경우 -->
+	                        <c:if test="${ not empty relayAtList }">
+	                        	<c:forEach var="at" items="${ relayAtList }" varStatus="i">
+	                        		<div class="old-each-file">
+	                        			<input type="hidden" name="relayFileNo" value="${ at.fileNo }">
+	                        			<span class="btn-file-remove"><ion-icon name="close-outline" index="${ i.index }" class="old"></ion-icon></span>
+	                        			<span>${ at.originName }</span>
+	                        		</div>
+	                        	</c:forEach>
+	                        	
+	                        	<script>
+				                  	$(function(){
+						                $(".file-empty").css("display", "none");
+						                
+					                	// 원글의 첨부파일 리스트
+					                	const arr = document.getElementsByName('relayFileNo');
+			
+					                	let existFileNo = "";
+					                	for(var i=0; i<arr.length; i++){
+					                		existFileNo += arr[i].value + ",";
+					                	}
+					                	existFileNo = existFileNo.substring(0,existFileNo.lastIndexOf(",")); 
+					                	$("input[name=existFileNo]").val(existFileNo);
+					                	
+				                  	})
+	                  			</script>
+	                        </c:if>
 	                      </div>
 	                    </td>
 	                    <td></td>
 	                  </tr>
+	                  
 	                    
 	                  <script>
 	                  	let fileArr = [];
@@ -484,7 +572,7 @@
 			                for(var i=0; i<obj.files.length; i++){
 			                  
 			                  value += '<div class="each-file">'
-			                       + '<span class="btn-file-remove"><ion-icon name="close-outline" index="' + i + '"></ion-icon></span>'
+			                       + '<span class="btn-file-remove"><ion-icon name="close-outline" index="' + i + '" class="new"></ion-icon></span>'
 			                       + '<span>' + obj.files[i].name + '</span>'
 			                       + '</div>';
 			
@@ -520,8 +608,8 @@
 			                
 		                }
 		                  
-		                // 파일 리스트에서 파일 개별 삭제
-		                $(document).on("click", ".btn-file-remove>ion-icon", function(){
+		                // 새로 첨부한 파일 리스트에서 파일 개별 삭제
+		                $(document).on("click", ".btn-file-remove>ion-icon.new", function(){
 		                	
 				            $(this).parent().parent().remove();
 				              
@@ -533,21 +621,48 @@
 				            settingFile();
 			              	
 					        $(".each-file").remove();
-					        if(fileArr.length == 0){
+					        //if(fileArr.length == 0){ => 이렇게 하면 전달 시에 문제 생김
+					        if($(".btn-file-remove").length == 0){
 			                	 $(".file-empty").css("display", "block");
 					        }else{
 				               selectFileList(document.querySelector("input[name=upfile]"));				            	
 					        }
 					        
 		                })
-		                  
+		                
+		                // 전달로 이미 첨부되어 있던 파일 리스트에서 파일 개별 삭제 / 삭제되지 않고 남아 있는 파일 번호 담기
+		                $(document).on("click", ".btn-file-remove>ion-icon.old", function(){
+						
+		                	$(this).parent().parent().remove();
+		                	
+		                	// 삭제되지 않고 남아 있는 첨부파일
+		                	const arr = document.getElementsByName('relayFileNo');
+
+		                	let existFileNo = "";
+		                	for(var i=0; i<arr.length; i++){
+		                		existFileNo += arr[i].value + ",";
+		                	}
+		                	existFileNo = existFileNo.substring(0,existFileNo.lastIndexOf(",")); 
+		                	
+		                	$("input[name=existFileNo]").val(existFileNo);
+		                	
+		                	if($(".btn-file-remove").length == 0){
+			                	 $(".file-empty").css("display", "block");
+					        }
+		                		
+		                });
+		                
+		                
 		                // 파일 전체 삭제
 		                function fileReset(){
 		                	
 		                    $("input[name=upfile]").val('');
 		                    fileArr = [];
-		
+		                    $("input[name=existFileNo]").val('');
+		                    
 					        $(".each-file").remove();
+					        $(".old-each-file").remove();
+					        
 		                	$(".file-empty").css("display", "block");
 		                	
 		                }
@@ -610,18 +725,31 @@
 			            	$("input[name=upfile]")[0].files = dataTransfer.files;
 				            
 		                }
+                   		
+                   		// 보내기 버튼 클릭
+                   		$(".mail-btn1").click(function(){
+                   			if(document.querySelectorAll('.to-li').length == 0){
+                   				toast("받는 사람 메일 주소를 입력해 주세요.");
+                   			}else{
+                   				$('#jyModal_confirm').modal('show');
+                   			}
+                   		})
+                   		
+                   		$(".mail-btn4").click(function(){
+                   			$("#summernote").summernote("code", "");
+                   		})
 	                  </script>
 	
 	                  <tr>
-	                    <th colspan="3" style="padding-top: 20px">
-	                     <textarea name="mailContent" id="summernote" rows="10" style="resize: none;" code=${ m.mailContent }></textarea>
-	                    </th>
+	                    <td colspan="3" style="padding-top: 20px; text-align: initial;">
+	                     <textarea name="mailContent" id="summernote" rows="10" style="resize: none;">${ m.mailContent }</textarea>
+	                    </td>
 	                    <td></td>
 	                  </tr>
 	                </table>
 	                <br>
 	                  
-		            <!-- 모달: 제목 없음 / 버튼 2개 -->
+		            <!-- 모달: 발송 confirm -->
 					<div class="modal" id="jyModal_confirm">
 					    <div class="modal-dialog modal-dialog-centered">
 					        <div class="modal-content">

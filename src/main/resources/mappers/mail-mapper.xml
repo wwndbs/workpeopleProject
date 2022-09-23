@@ -452,7 +452,8 @@
 	
 	<select id="selectMailByNo" resultMap="mailResult">
 		select
-			   mail_title
+			   mail_no
+			 , mail_title
 			 , mail_content
 			 , sender
 			 , m.user_name as "sender_name" 
