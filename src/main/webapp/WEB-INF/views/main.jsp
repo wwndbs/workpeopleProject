@@ -379,11 +379,11 @@
       $(function() {
          let position = 0;
          $(".slide-btn>#right-btn").click(function() {
-            position += 235;
+            position += 250;
             $(".project-container").css('transform', 'translateX(-' + position + 'px)');
             
-            if (position > 235) {
-               position = -235;
+            if (position > 210) {
+               position = -245;
             }
          })
 
