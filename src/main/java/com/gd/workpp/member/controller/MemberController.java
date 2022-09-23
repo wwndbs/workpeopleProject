@@ -253,13 +253,13 @@ public class MemberController {
 			return "common/errorPage";
 			
 		}
-		
+		   
 	}
 	
 	// 사원 퇴사 처리
 	@RequestMapping("delete.me")
 	public String deleteMember(int no,String filePath, Model model, HttpSession session) {
-		// filePath= "" | "resources/xxxx/xxx.pdf"
+		
 		
 		int result = mService.deleteMember(no);
 		
