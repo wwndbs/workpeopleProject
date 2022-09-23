@@ -48,7 +48,7 @@ public class AjaxMemberController {
 
 	@ResponseBody
 	@RequestMapping("checkphone.me")
-    public String sendSMS(Member m,String phoneNumber, String email) {
+    public String sendSMS(Member m,String phoneNumber, String email,HttpSession session) {
 		
 		m.setPhone(phoneNumber);
 		m.setEmail(email);
@@ -70,6 +70,7 @@ public class AjaxMemberController {
 	        return numStr;
 	        
 		}else {
+			session.setAttribute("alertMsg", "정보가 일치하는 이메일이 존재하지 않습니다."); 
 			return "";
 		}
     }

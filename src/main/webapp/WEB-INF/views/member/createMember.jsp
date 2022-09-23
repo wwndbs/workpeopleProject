@@ -87,7 +87,7 @@
                                     </tr>
 
                                     <tr>
-                                        <td colspan="2" align="center"><input style="height:40px;" type="text" id="phone" class="form-control" name="phone" style="height:30px;" placeholder="010-0000-0000" ></td>
+                                        <td colspan="2" align="center"><input style="height:40px;" type="text" id="phone" class="form-control" name="phone" style="height:30px;" placeholder="010-0000-0000" required></td>
                                     </tr>
                                     
                                     <tr style="height:50px;">
