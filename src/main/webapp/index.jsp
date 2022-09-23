@@ -71,6 +71,7 @@
         border-color:rgb(45, 130, 235);
     }
     
+    
     </style>
 <!-- favicon 설정 -->
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">

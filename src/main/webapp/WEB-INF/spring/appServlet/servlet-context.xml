@@ -25,7 +25,6 @@
 	
 	<interceptors>
 	 	<interceptor>
-	 		<mapping path="/login.me"/>
 			<mapping path="/updateForm.me"/>
 			<mapping path="/update.me"/>
 			<mapping path="/updatePwd.me"/>
