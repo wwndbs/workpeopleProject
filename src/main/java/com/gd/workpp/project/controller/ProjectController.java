@@ -30,24 +30,6 @@ public class ProjectController {
 	@Autowired
 	private ProjectService pService;
 	
-	// [김은지] 메인화면 프로젝트리스트 조회
-	@RequestMapping("homeList.pr")
-	public ModelAndView homeProjectList(ModelAndView mv, HttpSession session, Project pp) {
-		Member m = (Member)session.getAttribute("loginUser");
-		String userNo = m.getUserNo();
-		
-		ArrayList<Project> list = pService.homeProjectList(userNo);
-
-		System.out.println(list);
-		
-		mv.addObject("list", list)
-		  .addObject("userNo", userNo)
-		  .addObject(list)
-		  .setViewName("main");		
-		
-		return mv;		
-	}
-	
 	// [김은지] 내프로젝트 리스트 (로그인한 회원의 부서명 전달받기, sql에도 전달하고 컨트롤러서부터 계속 부서명을 전달해야됨 (jsp는 조건문x))
 	// 프로젝트 관리자 승인리스트
 	@RequestMapping(value="myProject.pr", produces="application/json; charset=utf-8")
@@ -146,9 +128,6 @@ public class ProjectController {
 		ArrayList<Project> pList = pService.selectAdmin(no);
 		ArrayList<ProMember> pmList = pService.selectMember(no);
 		
-		System.out.println(pi);
-		System.out.println(list);
-		
 		mv.addObject("pi", pi)
 		  .addObject("list", list)
 		  .addObject("no", no)
@@ -156,8 +135,7 @@ public class ProjectController {
 		  .addObject("keyword", keyword)
 		  .addObject("pList", pList)
 		  .addObject("pmList", pmList)
-		  .setViewName("project/projectDetailList");
-		
+		  .setViewName("project/projectDetailList");		
 		
 		return mv;
 	}
@@ -225,8 +203,6 @@ public class ProjectController {
 		}else {
 			mv.addObject("errorMsg", "상세조회 실패").setViewName("common/errorPage");	
 		}
-		
-		System.out.println(no);
 		
 		return mv;		
 

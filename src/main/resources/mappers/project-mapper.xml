@@ -79,7 +79,7 @@
                ) as "countMember" <!-- 프로젝트 참여인원 구하기 -->                 
   		  from project p    
   		  join pro_member pm on (p.project_no = pm.project_no)                 
-           and pm.user_no = #{userNo} <!-- 로그인한 회원번호 -->      
+           and pm.user_no = '00014' <!-- 로그인한 회원번호 -->      
            and pro_approve = 'Y'
          order
             by p.project_no desc
@@ -361,6 +361,40 @@
 		 order
 		    by pb.pro_board_no desc
 	</select>
+	
+	<!-- [김은지] 프로젝트게시판 상태별로 조회 | 1:진행, 2:완료, 3:보류 
+		select
+		       pb.pro_board_no
+		     , pb.pro_board_status
+		     , pb.pro_board_level
+		     , pb.pro_title
+		     , pb.project_no
+		     , pb.user_no as "boardWriterNo"		     
+		     , m.user_name as "pbUserName"
+		     , m.job_name as "pbJobName"
+		     , pb.create_date
+		     , pb.modify_date
+		     , pb.start_date
+		     , pb.end_date 
+		     , pb.attach_origin
+		     , pb.attach_modify
+		  from pro_board pb
+		  join member m on (m.user_no = pb.user_no)
+		 where pb.project_no = #{projectNo}
+		   and pb.status = 'Y'
+		   <choose>
+		   	  <when test="condition == 'proeed'">
+		   	  	and pro_board_status = 1
+		   	  </when>
+           	  <when test="condition == 'complete'">
+		   	  	and pro_board_status = 2
+		   	  </when>
+		   	  <when test="condition == 'postpone'">
+		   	  	and pro_board_status = 3
+		   	  </when>
+           </choose>
+		 order
+		    by pb.pro_board_no desc-->
 	
 	<!-- [김은지] 프로젝트게시물 조회수증가 -->
 	<update id="increaseCount">

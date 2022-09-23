@@ -96,7 +96,6 @@
 					                			<c:forEach var="d" items="${ list }">
 								                     <tr style="text-align:center;">
 								                     	<input type="hidden" value="${d.depName }">
-								                     	<input type="hidden" value="${d.userCount }">
 			                                            <td>${d.depName }</td>
 			                                            <td>${d.userName } 부장</td>
 			                                            <td>${d.userCount } 명</td>

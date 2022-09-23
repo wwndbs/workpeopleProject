@@ -55,9 +55,7 @@
 	                            <div class="profile-alert-wrapper">
 	                                <div class="sanprofile-area">
 	                                <img id="profileImg" src="<c:out value='${loginUser.profImg}' default='resources/profile_images/defaultProfile.jpg' />" onclick="$('#profileImgFile').click();">
-	                				<input type="file" id="profileImgFile" style="display:none;"><br>                             
-	                                <span id="profile-name"></span><br>
-	                                <span id="department-name"></span>
+	                				<input type="file" id="profileImgFile" style="display:none;"><br>                         
 	                                </div>
 	                            </div>
 	                            
@@ -132,7 +130,7 @@
 	                                    </tr>
 	
 	                                    <tr>
-	                                        <td style="font-weight:800; height:50px;">휴대폰</td>
+	                                        <td style="font-weight:800; height:50px;">휴대폰 (-를 제외한 숫자만 입력해주세요)</td>
 	                                    </tr>
 	
 	                                    <tr>
@@ -148,7 +146,7 @@
 	                                    </tr>
 	                                    
 	                                    <tr>
-	                                        <td style="font-weight:800; height:50px;">생년월일</td>
+	                                        <td style="font-weight:800; height:50px;">생년월일 (YY-MM-DD)</td>
 	                                    </tr>
 	
 	                                    <tr>

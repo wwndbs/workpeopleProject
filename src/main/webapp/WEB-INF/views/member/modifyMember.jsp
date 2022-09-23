@@ -84,15 +84,15 @@
                                     </tr>
 
                                     <tr>
-                                        <td style="font-weight:800; height:50px;">휴대폰 (010-0000-0000)</td>
+                                        <td style="font-weight:800; height:50px;">휴대폰 (-를 제외한 숫자만 입력해주세요)</td>
                                     </tr>
 
                                     <tr>
-                                        <td colspan="2" align="center"><input type="text" id="phone" class="form-control" name="phone" style="height:40px;" placeholder="${m.phone }" ></td>
+                                        <td colspan="2" align="center"><input type="text" id="phone" class="form-control" name="phone" style="height:40px;" value="${m.phone }" ></td>
                                     </tr>
                                     
                                     <tr>
-                                        <td style="font-weight:800;">개인이메일</td>
+                                        <td style="font-weight:800; height:40px;">개인이메일</td>
                                     </tr>
 
                                     <tr>
@@ -112,7 +112,7 @@
                                     </tr>
 
 									<tr>
-                                        <td>
+                                        <td style="width:380px;">
                                             <select id="depName" class="form-control" name="depName" style="height:40px; width:100%" required>
                                                 <option value="${m.depName}">${m.depName}</option>
                                                 <c:choose>

@@ -12,7 +12,7 @@ public interface ProjectService {
 	
 	// 작성자 김은지
 	
-	// 0. 메인화면 프로젝트리스트 조회
+	// 0. 메인화면 프로젝트리스트 조회 (ajax)
 	ArrayList<Project> homeProjectList(String userNo);
 	
 	// 1. 내 프로젝트 리스트 조회
@@ -76,7 +76,8 @@ public interface ProjectService {
 	// 19. 사용자 프로젝트 승인요청
 	int proApproveRequest(ProMember pm);
 	
-	// 20. 승인요청하는 사원 - 한명 모달조회
-	ProMember selectRequestMember(int projectNo, String userMemNo);
+	// 20. 프로젝트 게시물리스트 진행도별로 조회 (ajax)
+	int ajaxSelectListCount(int projectNo, String condition, String keyword);
+	ArrayList<ProBoard> ajaxSelectBoardList(int projectNo, PageInfo pi, String condition, String keyword);
 
 }

@@ -40,15 +40,15 @@
 		                        <ul>
 		                            <li style="width: 80px;"><a href="tel.me">전체</a></li>
 		                            <c:choose>
-			                			<c:when test="${ empty deplist }">
-		                					<li>${dep}</li>
-			                			</c:when>
-			                		<c:otherwise>
-			                			<c:forEach var="d" items="${ deplist }">
-			                				<li style="width: 80px;"><a href="tel.me?dep=${d.depName }">${d.depName }</a></li>
-			                    		</c:forEach>
-	                    			</c:otherwise>
-								</c:choose>
+				                			<c:when test="${ empty deplist }">
+			                					<li>${dep}</li>
+				                			</c:when>
+				                		<c:otherwise>
+				                			<c:forEach var="d" items="${ deplist }">
+				                				<li style="width: 80px;"><a href="tel.me?dep=${d.depName }">${d.depName }</a></li>
+				                    		</c:forEach>
+		                    			</c:otherwise>
+									</c:choose>
 		                        </ul>
 		                    </form>
 		                    <hr>
@@ -97,7 +97,7 @@
 		                    
 		                    <c:choose>
 					            <c:when test="${dep!=''}">
-				                    <div id="pagingArea">
+				                    <div id="pagingArea" class="sangpagingArea">
 						                <ul class="pagination">
 						                	
 						                	<c:choose>
@@ -126,7 +126,7 @@
 					            </c:when>
 
 					            <c:otherwise>
-					            	<div id="pagingArea">
+					            	<div id="pagingArea" class="sangpagingArea">
 						                <ul class="pagination">
 						                	
 						                	<c:choose>

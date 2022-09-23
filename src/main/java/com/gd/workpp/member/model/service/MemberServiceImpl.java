@@ -52,14 +52,14 @@ public class MemberServiceImpl implements MemberService{
 
 
 	@Override
-	public int modifyListCount() {
-		return mDao.modifyListCount(sqlSession);
+	public int modifyListCount(String dep) {
+		return mDao.modifyListCount(sqlSession,dep);
 	}
 
 
 	@Override
-	public ArrayList<Member> modifyList(PageInfo pi) {
-		return mDao.modifyList(sqlSession, pi);
+	public ArrayList<Member> modifyList(PageInfo pi, String dep) {
+		return mDao.modifyList(sqlSession, pi,dep);
 	}
 
 
@@ -102,6 +102,12 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public ArrayList<Member> searchTelList(PageInfo pi, String keyword) {
 		return mDao.searchTelList(sqlSession, pi, keyword);
+	}
+
+
+	@Override
+	public int checkPhone(Member m) {
+		return mDao.checkPhone(sqlSession,m);
 	}
 
 	

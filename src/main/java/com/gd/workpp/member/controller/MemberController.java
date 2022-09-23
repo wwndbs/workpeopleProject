@@ -2,6 +2,7 @@ package com.gd.workpp.member.controller;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,6 +24,7 @@ import com.gd.workpp.company.model.service.CompanyService;
 import com.gd.workpp.company.model.vo.Department;
 import com.gd.workpp.company.model.vo.Job;
 import com.gd.workpp.member.model.service.MemberService;
+import com.gd.workpp.member.model.service.certificationService;
 import com.gd.workpp.member.model.vo.Member;
 
 @Controller
@@ -47,6 +50,12 @@ public class MemberController {
 	@RequestMapping("updateForm.me")
 	public ModelAndView updateMemberForm(ModelAndView mv) {
 		mv.setViewName("member/updateMember");
+		return mv;
+	}
+	
+	@RequestMapping("findPwd.me")
+	public ModelAndView findPwdForm(ModelAndView mv) {
+		mv.setViewName("member/updatePwd");
 		return mv;
 	}
 	
@@ -86,17 +95,19 @@ public class MemberController {
 	}
 	
 	@RequestMapping("modifyList.me")
-	public ModelAndView modifyList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv) {
+	public ModelAndView modifyList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv,@RequestParam(value="dep", defaultValue="") String dep) {
 		
-		int listCount = mService.modifyListCount();
+		int listCount = mService.modifyListCount(dep);
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
-		ArrayList<Member> list = mService.modifyList(pi);
-		
+		ArrayList<Member> list = mService.modifyList(pi,dep);
+		ArrayList<Department> deplist = cService.departmentList();
 		
 
 		mv.addObject("pi", pi)
 		  .addObject("list", list)
+		  .addObject("dep",dep)
+		  .addObject("deplist", deplist)
 		  .setViewName("member/modifyMemberList");
 		
 		return mv;
@@ -104,36 +115,18 @@ public class MemberController {
 	
 	
 	@RequestMapping("login.me")
-	public ModelAndView loginMember(Member m, HttpSession session, ModelAndView mv) {
-		/*	암호화 확인용 코드
-			String encPwd = bcryptPasswordEncoder.encode(m.getUserPwd());
-			System.out.println(m.getUserPwd());
-			System.out.println(encPwd);
-		*/
+	public String loginMember(Member m, HttpSession session, Model model) {
 		
 		Member loginUser = mService.loginMember(m);
-		// loginUser : 오로지 아이디만을 가지고 조회된 회원
-		// loginUser userPwd 필드 : db에 기록되어있는 비번 (암호문)
 		
 		if(loginUser != null && bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) { // 로그인 성공
 			// 아이디가 일치하고 , 비밀번호도 일치할때 ( 매치를이용해서 db의 랜덤값과 유저가 입력한 비밀번호를 검사함 )
 			session.setAttribute("loginUser", loginUser); // 여기 비밀번호 암호문으로 담겨있음
-			mv.setViewName("main");
+			return "main";
 		}else {
-			mv.setViewName("redirect:/");
+			session.setAttribute("alertMsg", "로그인에 실패하였습니다.");
+			return "redirect:/";
 		}
-		
-		/* 비밀번호 암호화 이전
-		Member loginUser = mService.loginMember(m);
-		
-		if(loginUser == null) { // 실패
-			mv.setViewName("redirect:/");
-		}else { // 성공
-			session.setAttribute("loginUser", loginUser);
-			mv.setViewName("main");
-		}
-		*/
-		return mv;
 	}
 	
 	@RequestMapping("update.me")
@@ -154,7 +147,7 @@ public class MemberController {
 	}
 	
 	
-	@ResponseBody // 응답데이터를 보내주지 않아서 붙임
+	@ResponseBody
 	@RequestMapping("uploadProfile.me")
 	public void ajaxUploadProfile(MultipartFile uploadFile, Member m,String originalFile, HttpSession session) {
 		
@@ -180,7 +173,6 @@ public class MemberController {
 	}
 	
 	
-	// 비밀번호 수정
 	@RequestMapping("updatePwd.me")
 	public String updatePwd(Member m,HttpSession session,String updatePwd,String userPwd) {
 		
@@ -204,33 +196,7 @@ public class MemberController {
 			session.setAttribute("alertMsg", "현재 비밀번호가 일치하지 않습니다.");
 			return "redirect:updateForm.me";
 		}
-		
-		
-		/*
-		if(bcryptPasswordEncoder.matches(userPwd, loginUser.getUserPwd())) {
-			String encPwd = bcryptPasswordEncoder.encode(updatePwd);
-			m.setUserPwd(encPwd);
-			int result = mService.updatePwd(m);
-			if(result > 0) {
-				// > 변경 성공 시
-		           //- 갱신된 회원 객체 조회해서 session에 덮어씌우기
-		           //- 마이페이지가 보여질 수 있도록 처리 (이때 alert로 성공 알림)
-				session.setAttribute("loginUser",mService.loginMember(m));
-				session.setAttribute("alertMsg", "성공적으로 비밀번호가 변경되었습니다.");
-				return "redirect:myPage.me";
-				
-			}else {
-		        //> 변경 실패 시
-		           //- 마이페이지가 보여질 수 있도록 처리 (이때 alert로 실패 알림)
-				session.setAttribute("alertMsg", "비밀번호 변경에 실패하였습니다.");
-				return "redirect:myPage.me";
-				
-			}
-		}else {
-			session.setAttribute("alertMsg", "현재 비밀번호가 일치하지 않습니다.");
-			return "redirect:myPage.me";
-		}
-		*/
+
 	}
 	
 	// 사원 계정 생성 창 이동
@@ -308,5 +274,26 @@ public class MemberController {
 		
 	}
 	
+	@RequestMapping("pwdChange.me")
+	public String changePwd(Member m,HttpSession session,String updatePwd) {
+
+		String encPwd = bcryptPasswordEncoder.encode(updatePwd);
+		m.setUserPwd(encPwd);
+		int result = mService.updatePwd(m);
+		if(result > 0) {
+			session.setAttribute("alertMsg", "성공적으로 비밀번호가 변경되었습니다.");
+			return "redirect:findPwd.me";
+			
+		}else {
+	        //> 변경 실패 시
+	           //- 마이페이지가 보여질 수 있도록 처리 (이때 alert로 실패 알림)
+			session.setAttribute("alertMsg", "비밀번호 변경에 실패하였습니다.");
+			return "redirect:findPwd.me";
+			
+		}
+	}
+	
+	
+			
 	
 }

@@ -87,7 +87,7 @@ public class CompanyController {
 		int result = cService.addOrgChart(o);
 		
 		if(result>0) { // 성공
-			return "redirect:updateOrgchartForm.co";
+			return "redirect:updateOrgChartForm.co";
 		}else { // 실패
 
 			// 에러페이지 포워딩
@@ -102,7 +102,7 @@ public class CompanyController {
 		int result = cService.deleteOrgChart(o);
 		
 		if(result > 0) {
-			return "redirect:updateOrgchartForm.co";
+			return "redirect:updateOrgChartForm.co";
 			
 		}else {
 			// 실패 = 에ㅔ러 문구 담아서 에러메세지

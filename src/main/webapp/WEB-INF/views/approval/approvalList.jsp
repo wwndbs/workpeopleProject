@@ -96,24 +96,57 @@
 							    <ul class="pagination justify-content-center">
 							    
 							    	<c:if test="${ pi.currentPage != 1 }">
-								        <li class="page-item"><a class="page-link" href="approvalList.ap?cpage=1">«</a></li>
-								        <li class="page-item"><a class="page-link" href="approvalList.ap?cpage=${ pi.currentPage - 1 }">‹</a></li>
+							    		<c:choose>
+							    			<c:when test="${ category != 4 }">
+										        <li class="page-item"><a class="page-link" href="approvalList.ap?category=${ category }&cpage=1">«</a></li>
+										        <li class="page-item"><a class="page-link" href="approvalList.ap?category=${ category }&cpage=${ pi.currentPage - 1 }">‹</a></li>							    			
+							    			</c:when>
+							    			<c:otherwise>
+										        <li class="page-item"><a class="page-link" href="approvalList.ap?cpage=1">«</a></li>
+										        <li class="page-item"><a class="page-link" href="approvalList.ap?cpage=${ pi.currentPage - 1 }">‹</a></li>							    										    			
+							    			</c:otherwise>
+							    		</c:choose>
 							        </c:if>
 							        
-							        <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.maxPage }">
-							        	<c:choose>
-							        		<c:when test="${ pi.currentPage != p }">
-									        	<li class="page-item"><a class="page-link" href="approvalList.ap?cpage=${ p }">${ p }</a></li>
-							        		</c:when>
-							        		<c:otherwise>
-							        			<li class="page-item"><a class="page-link" href="approvalList.ap?cpage=${ p }"><strong>${ p }</strong></a></li>
-							        		</c:otherwise>
-							        	</c:choose>
-							        </c:forEach>
+							        <c:choose>
+							        	<c:when test="${ category != 4 }">
+									        <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.maxPage }">
+									        	<c:choose>
+									        		<c:when test="${ pi.currentPage != p }">
+											        	<li class="page-item"><a class="page-link" href="approvalList.ap?category=${ category }&cpage=${ p }">${ p }</a></li>
+									        		</c:when>
+									        		<c:otherwise>
+									        			<li class="page-item"><a class="page-link" href="approvalList.ap?category=${ category }&cpage=${ p }"><strong>${ p }</strong></a></li>
+									        		</c:otherwise>
+									        	</c:choose>
+									        </c:forEach>
+							        	</c:when>
+							        	<c:otherwise>
+									        <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.maxPage }">
+									        	<c:choose>
+									        		<c:when test="${ pi.currentPage != p }">
+											        	<li class="page-item"><a class="page-link" href="approvalList.ap?cpage=${ p }">${ p }</a></li>
+									        		</c:when>
+									        		<c:otherwise>
+									        			<li class="page-item"><a class="page-link" href="approvalList.ap?cpage=${ p }"><strong>${ p }</strong></a></li>
+									        		</c:otherwise>
+									        	</c:choose>
+									        </c:forEach>
+							        	</c:otherwise>
+							        </c:choose>
+
 							        
+							        <c:choose>
+							        	<c:when test="${ category != 4 }">
+									        <li class="page-item"><a class="page-link" href="approvalList.ap?category=${ category }&cpage=${ pi.currentPage + 1 }">›</a></li>
+									        <li class="page-item"><a class="page-link" href="approvalList.ap?category=${ category }&cpage=${ pi.endPage }">»</a></li>							        	
+							        	</c:when>
+							        	<c:otherwise>
+									        <li class="page-item"><a class="page-link" href="approvalList.ap?cpage=${ pi.currentPage + 1 }">›</a></li>
+									        <li class="page-item"><a class="page-link" href="approvalList.ap?cpage=${ pi.endPage }">»</a></li>							        	
+							        	</c:otherwise>
+							        </c:choose>
 							        <c:if test="${ pi.currentPage != pi.endPage }">
-								        <li class="page-item"><a class="page-link" href="approvalList.ap?cpage=${ pi.currentPage + 1 }">›</a></li>
-								        <li class="page-item"><a class="page-link" href="approvalList.ap?cpage=${ pi.endPage }">»</a></li>
 								    </c:if>
 							    </ul>
 						    </c:if>
@@ -125,6 +158,17 @@
 	</div>
 
 	<jsp:include page="../common/commonToast.jsp" />
+
+	<script>
+	      // 검색창에 value값이 없을 시 
+	      $("#search").keyup( function() {
+	    	  let keyword = $("#search").val();
+				
+	    	  if(!keyword){
+	    		  location.href="approvalList.ap";
+	    	  }
+	      })
+	</script>
 
 	<script>
 	    // 문서 상세조회

@@ -132,34 +132,8 @@
                            <a href="myProject.pr"><i class="fas fa-ellipsis-h"></i></a>
                         </li>
                      </ul>
-                     <div class="project-container">
-                     	<c:choose>
-                     		<c:when test="${ not empty list }">                     			
-                     			<span style="margin: 100px -220px -90px 220px">현재 참여하고있는 프로젝트가 없습니다.</span>
-                     		</c:when>
-                     		<c:otherwise>
-                     			<c:forEach var="p" items="${ list }">
-			                        <div class="project">
-			                           <span>${ p.projectTitle }</span> <span><i class="fas fa-user-alt"></i>&nbsp;13</span>
-			                        </div>
-		                        </c:forEach>		                        
-		                        <div class="project">
-			                           <span>프로젝트명</span> <span><i class="fas fa-user-alt"></i>&nbsp;13</span>
-			                        </div>
-			                        <div class="project">
-			                           <span>프로젝트명</span> <span><i class="fas fa-user-alt"></i>&nbsp;13</span>
-			                        </div>
-			                        <div class="project">
-			                           <span>프로젝트명</span> <span><i class="fas fa-user-alt"></i>&nbsp;13</span>
-			                        </div>
-			                        <div class="project">
-			                           <span>프로젝트명</span> <span><i class="fas fa-user-alt"></i>&nbsp;13</span>
-			                        </div>
-			                        <div class="project">
-			                           <span>프로젝트명</span> <span><i class="fas fa-user-alt"></i>&nbsp;13</span>
-			                        </div>
-                        	</c:otherwise>
-                        </c:choose>                        
+                     <div class="project-container">		                        
+                        <!-- ajax 조회부분 -->                                            
                      </div>
                      <div class="slide-btn">
                         <i class="fas fa-chevron-left" id="left-btn"></i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="fas fa-chevron-right" id="right-btn"></i>
@@ -196,12 +170,16 @@
    				url : "todoListView.td",
    				success : function(todolist){
 					value="";
-   					for(let i = 0; i < 5; i++){
-   						if(todolist[i].status == 1){
-   							value += '<li>' + todolist[i].todoContent + '</li>';		
-   						}
-   						$(".todo-list").html(value);
-   					}   						
+					if(todolist.length == 0){
+						value += '<li style="text-align : center;">조회된 할 일이 없습니다.</li>';
+					}else{
+	   					for(let i = 0; i < todolist.length; i++){
+		   						if(todolist[i].status == 1){
+		   							value += '<li>' + todolist[i].todoContent + '</li>';		
+		   						}	   							
+	   					}   												
+					}
+					$(".todo-list").html(value);
    				},
    				error : function(){
    					console.log("메인페이지 할 일 조회 부분 ajax연결 실패");
@@ -212,34 +190,38 @@
     		$.ajax({
    				url : "mainApprovalList.main",
    				success : function(list){
+   					
    					value="";
-
-   					for(let i = 0; i < 5; i++){
-   						if(i < 6){
-	   						value += '<tr>'
-	   							  +  	'<td style="text-align : left;">' + list[i].documentTitle + '</td>'
-	   						      +  	'<td>' + list[i].createDate + '</td>';
-	   						      
-					        if(list[i].progress == 0){
-								value += '<td><div class="tag-gray">대기</div></td>'
-								      +  '<input type="hidden" value="' + list[i].documentNo + '">'
-								      +  '<input type="hidden" value="' + list[i].documentForm + '">';
-					        }else if(list[i].progress == 1){
-					        	value += '<td><div class="tag-orange">진행중</div></td>'
-								      +  '<input type="hidden" value="' + list[i].documentNo + '">'
-								      +  '<input type="hidden" value="' + list[i].documentForm + '">';
-					        }else if(list[i].progress == 2){
-					        	value += '<td><div class="tag-green">완료</div></td>'
-								      +  '<input type="hidden" value="' + list[i].documentNo + '">'
-								      +  '<input type="hidden" value="' + list[i].documentForm + '">';
-					        }else{
-					        	value += '<td><div class="tag-red">반려</div></td>'
-								      +  '<input type="hidden" value="' + list[i].documentNo + '">'
-								      +  '<input type="hidden" value="' + list[i].documentForm + '">';
-					        }
-					        value += '</tr>';
-   						}
-   					}
+					if(list.length == 0){
+						value += '<tr><td colspan="3">조회된 결재 문서가 없습니다.</td></tr>';
+					}else{
+	   					for(let i = 0; i < list.length; i++){
+	   						if(i < 6){
+		   						value += '<tr>'
+		   							  +  	'<td style="text-align : left;">' + list[i].documentTitle + '</td>'
+		   						      +  	'<td>' + list[i].createDate + '</td>';
+		   						      
+						        if(list[i].progress == 0){
+									value += '<td><div class="tag-gray">대기</div></td>'
+									      +  '<input type="hidden" value="' + list[i].documentNo + '">'
+									      +  '<input type="hidden" value="' + list[i].documentForm + '">';
+						        }else if(list[i].progress == 1){
+						        	value += '<td><div class="tag-orange">진행중</div></td>'
+									      +  '<input type="hidden" value="' + list[i].documentNo + '">'
+									      +  '<input type="hidden" value="' + list[i].documentForm + '">';
+						        }else if(list[i].progress == 2){
+						        	value += '<td><div class="tag-green">완료</div></td>'
+									      +  '<input type="hidden" value="' + list[i].documentNo + '">'
+									      +  '<input type="hidden" value="' + list[i].documentForm + '">';
+						        }else{
+						        	value += '<td><div class="tag-red">반려</div></td>'
+									      +  '<input type="hidden" value="' + list[i].documentNo + '">'
+									      +  '<input type="hidden" value="' + list[i].documentForm + '">';
+						        }
+						        value += '</tr>';
+	   						}
+	   					}	
+					}
    					
    					$("#main-approval tbody").html(value);
    				},
@@ -247,7 +229,7 @@
    					console.log("메인페이지 결재 조회 부분 ajax연결 실패");
    				}
    			})
-   			
+   			   			
    			// 결재내역 상세조회
    			$(document).on("click", "#main-approval tbody tr", function(){
    				location.href="approvalDetail.ap?no=" + $(this).children().eq(3).val() + "&form=" + $(this).children().eq(4).val();
@@ -258,13 +240,19 @@
    				url : "mainBoardList.main",
    				success : function(board){
    					value="";
-   					for(let i = 0; i < 8; i++){
-   						value += '<li style="cursor : pointer;">'
-   						      +  	'<span>'
-   						      +     	'<a>' + board[i].boardTitle + '</a>'
-   						      +     '</span>'
-   						      +      '<span>' + board[i].createDate + '</span>'
-   						      +  '</li>';
+   					if(board.length == 0){
+   						value += '<li style="cursor : pointer;">조회된 게시물이 없습니다.</li>';
+   					}else{
+	   					for(let i = 0; i < board.length; i++){
+	   						if(i < 8){
+		   						value += '<li style="cursor : pointer;">'
+		   						      +  	'<span>'
+		   						      +     	'<a>' + board[i].boardTitle + '</a>'
+		   						      +     '</span>'
+		   						      +      '<span>' + board[i].createDate + '</span>'
+		   						      +  '</li>';	   							
+	   						}
+	   					}   						
    					}
    					$(".notice-list").html(value);
    				},
@@ -289,6 +277,32 @@
    					console.log("메인페이지 메일 갯수 조회 부분 ajax연결 실패");
    				}
    			})
+   			
+   			// 프로젝트 조회
+   			$.ajax({
+   				url : "homeList.pr",  
+   				success : function(plist){
+   					
+   					value="";
+   					for(let i = 0; i < 4; i++){
+   						if(i < 5){
+   							value += '<div class="project" style="text-align: right">'
+   								   +    '<input type="hidden" value="' + plist[i].projectNo + '">'
+   								   + 	'<span style="text-align:left">' + plist[i].projectTitle + '</span> <span><i class="fas fa-user-alt"></i>&nbsp;'+ plist[i].countMember +'</span>'
+   								   + '</div>';
+   						}
+   					}
+   					   										
+   					$(".project-container").html(value);
+   				},error : function(){
+   					console.log("프로젝트 조회 ajax연결 실패");
+   				}
+   			})
+   			
+   			// 프로젝트 상세조회
+   			$(document).on('click', "project-container div", function(){
+   				location.href="proList.pr?no=8";
+   			})
    		})
 	</script>
 
@@ -301,26 +315,30 @@
 					url : "todoListView.td",
 					success : function(todolist){
 					value="";
-					for(let i = 0; i < todolist.length; i++){
-	   					switch(status){
-		   					case 1 :
-	   	   						if(todolist[i].status == 1){
-	   	   							value += '<li>' + todolist[i].todoContent + '</li>';
-		   						}
-		   	   					break;
-		   					case 2 :
-	   	   						if(todolist[i].status == 2){
-	   	   							value += '<li>' + todolist[i].todoContent + '</li>';
-		   						}
-		   	   					break;
-		   					case 3 :
-	   	   						if(todolist[i].status == 3){
-	   	   							value += '<li>' + todolist[i].todoContent + '</li>';
-		   						}
-		   	   					break;
-	   					}
+					if(todolist.length == 0){
+						value += '<li style="text-align : center;">조회된 할 일이 없습니다.</li>';
+					}else{
+						for(let i = 0; i < todolist.length; i++){
+		   					switch(status){
+			   					case 1 :
+		   	   						if(todolist[i].status == 1){
+		   	   							value += '<li>' + todolist[i].todoContent + '</li>';
+			   						}
+			   	   					break;
+			   					case 2 :
+		   	   						if(todolist[i].status == 2){
+		   	   							value += '<li>' + todolist[i].todoContent + '</li>';
+			   						}
+			   	   					break;
+			   					case 3 :
+		   	   						if(todolist[i].status == 3){
+		   	   							value += '<li>' + todolist[i].todoContent + '</li>';
+			   						}
+			   	   					break;
+		   					}
+						}
 					}
-		   				$(".todo-list").html(value);
+		   			$(".todo-list").html(value);
 					},
 					error : function(){
 						console.log("메인페이지 상태별 할 일 조회 부분 ajax연결 실패");
@@ -340,13 +358,15 @@
    					if(board.length == 0){
    						value += '<li style="cursor : pointer;">조회된 게시물이 없습니다.</li>';
    					}else{
-	   					for(let i = 0; i < 8; i++){
-	   						value += '<li style="cursor : pointer;">'
-	   						      +  	'<span>'
-	   						      +     	'<a>' + board[i].boardTitle + '</a>'
-	   						      +     '</span>'
-	   						      +      '<span>' + board[i].createDate + '</span>'
-	   						      +  '</li>';
+	   					for(let i = 0; i < board.length; i++){
+	   						if(i < 8){
+		   						value += '<li style="cursor : pointer;">'
+		   						      +  	'<span>'
+		   						      +     	'<a>' + board[i].boardTitle + '</a>'
+		   						      +     '</span>'
+		   						      +      '<span>' + board[i].createDate + '</span>'
+		   						      +  '</li>';	   							
+	   						}
 	   					}	
    					}
    					$(".notice-list").html(value);
@@ -363,11 +383,11 @@
       $(function() {
          let position = 0;
          $(".slide-btn>#right-btn").click(function() {
-            position += 235;
+            position += 250;
             $(".project-container").css('transform', 'translateX(-' + position + 'px)');
             
-            if (position > 235) {
-               position = -235;
+            if (position > 210) {
+               position = -245;
             }
          })
 

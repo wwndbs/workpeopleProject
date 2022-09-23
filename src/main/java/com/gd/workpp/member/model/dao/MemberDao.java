@@ -33,17 +33,17 @@ public class MemberDao {
 		return sqlSession.insert("memberMapper.createMember",m);
 	}
 	
-	public int modifyListCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("memberMapper.modifyListCount");
+	public int modifyListCount(SqlSessionTemplate sqlSession,String dep) {
+		return sqlSession.selectOne("memberMapper.modifyListCount",dep);
 	}
 	
-	public ArrayList<Member> modifyList(SqlSessionTemplate sqlSession, PageInfo pi){
+	public ArrayList<Member> modifyList(SqlSessionTemplate sqlSession, PageInfo pi,String dep){
 		
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlSession.selectList("memberMapper.modifyList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("memberMapper.modifyList", dep, rowBounds);
 	}
 	
 	public Member selectmodifyMember(SqlSessionTemplate sqlSession, int userNo) {
@@ -94,6 +94,10 @@ public class MemberDao {
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
 		return (ArrayList)sqlSession.selectList("memberMapper.selectTelList", dep, rowBounds);
+	}
+	
+	public int checkPhone(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.selectOne("memberMapper.checkPhone",m);
 	}
 	
 }

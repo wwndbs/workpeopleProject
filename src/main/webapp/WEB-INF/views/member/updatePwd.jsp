@@ -80,11 +80,18 @@
     </style>
 </head>
 <body>
-
+	
+	<c:if test="${ not empty alertMsg }">
+		<script>
+			alert("${ alertMsg }");
+		</script>
+		<c:remove var="alertMsg" scope="session" />
+	</c:if>
+	
     <div id="header">
         <div id="header1">
             <div id="header1-1">
-                <img src="workpeople-resources/images/workpeople-logo-blue02.png" alt="">
+                <img src="resources/images/workpeople-logo-blue02.png" alt="">
                 <br><br><br>
             </div>
 
@@ -97,26 +104,26 @@
         <div id="body1"></div>
         <div id="body2">워크피플</div>
         <br><br>
-
+		
         <div id="body3">
             <div id="body3-1"></div>
             <div id="body3-2">
                 <form id="loginForm" method="post" action="" enctype="multipart/form-data">
                     <table id="loginTable" align="center">
                         <tr>
-                            <td colspan="2" align="center"><input type="text" id="" class="form-control" name="" style="height:30px;" placeholder="이메일" required></td>
+                            <td colspan="2" align="center"><input type="text" id="findemail" class="form-control" name="findemail" style="height:40px; width:100%;" placeholder="이메일" required></td>
                         </tr>
                         <tr >
-                            <td><input type="text" id="" class="form-control" name="" style="height:30px; width:100%" placeholder="전화번호" required></td>
-                            <td><button id="loginbtn" style="height:30px; width:100%; margin-left: 5px;">인증번호 받기</button></td>
+                            <td><input type="text" id="inputPhoneNumber" class="form-control" name="phoneNumber" style="height:40px; width:100%" placeholder="전화번호" required></td>
+                            <td><button type="button" class="btn btn-primary" id="sendPhoneNumber" style="height:40px; width:100%; margin-left: 5px;">인증번호 받기</button></td>
                         </tr>
                         <tr>
-                            <td colspan="2" align="center"><input type="text" id="" class="form-control" name="" style="height:30px;" placeholder="인증번호" required></td>
+                            <td colspan="2" align="center"><input type="text" id="inputCertifiedNumber" class="form-control" name="inputCertifiedNumber" style="height:40px; width:100%;" placeholder="인증번호"></td>
                         </tr>
                     </table>
                     <br>
                     <div align="center">
-                        <button type="submit" id="loginbtn" data-toggle="modal" data-target="#loginModal">인증하기</button>
+                        <button type="button" style="width:100%;" id="checkBtn" class="btn btn-primary">인증하기</button>
                     </div>
                 </form>
             </div>
@@ -124,8 +131,39 @@
         </div>
 
     </div>
+    
+    <script>
+		        $('#sendPhoneNumber').click(function(){
+		            $.ajax({
+		                type: "GET",
+		                url: "checkphone.me",
+		                data: {
+		                    "phoneNumber" : $('#inputPhoneNumber').val(),	
+		                    "email" : $('#findemail').val()
+		                },
+		                success: function(res){
+		                    if(res==""){
+		                    	alert("일치하는 이메일 정보가 없습니다");
+		                    	location.reload();
+		                    }else{
+			                	$('#checkBtn').click(function(){
+			                    	if($.trim(res) ==$('#inputCertifiedNumber').val()){
+			                        	var email = $('#findemail').val();
+									    $("#email").val(email);
+										$("#findPwdModal").modal("show");
+			                        }else{
+			                            alert("일치하는 이메일 정보가 없습니다");
+			                            location.reload();
+			                        }
+			                    })
+		                    }
+		
+		                }
+		            })
+		        });
+		</script>
 
-    <div class="modal fade" id="loginModal">
+    <div class="modal fade" id="findPwdModal">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
             <!-- Modal Header -->
@@ -133,22 +171,24 @@
                 <h4 class="modal-title">비밀번호 변경</h4>
             </div>
 
-            <form action="login.me" method="post">
+            <form action="pwdChange.me" method="post">
                 <!-- Modal Body -->
                 <div class="modal-body">
                     <label for="userPwd" class="mr-sm-2"></label>
-                    <input type="password" class="form-control mb-2 mr-sm-2" placeholder="변경할 비밀번호" id="" name="">
-                    <input type="password" class="form-control mb-2 mr-sm-2" placeholder="비밀번호 확인" id="" name="">
+                    <input type="text" class="form-control mb-2 mr-sm-2" id="email" name="email" placeholder="변경될 이메일" readonly >
+                    <input type="password" class="form-control mb-2 mr-sm-2" placeholder="변경할 비밀번호" id="updatePwd" name="updatePwd">
                 </div>
                 
                 <!-- Modal footer -->
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">변경</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
                 </div>
             </form>
             </div>
         </div>
+        
+		        
     </div>
 
 </body>

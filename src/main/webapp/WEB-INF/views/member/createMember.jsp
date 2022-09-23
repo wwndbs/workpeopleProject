@@ -83,11 +83,11 @@
                                     </tr>
 
                                     <tr style="height:50px;">
-                                        <td style="font-weight:800;">휴대폰</td>
+                                        <td style="font-weight:800;">휴대폰 (-를 제외한 숫자만 입력해주세요)</td>
                                     </tr>
 
                                     <tr>
-                                        <td colspan="2" align="center"><input style="height:40px;" type="text" id="phone" class="form-control" name="phone" style="height:30px;" placeholder="010-0000-0000" ></td>
+                                        <td colspan="2" align="center"><input style="height:40px;" type="text" id="phone" class="form-control" name="phone" style="height:30px;" placeholder="010-0000-0000" required></td>
                                     </tr>
                                     
                                     <tr style="height:50px;">
@@ -103,9 +103,9 @@
                                     </tr>
 
                                     <tr>
-                                        <td>
+                                        <td style="width:380px;">
                                             <select id="depName" class="form-control" name="depName" style="height:40px; width:100%" required>
-                                                <option value="${m.depName}">${m.depName}</option>
+                                                <option value="부서">부서</option>
                                                 <c:choose>
 							                		<c:when test="${ empty deplist }">
 							                			<tr>
@@ -123,7 +123,7 @@
                                         
                                         <td>
                                             <select id="jobName" class="form-control" name="jobName" style="height:40px; width:100%" required>
-                                                <option value="${m.jobName}">${m.jobName}</option>
+                                                <option value="직책">직책</option>
                                                 <c:choose>
 							                		<c:when test="${ empty joblist }">
 							                			<tr>
