@@ -47,7 +47,7 @@
 		     , user_no
 		     , board_type
 		     , board_title
-		     , create_date
+		     , to_char(create_date, 'YYYY-MM-DD') as "CREATE_DATE"
 		     , count
 		     , dep_name
 		  from board
