@@ -14,11 +14,11 @@
 				<div class="content-01">
 					<button id="department" type="button">부서 ▼</button>
 					<ul id="department-list" style="display : none">
-						<li onclick="memberList('인사팀');" style="cursor : pointer;"><a>인사팀</a></li>
+<!-- 						<li onclick="memberList('인사팀');" style="cursor : pointer;"><a>인사팀</a></li>
 						<li onclick="memberList('개발팀');" style="cursor : pointer;"><a>개발팀</a></li>
 						<li onclick="memberList('총무팀');" style="cursor : pointer;"><a>총무팀</a></li>
 						<li onclick="memberList('회계팀');" style="cursor : pointer;"><a>회계팀</a></li>
-						<li onclick="memberList('영업팀');" style="cursor : pointer;"><a>영업팀</a></li>
+						<li onclick="memberList('영업팀');" style="cursor : pointer;"><a>영업팀</a></li> -->
 					</ul>
 				</div>
 				<div class="content-02">
@@ -68,28 +68,32 @@
 	
 	<script>
 		// 부서별 멤버 조회
-		function memberList(dept){
+		$(document).on("click", "#department-list li", function(){
 			$.ajax({
 				url : "memberList.ap",
 				data : {
-					dept : dept
+					dept : $(this).text()
 				},
 				success : function(result){
 					value = "";
-					for(let i = 0; i < result.length; i++){
-						value += '<li>'
-						      +  	'<input type="checkbox" id="member-check" value="' + result[i].userNo + '">'
-						      +     '<div>';
-						      
-						if(result[i].profImg){
-							value += '<img src="' + result[i].profImg + '">';
-						}else{
-							value += '<img src="resources/profile_images/defaultProfile.jpg">';
-						}   
-						      
-						value +=		'&nbsp;&nbsp;<strong>' + result[i].userName + '</strong>&nbsp;&nbsp;' + result[i].jobName + '&nbsp;' + result[i].depName
-						      +     '</div>'
-						      +  '</li>';
+					if(result.length == 0){
+						value += '<li>조회된 부서원이 없습니다.</li>';
+					}else{
+						for(let i = 0; i < result.length; i++){
+							value += '<li>'
+							      +  	'<input type="checkbox" id="member-check" value="' + result[i].userNo + '">'
+							      +     '<div>';
+							      
+							if(result[i].profImg){
+								value += '<img src="' + result[i].profImg + '">';
+							}else{
+								value += '<img src="resources/profile_images/defaultProfile.jpg">';
+							}   
+							      
+							value +=		'&nbsp;&nbsp;<strong>' + result[i].userName + '</strong>&nbsp;&nbsp;' + result[i].jobName + '&nbsp;' + result[i].depName
+							      +     '</div>'
+							      +  '</li>';
+						}						
 					}
 					$(".member-list>ul").html(value);
 				},
@@ -97,7 +101,7 @@
 					console.log("부서별 멤버 조회 부분 ajax 연결 실패");
 				}
 			})
-		}
+		})	
 	</script>
 	
 	<script>
@@ -128,7 +132,26 @@
 	</script>
 
 	<script>
-	    // 부서 조회
+		// 부서 조회
+		$(function(){
+			$.ajax({
+				url : "departmentList.ap",
+				success : function(dep){
+					value = "";
+					for(let i = 0; i < dep.length; i++){
+						value += '<li style="cursor : pointer;">' + dep[i].depName + '</li>';
+					}
+					$("#department-list").html(value);
+				},
+				error : function(){
+					console.log("부서조회 부분 ajax연결 실패");
+				}
+			})
+		})
+	</script>
+
+	<script>
+	    // 부서 드롭 다운 메뉴
 		$(function() {
 			$('#department-list').hide();
 		})
