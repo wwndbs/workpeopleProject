@@ -79,9 +79,15 @@
 					for(let i = 0; i < result.length; i++){
 						value += '<li>'
 						      +  	'<input type="checkbox" id="member-check" value="' + result[i].userNo + '">'
-						      +     '<div>'
-						      +         '<img src="' + result[i].profImg + '" alt="프로필이미지">'
-						      +			'&nbsp;&nbsp;<strong>' + result[i].userName + '</strong>&nbsp;&nbsp;' + result[i].jobName + '&nbsp;' + result[i].depName
+						      +     '<div>';
+						      
+						if(result[i].profImg){
+							value += '<img src="' + result[i].profImg + '">';
+						}else{
+							value += '<img src="resources/profile_images/defaultProfile.jpg">';
+						}   
+						      
+						value +=		'&nbsp;&nbsp;<strong>' + result[i].userName + '</strong>&nbsp;&nbsp;' + result[i].jobName + '&nbsp;' + result[i].depName
 						      +     '</div>'
 						      +  '</li>';
 					}
@@ -182,11 +188,17 @@
 							value += '<ul>'
 							      +  	'<li>'
 							      +  		'<input type="checkbox" id="select-approval-line" value="' + list[i].userNo + '">'
-							      +  		'<div>'
-							      +  			'<img src="' + list[i].profImg + '" alt="프로필이미지">  <strong>' + list[i].userName + '</strong>  ' + list[i].jobName + ' ' + list[i].depName
-							      +  		'</div>'
+							      +  		'<div>';
+							      
+							if(list[i].profImg){
+								value += '<img src="' + list[i].profImg + '">  <strong>' + list[i].userName + '</strong>  ' + list[i].jobName + ' ' + list[i].depName;
+							}else{
+								value += '<img src="resources/profile_images/defaultProfile.jpg">  <strong>' + list[i].userName + '</strong>  ' + list[i].jobName + ' ' + list[i].depName;
+							}     
+							      
+							value +=  		'</div>'
 							      +  	'</li>'
-							      +  '</ul>'
+							      +  '</ul>';
 						}
 						$(".approval-line>div").html(value);
 					},
@@ -230,11 +242,17 @@
 							value += '<ul>'
 							      +  	'<li>'
 							      +  		'<input type="checkbox" id="select-reference-line" value="' + list[i].userNo + '">'
-							      +  		'<div>'
-							      +  			'<img src="' + list[i].profImg + '" alt="프로필이미지">  <strong>' + list[i].userName + '</strong>  ' + list[i].jobName + ' ' + list[i].depName
-							      +  		'</div>'
+							      +  		'<div>';
+							      
+							if(list[i].profImg){
+								value += '<img src="' + list[i].profImg + '">  <strong>' + list[i].userName + '</strong>  ' + list[i].jobName + ' ' + list[i].depName;
+							}else{
+								value += '<img src="resources/profile_images/defaultProfile.jpg">  <strong>' + list[i].userName + '</strong>  ' + list[i].jobName + ' ' + list[i].depName;
+							}    
+							      
+							value +=  		'</div>'
 							      +  	'</li>'
-							      +  '</ul>'
+							      +  '</ul>';
 						}
 						$(".reference>div").html(value);
 					},
@@ -277,11 +295,18 @@
 							value += '<ul>'
 							      +  	'<li>'
 							      +  		'<input type="checkbox" id="select-approval-line" value="' + list[i].userNo + '">'
-							      +  		'<div>'
-							      +  			'<img src="' + list[i].profImg + '" alt="프로필이미지">  <strong>' + list[i].userName + '</strong>  ' + list[i].jobName + ' ' + list[i].depName
-							      +  		'</div>'
+							      +  		'<div>';
+							      
+							      
+							if(list[i].profImg){
+								value += '<img src="' + list[i].profImg + '">  <strong>' + list[i].userName + '</strong>  ' + list[i].jobName + ' ' + list[i].depName;
+							}else{
+								value += '<img src="resources/profile_images/defaultProfile.jpg">  <strong>' + list[i].userName + '</strong>  ' + list[i].jobName + ' ' + list[i].depName;
+							}
+							      
+							value +=  		'</div>'
 							      +  	'</li>'
-							      +  '</ul>'
+							      +  '</ul>';
 						}
 						$(".approval-line>div").html(value);
 					},
@@ -324,11 +349,17 @@
 							value += '<ul>'
 							      +  	'<li>'
 							      +  		'<input type="checkbox" id="select-reference-line" value="' + list[i].userNo + '">'
-							      +  		'<div>'
-							      +  			'<img src="' + list[i].profImg + '" alt="프로필이미지">  <strong>' + list[i].userName + '</strong>  ' + list[i].jobName + ' ' + list[i].depName
-							      +  		'</div>'
+							      +  		'<div>';
+							      
+							if(list[i].profImg){
+								value += '<img src="' + list[i].profImg + '">  <strong>' + list[i].userName + '</strong>  ' + list[i].jobName + ' ' + list[i].depName;
+							}else{
+								value += '<img src="resources/profile_images/defaultProfile.jpg">  <strong>' + list[i].userName + '</strong>  ' + list[i].jobName + ' ' + list[i].depName;
+							}    
+							      
+							value +=  		'</div>'
 							      +  	'</li>'
-							      +  '</ul>'
+							      +  '</ul>';
 						}
 						$(".reference>div").html(value);
 					},

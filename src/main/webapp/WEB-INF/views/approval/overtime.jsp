@@ -131,36 +131,50 @@
 						for(let i = 0; i < list.length; i++){
 							if(list[i].referenceStatus == 0){
 								approvalSection += '<table align="right">'
-								               +  	'<tr>'
-								               +    	'<th width="120">' + list[i].userNo + " " + list[i].jobName + '</th>'
-								               +  	'</tr>'
-								               +  	'<tr>'
-								               +  		'<td>'
-								               +    		'<br><br><br>'
-								               +  		'</td>'
-								               +  	'</tr>'
-								               +  '</table>';
+								                +      '<tr>'
+								                +          '<th width="120">' + list[i].userNo + " " + list[i].jobName + '</th>'
+								                +      '</tr>'
+								                +      '<tr>'
+								                +          '<td>'
+								                +          '<br><br><br>'
+								                +          '</td>'
+								                +      '</tr>'
+								                +  '</table>';
 								               
-								approval += '<ul id="a">'
+								approval += '<ul>'
 								         +  	'<li>'
-								         +  		'<div>'
-								         +  			'<img src="' + list[i].profImg + '" alt="프로필이미지">  <strong>' + list[i].depName + '</strong>  ' + list[i].userNo + ' ' + list[i].jobName
-								         +  		'</div>'
+								         +  		'<div>';
+								         
+								if(list[i].profImg){
+									approval += '<img src="' + ${ list[i].profImg } + '">  <strong>' + list[i].depName + '</strong>  ' + list[i].userNo + ' ' + list[i].jobName;
+								}else{
+									approval += '<img src="resources/profile_images/defaultProfile.jpg">  <strong>' + list[i].depName + '</strong>  ' + list[i].userNo + ' ' + list[i].jobName;
+								}
+								         
+								approval +=  		'</div>'
 								         +  	'</li>'
 								         +  '</ul>';
+								         
 								$("#approval").prop("disabled", false);
 							}
 							
 							if(list[i].referenceStatus == 1){
 								reference += '<ul>'
 								          +  	'<li>'
-								          +  		'<div>'
-								          +  			'<img src="' + list[i].profImg + '" alt="프로필이미지">  <strong>' + list[i].depName + '</strong>  ' + list[i].userNo + ' ' + list[i].jobName
-								          +  		'</div>'
+								          +  		'<div>';
+								          
+								if(list[i].profImg){
+									reference += '<img src="' + ${ list[i].profImg } + '">  <strong>' + list[i].depName + '</strong>  ' + list[i].userNo + ' ' + list[i].jobName;
+								}else{
+									reference += '<img src="resources/profile_images/defaultProfile.jpg">  <strong>' + list[i].depName + '</strong>  ' + list[i].userNo + ' ' + list[i].jobName;
+								}
+								          
+								reference +=  		'</div>'
 								          +  	'</li>'
 								          +  '</ul>';
 							}
 						}
+						
 						$("#approval-section").html(approvalSection);
 						$("#approval-list>div").html(approval);
 						$("#reference-list>div").html(reference);
