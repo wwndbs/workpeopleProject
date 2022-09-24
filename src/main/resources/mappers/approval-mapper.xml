@@ -470,6 +470,12 @@
 		        , (case when job_name = '부장' then 5 end)
 	</select>
 	
+	<delete id="deleteApprovalAndReference">
+		delete
+		  from approval
+		 where document_no = #{documentNo}
+	</delete>
+	
 	<insert id="insertApproval">
 		  insert into
 		approval (

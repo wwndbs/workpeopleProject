@@ -194,6 +194,9 @@ public class ApprovalDao {
 		int referenceResult = 0; // 참조 isnert결과값
 		int approvalArrLength = approvalArr.length;
 		
+		// 기존에 결재자, 참조자가 존재한다면 삭제 후 진행
+		sqlSession.delete("approvalMapper.deleteApprovalAndReference", data);
+		
 		if(approvalArr.length > 0) {
 			for(int i = approvalArr.length; i > 0; i--) {
 				data.put("approval", approvalArr[i - 1]);

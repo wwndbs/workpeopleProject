@@ -264,6 +264,7 @@ public class AjaxMailController {
 	 * @param type : {"적용": 태그 적용, "해제": 태그 해제}
 	 * @param tagNo : 적용할 태그번호. 빈 문자열 넘어올 시 컬럼값 null로 변경
 	 * @param checkMailNo : 선택된 메일번호들
+	 * @return
 	 */
 	@ResponseBody
 	@RequestMapping(value="tagChange.ma", produces="text/html; charset=UTF-8")
