@@ -433,7 +433,7 @@
 		        var Clockday = document.getElementById("Clockday");
 		        var Clock = document.getElementById("Clock");
 		        Clockday.innerText = YYYY + '/' + MM + '/' + DD + '(' + Week + ')';
-		        Clock.innerText = hh + ':' + mm + ':' + ss;
+		        Clock.innerText = hh + ':' + mm;
 		    }
 		}
 		

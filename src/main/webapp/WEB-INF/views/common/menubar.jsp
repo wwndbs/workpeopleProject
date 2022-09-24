@@ -91,29 +91,31 @@
 						</a>
 					</li>
 
-					<li class="sidebar-nav-item">
-						<a href="commuteMember.at" class="sidebar-nav-link">
-							<span class="sidebar-nav-abbr"> Vi </span> <span class="sidebar-nav-name"> 사원별 출퇴근 현황 조회 </span>
-						</a>
-					</li>
-
-					<li class="sidebar-nav-item">
-						<a href="attendanceMember.at" class="sidebar-nav-link">
-							<span class="sidebar-nav-abbr"> Vi </span> <span class="sidebar-nav-name"> 사원별 근태 현황 조회 </span>
-						</a>
-					</li>
-
-					<li class="sidebar-nav-item">
-						<a href="atHolidayGive.at" class="sidebar-nav-link">
-							<span class="sidebar-nav-abbr"> Ac </span> <span class="sidebar-nav-name"> 사원 휴가관리 </span>
-						</a>
-					</li>
-
-					<li class="sidebar-nav-item">
-						<a href="holidayMemberList.at" class="sidebar-nav-link">
-							<span class="sidebar-nav-abbr"> Vi </span> <span class="sidebar-nav-name"> 사원 휴가내역 조회 </span>
-						</a>
-					</li>
+					<c:if test="${ loginUser.depName == '인사팀' }">	
+						<li class="sidebar-nav-item">
+							<a href="commuteMember.at" class="sidebar-nav-link">
+								<span class="sidebar-nav-abbr"> Vi </span> <span class="sidebar-nav-name"> 사원별 출퇴근 현황 조회 </span>
+							</a>
+						</li>
+	
+						<li class="sidebar-nav-item">
+							<a href="attendanceMember.at" class="sidebar-nav-link">
+								<span class="sidebar-nav-abbr"> Vi </span> <span class="sidebar-nav-name"> 사원별 근태 현황 조회 </span>
+							</a>
+						</li>
+	
+						<li class="sidebar-nav-item">
+							<a href="atHolidayGive.at" class="sidebar-nav-link">
+								<span class="sidebar-nav-abbr"> Ac </span> <span class="sidebar-nav-name"> 사원 휴가관리 </span>
+							</a>
+						</li>
+	
+						<li class="sidebar-nav-item">
+							<a href="holidayMemberList.at" class="sidebar-nav-link">
+								<span class="sidebar-nav-abbr"> Vi </span> <span class="sidebar-nav-name"> 사원 휴가내역 조회 </span>
+							</a>
+						</li>
+					</c:if>
 				</ul>
 			</li>
 			<!--전자결재-->
