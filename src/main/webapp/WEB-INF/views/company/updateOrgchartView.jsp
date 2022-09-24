@@ -121,7 +121,7 @@
 				                    	</c:otherwise>
 									</c:choose>
                            	</select>
-		                    <input type="text" class="form-control mb-2 mr-sm-2" placeholder="부모 객체명" id="parOb" name="parOb" required>
+		                    <input type="text" class="form-control mb-2 mr-sm-2" placeholder="상위 부서" id="parOb" name="parOb" required>
 		                </div>
 		                
 		                <!-- Modal footer -->

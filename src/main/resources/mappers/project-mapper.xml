@@ -122,9 +122,23 @@
              , p.user_no as "proAdminNo"
 		     , p.category
              , p.dep_name
+             , (
+                 select count(*)
+                   from pro_member pm
+                  where pm.project_no = p.project_no
+                    and pm.pro_approve = 'Y'
+                    and user_no = #{userNo} <!-- 로그인한회원번호 -->
+               ) as "checkDep" <!-- 내가 참여했는지 아닌지 확인 -->
+             , (
+                 select count(*)
+                   from pro_member
+                  where project_no = p.project_no
+               ) as "countMember" 
   		  from project p       
           join pro_member pm on (p.project_no = pm.project_no)
-         where p.dep_name not like '%'||#{depName}||'%'      
+         where p.dep_name not like '%'||#{depName}||'%'   
+           and pm.pro_approve = 'Y'   
+           and pm.user_no = #{userNo} 
          order
             by p.project_no desc
 	</select>

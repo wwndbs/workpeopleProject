@@ -182,12 +182,10 @@
 	<!-- 5-1. 이번달 총 연장근무 시간 -->
 	<select id="workAllCount" resultType="_int">
 		select 
-		       nvl(sum(work_use), 0) as work_use
-		  from document
-		  join attendance using(user_no)
-		  join work using(document_no)
-		 where user_no = #{userNo}
-		   and work_date between (TRUNC(SYSDATE, 'MONTH')) and (LAST_DAY(SYSDATE))
+		       nvl(sum(at_overtime), 0) as at_overtime
+		  from attendance
+		 where user_no = '00014'
+		   and at_date between (TRUNC(SYSDATE, 'MONTH')) and (LAST_DAY(SYSDATE))
 	</select>
 	
 	<!-- 5-2. 이번달 연장근무 가능시간 -->

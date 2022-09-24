@@ -31,8 +31,12 @@ public class ProjectDao {
 	}
 		
 	// [김은지] 내프로젝트조회 리스트2
-	public ArrayList<Project> selectList2(SqlSessionTemplate sqlSession, String depName){
-		return (ArrayList)sqlSession.selectList("projectMapper.selectList2", depName);
+	public ArrayList<Project> selectList2(SqlSessionTemplate sqlSession, String depName, String userNo){
+		HashMap<String, String> data = new HashMap<>();
+		data.put("depName", depName);
+		data.put("userNo", userNo);
+		
+		return (ArrayList)sqlSession.selectList("projectMapper.selectList2", data);
 	}
 	
 	// [김은지] 프로젝트 관리자 승인리스트 조회
@@ -176,6 +180,7 @@ public class ProjectDao {
 	
 	// [김은지] 프로젝트게시물 업데이트요청
 	public int updateProBoard(SqlSessionTemplate sqlSession, ProBoard pb) {
+		//System.out.println(pb);
 		return sqlSession.update("projectMapper.updateProBoard", pb);
 	}
 	

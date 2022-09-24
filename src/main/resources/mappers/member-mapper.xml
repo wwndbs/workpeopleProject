@@ -63,7 +63,7 @@
   		,	modify_date = sysdate
   		where email = #{email}
 	</update>
-	  
+	
 	<insert id="createMember">
 	  	insert
 	  		into member

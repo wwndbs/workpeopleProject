@@ -36,10 +36,11 @@ public class AjaxMemberController {
 	@RequestMapping(value="searchtel.me", produces="application/json; charset=UTF-8")
 	public String searchTel(@RequestParam(value="cpage", defaultValue="1")int currentPage,
 			                     String keyword, HttpSession session) {
+		
 		int listCount = mService.searchTelListCount(keyword);
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 12);
 		ArrayList<Member> list = mService.searchTelList(pi, keyword);
-
+		
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("list", list);
 		map.put("pi", pi);
