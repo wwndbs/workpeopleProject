@@ -32,11 +32,11 @@
 						<table class="table table-hover" style="text-align: center;">
 							<thead>
 								<tr>
-									<th width="100">번호 <a href="sortList.ap?type=noSort"><strong>⇅</strong></a></th>
+									<th width="100">번호</th>
 									<th width="200">결재양식</th>
 									<th>제목</th>
 									<th width="100">작성자</th>
-									<th width="200">작성일 <a href="sortList.ap?type=dateSort"><strong>⇅</strong></a></th>
+									<th width="200">작성일</th>
 									<th width="150">결재상태</th>
 								</tr>
 							</thead>

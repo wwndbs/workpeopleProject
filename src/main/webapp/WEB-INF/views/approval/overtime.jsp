@@ -146,7 +146,7 @@
 								         +  		'<div>';
 								         
 								if(list[i].profImg){
-									approval += '<img src="' + ${ list[i].profImg } + '">  <strong>' + list[i].depName + '</strong>  ' + list[i].userNo + ' ' + list[i].jobName;
+									approval += '<img src="' + list[i].profImg + '">  <strong>' + list[i].depName + '</strong>  ' + list[i].userNo + ' ' + list[i].jobName;
 								}else{
 									approval += '<img src="resources/profile_images/defaultProfile.jpg">  <strong>' + list[i].depName + '</strong>  ' + list[i].userNo + ' ' + list[i].jobName;
 								}

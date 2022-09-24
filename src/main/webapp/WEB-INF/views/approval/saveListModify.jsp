@@ -143,19 +143,19 @@
 								<button type="button" class="btn btn-secondary btn-sm" onclick="history.back();">돌아가기</button>
 								<c:choose>
 									<c:when test="${ document.documentForm eq '업무기안서' }">
-										<button type="submit" class="btn btn-primary btn-sm" id="save" name="status" value="2">임시저장</button>
+										<button type="submit" class="btn btn-primary btn-sm" id="save" formaction="insertApprovalPlan.ap" name="status" value="2">임시저장</button>
 										<button type="submit" class="btn btn-primary btn-sm" id="approval" formaction="insertApprovalPlan.ap" formenctype="multipart/form-data" disabled>결재상신</button>
 									</c:when>
 									<c:when test="${ document.documentForm eq '휴가신청서' }">
-										<button type="submit" class="btn btn-primary btn-sm" id="approval" disabled>결재상신</button>
+										<button type="submit" class="btn btn-primary btn-sm" id="save" name="status" formaction="insertApprovalVacation.ap" value="2">임시저장</button>
 										<button type="submit" class="btn btn-primary btn-sm" id="approval" formaction="insertApprovalVacation.ap" formenctype="multipart/form-data" disabled>결재상신</button>
 									</c:when>
 									<c:when test="${ document.documentForm eq '결근사유서' }">
-										<button type="submit" class="btn btn-primary btn-sm" id="approval" disabled>결재상신</button>
+										<button type="submit" class="btn btn-primary btn-sm" id="save" name="status" formaction="insertApprovalAbsence.ap" value="2">임시저장</button>
 										<button type="submit" class="btn btn-primary btn-sm" id="approval" formaction="insertApprovalAbsence.ap" formenctype="multipart/form-data" disabled>결재상신</button>
 									</c:when>
 									<c:otherwise>
-										<button type="submit" class="btn btn-primary btn-sm" id="approval" disabled>결재상신</button>				
+										<button type="submit" class="btn btn-primary btn-sm" id="save" name="status" formaction="insertApprovalOvertime.ap" value="2">임시저장</button>			
 										<button type="submit" class="btn btn-primary btn-sm" id="approval" formaction="insertApprovalOvertime.ap" formenctype="multipart/form-data" disabled>결재상신</button>
 									</c:otherwise>
 								</c:choose>																						

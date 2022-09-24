@@ -26,7 +26,7 @@
 					<div class="search-wrapper">
 						<span>결재조회</span>
 						<form class="search-area" action="">
-							<input type="text" placeholder="결재제목 검색" class="form-control" id="search">
+							<input type="text" placeholder="결재제목 검색" class="form-control" id="search" autofocus>
 						</form>
 					</div>
 					<div class="menu-wrapper">
@@ -40,11 +40,11 @@
 						<table class="table table-hover" style="text-align: center;">
 							<thead>
 								<tr>
-									<th width="100">번호 <a href="#"><strong>⇅</strong></a></th>
+									<th width="100">번호</th>
 									<th width="200">결재양식</th>
 									<th>제목</th>
 									<th width="100">작성자</th>
-									<th width="200">작성일 <a href="#"><strong>⇅</strong></a></th>
+									<th width="200">작성일</th>
 									<th width="150">결재상태</th>
 								</tr>
 							</thead>
