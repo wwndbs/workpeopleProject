@@ -36,7 +36,7 @@
                   <!--프로필 부분-->
                   <div class="profile-alert-wrapper">
                      <div class="profile-area">
-                        <img src="${ loginUser.profImg }" alt="프로필이미지"><br> <span id="profile-name">${ loginUser.userName }</span><br> <span id="department-name">${ loginUser.depName } / ${ loginUser.jobName }</span>
+                        <img src="<c:out value='${ loginUser.profImg }' default='resources/profile_images/defaultProfile.jpg' />"><br> <span id="profile-name">${ loginUser.userName }</span><br> <span id="department-name">${ loginUser.depName } / ${ loginUser.jobName }</span>
                      </div>
    
                      <!--알림 부분-->
