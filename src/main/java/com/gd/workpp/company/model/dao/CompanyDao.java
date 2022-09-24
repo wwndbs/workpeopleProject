@@ -53,4 +53,7 @@ public class CompanyDao {
 		return sqlSession.insert("companyMapper.updateCompany",co);
 	}
 	
+	public int uploadComImg(SqlSessionTemplate sqlSession,Company co) {
+		return sqlSession.insert("companyMapper.uploadComImg",co);
+	}
 }

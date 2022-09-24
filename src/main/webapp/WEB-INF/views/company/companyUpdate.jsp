@@ -82,9 +82,45 @@
                                     <br>
                                     <br>
                                     <div style="height: 100px;">                   
-                                        <img alt="image" name="comImg" class="img-fluid rounded" src="<c:out value='${co.comImg}' default='resources/profile_images/defaultProfile.jpg' />">
+                                        <img alt="image" name="comImg" class="img-fluid rounded" src="<c:out value='${co.comImg}' default='resources/profile_images/defaultProfile.jpg' />" onclick="$('#comImgFile').click();">
+                                    	<input type="file" id="comImgFile" style="display:none;"><br>  
                                     </div>
                                 </div>
+                                
+                                <script>
+									$(function(){
+										$("#comImgFile").change(function(){
+											
+											let formData = new FormData();
+											
+											let uploadFile = this.files[0] // 현재 선택한 파일객체 ( 사용자가 선택한 첨부파일 )
+											console.log(uploadFile);
+											
+											
+											// 업로드할 파일 담기
+											formData.append("uploadFile",uploadFile); // 폼에 데이터(파일) 담기 (키,벨류)  | 취소버튼 클릭시 undefined가 담김
+											formData.append("originalFile","${co.comImg;}"); // 기존의 프로필이미지가 없었을경우 => 빈 문자열이 넘어감 ""
+											// 기존의 프로필 이미지를 지우는 과정이 필요해서 기존의 이미지 경로를 가져가야됨
+											
+											
+											$.ajax({
+												url:"uploadImg.co",
+												data: formData, // 파일 자체 + 택스트가 담겨있는 form
+												contentType: false,  // 파일을 넘길떈 무조건 false
+												processData: false, // 파일을 넘길떈 무조건 false
+												type: "POST", // 파일을 넘길땐 무조건 포스트방식
+												success:function(){
+													location.reload();
+													// 기존의 페이지 강제로 새로고침 실행 시키기
+												},
+												error:function(){
+													console.log("이미지 변경용 ajax통신 실패");
+												}
+											})
+											
+										})
+									})
+								</script>
 								 -->
 
                                 <br>

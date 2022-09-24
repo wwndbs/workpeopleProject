@@ -1,6 +1,6 @@
 package com.gd.workpp.company.model.vo;
 
-import java.sql.Date;
+import java.sql.Date; 
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

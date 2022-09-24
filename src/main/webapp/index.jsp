@@ -64,7 +64,7 @@
         height: 100%;
     }
     #loginbtn{
-        width: 600px;
+        width: 100%;
         height: 40px;
         color:white;
         background-color:rgb(45, 130, 235);
