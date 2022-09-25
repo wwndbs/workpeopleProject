@@ -1,6 +1,8 @@
 package com.gd.workpp.approval.controller;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
@@ -404,7 +406,7 @@ public class ApprovalController {
 		
 		// 해당 결재 결재자 리스트 조회
 		ArrayList<Approval> list = apService.approvalDetailLine(no);
-		
+	
 		mv.addObject("document", document);
 		mv.addObject("obj", obj);
 		mv.addObject("list", list);
@@ -422,32 +424,35 @@ public class ApprovalController {
 	 * @param approvalCount : 결재문서 결재자 총인원
 	 * @param form : 결재문서 양식
 	 * @param documentNo : 결재문서 번호
+	 * @throws UnsupportedEncodingException 
 	 */
 	@RequestMapping("approvalOfApproval.ap")
 	public String approvalOfApproval(@RequestParam(value="vacationStart", defaultValue="1")String vacationStart,
 			                         @RequestParam(value="vacationEnd", defaultValue="1")String vacationEnd,
 			                         @RequestParam(value="absenceDate", defaultValue="1")String absenceDate,
-			                         String approvalUser, int order, int approvalCount, String form, int documentNo, String userName, HttpSession session, Model model) {
+			                         String approvalUser, int order, int approvalCount, String form, int documentNo, String userName, HttpSession session, Model model) throws UnsupportedEncodingException{
 		Member m = (Member)session.getAttribute("loginUser");
+		
+		 String encodedParam = URLEncoder.encode(form, "UTF-8");
 		
 		if(m.getUserName().equals(approvalUser)) {
 			if(approvalCount == order) {
 				int result = apService.approvalOfApproval(approvalUser, documentNo, vacationStart, vacationEnd, absenceDate, userName, form);
 				if(result > 0) {
 					session.setAttribute("toastMsg", "승인 했습니다.");
-					return "redirect:approvalDetail.ap?form=" + form + "&documentNo=" + documentNo;
+					return "redirect:approvalDetail.ap?no=" + documentNo + "&form=" + encodedParam;
 				}else {
 					model.addAttribute("errorMsg", "결재승인 과정 중 오류 발생");
 					return "common/errorPage";
 				}
 			}else {
 				session.setAttribute("toastMsg", "결재 순서가 아닙니다.");	
-				return "redirect:approvalDetail.ap?form=" + form + "&documentNo=" + documentNo;
+				return "redirect:approvalDetail.ap?no=" + documentNo + "&form=" + encodedParam;
 			}
 		}else {
 			session.setAttribute("toastMsg", "결재자가 아닙니다.");
 			System.out.println(form);
-			return "redirect:approvalDetail.ap?form=" + form + "&documentNo=" + documentNo;
+			return "redirect:approvalDetail.ap?no=" + documentNo + "&form=" + encodedParam;
 		}
 	}
 	

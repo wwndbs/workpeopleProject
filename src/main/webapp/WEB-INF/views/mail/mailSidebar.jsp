@@ -30,11 +30,11 @@
             <ul class="mailbox-list">
             	<li><a href="box.ma">받은메일함</a></li>
 	            <li><span><a href="box.ma?boxType=2">보낸메일함</a></span><span><button class="mail-btn-sidebar">수신확인</button><br></span></li>
-	            <li><a href="">내게쓴메일함</a></li>
+	            <li><a href="box.ma?boxType=3">내게쓴메일함</a></li>
 	            <li><a href="outbox.ma?">임시보관함</a></li>
 	            <br>
-	            <li><span><a href="">스팸메일함</a></span><span><button class="mail-btn-sidebar">비우기</button><br></span></li>
-	            <li><span><a href="">휴지통</a></span><span><button class="mail-btn-sidebar">비우기</button><br></span></li>
+	            <li><span><a href="box.ma?boxType=4">스팸메일함</a></span><span><button class="mail-btn-sidebar">비우기</button><br></span></li>
+	            <li><span><a href="box.ma?boxType=5">휴지통</a></span><span><button class="mail-btn-sidebar">비우기</button><br></span></li>
 	            <br>
 	            <li><a href="">중요메일함</a></li>
 	            <li><a href="">안읽은메일함</a></li>
@@ -83,7 +83,7 @@
 	   								   +		'<i class="fas fa-tag" style="color:' + list[i].tagColor + ';"></i>'
 	   								   +		'<span class="tagName">' + list[i].tagName + '</span>'
 	   								   +	'</td>'
-	   								   +	'<td>'
+	   								   +	'<td class="addBtn">'
 	   								   + 		'<input type="hidden" name="tagNo" value="' + list[i].tagNo + '">'
 	   								   +		'<a class="mail-a-taglist tagBtn">적용</a>'
 	   								   +	'</td>'
@@ -327,6 +327,12 @@
     		})
 
 		})
+		
+					            	
+	    // 페이지 재요청
+		function reload(){
+			location.reload();
+		}
 		</script>    
 
 </body>

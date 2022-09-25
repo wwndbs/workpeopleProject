@@ -18,6 +18,8 @@ import com.gd.workpp.approval.model.vo.Approval;
 import com.gd.workpp.approval.model.vo.Document;
 import com.gd.workpp.common.model.vo.PageInfo;
 import com.gd.workpp.common.template.Pagination;
+import com.gd.workpp.company.model.service.CompanyService;
+import com.gd.workpp.company.model.vo.Department;
 import com.gd.workpp.member.model.vo.Member;
 import com.google.gson.Gson;
 
@@ -25,6 +27,9 @@ import com.google.gson.Gson;
 public class AjaxApprovalController {
 	@Autowired
 	private ApprovalServiceImpl apService;
+	
+	@Autowired 
+	private CompanyService cService;
 	
 	/**
 	 * Author : 최영헌
@@ -147,6 +152,14 @@ public class AjaxApprovalController {
 		map.put("pi", pi);
 		
 		return new Gson().toJson(map);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="departmentList.ap", produces="application/json; charset=UTF-8")
+	public String departmentList() {
+		
+		ArrayList<Department> list = cService.departmentList();
+		return new Gson().toJson(list);
 	}
 	
 	/**

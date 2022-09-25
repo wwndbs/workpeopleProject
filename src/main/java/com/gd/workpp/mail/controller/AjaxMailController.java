@@ -228,7 +228,7 @@ public class AjaxMailController {
 
 	/**
 	 * Author : 정주윤
-	 * 체크박스로 선택된 메일들을 읽음 처리/스팸 처리/휴지통 이동 해주는 메소드
+	 * 체크박스로 선택된 메일들을 읽음 처리/스팸 처리/휴지통 이동해 주는 메소드
 	 * @param type : 어떤 상태값을 변경할 건지 (읽음여부, 스팸여부, 삭제여부)
 	 * @param checkMailNo : 선택된 메일번호들
 	 */
@@ -260,7 +260,7 @@ public class AjaxMailController {
 
 	/**
 	 * Author : 정주윤
-	 * 체크박스로 선택된 메일들에 태그 적용/적용해제 처리 해주는 메소드
+	 * 체크박스로 선택된 메일들에 태그 적용/적용해제 처리해 주는 메소드
 	 * @param type : {"적용": 태그 적용, "해제": 태그 해제}
 	 * @param tagNo : 적용할 태그번호. 빈 문자열 넘어올 시 컬럼값 null로 변경
 	 * @param checkMailNo : 선택된 메일번호들
@@ -277,5 +277,72 @@ public class AjaxMailController {
 		
 		return result > 0 ? "success" : "fail";
 	}
+
+	/**
+	 * Author : 정주윤
+	 * 임시보관함에서 체크박스로 선택된 메일들을 완전 삭제 처리해 주는 메소드
+	 * @param checkMailNo
+	 * @param session
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value="deleteMail.ma", produces="text/html; charset=UTF-8")
+	public String deleteMail(String checkMailNo, HttpSession session) {
+		
+		Member mem = (Member)session.getAttribute("loginUser");
+		String email = mem.getEmail();
+		
+		int result = mService.deleteMail(checkMailNo, email);
+		
+		// mailNo으로 ATTACHMENT 테이블 조회
+		String[] mailNoStr = checkMailNo.split(",");
+        int[] mailNoArr = new int[mailNoStr.length];
+        
+        for (int i=0; i<mailNoStr.length; i++) {
+        	mailNoArr[i] = Integer.parseInt(mailNoStr[i]);
+        }
+        
+		for(int mailNo : mailNoArr) {
+			
+			ArrayList<Attachment> existingFiles = mService.selectAttachment(mailNo);
+
+			if(!existingFiles.isEmpty()) { // 해당 메일에 기존 첨부파일 있었을 경우
+				// ATTACHMENT에 DELETE
+				int atResult = mService.deleteAttachment(mailNo);
+				
+				if(atResult > 0) { // DELETE 성공 시 서버에 업로드된 파일도 삭제
+					for(Attachment at : existingFiles) {
+						new File( session.getServletContext().getRealPath(at.getChangeName()) ).delete();
+					}
+				}
+			}
+			
+		}
+		
+		return result > 0 ? "success" : "fail";
+		
+	}
+
+	@ResponseBody
+	@RequestMapping(value="toMeTagChange.ma", produces="text/html; charset=UTF-8")
+	public String updateToMeTagChange(String type, int tagNo, String checkMailNo, String checkMailType, HttpSession session) {
+
+		Member mem = (Member)session.getAttribute("loginUser");
+		String email = mem.getEmail();
+		
+		String[] noArr = checkMailNo.split(",");
+		String[] typeArr = checkMailType.split(",");
+		
+		int result = 0;
+		for(int i=0; i<noArr.length; i++) {
+			int mailNo = Integer.parseInt(noArr[i]);
+			int mailType= Integer.parseInt(typeArr[i]);
+			result = mService.updateToMeTagChange(type, tagNo, mailNo, email, mailType);
+		}
+		
+		
+		return result > 0 ? "success" : "fail";
+	}
+	
 	
 }

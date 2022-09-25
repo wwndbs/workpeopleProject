@@ -30,9 +30,9 @@
 				</div>
 				<div class="content-03">
 					<div>
-						<i class="fas fa-caret-square-right" id="insert-approval"></i>
+						<i class="fas fa-caret-square-right" id="insert-receiver"></i>
 						<br>
-						<i class="fas fa-caret-square-left" id="delete-approval"></i>
+						<i class="fas fa-caret-square-left" id="delete-receiver"></i>
 					</div>
 					<div>
 						<i class="fas fa-caret-square-right" id="insert-reference"></i>
@@ -41,15 +41,15 @@
 					</div>
 				</div>
 				<div class="content-04">
-					<div class="approval-line">
+					<div class="adr-receiver">
 						<h5>
-							<strong>결재선</strong>
+							<strong>받는 사람</strong>
 						</h5>
 						<div>
 							<!-- ajax조회 -->						
 						</div>
 					</div>
-					<div class="reference">
+					<div class="adr-reference">
 						<h5>
 							<strong>참조</strong>
 						</h5>
@@ -105,7 +105,7 @@
 	</script>
 	
 	<script>
-		// 체크된 요소 결재선, 참조 이동
+		// 체크된 요소 받는사람, 참조 이동
 	</script>
 
 	<!--summernote-->
@@ -162,7 +162,7 @@
 		
 		// 모달창
 		$(function(){
-			$('#approval-line').click(function(){
+			$('#addressbook').click(function(){
 				if($('.modal-background').css("display") == "none"){
 					$('.modal-background').css("display", "");
 				}else{
@@ -178,8 +178,8 @@
 	</script>
 	
 	<script>	
-		// 체크된 멤버 결재선 부분으로 이동
-		$(document).on("click", "#insert-approval", function(){
+		// 체크된 멤버 받는사람으로 이동
+		$(document).on("click", "#insert-receiver", function(){
 			let check =  $("#member-check:checked").length; // 체크된 체크박스 수
 			let checkList = $("#member-check:checked:checked"); // 체크된 체크박스 리스트
 			
@@ -210,7 +210,8 @@
 						for(let i = 0; i < list.length; i++){
 							value += '<ul>'
 							      +  	'<li>'
-							      +  		'<input type="checkbox" id="select-approval-line" value="' + list[i].userNo + '">'
+							      +  		'<input type="checkbox" id="select-receiver-line" value="' + list[i].userNo + '">'
+							      +  		'<input type="hidden" name="select-receiver-email" value="' + list[i].email + '">'
 							      +  		'<div>';
 							      
 							if(list[i].profImg){
@@ -223,10 +224,10 @@
 							      +  	'</li>'
 							      +  '</ul>';
 						}
-						$(".approval-line>div").html(value);
+						$(".adr-receiver>div").append(value);
 					},
 					error : function(){
-						console.log("결재선 이동 부분 ajax연결실패");
+						console.log("받는사람 이동 부분 ajax연결실패");
 					}
 				})
 			}
@@ -234,7 +235,7 @@
 	</script>
 	
 		<script>	
-		// 체크된 멤버 참조 부분으로 이동
+		// 체크된 멤버 참조로 이동
 		$(document).on("click", "#insert-reference", function(){
 			let check =  $("#member-check:checked").length; // 체크된 체크박스 수
 			let checkList = $("#member-check:checked:checked"); // 체크된 체크박스 리스트
@@ -265,6 +266,7 @@
 							value += '<ul>'
 							      +  	'<li>'
 							      +  		'<input type="checkbox" id="select-reference-line" value="' + list[i].userNo + '">'
+							      +  		'<input type="hidden" name="select-reference-email" value="' + list[i].email + '">'
 							      +  		'<div>';
 							      
 							if(list[i].profImg){
@@ -277,7 +279,7 @@
 							      +  	'</li>'
 							      +  '</ul>';
 						}
-						$(".reference>div").html(value);
+						$(".adr-reference>div").append(value);
 					},
 					error : function(){
 						console.log("참조 이동 부분 ajax연결실패");
@@ -288,10 +290,10 @@
 	</script>
 	
 	<script>
-		// 체크된 멤버 결재선 영역에서 제외하기
-		$(document).on("click", "#delete-approval", function(){
-			let check =  $("#select-approval-line:checked").length; // 체크된 체크박스 수
-			let unCheckList = $("#select-approval-line:not(:checked)"); // 체크가 안된 체크박스 리스트
+		// 체크된 멤버 받는사람에서 제외하기
+		$(document).on("click", "#delete-receiver", function(){
+			let check =  $("#select-receiver-line:checked").length; // 체크된 체크박스 수
+			let unCheckList = $("#select-receiver-line:not(:checked)"); // 체크가 안된 체크박스 리스트
 			
 			if(check <= 0){
 				toast("선택된 멤버가 없습니다.");
@@ -317,7 +319,8 @@
 						for(let i = 0; i < list.length; i++){
 							value += '<ul>'
 							      +  	'<li>'
-							      +  		'<input type="checkbox" id="select-approval-line" value="' + list[i].userNo + '">'
+							      +  		'<input type="checkbox" id="select-receiver-line" value="' + list[i].userNo + '">'
+							      +  		'<input type="hidden" name="select-receiver-email" value="' + list[i].email + '">'
 							      +  		'<div>';
 							      
 							      
@@ -331,10 +334,10 @@
 							      +  	'</li>'
 							      +  '</ul>';
 						}
-						$(".approval-line>div").html(value);
+						$(".adr-receiver>div").html(value);
 					},
 					error : function(){
-						console.log("결재선 멤버 제외 부분 ajax연결실패");
+						console.log("받는사람 멤버 제외 부분 ajax연결실패");
 					}
 				})
 			}
@@ -372,6 +375,7 @@
 							value += '<ul>'
 							      +  	'<li>'
 							      +  		'<input type="checkbox" id="select-reference-line" value="' + list[i].userNo + '">'
+							      +  		'<input type="hidden" name="select-reference-email" value="' + list[i].email + '">'
 							      +  		'<div>';
 							      
 							if(list[i].profImg){
@@ -384,10 +388,10 @@
 							      +  	'</li>'
 							      +  '</ul>';
 						}
-						$(".reference>div").html(value);
+						$(".adr-reference>div").html(value);
 					},
 					error : function(){
-						console.log("결재선, 참조 멤버 제외 부분 ajax연결실패");
+						console.log("받는사람, 참조 멤버 제외 부분 ajax연결실패");
 					}
 				})
 			}
@@ -395,51 +399,83 @@
 	</script>
 	
 	<script>
-	    // 결재선, 참조 부분에 있는 멤버 등록
+	    // 받는사람, 참조 부분에 있는 멤버 등록
 		$(document).on("click", "#insert-member", function(){
-			let approvalMember = $(".approval-line>div input[type=checkbox]") // 결재선 부분 멤버 리스트
-			let referenceMember = $(".reference>div input[type=checkbox]") // 참조 부분 멤버 리스트
-			let documentNo = ${document.documentNo}
+
+            $('.modal-background').css("display", "none");
 			
-			let approval = "";
-			let reference = "";
+			let receiverArr = $(".adr-receiver>div input[name=select-receiver-email]") // 받는사람 멤버 리스트
+			let refArr = $(".adr-reference>div input[name=select-reference-email]") // 참조 멤버 리스트
 			
-			for(let i = 0; i < approvalMember.length; i++){
-				if(i == (approvalMember.length - 1)){
-					approval += approvalMember[i].value;
-				}else{
-					approval += approvalMember[i].value + ",";
+			// 받는사람 주소 li요소로 추가
+			let value = "";
+			let receiverMail = "";
+			for(let i = 0; i < receiverArr.length; i++){
+				value +='<li class="mail-addr-out to-li">'
+                    + '<span class="addr-block">' 
+                    + receiverArr[i].value
+                    + '</span>'
+                    + '<span class="btn-addr-remove">'
+                    + '<ion-icon name="close-outline"></ion-icon>'
+                    + '</span>'
+                    + '</li>';
+                    
+                receiverMail += receiverArr[i].value + ",";
+				
+				if(receiverArr[i].value == "${ loginUser.email }"){ // 내 주소를 입력시 나에게 체크박스 체크
+					$("#toMe").prop("checked", true);
 				}
 			}
 			
-			for(let i = 0; i < referenceMember.length; i++){
-				if(i == (referenceMember.length - 1)){
-					reference += referenceMember[i].value;
-				}else{
-					reference += referenceMember[i].value + ",";
-				}
-			}
+			receiverMail = receiverMail.substring(0,receiverMail.lastIndexOf(",")); // 맨 뒤 콤마 삭제
 			
-			if(approvalMember.length <= 0){
-				toast("결재자를 선택해 주세요.");
-			}else{
-				$.ajax({
-					url : "insertApprovalAndReference.ap",
-					data : {
-						approvalMember : approval,
-						referenceMember : reference,
-						documentNo : documentNo
-					},
-					success : function(){
-						toast("등록완료");
-						$('.modal-background').css("display", "none");
-						setTimeout(reload, 1000);
-					},
-					error : function(){
-						console.log("결재선, 참조 멤버 등록 부분 ajax연결실패");
-					}
-				})					
-			}
+			$("#to").val("");
+            $("#toAddrWrap .mail-addr-create").before(value);
+            
+            
+         	// input value에 입력한 주소 추가
+          	let currTo = $("#receiver").val();
+          	if(currTo == ''){ // 처음 주소 추가 시
+          		$("#receiver").val(receiverMail);
+          	}else{
+          		$("#receiver").val(currTo + "," + receiverMail);
+          	}
+          	
+          	toLimit();
+          	
+          	
+        	// 참조인 주소 li요소로 추가
+        	let refVal = "";
+        	let refMail = ""
+		    for(let i = 0; i < refArr.length; i++){
+		    	refVal +='<li class="mail-addr-out ref-li">'
+			          + '<span class="addr-block">' 
+			          + refArr[i].value
+			          + '</span>'
+			          + '<span class="btn-addr-remove">'
+			          + '<ion-icon name="close-outline"></ion-icon>'
+			          + '</span>'
+			          + '</li>';
+			    
+		    	refMail += refArr[i].value + ",";      
+			          
+		    }
+        	
+        	refMail = refMail.substring(0,refMail.lastIndexOf(",")); // 맨 뒤 콤마 삭제
+			
+		    $("#ref").val("");
+		    $("#refAddrWrap .mail-addr-create").before(refVal);
+        	
+			// input value에 입력한 주소 추가
+            let currRef = $("#mailRef").val();
+            if(currRef == ''){ // 처음 주소 추가 시
+            	$("#mailRef").val(refMail);
+            }else{
+            	$("#mailRef").val(currRef + "," + refMail);
+            }
+            
+            refLimit();
+            
 		})
 	</script>
 	

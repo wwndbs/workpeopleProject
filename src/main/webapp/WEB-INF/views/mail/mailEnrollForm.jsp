@@ -77,6 +77,9 @@
 	              	<c:when test="${ type eq 'relay' }"> <!-- 전달 발송 -->
 	              		<form action="insertRelay.ma" id="mailForm" method="post" enctype="multipart/form-data">
 	              	</c:when>
+	              	<c:when test="${ type eq 'out' }"> <!-- 임시 저장 후 발송 -->
+	              		<form action="sendSave.ma" id="mailForm" method="post" enctype="multipart/form-data">
+	              	</c:when>
 	              	<c:otherwise> <!-- 일반 메일 발송 -->
 	             		<form action="insert.ma" id="mailForm" method="post" enctype="multipart/form-data">
 	              	</c:otherwise>
@@ -88,6 +91,9 @@
 	              		<c:when test="${ type eq 'relay' }">
 	              			<input type="hidden" name="originMailNo" value="${ m.mailNo }">  <!-- 메일 전달시 원글의 메일번호가 담겨있음 -->
 	              		</c:when>
+	              		<c:when test="${ type eq 'out' }">
+	              			<input type="hidden" name="mailNo" value="${ m.mailNo }"> <!-- 임시보관함에서 작성 페이지 요청 시 해당 메일번호 -->
+	              		</c:when>
 	              		<c:otherwise>
 	              			<input type="hidden" name="mailNo"> <!-- 임시저장 성공시 해당 메일번호 담음. 임시저장 여부 구분 가능 -->
 	              		</c:otherwise>
@@ -97,7 +103,7 @@
 	                <input type="hidden" name="originFile">
 	              	
 	                <!-- 상단 버튼 박스 시작 -->
-	                <div class="mail-btn-content">
+	                <div class="mail-btn-content" style="width: 320px;">
 	                  <button type="button" class="mail-btn1">
 	                    <ion-icon name="paper-plane-outline" style="margin-top: 8px; font-size: 17px;"></ion-icon>
 	                    &nbsp;&nbsp;보내기
@@ -107,12 +113,14 @@
 	                    <ion-icon name="cloud-download-outline" style="margin-top:8px; font-size: 19px;"></ion-icon>
 	                    <span style="margin-top: 0px;">&nbsp;&nbsp;임시저장</span>
 	                  </button>
-	
-	                  <button type="button" class="mail-btn3" onclick="toast('토스트 알림 예시입니다. 필요하신 분 쓰세여');">
+					
+					  <!-- 
+	                  <button type="button" class="mail-btn3" onclick="toast('토스트 알림 예시입니다. 필요하신 분 쓰세요');">
 	                    <ion-icon name="eye-outline" style="margin-top:5px; font-size: 23px;"></ion-icon>
 	                    <span style="margin-top: 0px;">&nbsp;&nbsp;미리보기</span>
 	                  </button>
-	
+					   -->
+					   
 	                  <button type="reset" class="mail-btn4">
 	                    <ion-icon name="refresh-outline" style="margin-top:5px; font-size: 20px;"></ion-icon>
 	                    <span style="margin-top: 0px;">&nbsp;&nbsp;다시쓰기</span>
@@ -125,9 +133,11 @@
 	                    <th class="fixedCol1">
 	                      받는 사람
 						  <c:choose>
-						  	<c:when test="${ type eq 'reply' }">
-		                        <!-- 답장일 경우 -->
+						  	<c:when test="${ type eq 'reply' }"> <!-- 답장일 경우 -->
 						  		<input type="text" name="receiver" id="receiver" value="${ m.sender }" hidden>
+						  	</c:when>
+						  	<c:when test="${ type eq 'out' }"> <!-- 임시보관함에서 작성 페이지 넘어온 경우 -->
+						  		<input type="text" name="receiver" id="receiver" value="${ m.receiver }" hidden>
 						  	</c:when>
 						  	<c:otherwise>
 						  		<input type="text" name="receiver" id="receiver" value="" hidden>
@@ -144,17 +154,31 @@
 	                    	<div class="mail-input-wrap">
 	                        <div id="toAddrWrap" class="mail-input-div">
 	                          <ul>
-	                          	<!-- 답장일 경우 -->
-	                            <c:if test="${ type eq 'reply' }">
-		                            <li class="mail-addr-out to-li">
-			                          <span class="addr-block">
-			                           ${ m.sender }
-			                          </span>
-			                          <span class="btn-addr-remove">
-			                          <ion-icon name="close-outline"></ion-icon>
-			                          </span>
-			                        </li>
-	                            </c:if>
+		                        <c:choose>
+		                          <c:when test="${ type eq 'reply' }"> <!-- 답장일 경우 -->
+			                        <li class="mail-addr-out to-li">
+				                      <span class="addr-block">
+				                       ${ m.sender }
+				                      </span>
+				                      <span class="btn-addr-remove">
+				                      <ion-icon name="close-outline"></ion-icon>
+				                      </span>
+				                    </li>
+		                          </c:when>
+								  <c:when test="${ type eq 'out' and not empty m.receiver}">  <!-- 임시보관함에서 작성 페이지 넘어온 경우 -->
+									<c:forEach var="rec" items="${fn:split( m.receiver , ',')}">
+				                      <li class="mail-addr-out to-li">
+					                    <span class="addr-block">
+					                     ${ rec }
+					                    </span>
+					                    <span class="btn-addr-remove">
+					                    <ion-icon name="close-outline"></ion-icon>
+					                    </span>
+					                  </li>
+								    </c:forEach>
+								  </c:when>
+		                        </c:choose>
+	                          
 								<!-- mail-addr-out 출력될 자리 -->
 								
 	                            <li class="mail-addr-create">
@@ -171,21 +195,40 @@
 	                    </td>
 	
 	                    <td class="fixedCol3">
-	                      <button class="mail-btn-addressbook">주소록</button>
+	                      <button type="button" class="mail-btn-addressbook" id="addressbook">주소록</button>
 	                    </td>
 	                  </tr>
 	
 	                  <tr>
 	                    <th>
 	                      참조
-	                      <input type="text" name="mailRef" id="mailRef" value="" hidden>
+						  <c:choose>
+						  	<c:when test="${ type eq 'out'}"> <!-- 임시보관함에서 작성 페이지 넘어온 경우 -->
+						  		<input type="text" name="mailRef" id="mailRef" value="${ m.mailRef }" hidden>
+						  	</c:when>
+						  	<c:otherwise>
+						  		<input type="text" name="mailRef" id="mailRef" value="" hidden>
+						  	</c:otherwise>
+						  </c:choose>
 	                    </th>
 	                    <td></td>
 	                    <td>
 	                      <div class="mail-input-wrap">
 	                        <div id="refAddrWrap" class="mail-input-div">
 	                          <ul>
-	                          
+							  	<c:if test="${ type eq 'out' and not empty m.mailRef }">  <!-- 임시보관함에서 작성 페이지 넘어온 경우 -->
+							  		<c:forEach var="ref" items="${fn:split( m.mailRef , ',')}">
+			                            <li class="mail-addr-out ref-li">
+				                          <span class="addr-block">
+				                           ${ ref }
+				                          </span>
+				                          <span class="btn-addr-remove">
+				                          <ion-icon name="close-outline"></ion-icon>
+				                          </span>
+				                        </li>
+							  		</c:forEach>
+							  	</c:if>
+							  	
 								<!-- mail-addr-out 출력될 자리 -->
 	                      
 	                            <li class="mail-addr-create">
@@ -388,7 +431,7 @@
 		                
 		                // 받는 사람 최대 인원 제한
 		                function toLimit(){
-			              	if(document.querySelectorAll('.to-li').length == 5){
+			              	if(document.querySelectorAll('.to-li').length > 4){
 			              		$("#to").attr("readonly", true);
 			              		toast("최대 5명까지 발송 가능합니다.");
 			              	}else{
@@ -398,7 +441,7 @@
 		                
 		                // 참조 최대 인원 제한
 		                function refLimit(){
-			              	if(document.querySelectorAll('.ref-li').length == 3){
+			              	if(document.querySelectorAll('.ref-li').length > 4){
 			              		$("#ref").attr("readonly", true);
 			              		toast("최대 5명까지 참조 가능합니다.");
 			              	}else{
@@ -427,11 +470,11 @@
 							// 배열 순서를 뒤집어서 최근 주소부터 정렬
 							let recentAddr = emailArr.reverse(); // ["이메일", "이메일"]
 							
-							// 최대 5개까지 출력
+							// 최대 10개까지 출력
 							value = "";
 							for(let i=0; i<recentAddr.length; i++){
 								
-								if(i < 5){
+								if(i < 10){
 									value += '<option value="' + recentAddr[i] + '">' + recentAddr[i] + '</option>';
 								}
 							
@@ -487,8 +530,11 @@
 	                      <c:when test="${ type eq 'relay' }">
 	                      	<input type="text" name="mailTitle" value="Fwd : ${ m.mailTitle }" style="width: 100%;">
 	                      </c:when>
+	                      <c:when test="${ type eq 'out' }">
+	                      	<input type="text" name="mailTitle" value="${ m.mailTitle }" style="width: 100%;">
+	                      </c:when>
 	                      <c:otherwise>
-	                     	 <input type="text" name="mailTitle" style="width: 100%;" value="${ type }">
+	                     	 <input type="text" name="mailTitle" style="width: 100%;" value="">
 	                      </c:otherwise>
 	                    </c:choose>
 	                    </td>
@@ -764,13 +810,21 @@
                    		$(".mail-btn1").click(function(){
                    			if(document.querySelectorAll('.to-li').length == 0){
                    				toast("받는 사람 메일 주소를 입력해 주세요.");
+                   			}else if($("input[name=mailTitle]").val() == ''){
+                   				toast("제목을 입력해 주세요.");
                    			}else{
                    				$('#jyModal_confirm').modal('show');
-                   			}
+                   			} 
                    		})
                    		
+                   		// 다시쓰기 버튼 클릭
                    		$(".mail-btn4").click(function(){
                    			$("#summernote").summernote("code", "");
+                   			$("#receiver").val("");
+                   			$("#ref").val("");
+                   			
+                   			$(".to-li").remove();
+                   			$(".ref-li").remove();
                    		})
 	                  </script>
 	
@@ -820,7 +874,12 @@
 					<script>
 						// 메일 임시저장
 						function saveMail(){
-							
+			      			
+							if($("input[name=mailTitle]").val() == ''){
+                   				toast("받는 사람 메일 주소를 입력해 주세요.");
+                   				return;
+			      			}
+			      			
 							let formData = new FormData(document.getElementById("mailForm"));
 							
 				    		$.ajax({
@@ -842,7 +901,7 @@
 									console.log("메일 임시저장 ajax통신 실패");
 								}
 				    		})
-							
+                   			
 						}
 					
 						// 토스트
@@ -906,6 +965,8 @@
 	      </div>
 	    </div>
 		
+		
+		<jsp:include page="addressbook.jsp" />
 		<jsp:include page="../common/footer.jsp" />
 		
 	</div>

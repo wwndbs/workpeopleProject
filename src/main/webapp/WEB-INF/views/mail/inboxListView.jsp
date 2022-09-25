@@ -67,7 +67,6 @@
 	                    </button>  
 	
 	                    <button type="button" class="mail-btn5" id="relayBtn">
-	
 	                      <i class="material-icons-sharp" style="margin-top:3px; font-size: 25px;">
 	                        arrow_right_alt
 	                      </i>
@@ -186,33 +185,6 @@
 									}
 								})
 								
-								
-								/*
-								$("input:checkbox").change(function(){
-									
-									checkMailNo = ""; // 초기화
-									
-									$("input:checkbox[name=check]:checked").each(function(){
-										
-										checkMailNo += ($(this).val()) + ","; // 체크된 것만 메일번호 뽑기 "2,3,4,"
-										
-		                            })
-		                            
-		                            for(let i in tagArr){
-		                            	let tagTrSelector = "#tag" + tagArr[i];
-		                            	
-		                            	if($(tagTrSelector).find(".removeA").length == 0){
-			                            	$(tagTrSelector).append(removeBtn);		                            		
-		                            	}
-		                            	
-		                            }
-		                            
-		                            checkMailNo = checkMailNo.substring(0,checkMailNo.lastIndexOf(",")); // 맨 뒤 콤마 삭제
-		                             
-								})    
-								*/
-								
-								
 								let map = {};
 								let checkMailNo = "";								
 								$("input:checkbox").change(function(){
@@ -234,7 +206,6 @@
 									}else{
 										delete(map[mailNo]);
 									}
-									console.log(map);
 									
 									$("#tagDropArea").find(".removeBtn").remove();
 									
@@ -251,7 +222,6 @@
 									}
 									
 								})
-								
 								
 								// 메일 읽음 기능 (체크박스로 선택하여 읽음 버튼 클릭 시)
 								$("#readBtn").click(function(){
@@ -340,7 +310,7 @@
 									}
 				            		
 				            		$.ajax({
-	                                    url:"updateMailStatus.ma",
+	                                    url:"updateStatus.ma",
 	                                    data:{checkMailNo:checkMailNo,
 	                                    	  type:"mail_delete"},
 	                                    success:function(result){
@@ -377,7 +347,8 @@
 				            			url:"tagChange.ma",
 				            			data:{type:$(this).text(),
 				            				  checkMailNo:checkMailNo,
-										   	  tagNo:tagNo	            				
+										   	  tagNo:tagNo,
+										   	  mailType:1
 				            			},
 				            			success:function(result){
 		                                      reload();
@@ -402,7 +373,7 @@
 										return;
 									}
 										
-									location.href = 'relay.ma?no=' + checkMailNo;
+									location.href = 'relay.ma?no=' + checkMailNo + '&type=relay';
 				            		 
 				            	})
 				            	
@@ -480,11 +451,6 @@
 			            		})
 			            		
 			            	})
-			            	
-			            	// 페이지 재요청
-							function reload(){
-								location.reload();
-							}
 			            	
 							// toast script
 							let removeToast;

@@ -39,7 +39,8 @@ public class Attendance {
 	
 	private String vacationCategory;
 	private String vacationDate;
-	private int vacationCount;
+	private String vacationCount;
+	private int progress;
 	private String apStatus;
 	
 	private String depName;
@@ -48,5 +49,6 @@ public class Attendance {
 	private String workingDay;
 	private String workingName;
 	private String workUse;
+	
 	
 }

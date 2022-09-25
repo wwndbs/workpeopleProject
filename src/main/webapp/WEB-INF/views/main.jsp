@@ -36,7 +36,7 @@
                   <!--프로필 부분-->
                   <div class="profile-alert-wrapper">
                      <div class="profile-area">
-                        <img src="${ loginUser.profImg }" alt="프로필이미지"><br> <span id="profile-name">${ loginUser.userName }</span><br> <span id="department-name">${ loginUser.depName } / ${ loginUser.jobName }</span>
+                        <img src="<c:out value='${ loginUser.profImg }' default='resources/profile_images/defaultProfile.jpg' />"><br> <span id="profile-name">${ loginUser.userName }</span><br> <span id="department-name">${ loginUser.depName } / ${ loginUser.jobName }</span>
                      </div>
    
                      <!--알림 부분-->
@@ -285,7 +285,7 @@
    					
    					value="";
    					for(let i = 0; i < 4; i++){
-   						if(i < 5){
+   						if(i < 5	){
    							value += '<div class="project" style="text-align: right">'
    								   +    '<input type="hidden" value="' + plist[i].projectNo + '">'
    								   + 	'<span style="text-align:left">' + plist[i].projectTitle + '</span> <span><i class="fas fa-user-alt"></i>&nbsp;'+ plist[i].countMember +'</span>'
@@ -433,7 +433,7 @@
 		        var Clockday = document.getElementById("Clockday");
 		        var Clock = document.getElementById("Clock");
 		        Clockday.innerText = YYYY + '/' + MM + '/' + DD + '(' + Week + ')';
-		        Clock.innerText = hh + ':' + mm + ':' + ss;
+		        Clock.innerText = hh + ':' + mm;
 		    }
 		}
 		

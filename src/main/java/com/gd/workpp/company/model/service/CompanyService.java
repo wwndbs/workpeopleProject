@@ -6,6 +6,7 @@ import com.gd.workpp.company.model.vo.Company;
 import com.gd.workpp.company.model.vo.Department;
 import com.gd.workpp.company.model.vo.Job;
 import com.gd.workpp.company.model.vo.OrgChart;
+import com.gd.workpp.member.model.vo.Member;
 
 public interface CompanyService {
 	
@@ -29,4 +30,5 @@ public interface CompanyService {
 	
 	int updateCompany(Company co);
 	
+	int uploadComImg(Company co);
 }

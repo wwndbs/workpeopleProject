@@ -14,6 +14,7 @@ import com.gd.workpp.mail.model.vo.Mail;
 import com.gd.workpp.mail.model.vo.MailStatus;
 import com.gd.workpp.mail.model.vo.SplitEmail;
 import com.gd.workpp.mail.model.vo.Tag;
+import com.gd.workpp.member.model.vo.Member;
 
 @Service
 public class MailServiceImpl implements MailService {
@@ -206,6 +207,33 @@ public class MailServiceImpl implements MailService {
 	public int updateTagChange(String type, int tagNo, String checkMailNo, String email) {
 		return mDao.updateTagChange(sqlSession, type, tagNo, checkMailNo, email);
 	}
+
+	@Override
+	public int deleteMail(String checkMailNo, String email) {
+		return mDao.deleteMail(sqlSession, checkMailNo, email);
+	}
+
+	@Override
+	public ArrayList<Mail> selectToMe(PageInfo pi, String email) {
+		return mDao.selectToMe(sqlSession, pi, email);
+	}
+
+	@Override
+	public int updateToMeTagChange(String type, int tagNo, int mailNo, String email, int mailType) {
+		return mDao.updateToMeTagChange(sqlSession, type, tagNo, mailNo, email, mailType);
+	}
+
+	@Override
+	public ArrayList<Mail> selectSpambox(PageInfo pi, String email) {
+		return mDao.selectSpambox(sqlSession, pi, email);
+	}
+
+	@Override
+	public ArrayList<Mail> selectTrashbox(PageInfo pi, String email) {
+		return mDao.selectTrashbox(sqlSession, pi, email);
+	}
+
+
 
 
 }

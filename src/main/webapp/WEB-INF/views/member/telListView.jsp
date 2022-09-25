@@ -125,36 +125,6 @@
 						            </div>
 					            </c:when>
 	
-	
-								<c:when test="${keyword!=''}">
-				                    <div id="pagingArea" class="sangpagingArea">
-						                <ul class="pagination">
-						                	
-						                	<c:choose>
-						                		<c:when test="${ pi.currentPage eq 1 }">
-						                    		<li class="page-item disabled"><a class="page-link">Previous</a></li>
-						                    	</c:when>
-						                    	<c:otherwise>
-						                    		<li class="page-item"><a class="page-link" href="tel.me?keyword=${keyword}&cpage=${ pi.currentPage-1 }">Previous</a></li>
-						                    	</c:otherwise>
-						                    </c:choose>
-						                    
-						                    <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-					                   			<li class="page-item"><a class="page-link" href="tel.me?keyword=${keyword}&cpage=${ p }">${ p }</a></li>
-						                    </c:forEach>
-						                    
-						                    <c:choose>
-						                    	<c:when test="${ pi.currentPage eq pi.maxPage }">
-						                    		<li class="page-item disabled"><a class="page-link">Next</a></li>
-						                    	</c:when>
-						                    	<c:otherwise>
-						                    		<li class="page-item"><a class="page-link" href="tel.me?keyword=${keyword}&cpage=${ pi.currentPage+1 }">Next</a></li>
-						                    	</c:otherwise>
-						                    </c:choose>
-						                </ul>
-						            </div>
-					            </c:when>
-	
 					            <c:otherwise>
 					            	<div id="pagingArea" class="sangpagingArea">
 						                <ul class="pagination">
