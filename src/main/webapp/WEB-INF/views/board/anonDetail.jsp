@@ -42,6 +42,7 @@
 
                     <div class="write-button">
                     	<input type="hidden" id="rpType">
+                    	<input type="hidden" id="refNo">
                       <button type="button" class="btn btn-sm btn-primary" onclick="location.href='enrollForm.bo?no=3'">새글쓰기</button>
                       <!-- <button type="button" class="btn btn-sm btn-light">쪽지</button> -->
                       <c:choose>
@@ -140,6 +141,7 @@
                     		  $("#rpType").val(1);
                     	  }else{
                     		  $("#rpType").val(2);
+                    		  $("#refNo").val($(".report").parent().parent().parent().prev().prev().val());
                     	  }
                       }
                     </script>
@@ -230,7 +232,7 @@
 	    					if(type == 1){
 	    						reportRefNo = ${b.boardNo};
 	    					}else{
-	    						reportRefNo = $(btn).parent().parent().parent().parent().children().eq(1).val();
+	    						reportRefNo = $("#refNo").val();
 	    						console.log(reportRefNo);
 	    					}
 	                		
@@ -252,7 +254,7 @@
 				    					if(type == 1){
 				    						reportRefNo = ${b.boardNo};
 				    					}else{
-				    						reportRefNo = $(this).parent().parent().parent().parent().children().eq(1).val();
+				    						reportRefNo = $("#refNo").val();
 				    					}
 				    					
 							    		if($("#etcBtn").is(":checked")){

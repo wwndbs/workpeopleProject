@@ -647,7 +647,8 @@
 		   		  	(rp.status = 'Y' or rp.status = 'N')
 		   		  </otherwise>
 		   	   </choose>
-		  
+		  order
+		     by rp_date desc
 	</select>
 
 </mapper>

@@ -24,6 +24,13 @@
 	.board-contentt tr>th{
 		padding: 1% 0 1% 0;
 	}
+	
+	.standby{
+        color:rgb(250, 60, 60);
+    }
+    .complete{
+        color:rgb(66, 66, 253);
+    }
 </style>
 </head>
 <body>
@@ -173,9 +180,9 @@
                     						let status = "";
                     						let handlingDate = "";
                     						if(list[i].status = 'N'){ // 미처리
-                    							status = "미처리";
+                    							status = '<span class="standby"> 미처리 </span>';
                     						}else{ // 처리완료
-                    							status = "처리완료";
+                    							status = '<span class="complete"> 처리완료 </span>';
                     							handlingDate = list[i].handlingDate;
                     						}
                     						
