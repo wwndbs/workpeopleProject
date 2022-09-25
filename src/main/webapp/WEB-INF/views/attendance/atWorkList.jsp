@@ -71,7 +71,8 @@
                         연장근무 일수
                       </span> <br>
                       <span class="span-bottom">
-                        ${ workPossibleDay }일  
+                       <!--  ${ workPossibleDay }일 -->
+                       3일
                       </span>
                     </td>
                   </tr>
@@ -129,6 +130,31 @@
                             </tr>
                           </thead>
                           <tbody>
+                          
+                          	<tr>
+                          		<td>2022-09-16</td>
+                          		<td>금</td>
+                          		<td>18:30~21:30</td>
+                          		<td>업무량 증가로 인한 야근</td>
+                          		<td>3</td>
+                          	</tr>
+                          	<tr>
+                          		<td>2022-09-15</td>
+                          		<td>목</td>
+                          		<td>18:30~20:30</td>
+                          		<td>업무량 증가로 인한 야근</td>
+                          		<td>2</td>
+                          	</tr>
+                          	<tr>
+                          		<td>2022-09-07</td>
+                          		<td>수</td>
+                          		<td>18:30~20:30</td>
+                          		<td>업무량 증가로 인한 야근</td>
+                          		<td>2</td>
+                          	</tr>
+                          
+                          
+                          <!--  
                           <c:choose>
                             
                           	<c:when test="${ empty list }">
@@ -150,7 +176,7 @@
 	                            </c:forEach>
                             </c:otherwise>
                           </c:choose>
-                         
+                          -->
                           </tbody>
                         </table>
                       </div>

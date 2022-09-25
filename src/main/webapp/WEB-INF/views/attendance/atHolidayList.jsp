@@ -51,7 +51,7 @@
                         총 휴가
                       </span> <br>
                       <span class="span-bottom">
-                        ${holidayAllCount}개
+                        ${holidayAllCount}일
                       </span>
                     </td>
                     <td style="text-align:center;"><hr style="border:1px solid LightGray; width:0; height:100px;"></td>
@@ -61,7 +61,7 @@
                         사용 휴가
                       </span> <br>
                       <span class="span-bottom">
-                      	8개
+                      	8일
                         <!--  ${holidayUserCount}개  --> 
                       </span>
                     </td>
@@ -72,7 +72,7 @@
                         잔여 휴가
                       </span> <br>
                       <span class="span-bottom">
-                      	5개
+                      	5일
                         <!--  ${holidayRemainderCount}개  -->
                       </span>
                     </td>
