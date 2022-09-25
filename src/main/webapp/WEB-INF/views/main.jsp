@@ -300,10 +300,10 @@
    			})
    			
    			// 프로젝트 상세조회
-   			$(document).on('click', "project-container div", function(){
-   				location.href="proList.pr?no=8";
+   			$(document).on('click', ".project-container div", function(){
+   				location.href="proList.pr?no=" + $(this).children().eq(0).val();
    			})
-   		})
+   			
 	</script>
 
    
