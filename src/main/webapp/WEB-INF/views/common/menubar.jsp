@@ -69,7 +69,7 @@
 
 				<ul class="sidebar-sub-nav collapse" id="navTables">
 					<li class="sidebar-nav-item">
-						<a href="commute.at?userNo=${loginUser.userNo}" class="sidebar-nav-link">
+						<a href="commuteList.at?userNo=${loginUser.userNo}" class="sidebar-nav-link">
 							<span class="sidebar-nav-abbr"> Vi </span> <span class="sidebar-nav-name"> 출퇴근 기록 </span>
 						</a>
 					</li>
@@ -103,13 +103,13 @@
 								<span class="sidebar-nav-abbr"> Vi </span> <span class="sidebar-nav-name"> 사원별 근태 현황 조회 </span>
 							</a>
 						</li>
-	
+						<!--  
 						<li class="sidebar-nav-item">
 							<a href="atHolidayGive.at" class="sidebar-nav-link">
 								<span class="sidebar-nav-abbr"> Ac </span> <span class="sidebar-nav-name"> 사원 휴가관리 </span>
 							</a>
 						</li>
-	
+						s-->
 						<li class="sidebar-nav-item">
 							<a href="holidayMemberList.at" class="sidebar-nav-link">
 								<span class="sidebar-nav-abbr"> Vi </span> <span class="sidebar-nav-name"> 사원 휴가내역 조회 </span>
@@ -228,16 +228,16 @@
 				<ul class="sidebar-sub-nav collapse" id="navExtra3">
 					<li class="sidebar-nav-item">
 						<a href="schedule.sc" class="sidebar-nav-link">
-							<span class="sidebar-nav-abbr"> Ad </span> <span class="sidebar-nav-name"> 개인 일정 </span>
+							<span class="sidebar-nav-abbr"> Ad </span> <span class="sidebar-nav-name"> 일정 관리 </span>
 						</a>
 					</li>
-
+					<!--  
 					<li class="sidebar-nav-item">
 						<a href="scheduleCompany.sc" class="sidebar-nav-link">
 							<span class="sidebar-nav-abbr"> Ad </span> <span class="sidebar-nav-name"> 회사 일정 </span>
 						</a>
 					</li>
-
+					-->
 					<li class="sidebar-nav-item">
 						<a href="todoList.td" class="sidebar-nav-link">
 							<span class="sidebar-nav-abbr"> Ad </span> <span class="sidebar-nav-name"> To-Do </span>
