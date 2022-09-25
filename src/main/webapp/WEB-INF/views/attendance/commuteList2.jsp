@@ -69,8 +69,8 @@
 	                      </td>
 	                      <td style="padding-top:15px; padding-left:0px !important; padding-right:40px !important; font-size:15px;">
 	                        <span style="color: gray;"><b>
-	                         ${todayStart} <br>
-	                         ${todayEnd}
+	                          ${ todayStart } <br>
+	                          ${ todayEnd } 
 	                        </b></span>
 	                      </td>
 	                    </tr>
@@ -90,16 +90,15 @@
 	                    </tr>
 	                    <tr height="40px">
 	                      <td style="text-align:right; padding-right:100px;"><span><b>근무일수</b></span></td>
-	                      <td style="text-align:left; padding-right:60px;">${thisMonthWorkDay}일</td>
+	                      <td style="text-align:left; padding-right:60px;">${ thisMonthWorkDay }일</td>
 	                    </tr>
 	                    <tr height="40px">
 	                      <td style="text-align:right; padding-right:100px;"><span><b>연장근무시간</b></span></td>
-	                      <td style="text-align:left; padding-right:60px;">7시간</td>
-	                      <!--  <td style="text-align:left; padding-right:60px;">${thisMonthOvertime}시간</td>-->
+	                      <td style="text-align:left; padding-right:60px;">${ thisMonthOvertime }일</td>
 	                    </tr>
 	                    <tr height="40px">
 	                      <td style="text-align:right; padding-right:100px;"><span><b>총 근무시간</b></span></td>
-	                      <td style="text-align:left; padding-right:60px;">${thisMonthTotaltime}시간</td>
+	                      <td style="text-align:left; padding-right:60px;">${ thisMonthTotaltime }일</td>
 	                    </tr>
 	                  </table>
 	                </div>
@@ -117,15 +116,15 @@
 	                    </tr>
 	                    <tr height="40px">
 	                      <td><span><b>지각</b></span></td>
-	                      <td>${thisMonthLate}회</td>
+	                      <td>${ thisMonthLate }회</td>
 	                    </tr>
 	                    <tr height="40px">
 	                      <td><span><b>결근</b></span></td>
-	                      <td>${thisMonthAbsence}회</td>
+	                      <td>${ thisMonthAbsence }회</td>
 	                    </tr>
 	                    <tr height="40px">
 	                      <td><span><b>연차</b></span></td>
-	                      <td>${thisMonthHoliday}회</td>
+	                      <td>${ thisMonthHoliday }회</td>
 	                    </tr>
 	                  </table>
 	                </div>
@@ -146,8 +145,7 @@
 	                    </tr>
 	                    <tr height="40px">
 	                      <td><span><b>잔여휴가</b></span></td>
-	                      <td>5일</td>
-	                      <!--  <td>${thisMonthHolidayRemain}일</td> -->
+	                      <td>${ thisMonthHolidayRemain }일</td>
 	                    </tr>
 	                    <tr height="40px">
 	                      <td colspan="2"></td>
@@ -165,7 +163,7 @@
 	
 	              </div>  
 	
-	              <!--검색필터 부분
+	              <!--검색필터 부분-->
 	              <div class="commute-blank" style="width:100%; height:100%;">
 	                
 	                <div class="attendence-area">
@@ -175,12 +173,12 @@
 	                    <form action="" method="get" id="search-form">
 	                      <table>    	                                         
 	                        <tr style="height:50px;">
-	                
+	                          <!-- 
 	                          <td><b>기간조회</b></td>
 	                          <td style="padding-left:15px;">
 	                            <input type="date" id="start-date" style="height:40px;">&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;<input type="date" id="end-date" style="height:40px;">
 	                          </td>
-	       
+	                           --> 
 	                          <td style="padding-left:15px;"><b>근무상태</b></td>
 	                          <td style="padding-top:10px; padding-left:15px;">
 	                            <input type="radio" class="radio-value" id="status1" name="cStatus" value="전체" checked><label name="status0" style="margin-left:5px;">전체</label>
@@ -197,13 +195,13 @@
 	                     </div>
 	                 </div>
 	                </div>
-					-->
-	                <div class="commute-table-area holiday-manage" style="margin-top:25px;">
+	
+	                <div class="commute-table-area holiday-manage">
 	
 	                    <div style="padding-left:15px; width:100%;">
 	                      
 	                      <div style="display:inline-block; text-align:center; margin-top:15px; margin-bottom:15px;">
-	                        <strong>2022년 ${ loginUser.userName }님의 출퇴근 기록</strong>
+	                        <strong>2022 ${ loginUser.userName }님의 출퇴근 기록</strong>
 	                      </div>
 	                                                                  
 	                    </div>
@@ -212,7 +210,6 @@
 	                      <div class="card mb-grid" style="margin-left:15px; margin-right:15px;">
 	                        
 	                        <table class="table table-hover mb-0" id="commuteList" style="text-align:center;">
-	                          
 	                          <thead>
 	                            <tr>
 	                              <th scope="col">근무일자</th>
@@ -223,70 +220,17 @@
 	                            </tr>
 	                          </thead>
 	                          <tbody>
-	                          
-	                            <c:choose>							                          
-	                         		<c:when test="${ empty list }">
-	                         			<tr>
-	                         				<td colspan="5">조회내역이 없습니다.</td>
-	                         			</tr>
-	                         		</c:when>
-	                         		<c:otherwise>  
-	                         			<c:forEach var="at" items="${ list }">                       		
-			                            <tr>
-			                              <td>${ at.atDate }</td>
-			                              <td>${ at.atDay }</td>
-			                              <td>${ at.atStart }</td>
-			                              <td>${ at.atEnd }</td>
-			                              <td>${ at.atStatus }</td>
-			                            </tr>
-			                            </c:forEach>
-	                            	</c:otherwise>
-                                </c:choose>
+	                            <!-- 조회 리스트 넣을 자리 -->
 	                          </tbody>
 	                        </table>
 	                        
 	                        <div class="card-footer d-flex justify-content-end commute-pasing" style="justify-content:center !important;">
-	                           <ul class="pagination pagination-clean pagination-sm mb-0">
-                         	   <c:choose>
-                				<c:when test="${ pi.currentPage eq 1 }">
-	                            	<li class="page-item disabled">
-	                             		 <a class="page-link" href="#" tabindex="-1">‹</a>
-	                           		</li>
-                           		</c:when>
-                   				<c:otherwise>
-	                   				<li class="page-item">
-	                             		 <a class="page-link" href="commuteList.at?userNo=${loginUser.userNo}&cpage=${ pi.currentPage-1 }" tabindex="-1">‹</a>
-	                           		</li>
-	                           	</c:otherwise>
-	                           	</c:choose>
-	                           	
-	                           	<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-		                            <li class="page-item active"><a class="page-link" href="commuteList.at?userNo=${loginUser.userNo}&cpage=${ p }">${ p }</a></li>
-	                            </c:forEach>
-	                            
-	                            <c:choose>
-	                            <c:when test="${ pi.currentPage eq pi.maxPage }">
-	                            	 <li class="page-item" disabled>
-		                              <a class="page-link" href="commuteList.at?userNo=${loginUser.userNo}&cpage=${ pi.currentPage+1 }">›</a>
-		                            </li>
-	                            </c:when>
-	                            <c:otherwise>
-		                            <li class="page-item">
-		                              <a class="page-link" href="commuteList.at?userNo=${loginUser.userNo}&cpage=${ pi.currentPage+1 }">›</a>
-		                            </li>
-	                            </c:otherwise>
-	                            
-	                            </c:choose>
-	                            
-	                            
-	                          </ul> 
+	                          <!-- 페이징바 넣을 자리 -->
 	                        </div>
 	
 	                      </div>
-	                       
 	                    <!-- // Table seamless -->
-	    	                    
-	                    <!--검색시 ajax로 결과 리스트 조회                     
+	                    <!-- 검색시 ajax로 결과 리스트 조회 -->                    
                     <script>
                     	
                     	$(function(){
@@ -298,9 +242,12 @@
                     	function selectSearchList(cpage) {
                     		
                     		$.ajax({
-                    			url:"commuteList.at",
+                    			url:"commuteList.at?userNo=${loginUser.userNo}",
                     			data : {
-                    				cpage:cpage
+                    				cpage:cpage,
+                    				cStatus:$(".radio-value:checked").val(),
+                    				rank:$("#rank option:selected").val(),
+                    				keyword:$("#keyword").val()
                     			},
                     			success:function(result){
                     				let list = result.list;
@@ -313,11 +260,12 @@
                     				
                     				if(list.length == 0) {
                     					value += '<tr>'
-                          					  +    '<td colspan="5">조회 내역이 없습니다.</td>'
+                          					  +    '<td colspan="9">조회 내역이 없습니다.</td>'
                               			      +  '</tr>'
                     				}else{
                     					for(let i=0; i<list.length; i++){
                     						value += '<tr>'
+			  			                          +    	 '<td><input type="checkbox" id="checkbox" name="checkbox"></td>'
 			  			                          +    	 '<td>' + list[i].atDate + '</td>'
 			  			                          +   	 '<td>' + list[i].atDay + '</td>'
 			  			                          +   	 '<td>' + list[i].atStart + '</td>'
@@ -380,7 +328,6 @@
                     	}
                     
                     </script>
-      -->
 	                  </div>
 	
 	                </div>

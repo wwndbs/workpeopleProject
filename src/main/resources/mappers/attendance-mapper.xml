@@ -40,10 +40,12 @@
 		<result column="vacation_date" property="vacationDate" />
 		<result column="vacation_count" property="vacationCount" />
 		<result column="work_use" property="workUse" />
-		<result column="word_date" property="workDate" />
+		<result column="work_date" property="workDate" />
+		<result column="at_day" property="atDay" />
 		<result column="at_date" property="atDate" />
 		<result column="work_day" property="workDay" />
 		<result column="work_dateList" property="workDateList" />
+		<result column="progress" property="progress" />
 	</resultMap>
 	
 	<resultMap id="memberResult" type="Member">
@@ -61,38 +63,133 @@
 	
 	<!-- 1. 출퇴근기록 / commuteList.jsp -->
 	
-	<!-- 1-1. 출퇴근기록/오늘 출근기록 조회 -->
+	<!-- 출근버튼 클릭시 insert -->
+	<update id="insertCommute">
+		update
+		       attendance
+		   set at_start = to_char(sysdate, 'hh24:mi')
+		 where user_no = '00014'
+		   and at_date = '2022-09-26'
+    </update>
 	
+	<!-- 퇴근버튼 클릭시 update -->
+	<update id="updateCommute">
+		update
+	           attendance
+	       set at_end = to_char(sysdate, 'hh24:mi')
+	     where user_no = '00014'
+	       and at_date = '2022-09-26'	
+	</update>
+	
+	<!-- 1-1. 출퇴근기록/오늘 출근기록 조회 -->
+	<select id="todayStart" resultMap="attendanceResult">
+		select 
+		       nvl(at_start, '미등록') as at_start
+		  from attendance at
+		 where at.user_no = '00014'
+		   and to_char(to_date('2022-09-26', 'yyyy-mm-dd'), 'yyyy-mm-dd') = at_date
+	</select>
 	
 	<!-- 1-2. 출퇴근기록/오늘 퇴근기록 조회 -->
-	
+	<select id="todayEnd" resultMap="attendanceResult">
+		select 
+		       nvl(at_end, '미등록') as at_end
+		  from attendance at
+		 where at.user_no = '00014'
+		   and to_char(to_date('2022-09-26', 'yyyy-mm-dd'), 'yyyy-mm-dd') = at_date
+	</select>
 	
 	<!-- 1-3. 출퇴근기록/근무현황_이번달 근무일수 -->
-	
+	<select id="thisMonthWorkDay" resultType="_int">
+		select
+		       count(*)
+		  from attendance
+		 where user_no = '00014'
+		   and (at_status = '1' or at_status = '2')
+		   and at_date between (trunc(sysdate, 'month')) and (last_day(sysdate))
+	</select>
 	
 	<!-- 1-4. 출퇴근기록/근무현황_이번달 연장근무시간 -->
-	
+	<select id="thisMonthOvertime" resultType="_int">
+		select 
+		       nvl(sum(at_overtime), 0) as at_overtime
+		  from attendance
+		  where user_no = '00014'
+		   and at_date between (trunc(sysdate, 'month')) and (last_day(sysdate))
+	</select>
 	
 	<!-- 1-5. 출퇴근기록/근무현황_총 근무시간 -->
-	
+	<select id="thisMonthTotaltime" resultType="_int">
+		select
+		       nvl(sum(at_totaltime), 0)
+		  from attendance
+		 where user_no = '00014'
+		   and at_date between (trunc(sysdate, 'month')) and (last_day(sysdate))
+	</select>
 	
 	<!-- 1-6. 출퇴근기록/이번달 근태현황_지각(횟수) -->
-	
+	<select id="thisMonthLate" resultType="_int">
+		select
+		       count(*)
+		  from attendance
+		 where user_no = '00014'
+		   and at_status = '2'
+		   and at_date between (trunc(sysdate, 'month')) and (last_day(sysdate))
+	</select>
 	
 	<!-- 1-7. 출퇴근기록/이번달 근태현황_결근(횟수) --> 
-	
+	<select id="thisMonthAbsence" resultType="_int">
+		select 
+		       count(*)
+		  from attendance
+		 where user_no = '00014'
+		   and at_status = '4'
+		   and at_date between (trunc(sysdate, 'month')) and (last_day(sysdate))
+	</select>
 	
 	<!-- 1-8. 출퇴근기록/이번달 근태현황_연차(횟수) -->
+	<select id="thisMonthHoliday" resultType="_int">
+		select 
+		       count(*)
+		  from attendance
+		 where user_no = '00014'
+		   and at_status = '3'
+		   and at_date between (trunc(sysdate, 'month')) and (last_day(sysdate))
+	</select>
 	
+	<!-- 1-9. 출퇴근기록/휴가현황_잔여휴가(일수)  
+	<select id="thisMonthHolidayRemain" resultType="_int">
+        select
+		       13 - sum(vacation_count) 
+		  from document do
+		  join vacation va on(do.document_no = va.document_no)
+		 where do.user_no = '00014'
+		   and do.progress = '2'
+	</select>-->
 	
-	<!-- 1-9. 출퇴근기록/휴가현황_잔여휴가(일수) -->
+	<!-- 1-10. 출퇴근기록 표_근무일자/요일/출근시간/퇴근시간/근무상태 -->
+	<select id="commuteListCount" resultType="_int">
+		select 
+		       count(*)
+		  from attendance
+		 where user_no = '00014'
+	</select>
 	
-	
-	<!-- 1-10. 출퇴근기록 표_페이징처리 listCount -->
-	
-	
-	<!-- 1-11. 출퇴근기록 표_근무일자/요일/출근시간/퇴근시간/근무상태 -->
-	
+	<!-- 1-11. 출퇴근기록 표_페이징처리 listCount -->
+	<select id="commuteList" resultMap="attendanceResult">
+		select 
+		       at_date
+		     , at_day
+		     , nvl(at_start, '-') as at_start
+		     , nvl(at_end, '-') as at_end
+		     , decode(at_status, 1, '정상',
+		                         2, '지각',
+		                         3, '휴가',
+		                         4, '결근') as at_status
+		  from attendance
+		 where user_no = '00014'
+		 order by at_date desc
+	</select>
 	
 	
 	<!-- 2. 출퇴근기록 수정요청 / commuteUpdate.jsp -->	
@@ -135,45 +232,37 @@
 	<!-- 4-2. 사용 휴가 갯수 -->
 	<select id="holidayUserCount" resultType="_int">
 		select 
-		       count(vacation_count)
+		       nvl(sum(va.vacation_count), 0) as vacation_count
 		  from document do
-		  left join annual a on(a.user_no = do.user_no)
-		  left join vacation v on(v.document_no = do.document_no)
-		  left join approval ap on(ap.document_no = do.document_no)
-		 where user_no = #{userNo} 
-		   and ap.status = '승인'
-		   and a.annual_date between (trunc(sysdate, 'yyyy')) and (add_months(trunc(sysdate, 'year'), 12) -1)
+		  join vacation va on (va.document_no = do.document_no)
+		 where do.user_no = #{userNo}
+		   and do.progress = '2'
+		   and va.vacation_start between (trunc(sysdate, 'yyyy')) and (add_months(trunc(sysdate, 'year'), 12) -1)
 	</select>
 	
 	<!-- 4-3. 잔여 휴가 갯수 -->
 	<select id="holidayRemainderCount" resultType="_int">
 		select 
-		       count(annual_give) - count(vacation_count) as holidayCount
+		       13 - nvl(sum(va.vacation_count), 0) as holidayCount
 		  from document do
-		  left join annual a on(a.user_no = do.user_no)
-		  left join vacation v on(v.document_no = do.document_no)
-		  left join approval ap on(ap.document_no = do.document_no)
-		 where user_no = #{userNo} 
-		   and ap.status = '승인'
-		   and a.annual_date between (trunc(sysdate, 'yyyy')) and (add_months(trunc(sysdate, 'year'), 12) -1)
+		  join vacation va on (va.document_no = do.document_no)
+		 where do.user_no = #{userNo}
+		   and do.progress = '2'
+		   and va.vacation_start between (trunc(sysdate, 'yyyy')) and (add_months(trunc(sysdate, 'year'), 12) -1)
 	</select>
 	
 	<!-- 4-4. 휴가사용내역 표_휴가신청일자/휴가종류/사유/휴가사용기간/차감일수/승인내역 -->
 	<select id="selectHolidayList" resultMap="documentResult">
-		select
+		select 
 		       to_char(do.create_date, 'YYYY-MM-DD') as create_date
-		     , nvl(v.vacation_category, '-') as vacation_category
-		     , do.document_content 
-		     , nvl(v.vacation_start || '~' || vacation_end, '-') as vacation_date
-		     , v.vacation_count
-		     , DECODE(ap.status, '0', '결재대기',
-		                         '승인', '승인',
-		                         '반려', '반려') as ap_status
+		     , va.vacation_category
+		     , do.document_content
+		     , (va.vacation_start || '~' || va.vacation_end) as vacation_date
+		     , va.vacation_count
 		  from document do
-		  left join vacation v on(v.document_no = do.document_no)
-		  left join approval ap on(ap.document_no = do.document_no)
-		 where do.user_no = #{userNo}
-		 order by 1 desc
+		  join vacation va on (va.document_no = do.document_no)
+		 where user_no = #{userNo}
+		 order by 4 desc
 	</select>
 	
 	
@@ -184,17 +273,16 @@
 		select 
 		       nvl(sum(at_overtime), 0) as at_overtime
 		  from attendance
-		 where user_no = '00014'
+		 where user_no = #{userNo}
 		   and at_date between (TRUNC(SYSDATE, 'MONTH')) and (LAST_DAY(SYSDATE))
 	</select>
 	
 	<!-- 5-2. 이번달 연장근무 가능시간 -->
 	<select id="workPossibleCount" resultType="_int">
 		select
-		       60 - nvl(sum(work_use),0) as work_user
+		       60 - nvl(sum(work_use),0) as work_use
 		  from document
-		  left join attendance using(user_no)
-		  left join work using(document_no)
+		  join work using(document_no)
 		 where user_no = #{userNo}
 		   and work_date between (TRUNC(SYSDATE, 'MONTH')) and (LAST_DAY(SYSDATE))
 	</select>	
@@ -202,31 +290,28 @@
 	<!-- 5-3. 이번달 연장근무 일수 -->
 	<select id="workPossibleDay" resultType="_int">
 		select 
-		       count(work_use)
-		  from document
-		  left join attendance using(user_no)
-		  left join work using(document_no)
-		 where user_no = #{userNo}
-		   and at_date between (TRUNC(SYSDATE, 'MONTH')) and (LAST_DAY(SYSDATE))
+		       count(*)
+		  from document do
+		  join attendance at on(at.user_no = do.user_no)
+		  join work wo on(do.document_no = wo.document_no and at.at_date = wo.work_date)
+		 where do.user_no = #{userNo}
+		   and work_date between (TRUNC(SYSDATE, 'MONTH')) and (LAST_DAY(SYSDATE))
 	</select>	
 	
 	<!-- 5-4. 연장근무내역 표_연장근무일자/요일/연장근무시간/사유/소요시간/승인내역 -->
 	<select id="selectWorkList" resultMap="documentResult">
-		select
-		       do.user_no
-		     , work_date
-		     , at_day
+		select 
+		       work_date
+		     , at.at_day
 		     , nvl(wo.work_start || '~' || wo.work_end, '-') as work_dateList
 		     , do.document_content
 		     , wo.work_use
-		     , DECODE(ap.status, '0', '결재대기',
-		                         '승인', '승인',
-		                         '반려', '반려') as ap_status
 		  from document do
-		  left join attendance at on(at.user_no = do.user_no)
-		  left join approval ap on(ap.document_no = do.document_no)
-		  left join work wo on(wo.document_no = do.document_no)
+		  join attendance at on(at.user_no = do.user_no)
+		  join work wo on(do.document_no = wo.document_no and at.at_date = wo.work_date)
 		 where do.user_no = #{userNo}
+		   and work_date between (TRUNC(SYSDATE, 'MONTH')) and (LAST_DAY(SYSDATE))
+		 order by work_date desc
 	</select>	
 	
 	<!-- 6. 사원별 출퇴근 현황 조회 / commuteMemberList.jsp -->
@@ -295,6 +380,7 @@
 		 <if test="searchDep == 'dept5'">
 		   m.dep_name = '회계팀' 
 		 </if> 
+		 
 		   and m.user_name like '%' || #{keyword} || '%'
 		 order by at_date desc
 	</select>
@@ -312,7 +398,26 @@
 		       count(*)
           from attendance at
 		  join member m on(m.user_no = at.user_no)
-		 where m.status = 'N'
+		 where m.status = 'N'		
+		 <if test="searchDep == 'dept0'">
+		   and m.dep_name in('개발팀', '영업팀', '인사팀', '총무팀', '회계팀')
+		 </if>  
+		 <if test="searchDep == 'dept1'">
+		   and m.dep_name = '개발팀'
+		 </if>  
+		 <if test="searchDep == 'dept2'">
+		   and m.dep_name = '영업팀'
+		 </if>  
+		 <if test="searchDep == 'dept3'">
+		   and m.dep_name = '인사팀'
+		 </if> 
+		 <if test="searchDep == 'dept4'">
+		   and m.dep_name = '총무팀'
+		 </if> 
+		 <if test="searchDep == 'dept5'">
+		   and m.dep_name = '회계팀' 
+		 </if> 
+		 and m.user_name like '%' || #{keyword} || '%' 
 	</select>
 	
 	<!-- 8-2. 사원별 근태현황 표_근무날짜/사원번호/부서/사원명/직급/출근시간/퇴근시간/연장근무시간/총근무시간/근무상태 -->
@@ -326,15 +431,34 @@
 		     , m.job_name
 		     , nvl(at.at_start, '-') as at_start
 		     , nvl(at.at_end, '-') as at_end
-		     , nvl(at_overtime, '0') as at_overtime
+		     , nvl(at_overtime, 0) as at_overtime
 		     , at_totaltime
 		     , DECODE(AT_STATUS, 1, '정상',
 		                         2, '지각',
 		          			     3, '휴가',
-                                '결근') AS AT_STATUS
+                                 4, '결근') AS AT_STATUS
           from attendance at
 		  join member m on(m.user_no = at.user_no)
 		 where m.status = 'N'
+		 <if test="searchDep == 'dept0'">
+		   and m.dep_name in('개발팀', '영업팀', '인사팀', '총무팀', '회계팀')
+		 </if>  
+		 <if test="searchDep == 'dept1'">
+		   and m.dep_name = '개발팀'
+		 </if>  
+		 <if test="searchDep == 'dept2'">
+		   and m.dep_name = '영업팀'
+		 </if>  
+		 <if test="searchDep == 'dept3'">
+		   and m.dep_name = '인사팀'
+		 </if> 
+		 <if test="searchDep == 'dept4'">
+		   and m.dep_name = '총무팀'
+		 </if> 
+		 <if test="searchDep == 'dept5'">
+		   and m.dep_name = '회계팀' 
+		 </if> 
+		 and m.user_name like '%' || #{keyword} || '%' 		 
           order by at_date desc
 	</select>
 	
@@ -476,10 +600,10 @@
 		 where do.create_date is not null
 		   and vacation_count is not null 
 		 <if test="hCategory == 'hStatus0'">
-		   and v.vacation_category in('연가', '병가', '경조사', '기타')
+		   and v.vacation_category in('연차', '병가', '경조사', '기타')
 		 </if>  
 		 <if test="hCategory == 'hStatus1'">
-		   and v.vacation_category = '연가'
+		   and v.vacation_category = '연차'
 		 </if>  
 		 <if test="hCategory == 'hStatus2'">
 		   and v.vacation_category = '병가'
@@ -523,7 +647,6 @@
 		     , m.user_name
 		     , m.job_name
 		     , v.vacation_category
-		     , ap.status
 		  from member m
 		  join document do on(m.user_no = do.user_no)
 		  join vacation v on(v.document_no = do.document_no)
@@ -531,10 +654,10 @@
 		 where do.create_date is not null
 		   and vacation_count is not null 
 		 <if test="hCategory == 'hStatus0'">
-		   and v.vacation_category in('연가', '병가', '경조사', '기타')
+		   and v.vacation_category in('연차', '병가', '경조사', '기타')
 		 </if>  
 		 <if test="hCategory == 'hStatus1'">
-		   and v.vacation_category = '연가'
+		   and v.vacation_category = '연차'
 		 </if>  
 		 <if test="hCategory == 'hStatus2'">
 		   and v.vacation_category = '병가'
@@ -559,9 +682,6 @@
 		 </if> 
 		 <if test="searchDep == 'dept4'">
 		   and m.dep_name = '총무팀'
-		 </if> 
-		 <if test="searchDep == 'dept5'">
-		   and m.dep_name = '회계팀' 
 		 </if> 
 		 and m.user_name like '%' || #{keyword} || '%'
 		 and m.status = 'N'

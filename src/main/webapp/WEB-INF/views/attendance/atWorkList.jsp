@@ -34,7 +34,7 @@
       <div class="adminx-content">
         <div class="adminx-main-content">
 
-          <span style="margin-left:20px;"><b>강보람님의 7월 연장근무</b></span> 
+          <span style="margin-left:20px;"><b>${ loginUser.userName }님의 9월 연장근무</b></span> 
 
           <div class="container-fluid">
 
@@ -61,7 +61,7 @@
                         연장근무 가능시간
                       </span> <br>
                       <span class="span-bottom">
-                        ${ workPossibleCount }시간  
+                        53시간  
                       </span>
                     </td>
                     <td style="text-align:center;"><hr style="border:1px solid LightGray; width:0; height:100px;"></td>
@@ -109,7 +109,7 @@
                     <div style="padding-left:15px; width:100%;">
                       
                       <div style="display:inline-block; text-align:center; margin-top:15px; margin-bottom:15px;">
-                        <strong>2022년 강보람님의 연장근무내역</strong>
+                        <strong>2022년 ${ loginUser.userName }님의 연장근무내역</strong>
                         <button type="button" class="btn btn-sm btn-primary" style="margin-left:15px; height:40px;" onclick="location.href='documentList.ap'">연장근무신청</button>
                       </div>
                                                                   
@@ -126,16 +126,18 @@
                               <th scope="col">연장근무시간</th>
                               <th scope="col">사유</th>
                               <th scope="col">소요시간</th>
-                              <th scope="col">승인내역</th>
                             </tr>
                           </thead>
                           <tbody>
                           <c:choose>
+                            
                           	<c:when test="${ empty list }">
                           		<tr>
-                					<td colspan="6">조회내역이 없습니다.</td>
+                					<td colspan="5">조회내역이 없습니다.</td>
                 				</tr>
                           	</c:when>
+                          	
+                          	
                           	<c:otherwise>
                           		<c:forEach var="at" items="${ list }">
 		                            <tr>
@@ -144,11 +146,11 @@
 		                              <td>${ at.workDateList }</td>
 		                              <td>${ at.documentContent }</td>
 		                              <td>${ at.workUse }</td>
-		                              <td>${ at.status }</td>
 		                            </tr>
 	                            </c:forEach>
                             </c:otherwise>
                           </c:choose>
+                         
                           </tbody>
                         </table>
                       </div>

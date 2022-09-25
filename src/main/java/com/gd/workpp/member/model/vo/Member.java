@@ -34,4 +34,5 @@ public class Member {
 	private String vacationDate;
 	private String vacationCategory;
 	private String apStatus;
+	private String progress;
 }

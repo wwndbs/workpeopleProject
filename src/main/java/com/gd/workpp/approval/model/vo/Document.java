@@ -30,7 +30,7 @@ public class Document {
 	// 장서원 추가
 	private String vacationCategory;
 	private String vacationDate;
-	private int vacationCount;
+	private String vacationCount;
 	private String apStatus;
 	private String workUse;
 	private String workDate;

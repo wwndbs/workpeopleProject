@@ -18,6 +18,74 @@ public class AttendanceServiceImpl implements AttendanceService {
 	@Autowired
 	private SqlSessionTemplate sqlSession;	
 	
+	// 출근버튼 insert
+	@Override
+	public int insertCommute(String userNo) {
+		return atDao.insertCommute(sqlSession, userNo);
+	}
+	
+	// 퇴근버튼 update
+	@Override
+	public int updateCommute(String userNo) {
+		return atDao.updateCommute(sqlSession, userNo);
+	}
+	
+	// 1. 출퇴근기록 페이지 / commuteList.jsp
+	@Override
+	public Attendance todayStart(String userNo) {
+		return atDao.todayStart(sqlSession, userNo);
+	}
+
+	@Override
+	public Attendance todayEnd(String userNo) {
+		return atDao.todayEnd(sqlSession, userNo);
+	}
+
+	@Override
+	public int thisMonthWorkDay(String userNo) {
+		return atDao.thisMonthWorkDay(sqlSession, userNo);
+	}
+
+	@Override
+	public int thisMonthOvertime(String userNo) {
+		return atDao.thisMonthOvertime(sqlSession, userNo);
+	}
+
+	@Override
+	public int thisMonthTotaltime(String userNo) {
+		return atDao.thisMonthTotaltime(sqlSession, userNo);
+	}
+
+	@Override
+	public int thisMonthLate(String userNo) {
+		return atDao.thisMonthLate(sqlSession, userNo);
+	}
+
+	@Override
+	public int thisMonthAbsence(String userNo) {
+		return atDao.thisMonthAbsence(sqlSession, userNo);
+	}
+
+	@Override
+	public int thisMonthHoliday(String userNo) {
+		return atDao.thisMonthHoliday(sqlSession, userNo);
+	}
+
+//	@Override
+//	public int thisMonthHolidayRemain(String userNo) {
+//		return atDao.thisMonthHolidayRemain(sqlSession, userNo);
+//	}
+
+	@Override
+	public int commuteListCount(String userNo) {
+		return atDao.commuteListCount(sqlSession, userNo);
+	}
+
+	@Override
+	public ArrayList<Attendance> commuteList(PageInfo pi, String userNo) {
+		return atDao.commuteList(sqlSession, pi, userNo);
+	}
+	
 	
 	/*
 	// 3. 개인근태현황 / attendanceList.jsp	
@@ -71,13 +139,13 @@ public class AttendanceServiceImpl implements AttendanceService {
 
 	// 6. 사원별 출퇴근 현황 조회 / commuteMemberList.jsp
 	@Override
-	public int commuteMemberListCount(String searchDep, String keyword) {
-		return atDao.commuteMemberListCount(sqlSession, searchDep, keyword);
+	public int commuteMemberListCount(String searchDep, String keyword, String datepicker) {
+		return atDao.commuteMemberListCount(sqlSession, searchDep, keyword, datepicker);
 	}
 	
 	@Override
-	public ArrayList<Attendance> commuteMemberList(PageInfo pi, String searchDep, String keyword) {
-		return atDao.commuteMemberList(sqlSession, pi, searchDep, keyword);
+	public ArrayList<Attendance> commuteMemberList(PageInfo pi, String searchDep, String keyword, String datepicker) {
+		return atDao.commuteMemberList(sqlSession, pi, searchDep, keyword, datepicker);
 	}
 	
 	// 8. 사원별 근태현황 조회 / attendanceMemberList.jsp
@@ -115,6 +183,10 @@ public class AttendanceServiceImpl implements AttendanceService {
 			String searchDep, String keyword) {
 		return atDao.holidayMemberAllList(sqlSession, pi, hCategory, searchDep, keyword);
 	}
+
+
+
+
 
 
 

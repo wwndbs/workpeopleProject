@@ -170,7 +170,9 @@
 				                		toast("승인받은 프로젝트만 참가 가능합니다.");
 				                	}else{
 				                		location.href='proList.pr?no=${pp.projectNo}';
-				                		//location.href='proList.pr?no=${pp.projectNo}&status=1';
+				                		//location.href='proList.pr?no=${pp.projectNo}&status=1'; 진행중|완료 등으로 조회할 경우
+				                		
+				                		//<div class="card mb-grid project w-100 box1" onclick="location.href='proList.pr?no=${pp.projectNo}'">
 				                	}
 				                	
 				                }

@@ -8,57 +8,50 @@ import com.gd.workpp.common.model.vo.PageInfo;
 public interface AttendanceService {
 	
 	// 메인페이지 / 출근버튼 클릭시 insert
-	
+	int insertCommute(String userNo);
 	
 	// 메인페이지 / 퇴근버튼 클릭시 update
-	
+	int updateCommute(String userNo);
 	
 	// 1. 출퇴근기록 / commuteList.jsp
 	
 	// 1-1. 출퇴근기록/오늘 출근기록 조회
-	
+	Attendance todayStart(String userNo);
 	
 	// 1-2. 출퇴근기록/오늘 퇴근기록 조회
-	
+	Attendance todayEnd(String userNo);
 	
 	// 1-3. 출퇴근기록/근무현황_이번달 근무일수
-	
+	int thisMonthWorkDay(String userNo);
 	
 	// 1-4. 출퇴근기록/근무현황_이번달 연장근무시간
-	
+	int thisMonthOvertime(String userNo);
 	
 	// 1-5. 출퇴근기록/근무현황_총 근무시간
-	
+	int thisMonthTotaltime(String userNo);
 	
 	// 1-6. 출퇴근기록/이번달 근태현황_지각(횟수)
-	
+	int thisMonthLate(String userNo);
 	
 	// 1-7. 출퇴근기록/이번달 근태현황_결근(횟수) 
-	
+	int thisMonthAbsence(String userNo);
 	
 	// 1-8. 출퇴근기록/이번달 근태현황_연차(횟수)
-	
+	int thisMonthHoliday(String userNo);
 	
 	// 1-9. 출퇴근기록/휴가현황_잔여휴가(일수)
-	
+//	int thisMonthHolidayRemain(String userNo);
 	
 	// 1-10. 출퇴근기록 표_페이징처리 listCount
-	
+	int commuteListCount(String userNo);	
 	
 	// 1-11. 출퇴근기록 표_근무일자/요일/출근시간/퇴근시간/근무상태
+	ArrayList<Attendance> commuteList(PageInfo pi, String userNo);
 	
-	
-	// 2. 출퇴근기록 수정요청 / commuteUpdate.jsp
-	
-	// 2-1. 이번달 시작일~종료일 출력(조회)
-	
-	
-	// 2-2. 출퇴근기록 표_페이징처리 listCount
-	
-	
-	// 2-3. 출퇴근기록 표_근무일자/요일/출근시간/퇴근시간/근무상태/수정상태
-	
-	
+	// 2. 출퇴근기록 수정요청 / commuteUpdate.jsp	
+	// 2-1. 이번달 시작일~종료일 출력(조회)	
+	// 2-2. 출퇴근기록 표_페이징처리 listCount	
+	// 2-3. 출퇴근기록 표_근무일자/요일/출근시간/퇴근시간/근무상태/수정상태	
 	// 2-4. 수정요청 update
 	
 	
@@ -102,10 +95,10 @@ public interface AttendanceService {
 	// 6. 사원별 출퇴근 현황 조회 / commuteMemberList.jsp
 	
 	// 6-1. 출퇴근현황 표 페이징처리 listCount
-	int commuteMemberListCount(String searchDep, String keyword);
+	int commuteMemberListCount(String searchDep, String keyword, String datepicker);
 	
 	// 6-2. 출퇴근현황(날짜 클릭시)_사원번호/부서/사원명/직급/출근시간/퇴근시간/연장근무시간/비고(연차)
-	ArrayList<Attendance> commuteMemberList(PageInfo pi, String searchDep, String keyword);
+	ArrayList<Attendance> commuteMemberList(PageInfo pi, String searchDep, String keyword, String datepicker);
 	
 	// 7. 출퇴근 기록 수정요청 현황 / commuteMemberUpdate.jsp	
 	// 7-1. 출퇴근 기록 수정요청 현황 표 페이징처리 listCount

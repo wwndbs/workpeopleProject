@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.gd.workpp.board.model.vo.Board;
 import com.gd.workpp.board.model.vo.Reply;
+import com.gd.workpp.board.model.vo.Report;
 import com.gd.workpp.common.model.vo.Attachment;
 import com.gd.workpp.common.model.vo.PageInfo;
 
@@ -41,6 +42,9 @@ public interface BoardService {
 	// 게시판 상세페이지
 	int increaseCount(int boardNo);
 	Board selectBoard(int boardNo);
+	int selectBoardLike(Board b);
+	
+	// 댓글 조회
 	ArrayList<Reply> selectReplyList(int boardNo);
 	
 	// 댓글 작성
@@ -51,5 +55,14 @@ public interface BoardService {
 	
 	// 댓글 수정
 	int updateReply(Reply r);
+	
+	// 게시글 좋아요 / 좋아요 해제
+	int insertBoardLike(Board b);
+	int deleteBoardLike(Board b);
+	int selectBoardLikeCount(Board b);
+	
+	// 신고
+	Report checkReport(Report rp);
+	int insertReport(Report rp);
 	
 }
