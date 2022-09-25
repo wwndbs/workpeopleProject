@@ -59,6 +59,7 @@
 		<result column="vacation_date" property="vacationDate" />
 		<result column="vacation_category" property="vacationCategory" />
 		<result column="ap_status" property="apStatus" />
+		<result column="at_date" property="atDate" />
 	</resultMap>
 	
 	<!-- 1. 출퇴근기록 / commuteList.jsp -->
@@ -389,8 +390,7 @@
 		 </if> 
 		 <if test="searchDep == 'dept5'">
 		   m.dep_name = '회계팀' 
-		 </if> 
-		 
+		 </if> 		 
 		   and m.user_name like '%' || #{keyword} || '%'
 		 order by at_date desc
 	</select>
@@ -408,7 +408,24 @@
 		       count(*)
           from attendance at
 		  join member m on(m.user_no = at.user_no)
-		 where m.status = 'N'		
+		 where m.status = 'N'
+		 <!--  
+		 <if test="atCategory == 'atStatus0'">
+		   and at.at_status in('연차', '병가', '경조사', '기타')
+		 </if>  
+		 <if test="atCategory == 'atStatus1'">
+		   and at.at_status = '1'
+		 </if>  
+		 <if test="atCategory == 'atStatus2'">
+		   and at.at_status = '2'
+		 </if>  
+		 <if test="atCategory == 'atStatus'">
+		   and at.at_status = '3'
+		 </if> 
+		 <if test="atCategory == 'atStatus'">
+		   and at.at_status = '4'
+		 </if> 		
+		 -->
 		 <if test="searchDep == 'dept0'">
 		   and m.dep_name in('개발팀', '영업팀', '인사팀', '총무팀', '회계팀')
 		 </if>  
@@ -450,6 +467,23 @@
           from attendance at
 		  join member m on(m.user_no = at.user_no)
 		 where m.status = 'N'
+		 <!--  
+		 <if test="atCategory == 'atStatus0'">
+		   and at.at_status in('연차', '병가', '경조사', '기타')
+		 </if>  
+		 <if test="atCategory == 'atStatus1'">
+		   and at.at_status = '1'
+		 </if>  
+		 <if test="atCategory == 'atStatus2'">
+		   and at.at_status = '2'
+		 </if>  
+		 <if test="atCategory == 'atStatus'">
+		   and at.at_status = '3'
+		 </if> 
+		 <if test="atCategory == 'atStatus'">
+		   and at.at_status = '4'
+		 </if> 	
+		 -->		 
 		 <if test="searchDep == 'dept0'">
 		   and m.dep_name in('개발팀', '영업팀', '인사팀', '총무팀', '회계팀')
 		 </if>  
@@ -601,14 +635,12 @@
 	
 	<!-- 10-1. 휴가내역 표 페이징처리 listCount -->
 	<select id="holidayMemberAllListCount" resultType="_int">
-		select
+		select 
 		       count(*)
 		  from member m
-		  join document do on(m.user_no = do.user_no)
-		  join vacation v on(v.document_no = do.document_no)
-		  join approval ap on(ap.document_no = do.document_no)
-		 where do.create_date is not null
-		   and vacation_count is not null 
+		  join attendance at on(at.user_no = m.user_no)
+		 where at_status = '3'
+		 <!--  
 		 <if test="hCategory == 'hStatus0'">
 		   and v.vacation_category in('연차', '병가', '경조사', '기타')
 		 </if>  
@@ -619,11 +651,12 @@
 		   and v.vacation_category = '병가'
 		 </if>  
 		 <if test="hCategory == 'hStatus3'">
-		   and v.vacation_category = '과장'
+		   and v.vacation_category = '경조사'
 		 </if> 
 		 <if test="hCategory == 'hStatus4'">
 		   and v.vacation_category = '기타'
 		 </if> 
+		 -->
 		 <if test="searchDep == 'dept0'">
 		   and m.dep_name in('개발팀', '영업팀', '인사팀', '총무팀', '회계팀')
 		 </if>  
@@ -648,21 +681,17 @@
 	
 	<!-- 10-2. 휴가내역 표_휴가일/사원번호/부서/사원명/직급/휴가종류/승인내역 -->
 	<select id="holidayMemberAllList" resultMap="memberResult">
-		select
-		       case when (v.vacation_start != null and v.vacation_end != null) then (v.vacation_start || '~' || v.vacation_end)
-		            when (v.vacation_start || '~' || v.vacation_end) = '~' then '-'
-		       end as "vacation_date"
+		select 
+		       at_date
 		     , m.user_no
 		     , m.dep_name
 		     , m.user_name
 		     , m.job_name
-		     , v.vacation_category
+		     , '연차' as vacation_category
 		  from member m
-		  join document do on(m.user_no = do.user_no)
-		  join vacation v on(v.document_no = do.document_no)
-		  join approval ap on(ap.document_no = do.document_no)
-		 where do.create_date is not null
-		   and vacation_count is not null 
+		  join attendance at on(at.user_no = m.user_no)
+		 where at_status = '3'
+		 <!--  
 		 <if test="hCategory == 'hStatus0'">
 		   and v.vacation_category in('연차', '병가', '경조사', '기타')
 		 </if>  
@@ -673,11 +702,12 @@
 		   and v.vacation_category = '병가'
 		 </if>  
 		 <if test="hCategory == 'hStatus3'">
-		   and v.vacation_category = '과장'
+		   and v.vacation_category = '경조사'
 		 </if> 
 		 <if test="hCategory == 'hStatus4'">
 		   and v.vacation_category = '기타'
 		 </if> 
+		 -->
 		 <if test="searchDep == 'dept0'">
 		   and m.dep_name in('개발팀', '영업팀', '인사팀', '총무팀', '회계팀')
 		 </if>  
@@ -695,6 +725,7 @@
 		 </if> 
 		 and m.user_name like '%' || #{keyword} || '%'
 		 and m.status = 'N'
+		 order by at_date desc
 	</select>	
 
 	 

@@ -145,13 +145,13 @@ public class AttendanceServiceImpl implements AttendanceService {
 
 	// 6. 사원별 출퇴근 현황 조회 / commuteMemberList.jsp
 	@Override
-	public int commuteMemberListCount(String searchDep, String keyword, String datepicker) {
-		return atDao.commuteMemberListCount(sqlSession, searchDep, keyword, datepicker);
+	public int commuteMemberListCount(String searchDep, String keyword) {
+		return atDao.commuteMemberListCount(sqlSession, searchDep, keyword);
 	}
 	
 	@Override
-	public ArrayList<Attendance> commuteMemberList(PageInfo pi, String searchDep, String keyword, String datepicker) {
-		return atDao.commuteMemberList(sqlSession, pi, searchDep, keyword, datepicker);
+	public ArrayList<Attendance> commuteMemberList(PageInfo pi, String searchDep, String keyword) {
+		return atDao.commuteMemberList(sqlSession, pi, searchDep, keyword);
 	}
 	
 	// 8. 사원별 근태현황 조회 / attendanceMemberList.jsp

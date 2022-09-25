@@ -161,7 +161,7 @@
                     				}else{
                     					for(let i=0; i<list.length; i++){
                     						value += '<tr>'
-			  			                          +    	 '<td>' + list[i].vacationDate + '</td>'
+			  			                          +    	 '<td>' + list[i].atDate + '</td>'
 			  			                          +   	 '<td>' + list[i].userNo + '</td>'
 			  			                          +   	 '<td>' + list[i].depName + '</td>'
 			  			                          +   	 '<td>' + list[i].userName + '</td>'

@@ -122,14 +122,7 @@
                         <button class="btn btn-danger" id="atEnd-btn" data-toggle="modal" data-target="#commute-end-modal" data-backdrop="static">퇴근</button>
                      </div>
                   </div>
-                  
-                  <!-- 출/퇴근 버튼 비활성화 스크립트 
-                  <script>
-                 	 $("#atStart-btn").bind("click", function(){
-                	    $("#atStart-btn").attr("disabled", true);
-                	    // <input type="button" id="'my_id" value="버튼" disabled="disabled" />
-                	   });
-                  </script>-->
+                 
    
                   <!--프로젝트 부분-->
                   <div class="project-area">
@@ -502,6 +495,15 @@
 			</div>
 		</div>
     </form>
+    
+    <!-- 출/퇴근 버튼 비활성화 스크립트 -->
+	<script>
+		$("#commute-start-btn").bind("click", function(){
+			$("#atStart-btn").attr("disabled", true);
+		});
+	</script>
+    
+    
    <jsp:include page="common/footer.jsp"/>
 </body>
 </html>

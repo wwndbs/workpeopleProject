@@ -316,22 +316,19 @@ public class AttendanceController {
 	
 	@ResponseBody
 	@RequestMapping(value="commuteMemberList.at", produces="application/json; charset=utf-8")
-	public String commuteMemberList(@RequestParam(value="cpage", defaultValue="1") int currentPage, String searchDep, String keyword, String datepicker) {	
+	public String commuteMemberList(@RequestParam(value="cpage", defaultValue="1") int currentPage, String searchDep, String keyword) {	
 		
-		int listCount = atService.commuteMemberListCount(searchDep, keyword, datepicker);
+		int listCount = atService.commuteMemberListCount(searchDep, keyword);
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);		
-		ArrayList<Attendance> list = atService.commuteMemberList(pi, searchDep, keyword, datepicker);
+		ArrayList<Attendance> list = atService.commuteMemberList(pi, searchDep, keyword);
 		
 		HashMap<String,Object> map = new HashMap<>();
 		map.put("list", list);
 		map.put("pi", pi);
 		map.put("searchDep", searchDep);
 		map.put("keyword", keyword);
-		map.put("datepicker", datepicker);
-		
-		System.out.println(datepicker);
-		
+
 	    return new Gson().toJson(map);
 
 	}

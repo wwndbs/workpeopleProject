@@ -159,20 +159,19 @@ public class AttendanceDao {
 	// 6. 사원별 출퇴근 현황 조회 / commuteMemberList.jsp
 	
 	// 6-1. 출퇴근현황 표 페이징처리 listCount
-	public int commuteMemberListCount(SqlSessionTemplate sqlSession, String searchDep, String keyword, String datepicker) {
+	public int commuteMemberListCount(SqlSessionTemplate sqlSession, String searchDep, String keyword) {
 		HashMap<String,Object> map = new HashMap<>();
 		map.put("searchDep", searchDep);
 		map.put("keyword", keyword);
-		map.put("datepicker", datepicker);
 		
 		return sqlSession.selectOne("attendanceMapper.commuteMemberListCount", map);
 	}
 	
 	// 6-2. 출퇴근현황(날짜 클릭시)_사원번호/부서/사원명/직급/출근시간/퇴근시간/연장근무시간/비고(연차)
-	public ArrayList<Attendance> commuteMemberList(SqlSessionTemplate sqlSession, PageInfo pi, String searchDep, String keyword, String datepicker) {	
+	public ArrayList<Attendance> commuteMemberList(SqlSessionTemplate sqlSession, PageInfo pi, String searchDep, String keyword) {	
 		HashMap<String,Object> map = new HashMap<>();
 		map.put("searchDep", searchDep);
-		map.put("datepicker", datepicker);
+		map.put("keyword", keyword);
 
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * limit;
