@@ -288,7 +288,7 @@
 				            		 
 				            	})
 				            	
-				            	// 메일 선택 삭제 요청 (휴지통 이동)
+				            	// 메일 선택 삭제 요청 (완전 삭제)
 				            	$("#deleteBtn").click(function(){
 
 									if(checkMailNo == ''){
@@ -297,12 +297,11 @@
 									}
 				            		
 				            		$.ajax({
-	                                    url:"updateStatus.ma",
-	                                    data:{checkMailNo:checkMailNo,
-	                                    	  type:"mail_delete"},
+	                                    url:"realDelete.ma",
+	                                    data:{checkMailNo:checkMailNo},
 	                                    success:function(result){
 	                        				if(result == "success"){
-		                                        toast("휴지통으로 이동했습니다.");
+		                                        toast("삭제되었습니다.");
 		                                        setTimeout(reload, 1000);
 	                        				}else{
 	                        					toast("삭제에 실패했습니다.");

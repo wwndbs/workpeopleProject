@@ -249,6 +249,11 @@ public class MailServiceImpl implements MailService {
 		return mDao.deleteSpam(sqlSession, email, deleteMail);
 	}
 
+	@Override
+	public int realDelete(String checkMailNo, String email) {
+		return mDao.realDelete(sqlSession, checkMailNo, email);
+	}
+
 
 	
 

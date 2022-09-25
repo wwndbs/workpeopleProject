@@ -118,4 +118,7 @@ public interface MailService {
 	// 스팸 주소 삭제 서비스
 	int deleteSpam(String email, String deleteMail);
 	
+	// 휴지통에서 완전 삭제 서비스
+	int realDelete(String checkMailNo, String email);
+	
 }
