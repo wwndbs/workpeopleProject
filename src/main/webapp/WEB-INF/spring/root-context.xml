@@ -13,10 +13,17 @@
 	<!--  * dataSource 등록 -->
 	<bean class="org.apache.commons.dbcp.BasicDataSource" id="dataSource" destroy-method="close">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<!-- 
 		<property name="url" value="jdbc:oracle:thin:@gd1class.iptime.org:8877:xe" />
 		<property name="username" value="GDJ49WORKPP" />
 		<property name="password" value="WORKPP" />
+	 	 -->
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
+		<property name="username" value="WORKPP" />
+		<property name="password" value="WORKPP" />
+		 
 	</bean>
+	
 	
 	<!-- * sqlSessionFactoryBean 등록 -->
 	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
