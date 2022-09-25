@@ -109,19 +109,27 @@
 	                    	<div id="Clockday">00/00/00</div>
 	        				<div id="Clock">00:00</div>
 	                    </div>
-                        <span><strong>출근시간</strong></span>
+                        <span hidden><strong>출근시간</strong></span>
                         &nbsp;&nbsp;
-                        <span><strong style="color: gray;">${ atStart }</strong></span>
+                        <span id="atStart"><strong style="color: gray;"></strong></span>
                         <br>
-                        <span><strong>퇴근시간</strong></span>
+                        <span hidden><strong>퇴근시간</strong></span>
                         &nbsp;&nbsp;
-                        <span><strong style="color: gray;">${ atEnd }</strong></span>
+                        <span id="atEnd"><strong style="color: gray;"></strong></span>
                      </div>
-                     <div id="btn">
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#commute-start-modal" data-backdrop="static">출근</button>
-                        <button class="btn btn-danger" data-toggle="modal" data-target="#commute-end-modal" data-backdrop="static">퇴근</button>
+                     <div id="btn" style="margin: -15px 0px 15px 0px;">
+                        <button class="btn btn-primary" id="atStart-btn" data-toggle="modal" data-target="#commute-start-modal" data-backdrop="static">출근</button>
+                        <button class="btn btn-danger" id="atEnd-btn" data-toggle="modal" data-target="#commute-end-modal" data-backdrop="static">퇴근</button>
                      </div>
                   </div>
+                  
+                  <!-- 출/퇴근 버튼 비활성화 스크립트 
+                  <script>
+                 	 $("#atStart-btn").bind("click", function(){
+                	    $("#atStart-btn").attr("disabled", true);
+                	    // <input type="button" id="'my_id" value="버튼" disabled="disabled" />
+                	   });
+                  </script>-->
    
                   <!--프로젝트 부분-->
                   <div class="project-area">
