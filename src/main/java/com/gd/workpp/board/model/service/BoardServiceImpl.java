@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.gd.workpp.board.model.dao.BoardDao;
 import com.gd.workpp.board.model.vo.Board;
 import com.gd.workpp.board.model.vo.Reply;
+import com.gd.workpp.board.model.vo.Report;
 import com.gd.workpp.common.model.vo.Attachment;
 import com.gd.workpp.common.model.vo.PageInfo;
 
@@ -142,6 +143,12 @@ public class BoardServiceImpl implements BoardService {
 	public Board selectBoard(int boardNo) {
 		return bDao.selectBoard(sqlSession, boardNo);
 	}
+	
+	// 게시글 좋아요 여부 조회
+	@Override
+	public int selectBoardLike(Board b) {
+		return bDao.selectBoardLike(sqlSession, b);
+	}
 
 	// 댓글 리스트 조회
 	@Override
@@ -167,6 +174,39 @@ public class BoardServiceImpl implements BoardService {
 	public int updateReply(Reply r) {
 		return bDao.updateReply(sqlSession, r);
 	}
+
+	// 게시글 좋아요
+	@Override
+	public int insertBoardLike(Board b) {
+		return bDao.insertBoardLike(sqlSession, b);
+	}
+
+	// 게시글 좋아요 해제
+	@Override
+	public int deleteBoardLike(Board b) {
+		return bDao.deleteBoardLike(sqlSession, b);
+	}
+
+	// 게시글 좋아요 개수
+	@Override
+	public int selectBoardLikeCount(Board b) {
+		return bDao.selectBoardLikeCount(sqlSession, b);
+	}
+	
+	// 신고 여부 조회
+	@Override
+	public Report checkReport(Report rp) {
+		return bDao.checkReport(sqlSession, rp);
+	}
+
+	// 신고
+	@Override
+	public int insertReport(Report rp) {
+		return bDao.insertReport(sqlSession, rp);
+	}
+
+
+	
 	
 	
 	

@@ -33,7 +33,7 @@
                 <br>
 
                 <div class="board-title">
-                    <h5>${ b.depName } 게시판</h5>
+                    <h5>익명 게시판</h5>
                 </div>
 
                 <br>
@@ -41,18 +41,25 @@
                 <div class="board-content">
 
                     <div class="write-button">
-                      <button type="button" class="btn btn-sm btn-primary" onclick="location.href='enrollForm.bo?no=2'">새글쓰기</button>
+                    	<input type="hidden" id="rpType">
+                      <button type="button" class="btn btn-sm btn-primary" onclick="location.href='enrollForm.bo?no=3'">새글쓰기</button>
                       <!-- <button type="button" class="btn btn-sm btn-light">쪽지</button> -->
-                      <c:if test="${ loginUser.userNo eq b.userNo }">
-	                      <button type="button" class="btn btn-sm btn-light">수정</button>
-	                      <button type="button" class="btn btn-sm btn-danger">삭제</button>
-                      </c:if>
+                      <c:choose>
+	                      <c:when test="${ loginUser.userNo eq b.userNo }">
+		                      <button type="button" class="btn btn-sm btn-light">수정</button>
+		                      <button type="button" class="btn btn-sm btn-danger" >삭제</button>
+	                      </c:when>
+	                      <c:otherwise>
+	                          <button type="button" class="btn btn-sm btn-danger" onclick="rpType(1);" data-toggle="modal" data-target="#jyModal_confirm">신고</button>
+	                      </c:otherwise>
+                      </c:choose>
+                      
                     </div>
 
                     <div class="page-button">
-                      <button type="button" class="btn btn-sm btn-light" onclick="location.href='deptDetail.bo?boardNo=${b.boardNo - 1}&cpage=${ cpage }'">이전</button>
-                      <button type="button" class="btn btn-sm btn-light" onclick="location.href='deptDetail.bo?boardNo=${b.boardNo + 1}&cpage=${ cpage }'">다음</button>
-                      <button type="button" class="btn btn-sm btn-light" onclick="location.href='list.bo?cpage=${cpage}&no=2&dept=${ b.depName }'">목록</button>
+                      <button type="button" class="btn btn-sm btn-light" onclick="location.href='anonDetail.bo?boardNo=${b.boardNo - 1}&cpage=${ cpage }'">이전</button>
+                      <button type="button" class="btn btn-sm btn-light" onclick="location.href='anonDetail.bo?boardNo=${b.boardNo + 1}&cpage=${ cpage }'">다음</button>
+                      <button type="button" class="btn btn-sm btn-light" onclick="location.href='list.bo?cpage=${cpage}&no=3'">목록</button>
                     </div>
 
                     <div class="content-header">
@@ -60,7 +67,6 @@
                       <h5 class="re">[<span id="replyCount">${ b.reply }</span>]</h5>
                       <div class="profile">
                         <img src="resources/images/defaultProfile.jpg" alt="">
-                        <div>${ b.userName } ${ b.jobName }</div>
                         <div id="date">${ b.createDate }</div>
                       </div>
                     </div>
@@ -87,7 +93,7 @@
                             	url: "like.bo",
                             	data: {
                             		boardNo: ${b.boardNo},
-                            		userNo: "${b.userNo}"
+                            		userNo: "${loginUser.userNo}"
                             	},
                             	success: function(r){
                             		if(r.result == 1){
@@ -109,7 +115,7 @@
                             	url: "unlike.bo",
                             	data: {
                             		boardNo: ${b.boardNo},
-                            		userNo: "${b.userNo}"
+                            		userNo: "${loginUser.userNo}"
                             	},
                             	success: function(r){
                             		if(r.result == 1){
@@ -127,6 +133,15 @@
                             
                           }
                       }
+                    	  
+                      
+                      function rpType(type){
+                    	  if(type == 1){
+                    		  $("#rpType").val(1);
+                    	  }else{
+                    		  $("#rpType").val(2);
+                    	  }
+                      }
                     </script>
 
                     <div class="content-reply">
@@ -137,7 +152,7 @@
 	                        
 	                      </ul>
 
-                      <!-- 댓글 간 간격 조정하기 (프로필 사진 위치도 조정) -->
+                      <!-- 댓글 -->
                       <div class="reply-create">
                         <span class="photo"><img src="resources/images/defaultProfile.jpg" alt=""></span>
                         <div class="msg-wrap">
@@ -150,6 +165,142 @@
                         </div>
                       </div>
                     </div>
+                    
+                    <!-- 신고하기 모달창 -->
+                    <div class="modal" id="jyModal_confirm">
+				        <div class="modal-dialog modal-dialog-centered">
+				            <div class="modal-content">
+				                <!-- Modal Header -->
+				                <div class="modal-header">
+				                    <h6 class="modal-title">신고하기</h6>
+				                    <button type="button" class="modal_close" data-dismiss="modal">&times;</button>
+				                </div>
+				                <!-- Modal body -->
+				                <div class="modal-body" style="text-align: left; padding-left: 30px;">
+				                    <p><b>신고사유를 선택해주세요</b></p>
+				                    <input type="hidden" id="real">
+				                    <p><input type="radio" class="rpRadio" value="악의적 욕설이 포함된 글">&nbsp;&nbsp;악의적 욕설이 포함된 글</p>
+				                    <p><input type="radio" class="rpRadio" value="성적인 글 및 성희롱 발언">&nbsp;&nbsp;성적인 글 및 성희롱 발언</p>
+				                    <p><input type="radio" class="rpRadio" value="홍보 및 상업적인 내용이 들어간 글">&nbsp;&nbsp;홍보 및 상업적인 내용이 들어간 글</p>
+				                    <p><input type="radio" id="etcBtn" class="rpRadio" value="기타">&nbsp;&nbsp;기타</p>
+				                    <textarea id="rpEtc" cols="50" rows="4" style="resize: none;" disabled></textarea>
+				                </div>
+				                <!-- Modal footer -->
+				                <div class="modal-footer">
+				                <button type="button" class="btn btn-jycancle" data-dismiss="modal">취소</button>
+				                <button type="button" class="btn btn-jyok" id="realSpam" onclick="report();">신고</button>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+				    
+				    <!-- 토스트 메시지 -->
+		   		    <div id="toast" class="">
+					    
+				    </div>
+				    
+				    <script>
+				    	
+				    	$(document).on("click", ".rpRadio", function(){
+				    		
+				    		$(this).parent().siblings().children("input").prop("checked", false);
+				    		
+				    		if($(this).val() != "기타"){
+					    		$("#real").val($(this).val());
+				    		}else{
+				    			$("#rpEtc").attr("disabled", false);
+				    			$("#real").val($(this).parent().next().val());
+				    		}
+				    		
+				    		if($("#etcBtn").is(":checked")){
+				    			$("#rpEtc").attr("disabled", false);
+				    		}else{
+				    			$("#rpEtc").attr("disabled", true);
+				    		}
+				    		
+				    	})
+
+	                	// 신고
+	                	function report(){
+	                		
+				    		// 유저가 동일한 게시글을 신고한 이력이 있는지 조회
+				    		$.ajax({
+				    			url: "rpCheck.bo",
+				    			data: {
+				    				reportRefNo: ${b.boardNo},
+				    				userNo: "${loginUser.userNo}"
+				    			},
+				    			success: function(rep){
+
+				    				if(rep == null){ // 이력 없음
+				    					
+				    					// 신고 접수
+				    					let type = $("#rpType").val();
+				    					
+							    		if($("#etcBtn").is(":checked")){
+							    			$("#real").val($("#rpEtc").val());
+							    		}
+							    		
+				                		let value = $("#real").val();
+				                		
+				                		$.ajax({
+				                			url: "report.bo",
+				                			data: {
+				                				reportType: type,
+				                				reportRefNo: ${b.boardNo},
+				                				userNo: "${loginUser.userNo}",
+				                				reportContent: value
+				                			},
+				                			success: function(r){
+				                				if(r.result > 0){
+				                					
+				                					toast("신고가 접수되었습니다.");
+				                					
+				                					$(".btn-jycancle").click();
+				                					
+				                				}else{
+				                					console.log("신고 실패");
+				                				}
+				                			},error: function(){
+				                				console.log("신고 ajax 실패");
+				                			}
+				                		});
+				    					
+				    				}else{ // 이력 있음
+
+				    					toast("이미 신고가 접수되었습니다.");
+				    				
+				    					$(".btn-jycancle").click();
+				    					
+				    				}
+
+				    				
+				    			},error: function(){
+				    				console.log("신고 여부 ajax 실패");
+				    			}
+				    		});
+				    		
+				    		
+	                		 
+	                	}
+				    	
+				    	// 토스트
+                      	let removeToast;
+                    	
+						function toast(string) {
+						    const toast = document.getElementById("toast");
+	
+						    toast.classList.contains("reveal") ?
+						        (clearTimeout(removeToast), removeToast = setTimeout(function () {
+						            document.getElementById("toast").classList.remove("reveal")
+						        }, 1000)) :
+						        removeToast = setTimeout(function () {
+						            document.getElementById("toast").classList.remove("reveal")
+						        }, 1500)
+						    toast.classList.add("reveal"),
+						        toast.innerText = string
+						}
+				    </script>
                     
                     <script>
                     
@@ -164,6 +315,11 @@
                                 $("#heart").attr("stroke", "red");
                     			
                     		}
+                    		
+                    		$("#rpReply").click(function(){
+                    			console.log("클릭됨");
+                    			$("#rpType").val(2);
+                    		})
                     		
                     	})
                     	
@@ -288,11 +444,10 @@
                     						value += '<div>'
                     								+	'<span class="photo"><img src="resources/images/defaultProfile.jpg" alt=""></span>'
                     								+	'<div class="msg-wrap">'
-                    								+		'<div class="info">'
-                    								+			'<span class="name">' + list[i].userName + ' ' + list[i].jobName + '</span>';
+                    								+		'<div class="info">';
                     						
                     						if(list[i].level == 1){
-                    							value += '<span class="btn-wrap" id="reply">'
+                    							value += '<span class="btn-wrap" id="reply" style="margin-left: 0;">'
                     									+	'<span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="grey" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-down-right"><polyline points="15 10 20 15 15 20"></polyline><path d="M4 4v7a4 4 0 0 0 4 4h12"></path></svg></span>'
                     									+	'<span class="txt" onclick="addReply(this);">댓글</span>'
                     									+'</span>';
@@ -301,7 +456,7 @@
                     						value += 			'<span class="date">' + list[i].createDate + '</span>';
                     						
                     						if(userNo != list[i].userNo){
-                    							value += '<span class="message">쪽지</span>';
+                    							value += '<span class="report" onclick="rpType(2);" data-toggle="modal" data-target="#jyModal_confirm">신고</span>';
                     						}else{
                     							value += '<span class="editRe" onclick="editForm(this);">수정</span>'
                     									+'<span class="deleteRe" onclick="deleteRe(this);">삭제</span>';
@@ -406,6 +561,7 @@
                     		});
                     		
                     	}
+                    	
                     		
                     
                     </script>

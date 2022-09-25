@@ -38,8 +38,8 @@
 	                  <div class="mail-btn-content" style="width: 580px;">
 	                    <input type="checkbox" id="checkAll" style="margin-right: 10px;">
 	
-	                    <button type="button" class="mail-btn4" id="spamBtn">
-	                      <ion-icon name="ban-sharp" style="margin-top:5px; font-size: 20px;"></ion-icon>
+	                    <button type="button" class="mail-btn4" id="spanCancleBtn">
+	                      <ion-icon name="checkmark-circle-outline" style="margin-top:5px; font-size: 20px;"></ion-icon>
 	                      <span>&nbsp;&nbsp;정상신고</span>
 	                    </button>
 	                    
@@ -101,6 +101,7 @@
 				                      <td class="d1">				                      
 				                      	  <input type="checkbox" name="check" value="${ m.mailNo }">
 					                      <input type="hidden" name="tag" value="${ m.tag.tagNo }">
+					                      <input type="hidden" name="tag" value="${ m.sender }">
 				                      </td>
 				                      <td class="d2">
 				                      	<c:choose>
@@ -158,7 +159,7 @@
 								
 								// 메일 상세조회 페이지 요청
 			            		$(".d5>span").click(function(){
-			            			location.href = 'detail.ma?no=' + $(this).parent().siblings().eq(0).children().val();
+			            			location.href = 'detail.ma?no=' + $(this).parent().siblings().eq(0).children().val() + '&boxType=4';
 								})
 			            	
 	            				// 상단 체크박스로 전체 선택, 전체 해제 
@@ -186,17 +187,22 @@
 								})
 								
 								let map = {};
-								let checkMailNo = "";								
+								let checkMailNo = "";
+								let checkEmail = "";
 								$("input:checkbox").change(function(){
 									
-									// 체크박스 클릭 시마다 메일번호 담기
+									// 체크박스 클릭 시마다 메일번호, 이메일 담기
 									checkMailNo = ""; // 초기화
+									checkEmail = "";
 									$("input:checkbox[name=check]:checked").each(function(){
 										checkMailNo += ($(this).val()) + ","; // 체크된 것만 메일번호 뽑기 "2,3,4,"
+										checkEmail += ($(this).next().next().val()) + ",";
 		                            })
 		                            checkMailNo = checkMailNo.substring(0,checkMailNo.lastIndexOf(",")); // 맨 뒤 콤마 삭제
+		                            checkEmail = checkEmail.substring(0,checkEmail.lastIndexOf(","));
 
-									
+		                            console.log(checkEmail);
+		                            
 		                            // 체크박스 클릭 시마다 태그 드롭다운 내부에 적용,해제 버튼 변경
 									let mailNo = $(this).val();
 									let tagNo = $(this).next().val();
@@ -250,31 +256,31 @@
 									
 								})
 								
-				            	// 스팸 신고 버튼 클릭 시 토스트나 모달 출력
-				            	$("#spamBtn").click(function(){
+				            	// 정상 신고 버튼 클릭 시 토스트나 모달 출력
+				            	$("#spanCancleBtn").click(function(){
 	
 									if(checkMailNo == ''){
 										toast("선택된 메일이 없습니다.");
 										return;
 									}
 				            		
-				            		 $('#jyModal_confirm').modal('show'); 
+				            		 $('#jyModal_confirm2').modal('show'); 
 				            		 
 				            	})
 				            	
-				            	// 스팸 신고 요청 (스팸메일함 이동, 스팸주소 등록)
-				            	$("#realSpam").click(function(){
+				            	// 정상 신고 요청 (받은메일함 이동, 스팸주소 해제)
+				            	$("#realCancle").click(function(){
 				            		
 				            		$.ajax({
-	                                    url:"updateStatus.ma",
-	                                    data:{checkMailNo:checkMailNo,
-	                                    	  type:"mail_spam"},
+	                                    url:"spamCancle.ma",
+	                                    data:{checkEmail:checkEmail,
+	                                    	  checkMailNo:checkMailNo},
 	                                    success:function(result){
 	                        				if(result == "success"){
-		                                        toast("스팸처리 되었습니다.");
+		                                        toast("스팸메일이 복원 되었습니다.");
 												setTimeout(reload, 1000);
 	                        				}else{
-	                        					toast("스팸 신고에 실패하였습니다.");
+	                        					toast("정상 신고에 실패하였습니다.");
 	                        				}
 	                                    },
 	                                    error:function(){
@@ -471,27 +477,27 @@
 							
 			            </script>
 					    
-		                  <!-- 모달: 스팸신고 컨펌 -->
-			              <div class="modal" id="jyModal_confirm">
-			                <div class="modal-dialog modal-dialog-centered">
-			                    <div class="modal-content">
-			                        <!-- Modal Header -->
-			                        <div class="modal-header">
-			                          <h6 class="modal-title">스팸신고</h6>
-			                          <button type="button" class="modal_close" data-dismiss="modal">&times;</button>
-			                        </div>
-			                        <!-- Modal body -->
-			                        <div class="modal-body" style="text-align: center;">
-			                          보낸 사람을 수신거부 목록에 추가하고, <br>
-			                          신고한 메일은 스팸메일함으로 이동됩니다.
-			                        </div>
-			                        <!-- Modal footer -->
-			                        <div class="modal-footer">
-			                        <button type="button" class="btn btn-jycancle" data-dismiss="modal">취소</button>
-			                        <button type="button" class="btn btn-jyok" id="realSpam" data-dismiss="modal">확인</button>
-			                        </div>
-			                    </div>
-			                </div>
+			            <!-- 모달: 정상신고 컨펌 -->
+			            <div class="modal" id="jyModal_confirm2">
+			              <div class="modal-dialog modal-dialog-centered">
+			                  <div class="modal-content">
+			                      <!-- Modal Header -->
+			                      <div class="modal-header">
+			                        <h6 class="modal-title">정상신고</h6>
+			                        <button type="button" class="modal_close" data-dismiss="modal">&times;</button>
+			                      </div>
+			                      <!-- Modal body -->
+			                      <div class="modal-body" style="text-align: center;">
+			                        보낸 사람을 수신거부 목록에서 제외하고, <br>
+			                        신고한 메일은 받은메일함으로 이동됩니다.
+			                      </div>
+			                      <!-- Modal footer -->
+			                      <div class="modal-footer">
+			                      <button type="button" class="btn btn-jycancle" data-dismiss="modal">취소</button>
+			                      <button type="button" class="btn btn-jyok" id="realCancle">확인</button>
+			                      </div>
+			                  </div>
+			              </div>
 			            </div>
 			            <!-- 모달 끝 -->
 					    

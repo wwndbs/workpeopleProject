@@ -18,10 +18,9 @@
 	   		  <div id="toast" class="">
 				    
 			  </div>
-			
-			<c:if test="${ not empty toastMsg }">
+			  
+				
 				<script>
-					
 					
 					// 토스트
 	            	
@@ -39,11 +38,15 @@
 					    toast.classList.add("reveal"),
 					        toast.innerText = string
 					}
-					
-					toast("${toastMsg}");
 				</script>
-				<c:remove var="toastMsg" scope="session" />
-			</c:if>
+					
+				<c:if test="${ not empty toastMsg }">
+					<script>
+						toast("${toastMsg}");
+					</script>
+					<c:remove var="toastMsg" scope="session" />
+				</c:if>
+				
             <!-- 게시판 전체 div 시작 -->
             <div class="container-board">
               <!-- 게시판 사이드바 시작 -->
@@ -74,7 +77,7 @@
                   			
                   			if(dept != "${loginUser.depName}"){
                   				
-                  				alert("본인이 속한 부서만 접근 가능합니다.");
+                  				toast("본인이 속한 부서만 접근 가능합니다.");
                   				$(this).removeAttr("href");
                   				
                   			}
@@ -87,7 +90,9 @@
                 
                   <a href=""><h6>내 게시글 조회</h6></a>
                   
-                  <a href="enrollForm.bo?no=1"><h6>글쓰기</h6></a>
+                  <c:if test="${ loginUser.jobName eq '부장' or loginUser.jobName eq '팀장' }">
+                  	<a href="rpHandle.bo"><h6>신고 관리</h6></a>
+                  </c:if>
                 </div>
 
               </div>

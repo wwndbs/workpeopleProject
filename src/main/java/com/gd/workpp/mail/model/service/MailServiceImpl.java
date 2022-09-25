@@ -12,6 +12,7 @@ import com.gd.workpp.common.model.vo.PageInfo;
 import com.gd.workpp.mail.model.dao.MailDao;
 import com.gd.workpp.mail.model.vo.Mail;
 import com.gd.workpp.mail.model.vo.MailStatus;
+import com.gd.workpp.mail.model.vo.Spam;
 import com.gd.workpp.mail.model.vo.SplitEmail;
 import com.gd.workpp.mail.model.vo.Tag;
 import com.gd.workpp.member.model.vo.Member;
@@ -233,7 +234,23 @@ public class MailServiceImpl implements MailService {
 		return mDao.selectTrashbox(sqlSession, pi, email);
 	}
 
+	@Override
+	public int updateSpamCancle(String checkMailNo, String email) {
+		return mDao.updateSpamCancle(sqlSession, checkMailNo, email);
+	}
 
+	@Override
+	public ArrayList<Spam> selectSpamAddr(String email) {
+		return mDao.selectSpamAddr(sqlSession, email);
+	}
+
+	@Override
+	public int deleteSpam(String email, String deleteMail) {
+		return mDao.deleteSpam(sqlSession, email, deleteMail);
+	}
+
+
+	
 
 
 }

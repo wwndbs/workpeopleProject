@@ -41,6 +41,12 @@
 		<result column="tag_color" property="tagColor" />
 	</resultMap>
 	
+	<resultMap id="spamResult" type="Spam">
+		<result column="spam_no" property="spamNo" />
+		<result column="user_mail" property="userMail" />
+		<result column="spam_address" property="spamAddress" />
+	</resultMap>
+	
 	<resultMap id="splitEmailResult" type="SplitEmail">
 		<result column="email" property="email" />
 		<result column="name" property="name" />
@@ -672,11 +678,22 @@
 		   and user_mail = #{email}
 	</update>
 	
+	<select id="selectSpamAddr" resultMap="spamResult">
+		select 
+			   spam_address
+		  from mail_spam
+		 where user_mail = #{email}
+	</select>
+	
 	<delete id="deleteSpam">
 		delete
 		  from mail_spam
 		 where user_mail = #{email}
-		   and spam_address = #{spamAddress}
+		   and spam_address = #{deleteMail}
 	</delete>
 	
+
+	
+	
+
 </mapper>
