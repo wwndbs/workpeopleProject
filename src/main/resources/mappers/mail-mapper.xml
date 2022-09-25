@@ -273,7 +273,7 @@
 			                       select spam_address
 			                         from mail_spam
 			                        where user_mail = #{email}
-			                     )		 	
+			                     )
 		 	</when>
 		 	<when test='boxType == "2"'>
 			    and mail_delete = 'N'
