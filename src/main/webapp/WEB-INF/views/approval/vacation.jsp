@@ -168,7 +168,7 @@
 								          +  		'<div>';
 								          
 								if(list[i].profImg){
-									reference += '<img src="' + ${ list[i].profImg } + '">  <strong>' + list[i].depName + '</strong>  ' + list[i].userNo + ' ' + list[i].jobName;
+									reference += '<img src="' + list[i].profImg + '">  <strong>' + list[i].depName + '</strong>  ' + list[i].userNo + ' ' + list[i].jobName;
 								}else{
 									reference += '<img src="resources/profile_images/defaultProfile.jpg">  <strong>' + list[i].depName + '</strong>  ' + list[i].userNo + ' ' + list[i].jobName;
 								}

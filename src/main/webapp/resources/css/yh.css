@@ -615,7 +615,7 @@ textarea:focus{
 .document-content-wrapper>.document-area>ul>li{
     display : flex;
     align-items: center;
-    width : 550px;
+    width : 30%;
     height : 120px;
     font-size : 16px;
     font-weight: bold;
