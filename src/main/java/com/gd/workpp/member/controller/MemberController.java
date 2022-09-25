@@ -282,13 +282,13 @@ public class MemberController {
 		int result = mService.updatePwd(m);
 		if(result > 0) {
 			session.setAttribute("alertMsg", "성공적으로 비밀번호가 변경되었습니다.");
-			return "redirect:findPwd.me";
+			return "redirect:/";
 			
 		}else {
 	        //> 변경 실패 시
 	           //- 마이페이지가 보여질 수 있도록 처리 (이때 alert로 실패 알림)
 			session.setAttribute("alertMsg", "비밀번호 변경에 실패하였습니다.");
-			return "redirect:findPwd.me";
+			return "redirect:/";
 			
 		}
 	}
