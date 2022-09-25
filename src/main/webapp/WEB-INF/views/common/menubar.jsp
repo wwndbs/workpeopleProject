@@ -160,7 +160,7 @@
 					<span class="sidebar-nav-end"> <i data-feather="chevron-right" class="nav-collapse-icon"></i></span>
 				</a>
 			</li>
-			<!--쪽지-->
+			<!--쪽지
 			<li class="sidebar-nav-item">
 				<a class="sidebar-nav-link collapsed" data-toggle="collapse" href="#navExtra" aria-expanded="false" aria-controls="navExtra">
 					<span class="sidebar-nav-icon"> <i class="fas fa-sticky-note"></i></span>
@@ -185,7 +185,7 @@
 						</a>
 					</li>
 				</ul>
-			</li>
+			</li>-->
 			<!--조직도/주소록-->
 			<li class="sidebar-nav-item">
 				<a class="sidebar-nav-link collapsed" data-toggle="collapse" href="#navExtra2" aria-expanded="false" aria-controls="navExtra">
@@ -275,7 +275,7 @@
 				</a>
 			</li>
 
-			<!--설문조사-->
+			<!--설문조사
 			<li class="sidebar-nav-item">
 				<a class="sidebar-nav-link collapsed" data-toggle="collapse" href="#navExtra6" aria-expanded="false" aria-controls="navExtra">
 					<span class="sidebar-nav-icon"> <i class="fas fa-poll-h"></i></span>
@@ -301,7 +301,7 @@
 						</a>
 					</li>
 				</ul>
-			</li>
+			</li>-->
 		</ul>
 	</div>
 	
