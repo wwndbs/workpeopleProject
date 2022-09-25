@@ -7,9 +7,9 @@ import com.gd.workpp.common.model.vo.Attachment;
 import com.gd.workpp.common.model.vo.PageInfo;
 import com.gd.workpp.mail.model.vo.Mail;
 import com.gd.workpp.mail.model.vo.MailStatus;
+import com.gd.workpp.mail.model.vo.Spam;
 import com.gd.workpp.mail.model.vo.SplitEmail;
 import com.gd.workpp.mail.model.vo.Tag;
-import com.gd.workpp.member.model.vo.Member;
 
 public interface MailService {
 	
@@ -69,7 +69,7 @@ public interface MailService {
 	// 체크박스 선택 시 스팸 여부, 읽음 여부 변경 서비스
 	int updateMailStatus(String type, String checkMailNo, String email);
 	
-	// 메일번호로 보낸 사람 조회 서비스
+	// 메일번호로 아직 스팸으로 등록되지 않은 주소 조회 서비스
 	List<String> selectSender(String checkMailNo, String email);
 	
 	// 스팸 주소 등록 서비스
@@ -109,6 +109,13 @@ public interface MailService {
 	// 휴지통 리스트 페이지 서비스
 	ArrayList<Mail> selectTrashbox(PageInfo pi, String email);
 	
+	// 스팸 정상신고 서비스 (받은메일함으로 이동)
+	int updateSpamCancle(String checkMailNo, String email);
 	
+	// 스팸등록한 주소 조회 서비스
+	ArrayList<Spam> selectSpamAddr(String email);
+	
+	// 스팸 주소 삭제 서비스
+	int deleteSpam(String email, String deleteMail);
 	
 }

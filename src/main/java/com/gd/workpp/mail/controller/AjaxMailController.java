@@ -20,6 +20,7 @@ import com.gd.workpp.common.model.vo.Attachment;
 import com.gd.workpp.common.template.FileUpload;
 import com.gd.workpp.mail.model.service.MailServiceImpl;
 import com.gd.workpp.mail.model.vo.Mail;
+import com.gd.workpp.mail.model.vo.Spam;
 import com.gd.workpp.mail.model.vo.Tag;
 import com.gd.workpp.member.model.vo.Member;
 import com.google.gson.Gson;
@@ -340,9 +341,47 @@ public class AjaxMailController {
 			result = mService.updateToMeTagChange(type, tagNo, mailNo, email, mailType);
 		}
 		
-		
 		return result > 0 ? "success" : "fail";
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="spamCancle.ma", produces="text/html; charset=UTF-8")
+	public String spamRollback(String checkMailNo, String checkEmail, HttpSession session) {
+		
+		Member mem = (Member)session.getAttribute("loginUser");
+		String email = mem.getEmail();
+		
+		// 스팸 정상신고
+		int result1 = mService.updateSpamCancle(checkMailNo, email);
+		
+		String[] addr = checkEmail.split(",");
+		
+		int result2 = 1;
+		// 해당 사원의 스팸 등록 주소 조회
+		ArrayList<Spam> spamList = mService.selectSpamAddr(email);
+		
+		// 삭제할 주소 찾기
+		String deleteAddr = "";
+		for(int i=0; i<addr.length; i++) {
+				
+				for(int j=0; j<spamList.size(); j++) {
+					if(addr[i].equals(spamList.get(j).getSpamAddress())) {
+						deleteAddr += addr[i] + ",";
+					}
+					
+				}
+			
+		}
+		
+		 // 스팸에 등록되어 있는 경우 보낸 사람 주소를 스팸 목록에서 제거 
+		String[] deleteMailArr =deleteAddr.split(",");
+		  
+		 for(String deleteMail : deleteMailArr) { 
+			 result2 = mService.deleteSpam(email, deleteMail); 
+		  }
+		  
+		  return result1 * result2 > 0 ? "success" : "fail";
+		 
+	}
 	
 }

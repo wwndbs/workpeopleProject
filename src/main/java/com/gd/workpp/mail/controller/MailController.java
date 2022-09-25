@@ -278,9 +278,10 @@ public class MailController {
 			mv.setViewName("mail/sentboxListView");
 
 		}else if (boxType == 3){ // 내게쓴메일함
-
+			System.out.println(pi);
 			list = mService.selectToMe(pi, email);
 			mv.setViewName("mail/toMeListView");
+			System.out.println(list.size());
 			
 		}else if (boxType == 4){ // 스팸메일함
 			
@@ -307,8 +308,7 @@ public class MailController {
 	 * Author : 정주윤 
 	 * 메일 상세 조회 요청 처리해 주는 메소드
 	 * @param no      : 조회하고자 하는 메일번호
-	 * @param boxType : {1:받은메일함, 2:보낸메일함}
-	 * @return
+	 * @param boxType : {1:받은메일함, 2:보낸메일함, 4:스팸메일함}
 	 */
 	@RequestMapping("detail.ma")
 	public ModelAndView selectMailDetail(int no, @RequestParam(value = "boxType", defaultValue = "1") int boxType,
@@ -329,9 +329,7 @@ public class MailController {
 		ArrayList<SplitEmail> receiverList = mService.selectSplitEmail("receiver", no);
 		ArrayList<SplitEmail> refList = mService.selectSplitEmail("mail_ref", no);
 
-		if (boxType == 1) { // 받은 메일함에서 상세 보기
-			mv.setViewName("mail/mailDetailView");
-		} else if (boxType == 2) { // 보낸 메일함에서 상세 보기
+		if (boxType == 1 || boxType == 2 || boxType == 4) {
 			mv.setViewName("mail/mailDetailView");
 		}
 

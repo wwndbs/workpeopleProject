@@ -12,9 +12,9 @@ import com.gd.workpp.common.model.vo.Attachment;
 import com.gd.workpp.common.model.vo.PageInfo;
 import com.gd.workpp.mail.model.vo.Mail;
 import com.gd.workpp.mail.model.vo.MailStatus;
+import com.gd.workpp.mail.model.vo.Spam;
 import com.gd.workpp.mail.model.vo.SplitEmail;
 import com.gd.workpp.mail.model.vo.Tag;
-import com.gd.workpp.member.model.vo.Member;
 
 @Repository
 public class MailDao {
@@ -267,5 +267,27 @@ public class MailDao {
 		return (ArrayList)sqlSession.selectList("mailMapper.selectTrashbox", email, rowBounds);
 	}
 	
+	public int updateSpamCancle(SqlSessionTemplate sqlSession, String checkMailNo, String email) {
+		String[] noArr = checkMailNo.split(",");
+		
+		HashMap<String, Object> data = new HashMap<>();
+		data.put("noArr", noArr);
+		data.put("email", email);
+		
+		return sqlSession.delete("mailMapper.updateSpamCancle", data);
+	}
+	
+	public ArrayList<Spam> selectSpamAddr(SqlSessionTemplate sqlSession, String email){
+		
+		return (ArrayList)sqlSession.selectList("mailMapper.selectSpamAddr", email);
+	}
+	
+	public int deleteSpam(SqlSessionTemplate sqlSession, String email, String deleteMail) {
+		HashMap<String, String> data = new HashMap<>();
+		data.put("email", email);
+		data.put("deleteMail", deleteMail);
+
+		return sqlSession.delete("mailMapper.deleteSpam", data);
+	}
 	
 }

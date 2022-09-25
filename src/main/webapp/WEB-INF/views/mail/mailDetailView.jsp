@@ -38,6 +38,9 @@
 					<c:when test="${ boxType eq 2 }">
 						<span class="mail-h">보낸 메일함</span>
 					</c:when>              	
+					<c:when test="${ boxType eq 4 }">
+						<span class="mail-h">스팸 메일함</span>
+					</c:when>
               	</c:choose>
 
                 <form action="">
@@ -50,7 +53,10 @@
               		</c:when>
 					<c:when test="${ boxType eq 2 }">
 		                <div class="mail-btn-content" style="width: 350px;">
-					</c:when>              	
+					</c:when>  	
+					<c:when test="${ boxType eq 4 }">
+		                <div class="mail-btn-content" style="width: 455px;">
+					</c:when>  	
               	</c:choose>
                   
                   	<input type="hidden" name="no" value="${ m.mailNo }">
@@ -61,6 +67,13 @@
 	                      <span>&nbsp;&nbsp;스팸신고</span>
 	                    </button>
 					</c:if>
+                    
+                    <c:if test="${ boxType eq 4 }">
+	                    <button type="button" class="mail-btn4" data-toggle="modal" data-target="#jyModal_confirm">
+	                      <ion-icon name="checkmark-circle-outline" style="margin-top:5px; font-size: 20px;"></ion-icon>
+	                      <span>&nbsp;&nbsp;정상신고</span>
+	                    </button>
+                    </c:if>
                     
                     <button type="button" class="mail-btn5" id="replyBtn">
                       <ion-icon name="return-down-forward-outline" style="margin-top:5px; font-size: 20px;"></ion-icon>
@@ -398,6 +411,30 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <!-- 모달 끝 -->
+            
+            <!-- 모달: 정상신고 컨펌 -->
+            <div class="modal" id="jyModal_confirm2">
+              <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                      <!-- Modal Header -->
+                      <div class="modal-header">
+                        <h6 class="modal-title">정상신고</h6>
+                        <button type="button" class="modal_close" data-dismiss="modal">&times;</button>
+                      </div>
+                      <!-- Modal body -->
+                      <div class="modal-body" style="text-align: center;">
+                        보낸 사람을 수신거부 목록에서 제외하고, <br>
+                        신고한 메일은 받은메일함으로 이동됩니다.
+                      </div>
+                      <!-- Modal footer -->
+                      <div class="modal-footer">
+                      <button type="button" class="btn btn-jycancle" data-dismiss="modal">취소</button>
+                      <button type="button" class="btn btn-jyok" id="spamRollback">확인</button>
+                      </div>
+                  </div>
+              </div>
             </div>
             <!-- 모달 끝 -->
             

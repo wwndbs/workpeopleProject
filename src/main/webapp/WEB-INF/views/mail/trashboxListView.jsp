@@ -39,7 +39,7 @@
 	                    <input type="checkbox" id="checkAll" style="margin-right: 10px;">
 	
 	                    <button type="button" class="mail-btn5" id="spamBtn">
-	                      <ion-icon name="ban-sharp" style="margin-top:5px; font-size: 20px;"></ion-icon>
+	                      <ion-icon name="reload-outline" style="margin-top:5px; font-size: 20px;"></ion-icon>
 	                      <span>&nbsp;&nbsp;복원</span>
 	                    </button>
 	                    
@@ -79,7 +79,7 @@
 	                    <c:choose>
 	                		<c:when test="${ empty list }">
 	                			<tr>
-	                				<td colspan="5" class="noList">현재 받은 메일이 없습니다.</td>
+	                				<td colspan="5" class="noList">현재 휴지통에 메일이 없습니다.</td>
 	                			</tr>
 	                		</c:when>
 	                		<c:otherwise>
