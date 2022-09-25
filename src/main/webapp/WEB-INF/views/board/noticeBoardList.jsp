@@ -68,7 +68,7 @@
                         		</c:when>
                         		<c:otherwise> 
                         			<c:forEach var="b" items="${ list }">
-			                            <tr>
+			                            <tr class="board">
 			                            	<input type="hidden" name="boardNo" value="${ b.boardNo }">
 			                                <td>${ b.boardOrder }</td>
 			                                <td>${ b.boardTitle }</td>
@@ -81,6 +81,14 @@
 		                    </c:choose>
                         </tbody>
                     </table>
+                    
+                    <script>
+                    	$(".board").click(function(){
+                    		let boardNo = $(this).children().eq(0).val();
+                    		
+                    		location.href="noticeDetail.bo?boardNo=" + boardNo + "&cpage=" + ${pi.currentPage};
+                    	})
+                    </script>
                     
                     <c:if test="${ loginUser.jobName eq '부장' or loginUser.jobName eq '팀장' }">
 	                    <div class="write-button">

@@ -72,7 +72,7 @@
 .board-table{
     background-color: white;
     padding: 5% 3%;
-    height: 80%;
+    height: 95%;
     width: 95%;
     margin: auto;
     border: 1px solid rgb(224, 224, 224);
@@ -243,6 +243,13 @@
 .board-content .msg-wrap .editRe, .board-content .msg-wrap .deleteRe{
 	font-size: 13px;
     color: #999;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.board-content .msg-wrap .report{
+    font-size: 13px;
+    color: red;
     margin-left: 5px;
     cursor: pointer;
 }

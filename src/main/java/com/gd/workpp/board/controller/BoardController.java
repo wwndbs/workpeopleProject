@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.gd.workpp.board.model.service.BoardService;
 import com.gd.workpp.board.model.vo.Board;
 import com.gd.workpp.board.model.vo.Reply;
+import com.gd.workpp.board.model.vo.Report;
 import com.gd.workpp.common.model.vo.Attachment;
 import com.gd.workpp.common.model.vo.PageInfo;
 import com.gd.workpp.common.template.FileUpload;
@@ -304,7 +305,12 @@ public class BoardController {
 	
 	// 부서게시판 상세페이지
 	@RequestMapping("deptDetail.bo")
-	public String selectDeptBoard(int boardNo, int cpage, Model model) {
+	public String selectDeptBoard(int boardNo, int cpage, HttpSession session, Model model) {
+		
+		String userNo = ((Member)session.getAttribute("loginUser")).getUserNo();
+		Board bd = new Board();
+		bd.setBoardNo(String.valueOf(boardNo));
+		bd.setUserNo(userNo);
 		
 		// 조회수 증가
 		int result = bService.increaseCount(boardNo);
@@ -313,10 +319,11 @@ public class BoardController {
 			
 			// 게시글 조회
 			Board b = bService.selectBoard(boardNo);
-			
+			int bLike = bService.selectBoardLike(bd);
 			
 			model.addAttribute("cpage", cpage);
 			model.addAttribute("b", b);
+			model.addAttribute("bLike", bLike);
 			return "board/deptDetail";
 			
 		}else {
@@ -381,14 +388,136 @@ public class BoardController {
 		
 	}
 	
-	// 댓글 삭제
+	// 댓글 삭제 (일단 보류)
 	@ResponseBody
 	@RequestMapping(value="deleteReply.bo", produces="application/json; charset=UTF-8")
 	public String ajaxDeleteReply(int replyNo) {
 		
-		System.out.println(replyNo);
+		//System.out.println(replyNo);
 		 
 		return null;
+		
+	}
+	
+	// 게시글 좋아요
+	@ResponseBody
+	@RequestMapping(value="like.bo", produces="application/json; charset=UTF-8")
+	public String ajaxBoardLike(Board b) {
+		
+		int result = bService.insertBoardLike(b);
+		int count = bService.selectBoardLikeCount(b);
+		
+		JSONObject jObj = new JSONObject();
+		jObj.put("result", result);
+		jObj.put("count", count);
+		
+		return jObj.toJSONString();
+		
+	}
+	
+	// 게시글 좋아요 해제
+	@ResponseBody
+	@RequestMapping(value="unlike.bo", produces="application/json; charset=UTF-8")
+	public String ajaxBoardUnlike(Board b) {
+		
+		int result = bService.deleteBoardLike(b);
+		int count = bService.selectBoardLikeCount(b);
+		
+		JSONObject jObj = new JSONObject();
+		jObj.put("result", result);
+		jObj.put("count", count);
+		
+		return jObj.toJSONString();
+		
+	}
+	
+	// 공지게시판 상세페이지
+	@RequestMapping("noticeDetail.bo")
+	public String selectNoticeBoard(int boardNo, int cpage, Model model) {
+		
+		// 조회수 증가
+		int result = bService.increaseCount(boardNo);
+		
+		if(result > 0) {
+			
+			// 게시글 조회
+			Board b = bService.selectBoard(boardNo);
+			
+			model.addAttribute("cpage", cpage);
+			model.addAttribute("b", b);
+			return "board/noticeDetail";
+			
+		}else {
+			
+			// 에러페이지
+			return "common/errorPage";
+			
+		}
+		
+	}
+	
+	// 익명게시판 상세페이지
+	@RequestMapping("anonDetail.bo")
+	public String selectAnonBoard(int boardNo, int cpage, HttpSession session, Model model) {
+		
+		String userNo = ((Member)session.getAttribute("loginUser")).getUserNo();
+		Board bd = new Board();
+		bd.setBoardNo(String.valueOf(boardNo));
+		bd.setUserNo(userNo);
+		
+		// 조회수 증가
+		int result = bService.increaseCount(boardNo);
+		
+		if(result > 0) {
+			
+			// 게시글 조회
+			Board b = bService.selectBoard(boardNo);
+			int bLike = bService.selectBoardLike(bd);
+			
+			model.addAttribute("cpage", cpage);
+			model.addAttribute("b", b);
+			model.addAttribute("bLike", bLike);
+			return "board/anonDetail";
+			
+		}else {
+			
+			// 에러페이지
+			return "common/errorPage";
+			
+		}
+		
+	}
+	
+	// 신고 여부 조회
+	@ResponseBody
+	@RequestMapping(value="rpCheck.bo", produces="application/json; charset=UTF-8")
+	public String ajaxCheckReport(Report rp) {
+		
+		Report rep = bService.checkReport(rp);
+		
+		return new Gson().toJson(rep);
+		
+	}
+	
+	// 신고
+	@ResponseBody
+	@RequestMapping(value="report.bo", produces="application/json; charset=UTF-8")
+	public String ajaxInsertReport(Report rp) {
+		
+		int result = bService.insertReport(rp);
+		
+		JSONObject jObj = new JSONObject();
+		jObj.put("result", result);
+		
+		return jObj.toJSONString();
+		
+	}
+	
+	// 신고 관리 페이지
+	@RequestMapping("rpHandle.bo")
+	public String handleReport() {
+		
+		return "board/adminReport";
 		
 	}
 }

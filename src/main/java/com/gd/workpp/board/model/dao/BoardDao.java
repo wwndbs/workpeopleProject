@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.gd.workpp.board.model.vo.Board;
 import com.gd.workpp.board.model.vo.Reply;
+import com.gd.workpp.board.model.vo.Report;
 import com.gd.workpp.common.model.vo.Attachment;
 import com.gd.workpp.common.model.vo.PageInfo;
 
@@ -111,6 +112,10 @@ public class BoardDao {
 		return sqlSession.selectOne("boardMapper.selectBoard", boardNo);
 	}
 	
+	public int selectBoardLike(SqlSessionTemplate sqlSession, Board b) {
+		return sqlSession.selectOne("boardMapper.selectBoardLike", b);
+	}
+	
 	public ArrayList<Reply> selectReplyList(SqlSessionTemplate sqlSession, int boardNo) {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectReplyList", boardNo);
 	}
@@ -125,6 +130,26 @@ public class BoardDao {
 	
 	public int updateReply(SqlSessionTemplate sqlSession, Reply r) {
 		return sqlSession.update("boardMapper.updateReply", r);
+	}
+	
+	public int insertBoardLike(SqlSessionTemplate sqlSession, Board b) {
+		return sqlSession.insert("boardMapper.insertBoardLike", b);
+	}
+	
+	public int deleteBoardLike(SqlSessionTemplate sqlSession, Board b) {
+		return sqlSession.delete("boardMapper.deleteBoardLike", b);
+	}
+	
+	public int selectBoardLikeCount(SqlSessionTemplate sqlSession, Board b) {
+		return sqlSession.selectOne("boardMapper.selectBoardLikeCount", b);
+	}
+	
+	public Report checkReport(SqlSessionTemplate sqlSession, Report rp) {
+		return sqlSession.selectOne("boardMapper.checkReport", rp);
+	}
+	
+	public int insertReport(SqlSessionTemplate sqlSession, Report rp) {
+		return sqlSession.insert("boardMapper.insertReport", rp);
 	}
 
 }

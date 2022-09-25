@@ -1,40 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
-	
-	<!-- 
-		* root-context.xml
-		  서버구동과 동시에 web.xml을 거쳐서 바로 로딩되는 문서(pre-loading)
-		  => 서버구동과 동시에 바로 세팅해야 되는 내용들을 작성하면 됨
-		  	 주로 DB연결 설정, 트랜잭션 처리, 내외부모듈연동 등등
-	-->	
-	
-	<!--  * dataSource 등록 -->
-	<bean class="org.apache.commons.dbcp.BasicDataSource" id="dataSource" destroy-method="close">
-		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-		<property name="url" value="jdbc:oracle:thin:@gd1class.iptime.org:8877:xe" />
-		<property name="username" value="GDJ49WORKPP" />
-		<property name="password" value="WORKPP" />
-	</bean>
-	
-	<!-- * sqlSessionFactoryBean 등록 -->
-	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
-		<property name="configLocation" value="classpath:config/mybatis-config.xml" />
-		<property name="dataSource" ref="dataSource" />
-	</bean>
-	
-	<!-- * sqlSession 등록 -->
-	<bean class="org.mybatis.spring.SqlSessionTemplate" id="sqlSession">
-		<constructor-arg ref="sqlSessionFactory"/>
-	</bean>
-	
-	<!-- 파일업로드 관련 빈 등록 (파일용량제한값) -->
-	<bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">
-		<property name="maxUploadSize" value="100000000" />
-		<property name="maxInMemorySize" value="100000000" />
-	</bean>
-	
-	<bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" id="bcryptPasswordEncoder" />
-	
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+   
+   <!-- 
+      * root-context.xml
+        서버구동과 동시에 web.xml을 거쳐서 바로 로딩되는 문서(pre-loading)
+        => 서버구동과 동시에 바로 세팅해야 되는 내용들을 작성하면 됨
+            주로 DB연결 설정, 트랜잭션 처리, 내외부모듈연동 등등
+   -->   
+   
+   <!--  * dataSource 등록 -->
+   <bean class="org.apache.commons.dbcp.BasicDataSource" id="dataSource" destroy-method="close">
+      <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+       <!-- 
+      <property name="url" value="jdbc:oracle:thin:@gd1class.iptime.org:8877:xe" />
+      <property name="username" value="GDJ49WORKPP" />
+      <property name="password" value="WORKPP" />
+       -->
+      <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
+      <property name="username" value="workpp" />
+      <property name="password" value="workpp" />
+       
+   </bean>
+   
+   
+   <!-- * sqlSessionFactoryBean 등록 -->
+   <bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
+      <property name="configLocation" value="classpath:config/mybatis-config.xml" />
+      <property name="dataSource" ref="dataSource" />
+   </bean>
+   
+   <!-- * sqlSession 등록 -->
+   <bean class="org.mybatis.spring.SqlSessionTemplate" id="sqlSession">
+      <constructor-arg ref="sqlSessionFactory"/>
+   </bean>
+   
+   <!-- 파일업로드 관련 빈 등록 (파일용량제한값) -->
+   <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">
+      <property name="maxUploadSize" value="100000000" />
+      <property name="maxInMemorySize" value="100000000" />
+   </bean>
+   
+   <bean class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" id="bcryptPasswordEncoder" />
+   
 </beans>
