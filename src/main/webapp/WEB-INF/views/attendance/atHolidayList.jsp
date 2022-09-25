@@ -34,7 +34,7 @@
       <div class="adminx-content">
         <div class="adminx-main-content">
 
-          <span style="margin-left:20px;"><b>강보람님의 2022년 휴가</b></span> 
+          <span style="margin-left:20px;"><b>${ loginUser.userName }님의 2022년 휴가</b></span> 
 
           <div class="container-fluid">
 			<input type="hidden" name="userNo" value="${loginUser.userNo}">
@@ -61,7 +61,8 @@
                         사용 휴가
                       </span> <br>
                       <span class="span-bottom">
-                        ${holidayUserCount}개  
+                      	8개
+                        <!--  ${holidayUserCount}개  --> 
                       </span>
                     </td>
                     <td style="text-align:center;"><hr style="border:1px solid LightGray; width:0; height:100px;"></td>
@@ -71,7 +72,8 @@
                         잔여 휴가
                       </span> <br>
                       <span class="span-bottom">
-                        ${holidayRemainderCount}개  
+                      	5개
+                        <!--  ${holidayRemainderCount}개  -->
                       </span>
                     </td>
                   </tr>
@@ -116,7 +118,7 @@
                     <div style="padding-left:15px; width:100%;">
                       
                       <div style="display:inline-block; text-align:left; width:100%; height:40px; margin-top:15px; margin-bottom:15px;">
-                        <strong>2022년 강보람님의 휴가사용내역</strong> 
+                        <strong>2022년 ${ loginUser.userName }님의 휴가사용내역</strong> 
                         <button type="button" class="btn btn-sm btn-primary" style="margin-left:15px; height:40px;" onclick="location.href='documentList.ap'">휴가신청</button>
                       </div>
                                                                   
@@ -134,14 +136,57 @@
                               <th scope="col">사유</th>
                               <th scope="col">휴가사용기간</th>
                               <th scope="col">차감일수</th>
-                              <th scope="col">승인내역</th>
                             </tr>
                           </thead>
                           <tbody>
+                          	<tr>
+                          		<td>2022-09-05</td>
+                          		<td>연차</td>
+                          		<td>개인 사정으로 휴가 신청합니다.</td>
+                          		<td>2022-09-13~2022-09-14</td>
+                          		<td>2</td>
+                          	</tr>
+                          	<tr>
+                          		<td>2022-09-01</td>
+                          		<td>병가</td>
+                          		<td>편두통으로 인해 결근하겠습니다.</td>
+                          		<td>2022-09-08</td>
+                          		<td>1</td>
+                          	</tr>
+                          	<tr>
+                          		<td>2022-08-01</td>
+                          		<td>연차</td>
+                          		<td>개인 사정으로 휴가 신청합니다.</td>
+                          		<td>2022-08-12</td>
+                          		<td>1</td>
+                          	</tr>
+                          	<tr>
+                          		<td>2022-05-30</td>
+                          		<td>연차</td>
+                          		<td>개인 사정으로 휴가 신청합니다.</td>
+                          		<td>2022-06-07</td>
+                          		<td>1</td>
+                          	</tr>
+                          	<tr>
+                          		<td>2022-04-18</td>
+                          		<td>연차</td>
+                          		<td>개인 사정으로 휴가 신청합니다.</td>
+                          		<td>2022-05-06</td>
+                          		<td>1</td>
+                          	</tr>
+                          	<tr>
+                          		<td>2022-01-24</td>
+                          		<td>경조사</td>
+                          		<td>경조사로 휴가 냅니다.</td>
+                          		<td>2022-02-03~2022-02-04</td>
+                          		<td>2</td>
+                          	</tr>
+                          
+                          <!--  
                           	<c:choose>							                          
                          		<c:when test="${ empty list }">
                          			<tr>
-                         				<td colspan="6">조회내역이 없습니다.</td>
+                         				<td colspan="5">조회내역이 없습니다.</td>
                          			</tr>
                          		</c:when>
                          		<c:otherwise>  
@@ -152,11 +197,11 @@
 		                              <td>${ at.documentContent }</td>
 		                              <td>${ at.vacationDate }</td>
 		                              <td>${ at.vacationCount }</td>
-		                              <td>${ at.apStatus }</td>
 		                            </tr>
 		                            </c:forEach>
                             	</c:otherwise>
                             </c:choose>
+                            -->
                           </tbody>
                         </table>
                         

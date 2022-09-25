@@ -96,7 +96,7 @@
                     <div style="padding-left:15px; width:100%;">
                       
                       <div style="display:inline-block; text-align:center; margin-bottom:15px;">
-                        <strong>* 조회 결과 XX건</strong>
+                        <strong>* 사원 근태 내역</strong>
                       </div>
                                                                   
                     </div>

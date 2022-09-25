@@ -50,5 +50,7 @@ public class Attendance {
 	private String workingName;
 	private String workUse;
 	
+	private String todayStart;
+	private String todayEnd;
 	
 }

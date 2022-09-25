@@ -59,7 +59,7 @@
 				  <!-- datePicker 관련 script -->	
                   <script>
                  	 $.datepicker.setDefaults({
-                 		 dateFormat: "yy/mm/dd",
+                 		 dateFormat: "yy-mm-dd",
                  		 prevText: "이전 달",
                  		 nextText: "다음 달",
                  		 monthNames: ["1월", "2월", "3월", "4월", "5월", "6월","7월", "8월", "9월", "10월", "11월", "12월"],
@@ -67,7 +67,7 @@
                  		 dayNamesMin: ["일", "월", "화", "수", "목", "금", "토"],
                  		 showMonthAfterYear: true,
                  		 yearSuffix: "년",
-                 		 maxDate: "2022/09/26",
+                 		 maxDate: "2022-09-26",
                  		 monthNamesShort: ["1월", "2월", "3월", "4월", "5월", "6월","7월", "8월", "9월", "10월", "11월", "12월"]
                  		/*날짜가 선택되면 호출될 함수
                  		  onSelect: function (dateText) {
@@ -78,7 +78,7 @@
 					 $(function() {
 					  $('#datepicker').datepicker({
 					    onSelect: function(dateText) {
-					 $('#datepicker2').datepicker("setDate", $(this).datepicker("getDate"));
+					  $('#datepicker2').datepicker("setDate", $(this).datepicker("getDate"));
 					    }
 					  });
 					});
@@ -172,18 +172,19 @@
                     		selectSearchList(1);
                     		
                     	})
-                    
+                    	
                     	function selectSearchList(cpage) {
                     		console.log($("#keyword").val());
-                    		
+                    		console.log($("#datepicker").val());
                     		$.ajax({
                     			url:"commuteMemberList.at",
                     			data : {
                     				cpage:cpage,
                     				searchDep:$("#searchDep option:selected").val(),
-                    				keyword:$("#keyword").val()
-                    			},
-                    			success:function(result){
+                    				keyword:$("#keyword").val(),
+                    				datepicker:$("#datepicker2").val()                  	
+                    				},
+                    			success:function(result){ 		                   				                    				
                     				let list = result.list;
                     				let pi = result.pi;
                     				let value = "";

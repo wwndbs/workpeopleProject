@@ -112,7 +112,6 @@
                               <th scope="col">사원명</th>
                               <th scope="col">직급</th>
                               <th scope="col">휴가종류</th>
-                              <th scope="col">승인내역</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -168,7 +167,6 @@
 			  			                          +   	 '<td>' + list[i].userName + '</td>'
 			  			                          +   	 '<td>' + list[i].jobName + '</td>'
 			  			                          +   	 '<td>' + list[i].vacationCategory + '</td>'
-			  			                          +    	 '<td>' + list[i].apStatus + '</td>'
 			  			                          +  '</tr>';
                     					};
                     					

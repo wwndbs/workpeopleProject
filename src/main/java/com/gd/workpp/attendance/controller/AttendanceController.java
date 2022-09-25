@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.maven.model.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,64 +26,163 @@ public class AttendanceController {
 	@Autowired
 	private AttendanceService atService;
 	
+
 	// 메인페이지 출근버튼 클릭시 insert
+	@RequestMapping("commuteIn.at")
+	public String insertCommute(String userNo, HttpSession session, Model model) {
+		
+		int result = atService.insertCommute(userNo);
+		
+		if(result > 0 ) { // 성공 => alert, 메인페이지
+			session.setAttribute("alertMsg", "출근 등록이 완료되었습니다.");
+			return "redirect:main.wp";			
+		}else { // 실패 => 에러문구, 에러페이지
+			return "common/errorPage";
+		}
+		
+	}
 	
 	
 	// 메인페이지 퇴근버튼 클릭시 update
+	@RequestMapping("commuteOut.at")
+	public String updateCommute(String userNo, HttpSession session, Model model) {
+		
+		int result = atService.updateCommute(userNo);
+		
+		if(result > 0 ) { // 성공 => alert, 메인페이지
+			session.setAttribute("alertMsg", "퇴근 등록이 완료되었습니다.");
+			return "redirect:main.wp";			
+		}else { // 실패 => 에러문구, 에러페이지
+			return "common/errorPage";
+		}
+	}
 	
 	
-	// 출퇴근기록 페이지 / commuteList.jsp
+	// 1. 출퇴근기록 페이지 / commuteList.jsp
+	/*
 	@RequestMapping("commute.at")
 	public String commute() {
 		return "attendance/commuteList";
 	}
+	*/
 	
-	/* 출퇴근기록 페이지 조회
 	@RequestMapping("commuteList.at")
-	public String commuteList() {
-	/*
-	// 1. 출퇴근기록 페이지 / commuteList.jsp
-	@ResponseBody
-	@RequestMapping(value="commuteList.at", produces="application/json; charset=utf-8")
-	public String commuteList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv) {
-	
-		// 오늘 출근시간
-		// 1-1. 출퇴근기록/오늘 출근기록 조회
+	public ModelAndView commuteList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, HttpSession session) {
 		
+		Member m = (Member)session.getAttribute("loginUser");
+		String userNo = m.getUserNo();
+		
+		// 1-1. 출퇴근기록/오늘 출근기록 조회
+		Attendance todayStart = atService.todayStart(userNo);
 		
 		// 1-2. 출퇴근기록/오늘 퇴근기록 조회
-		
+		Attendance todayEnd = atService.todayEnd(userNo);
 		
 		// 1-3. 출퇴근기록/근무현황_이번달 근무일수
-		
+		int thisMonthWorkDay = atService.thisMonthWorkDay(userNo);
 		
 		// 1-4. 출퇴근기록/근무현황_이번달 연장근무시간
-		
+		int thisMonthOvertime = atService.thisMonthOvertime(userNo);
 		
 		// 1-5. 출퇴근기록/근무현황_총 근무시간
-		
+		int thisMonthTotaltime = atService.thisMonthTotaltime(userNo);
 		
 		// 1-6. 출퇴근기록/이번달 근태현황_지각(횟수)
-		
+		int thisMonthLate = atService.thisMonthLate(userNo);
 		
 		// 1-7. 출퇴근기록/이번달 근태현황_결근(횟수) 
-		
-		// 이번달 근무일수
+		int thisMonthAbsence = atService.thisMonthAbsence(userNo);
 		
 		// 1-8. 출퇴근기록/이번달 근태현황_연차(횟수)
+		int thisMonthHoliday = atService.thisMonthHoliday(userNo);		
 		
-		// 이번달 연장근무시간
-		
-				
-		// 총 근무시간
 		// 1-9. 출퇴근기록/휴가현황_잔여휴가(일수)
-		
+		//int thisMonthHolidayRemain = atService.thisMonthHolidayRemain(userNo);
 		
 		// 1-10. 출퇴근기록 표_페이징처리 listCount
-		
+		int listCount = atService.commuteListCount(userNo);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		
 		// 1-11. 출퇴근기록 표_근무일자/요일/출근시간/퇴근시간/근무상태		
-		ArrayList<Attendance> list = atService.commuteList(pi);
+		ArrayList<Attendance> list = atService.commuteList(pi, userNo);
+		
+		mv.addObject("todayStart", todayStart.getAtStart())
+		  .addObject("todayEnd", todayEnd.getAtEnd())
+		  .addObject("thisMonthWorkDay", thisMonthWorkDay)
+		  .addObject("thisMonthOvertime", thisMonthOvertime)
+		  .addObject("thisMonthTotaltime", thisMonthTotaltime)
+		  .addObject("thisMonthLate", thisMonthLate)
+		  .addObject("thisMonthAbsence", thisMonthAbsence)
+		  .addObject("thisMonthHoliday", thisMonthHoliday)
+		 // .addObject("thisMonthHolidayRemain", thisMonthHolidayRemain)
+		  .addObject("pi", pi)
+		  .addObject("list", list)
+		  .setViewName("attendance/commuteList");
+		
+
+		return mv;
+		
+	}
+	
+	/*
+	@ResponseBody
+	@RequestMapping(value="commuteList.at", produces="application/json; charset=utf-8")
+	public String commuteList(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session) {
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		String userNo = m.getUserNo();
+		
+		System.out.println(userNo);
+		
+		// 1-1. 출퇴근기록/오늘 출근기록 조회
+		Attendance todayStart = atService.todayStart(userNo);
+		
+		// 1-2. 출퇴근기록/오늘 퇴근기록 조회
+		Attendance todayEnd = atService.todayEnd(userNo);
+		
+		// 1-3. 출퇴근기록/근무현황_이번달 근무일수
+		int thisMonthWorkDay = atService.thisMonthWorkDay(userNo);
+		
+		// 1-4. 출퇴근기록/근무현황_이번달 연장근무시간
+		int thisMonthOvertime = atService.thisMonthOvertime(userNo);
+		
+		// 1-5. 출퇴근기록/근무현황_총 근무시간
+		int thisMonthTotaltime = atService.thisMonthTotaltime(userNo);
+		
+		// 1-6. 출퇴근기록/이번달 근태현황_지각(횟수)
+		int thisMonthLate = atService.thisMonthLate(userNo);
+		
+		// 1-7. 출퇴근기록/이번달 근태현황_결근(횟수) 
+		int thisMonthAbsence = atService.thisMonthAbsence(userNo);
+		
+		// 1-8. 출퇴근기록/이번달 근태현황_연차(횟수)
+		int thisMonthHoliday = atService.thisMonthHoliday(userNo);		
+		
+		// 1-9. 출퇴근기록/휴가현황_잔여휴가(일수)
+		int thisMonthHolidayRemain = atService.thisMonthHolidayRemain(userNo);
+		
+		// 1-10. 출퇴근기록 표_페이징처리 listCount
+		int listCount = atService.commuteListCount(userNo);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		
+		// 1-11. 출퇴근기록 표_근무일자/요일/출근시간/퇴근시간/근무상태		
+		ArrayList<Attendance> list = atService.commuteList(pi, userNo);
+		
+		HashMap<String,Object> map = new HashMap<>();
+		map.put("todayStart", todayStart);
+		map.put("todayEnd", todayEnd);
+		map.put("thisMonthWorkDay", thisMonthWorkDay);
+		map.put("thisMonthOvertime", thisMonthOvertime);
+		map.put("thisMonthTotaltime", thisMonthTotaltime);
+		map.put("thisMonthLate", thisMonthLate);
+		map.put("thisMonthAbsence", thisMonthAbsence);
+		map.put("thisMonthHoliday", thisMonthHoliday);
+		map.put("thisMonthHolidayRemain", thisMonthHolidayRemain);
+		map.put("list", list);
+		map.put("pi", pi);
+		map.put("userNo", userNo);
+		
+	    return new Gson().toJson(map);
 		
 	}
 	*/
@@ -130,7 +230,7 @@ public class AttendanceController {
 	}	
 	*/
 	
-	// 연장근무내역 조회
+	// 휴가내역 조회
 	// 4. 휴가관리 / atHolidayList.jsp
 	@RequestMapping("holiday.at")
 	public ModelAndView holidayList(ModelAndView mv, HttpSession session) {
@@ -155,6 +255,8 @@ public class AttendanceController {
 		  .addObject("holidayRemainderCount", holidayRemainderCount)
 		  .addObject("list", list)
 		  .setViewName("attendance/atHolidayList");
+		
+		System.out.println();
 		
 		return mv;
 		
@@ -197,18 +299,21 @@ public class AttendanceController {
 	
 	@ResponseBody
 	@RequestMapping(value="commuteMemberList.at", produces="application/json; charset=utf-8")
-	public String commuteMemberList(@RequestParam(value="cpage", defaultValue="1") int currentPage, String searchDep, String keyword) {	
+	public String commuteMemberList(@RequestParam(value="cpage", defaultValue="1") int currentPage, String searchDep, String keyword, String datepicker) {	
 		
-		int listCount = atService.commuteMemberListCount(searchDep, keyword);
+		int listCount = atService.commuteMemberListCount(searchDep, keyword, datepicker);
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);		
-		ArrayList<Attendance> list = atService.commuteMemberList(pi, searchDep, keyword);
+		ArrayList<Attendance> list = atService.commuteMemberList(pi, searchDep, keyword, datepicker);
 		
 		HashMap<String,Object> map = new HashMap<>();
 		map.put("list", list);
 		map.put("pi", pi);
 		map.put("searchDep", searchDep);
 		map.put("keyword", keyword);
+		map.put("datepicker", datepicker);
+		
+		System.out.println(datepicker);
 		
 	    return new Gson().toJson(map);
 
