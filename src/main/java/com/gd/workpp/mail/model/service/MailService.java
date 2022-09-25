@@ -106,9 +106,6 @@ public interface MailService {
 	// 스팸메일함 리스트 페이지 서비스
 	ArrayList<Mail> selectSpambox(PageInfo pi, String email);
 	
-	// 휴지통 리스트 페이지 서비스
-	ArrayList<Mail> selectTrashbox(PageInfo pi, String email);
-	
 	// 스팸 정상신고 서비스 (받은메일함으로 이동)
 	int updateSpamCancle(String checkMailNo, String email);
 	
@@ -120,5 +117,21 @@ public interface MailService {
 	
 	// 휴지통에서 완전 삭제 서비스
 	int realDelete(String checkMailNo, String email);
+	
+	// 휴지통에서 복원 서비스
+	int restoreMail(String checkMailNo, String email);
+	
+	// 기타메일함 (휴지통, 중요, 앍읽은메일함) 리스트 페이지 서비스
+	ArrayList<Mail> selectEtcbox(PageInfo pi, int boxType, String email);
+	
+	// 사이드바에서 휴지통 비우기 서비스
+	int vacateTrashbox(String email);
+	
+	// 파일번호로 첨부파일 조회 서비스
+	int deleteAttachmentbyFileNo(int fileNo);
+	
+	// 임시저장메일 발송 서비스 
+	int sendSaveMail(Mail m, ArrayList<Attachment> atList);
+	int insertMailStatusSaveMail(ArrayList<MailStatus> msList);
 	
 }

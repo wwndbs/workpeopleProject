@@ -38,7 +38,7 @@
 	                  <div class="mail-btn-content" style="width: 480px;">
 	                    <input type="checkbox" id="checkAll" style="margin-right: 10px;">
 	
-	                    <button type="button" class="mail-btn5" id="spamBtn">
+	                    <button type="button" class="mail-btn5" id="restoreBtn">
 	                      <ion-icon name="reload-outline" style="margin-top:5px; font-size: 20px;"></ion-icon>
 	                      <span>&nbsp;&nbsp;복원</span>
 	                    </button>
@@ -126,7 +126,7 @@
 				                      		</c:when>
 				                      	</c:choose>
 				                        <span>${ m.mailTitle }</span>
-				                        <ion-icon name="copy-outline"></ion-icon>
+				                        <!-- 팝업 <ion-icon name="copy-outline"></ion-icon>  -->
 				                      </td>
 				                      <td class="d6">${ m.sendDate }</td>
 				                    </tr>
@@ -237,38 +237,30 @@
 									
 								})
 								
-				            	// 스팸 신고 버튼 클릭 시 토스트나 모달 출력
-				            	$("#spamBtn").click(function(){
+				            	// 복원 버튼 클릭 시
+				            	$("#restoreBtn").click(function(){
 	
 									if(checkMailNo == ''){
 										toast("선택된 메일이 없습니다.");
 										return;
 									}
 				            		
-				            		 $('#jyModal_confirm').modal('show'); 
-				            		 
-				            	})
-				            	
-				            	// 스팸 신고 요청 (스팸메일함 이동, 스팸주소 등록)
-				            	$("#realSpam").click(function(){
-				            		
 				            		$.ajax({
-	                                    url:"updateStatus.ma",
-	                                    data:{checkMailNo:checkMailNo,
-	                                    	  type:"mail_spam"},
+	                                    url:"restore.ma",
+	                                    data:{checkMailNo:checkMailNo},
 	                                    success:function(result){
 	                        				if(result == "success"){
-		                                        toast("스팸처리 되었습니다.");
+		                                        toast("메일함으로 이동하였습니다.");
 												setTimeout(reload, 1000);
 	                        				}else{
-	                        					toast("스팸 신고에 실패하였습니다.");
+	                        					toast("복원에 실패하였습니다.");
 	                        				}
 	                                    },
 	                                    error:function(){
-	                                        console.log("스팸 신고 ajax통신 실패")
+	                                        console.log("메일 복원 ajax통신 실패")
 	                                    }
-					            	})
-				       
+					            	})	 
+								
 				            	})
 				            	
 				            	// 답장
@@ -295,7 +287,13 @@
 										toast("선택된 메일이 없습니다.");
 										return;
 									}
+
+									$('#jyModal_confirm').modal('show'); 
+									
+								})	
 				            		
+								$("#realDelete").click(function(){
+									
 				            		$.ajax({
 	                                    url:"realDelete.ma",
 	                                    data:{checkMailNo:checkMailNo},
@@ -311,9 +309,9 @@
 	                                        console.log("메일 삭제 ajax통신 실패")
 	                                    }
 					            	})
+					            	
+								})
 				       
-				            	})
-								
 				            	// 태그 적용/해제 요청
 				            	$(document).on("click", ".tagBtn", function(){
 
@@ -457,29 +455,28 @@
 							
 			            </script>
 					    
-		                  <!-- 모달: 스팸신고 컨펌 -->
-			              <div class="modal" id="jyModal_confirm">
-			                <div class="modal-dialog modal-dialog-centered">
-			                    <div class="modal-content">
-			                        <!-- Modal Header -->
-			                        <div class="modal-header">
-			                          <h6 class="modal-title">스팸신고</h6>
-			                          <button type="button" class="modal_close" data-dismiss="modal">&times;</button>
-			                        </div>
-			                        <!-- Modal body -->
-			                        <div class="modal-body" style="text-align: center;">
-			                          보낸 사람을 수신거부 목록에 추가하고, <br>
-			                          신고한 메일은 스팸메일함으로 이동됩니다.
-			                        </div>
-			                        <!-- Modal footer -->
-			                        <div class="modal-footer">
-			                        <button type="button" class="btn btn-jycancle" data-dismiss="modal">취소</button>
-			                        <button type="button" class="btn btn-jyok" id="realSpam" data-dismiss="modal">확인</button>
-			                        </div>
-			                    </div>
-			                </div>
-			            </div>
-			            <!-- 모달 끝 -->
+					    <!-- 모달: 삭제 컨펌 -->
+					    <div class="modal" id="jyModal_confirm">
+					        <div class="modal-dialog modal-dialog-centered">
+					            <div class="modal-content">
+					                <!-- Modal Header -->
+					                <div class="modal-header">
+					                    <button type="button" class="modal_close" data-dismiss="modal" style="margin-left: 95%;">&times;</button>
+					                </div>
+					                <!-- Modal body -->
+					                <div class="modal-body" style="text-align: center;">
+					                    휴지통에서 삭제한 메일은 복구가 되지 않습니다. <br>
+								        메일을 삭제하시겠습니까?
+					                </div>
+					                <!-- Modal footer -->
+					                <div class="modal-footer">
+					                    <button type="button" class="btn btn-jycancle" data-dismiss="modal">취소</button>
+					                    <button type="button" class="btn btn-jyok" id="realDelete">확인</button>
+					                </div>
+					            </div>
+					        </div>
+					    </div>
+					    <!-- 모달 끝 -->
 					    
 	                  </div>
 	                  <!-- 메일함 끝 -->

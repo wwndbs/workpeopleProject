@@ -101,6 +101,7 @@
 	               
 	                <input type="hidden" name="existFileNo" value="">
 	                <input type="hidden" name="originFile">
+	                <input type="hidden" name="deleteFileNo" value="">
 	              	
 	                <!-- 상단 버튼 박스 시작 -->
 	                <div class="mail-btn-content" style="width: 320px;">
@@ -710,12 +711,13 @@
 					        
 		                })
 		                
-		                // 전달로 이미 첨부되어 있던 파일 리스트에서 파일 개별 삭제 / 삭제되지 않고 남아 있는 파일 번호 담기
+						let deleteFileNo = "";		                
+		                // 전달,임시보관으로 이미 첨부되어 있던 파일 리스트에서 파일 개별 삭제
 		                $(document).on("click", ".btn-file-remove>ion-icon.old", function(){
-						
+		                	
 		                	$(this).parent().parent().remove();
 		                	
-		                	// 삭제되지 않고 남아 있는 첨부파일
+		                	// 삭제되지 않고 남아 있는 첨부파일 번호 담기 (전달메일 보내기 시 사용)
 		                	const arr = document.getElementsByName('relayFileNo');
 
 		                	let existFileNo = "";
@@ -724,7 +726,11 @@
 		                	}
 		                	existFileNo = existFileNo.substring(0,existFileNo.lastIndexOf(",")); 
 		                	
+		                	// 삭제된 첨부파일 번호 담기 (임시보관메일 보내기 시 사용)
+		                	deleteFileNo += $(this).parent().prev().val() + ",";
+		                	
 		                	$("input[name=existFileNo]").val(existFileNo);
+		                	$("input[name=deleteFileNo]").val(deleteFileNo);
 		                	
 		                	if($(".btn-file-remove").length == 0){
 			                	 $(".file-empty").css("display", "block");
@@ -831,7 +837,7 @@
 	                  <tr>
 	                    <td colspan="3" style="padding-top: 20px; text-align: initial;">
 		                    <c:choose>
-		                      <c:when test="${ type eq 'relay' }">
+		                      <c:when test="${ type eq 'relay' or type eq 'out' }">
 		                      	<textarea name="mailContent" id="summernote" rows="10" style="resize: none;">${ m.mailContent }</textarea>
 		                      </c:when>
 		                      <c:otherwise>
@@ -876,7 +882,7 @@
 						function saveMail(){
 			      			
 							if($("input[name=mailTitle]").val() == ''){
-                   				toast("받는 사람 메일 주소를 입력해 주세요.");
+                   				toast("제목을 입력해 주세요.");
                    				return;
 			      			}
 			      			

@@ -29,15 +29,18 @@
         	<h5>메일함</h5>
             <ul class="mailbox-list">
             	<li><a href="box.ma">받은메일함</a></li>
-	            <li><span><a href="box.ma?boxType=2">보낸메일함</a></span><span><button class="mail-btn-sidebar">수신확인</button><br></span></li>
+	            <li><span><a href="box.ma?boxType=2">보낸메일함</a></span>
+	            <!-- <span><button class="mail-btn-sidebar">수신확인</button><br></span></li> -->
 	            <li><a href="box.ma?boxType=3">내게쓴메일함</a></li>
 	            <li><a href="outbox.ma?">임시보관함</a></li>
 	            <br>
-	            <li><span><a href="box.ma?boxType=4">스팸메일함</a></span><span><button class="mail-btn-sidebar">비우기</button><br></span></li>
-	            <li><span><a href="box.ma?boxType=5">휴지통</a></span><span><button class="mail-btn-sidebar">비우기</button><br></span></li>
+	            <li><span><a href="box.ma?boxType=4">스팸메일함</a></span>
+	            <!-- <span><button class="mail-btn-sidebar">비우기</button><br></span></li>  -->
+	            <li><span><a href="box.ma?boxType=5">휴지통</a></span>
+	            <span><button class="mail-btn-sidebar" data-toggle="modal" data-target="#jyModal_vacate_confirm">비우기</button><br></span></li>
 	            <br>
-	            <li><a href="">중요메일함</a></li>
-	            <li><a href="">안읽은메일함</a></li>
+	            <li><a href="box.ma?boxType=6">중요메일함</a></li>
+	            <li><a href="box.ma?boxType=7">안읽은메일함</a></li>
         	</ul>
         </div>
         
@@ -99,10 +102,30 @@
           			}
         		})        	
         		
+        		// 휴지통 비우기 버튼 클릭
+        		$("#realVacate").click(function(){
+        			
+            		$.ajax({
+            			url: "vacateTrashbox.ma",
+            			success:function(result){
+
+            				if(result == "success"){
+            					toast("삭제되었습니다.");
+            					setTimeout(reload, 1000);
+							}
+							
+            			},
+            			error:function(){
+							console.log("휴지통 비우기 ajax통신 실패");
+            			}
+            		})
+            		
+        		})
+        		
         	})
         </script>
       
-        <br><br>
+        <br><br><br>
        
         <div class="sidebar4">
         	<ion-icon name="settings-outline" style="vertical-align: -3px;"></ion-icon>
@@ -113,6 +136,29 @@
 
     </div>
     <!-- 메일 사이드바 끝 -->
+   
+    <!-- 모달: 휴지통 비우기 컨펌 -->
+    <div class="modal" id="jyModal_vacate_confirm">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="modal_close" data-dismiss="modal" style="margin-left: 95%;">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body" style="text-align: center;">
+                    휴지통을 비우면 메일이 완전히 삭제됩니다. <br>
+			        휴지통을 비우시겠습니까?
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-jycancle" data-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-jyok" id="realVacate">확인</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 모달 끝 -->
    
     <!-- 모달: 태그 추가 -->
     <div class="modal tagModal" id="jyModal_insertTag">

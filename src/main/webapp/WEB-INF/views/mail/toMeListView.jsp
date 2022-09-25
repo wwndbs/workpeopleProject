@@ -38,7 +38,6 @@
               	<!-- 제목 + 버튼 + 리스트 div 시작 -->
 				<div class="mail-main-form-list">                
 	                <span class="mail-h">내게쓴메일함</span>
-	                ${ listCount }
 	
 	                <form action="">
 	                  <!-- 상단 버튼 박스 시작 -->
@@ -143,7 +142,7 @@
 				                      		</c:when>
 				                      	</c:choose>
 				                        <span>${ m.mailTitle }</span>
-				                        <ion-icon name="copy-outline"></ion-icon>
+				                        <!-- 팝업 <ion-icon name="copy-outline"></ion-icon>  -->
 				                      </td>
 				                      <td class="d6">${ m.sendDate }</td>
 				                    </tr>

@@ -139,7 +139,7 @@
 				                      		</c:when>
 				                      	</c:choose>
 				                        <span>${ m.mailTitle }</span>
-				                        <ion-icon name="copy-outline"></ion-icon>
+				                        <!-- 팝업 <ion-icon name="copy-outline"></ion-icon>  -->
 				                      </td>
 				                      <td class="d6">${ m.sendDate }</td>
 				                    </tr>

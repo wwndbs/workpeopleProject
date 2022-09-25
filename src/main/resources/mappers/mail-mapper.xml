@@ -305,6 +305,12 @@
 		 	<when test='boxType == "5"'>
 			    and mail_delete = 'Y'
 		 	</when>
+		 	<when test='boxType == "6"'>
+		 		and mail_important = 'Y'
+		 	</when>
+		 	<when test='boxType == "7"'>
+		 		and mail_read = 'N'
+		 	</when>
 		 </choose>
 	</select>
 	
@@ -344,6 +350,11 @@
 		 	</when>
 		 	<when test='boxType == "5"'>
 			    and mail_delete = 'Y'
+		 	</when>
+		 	<when test='boxType == "6"'>
+		 		and mail_important = 'Y'
+		 	</when>
+		 	<when test='boxType == "7"'>
 		 	</when>
 		 </choose>
 	</select>
@@ -615,7 +626,7 @@
 		   and mail_type = #{mailType}
 	</update>
 	
-	<select id="selectTrashbox" resultMap="mailResult">
+	<select id="selectEtcbox" resultMap="mailResult">
 			select 
 		       mail_no
 		     , mail_title
@@ -632,7 +643,17 @@
 		  left join member mem on (sender = email)
 		  left join mail_tag t on (s.tag_no = t.tag_no)
 		 where s.user_mail = #{email}
-		   and mail_delete = 'Y'
+		 <choose>
+		 	<when test='boxType == "5"'>
+		 	and	mail_delete = 'Y'
+		 	</when>
+		 	<when test='boxType == "6"'>
+		 	and	mail_important = 'Y'
+		 	</when>
+		 	<when test='boxType == "7"'>
+		 	and	mail_read = 'N'
+		 	</when>
+		 </choose>
 		 order by mail_no desc
 	</select>
 	
@@ -702,6 +723,47 @@
          </foreach>
 	</delete>
 	
-	
+	<update id="restoreMail">
+		update
+		       mail_status
+		   set mail_delete = 'N'
+		 where mail_no in
+ 	     <foreach collection="noArr" item='no' index='i' open="(" close=")" separator=",">
+           #{no}
+         </foreach>
+		   and user_mail = #{email}
+	</update>
 
+	<delete id="vacateTrashbox">
+		delete
+		  from mail_status
+		 where user_mail = #{email}
+		   and mail_delete = 'Y'
+	</delete>
+		
+	<delete id="deleteAttachmentbyFileNo">
+		delete
+		  from attachment
+		 where ref_type = 1
+		   and file_no = #{fileNo}
+	</delete>
+	
+	 <insert id="insertMailStatusSaveMail">
+		insert
+		  into mail_status
+		     (
+		       mail_no
+		     , user_mail
+		     , user_name
+		     , mail_type
+		     )
+		values
+			 (
+			   #{mailNo}
+			 , #{userMail}
+			 , #{userName}
+			 , #{mailType}
+			 )
+	</insert>
+	
 </mapper>

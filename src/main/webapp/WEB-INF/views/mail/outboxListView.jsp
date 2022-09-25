@@ -31,7 +31,7 @@
               <div class="mail-main-form">
               	<!-- 제목 + 버튼 + 리스트 div 시작 -->
 				<div class="mail-main-form-list">                
-	                <span class="mail-h">임시보관함</span>
+	                <span class="mail-h">임시 보관함</span>
 	                <span>전체 보관 메일 <span id="allCount">${ listCount }</span></span>
 	
 	                <form action="">

@@ -324,6 +324,14 @@ public class AjaxMailController {
 		
 	}
 
+	/**
+	 * Author : 정주윤
+	 * 내게쓴메일함에서 태그를 변경 처리해 주는 메소드
+	 * @param type : {적용, 해제}
+	 * @param tagNo : 변경 적용하려는 태그
+	 * @param checkMailNo : 선택된 메일번호들
+	 * @param checkMailType : 선택된 메일들의 메일타입
+	 */
 	@ResponseBody
 	@RequestMapping(value="toMeTagChange.ma", produces="text/html; charset=UTF-8")
 	public String updateToMeTagChange(String type, int tagNo, String checkMailNo, String checkMailType, HttpSession session) {
@@ -344,6 +352,12 @@ public class AjaxMailController {
 		return result > 0 ? "success" : "fail";
 	}
 	
+	/**
+	 * Author : 정주윤
+	 * 선택된 메일들을 스팸 정상신고 처리해 주는 메소드
+	 * @param checkMailNo : 선택된 메일번호들
+	 * @param checkEmail : 선택된 메일주소들
+	 */
 	@ResponseBody
 	@RequestMapping(value="spamCancle.ma", produces="text/html; charset=UTF-8")
 	public String spamRollback(String checkMailNo, String checkEmail, HttpSession session) {
@@ -384,6 +398,10 @@ public class AjaxMailController {
 		 
 	}
 	
+	/**
+	 * Author : 정주윤
+	 * 휴지통에서 메일을 완전 삭제 처리해 주는 메소드
+	 */
 	@ResponseBody
 	@RequestMapping(value="realDelete.ma", produces="text/html; charset=UTF-8")
 	public String realDelete(String checkMailNo, HttpSession session) {
@@ -396,6 +414,39 @@ public class AjaxMailController {
 		return result > 0 ? "success" : "fail";
 		
 	}
-
+	
+	/**
+	 * Author : 정주윤
+	 * 휴지통에서 메일을 복원 처리해 주는 메소드
+	 */
+	@ResponseBody
+	@RequestMapping(value="restore.ma", produces="text/html; charset=UTF-8")
+	public String restoreMail(String checkMailNo, HttpSession session) {
+		
+		Member mem = (Member)session.getAttribute("loginUser");
+		String email = mem.getEmail();
+		
+		int result = mService.restoreMail(checkMailNo, email);
+		
+		return result > 0 ? "success" : "fail";
+		
+	}
+	
+	/**
+	 * Author : 정주윤
+	 * 사이드바의 휴지통 비우기 기능 처리해 주는 메소드
+	 */
+	@ResponseBody
+	@RequestMapping(value="vacateTrashbox.ma", produces="text/html; charset=UTF-8")
+	public String vacateTrashbox(String checkMailNo, HttpSession session) {
+		
+		Member mem = (Member)session.getAttribute("loginUser");
+		String email = mem.getEmail();
+		
+		int result = mService.vacateTrashbox(email);
+		
+		return result > 0 ? "success" : "fail";
+		
+	}
 	
 }

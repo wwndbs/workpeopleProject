@@ -140,7 +140,7 @@
 				                      		</c:when>
 				                      	</c:choose>
 				                        <span>${ m.mailTitle }</span>
-				                        <ion-icon name="copy-outline"></ion-icon>
+				                        <!-- 팝업 <ion-icon name="copy-outline"></ion-icon>  -->
 				                      </td>
 				                      <td class="d6">${ m.sendDate }</td>
 				                    </tr>
@@ -280,11 +280,12 @@
 		                                        toast("스팸메일이 복원 되었습니다.");
 												setTimeout(reload, 1000);
 	                        				}else{
-	                        					toast("정상 신고에 실패하였습니다.");
+	                        					//toast("정상 신고에 실패하였습니다.");
+	                        					setTimeout(reload, 100);
 	                        				}
 	                                    },
 	                                    error:function(){
-	                                        console.log("스팸 신고 ajax통신 실패")
+	                                        console.log("스팸 정상 신고 ajax통신 실패")
 	                                    }
 					            	})
 				       

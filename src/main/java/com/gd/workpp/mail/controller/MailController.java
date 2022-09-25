@@ -1,5 +1,6 @@
 package com.gd.workpp.mail.controller;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -146,7 +147,7 @@ public class MailController {
 	/**
 	 * Author : 정주윤 메일 전달 요청을 처리해 주는 메소드
 	 * @param existFileNo : 전달 시에 삭제하지 않고 남아있는 파일번호
-	 * @param mailNo      : 원글의 메일번호
+	 * @param originMailNo : 원글의 메일번호
 	 */
 	@RequestMapping("insertRelay.ma")
 	public String insertRelay(String existFileNo, int originMailNo, Mail m, MultipartFile[] upfile, HttpSession session,
@@ -181,7 +182,6 @@ public class MailController {
 		String[] exist = existFileNo.split(",");
 
 		if (originFile.size() == exist.length) { // 원글 첨부파일 개수와 삭제하지 않은 첨부파일 개수가 동일 => 원글 첨부파일 전부 전달
-			System.out.println("첨부파일 삭제안함");
 			
 			// 새로 첨부한 파일 있을 경우 업로드
 			for (int i = 0; i < upfile.length; i++) {
@@ -199,7 +199,6 @@ public class MailController {
 			}
 			
 		} else { // 원글 첨부파일 일부 삭제했음
-			System.out.println("첨부파일 삭제함");
 
 			// 새로 첨부한 파일 있을 경우 업로드
 			for (int i = 0; i < upfile.length; i++) {
@@ -250,7 +249,7 @@ public class MailController {
 	 * Author : 정주윤
 	 * 받은메일함 / 보낸메일함 / 내게쓴메일함 / 스팸메일함 / 휴지통 조회 요청 처리해 주는 메소드
 	 * @param currentPage : 요청한 페이지 번호
-	 * @param boxType     : {1:받은메일함, 2:받은메일함, 3:내게쓴메일함, 4:스팸메일함, 5:휴지통}
+	 * @param boxType     : {1:받은메일함, 2:받은메일함, 3:내게쓴메일함, 4:스팸메일함, 5:휴지통, 6: 중요메일함, 7: 안읽은메일함}
 	 */
 	@RequestMapping("box.ma")
 	public ModelAndView selectBox(@RequestParam(value = "cpage", defaultValue = "1") int currentPage,
@@ -260,7 +259,7 @@ public class MailController {
 		String email = mem.getEmail();
 
 		int listCount = mService.selectListCount(boxType, email);
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 18);
 
 		// 읽지 않은 메일 개수 조회
 		int notReadCount = mService.selectNotReadCount(boxType, email);
@@ -278,10 +277,8 @@ public class MailController {
 			mv.setViewName("mail/sentboxListView");
 
 		}else if (boxType == 3){ // 내게쓴메일함
-			System.out.println(pi);
 			list = mService.selectToMe(pi, email);
 			mv.setViewName("mail/toMeListView");
-			System.out.println(list.size());
 			
 		}else if (boxType == 4){ // 스팸메일함
 			
@@ -290,8 +287,20 @@ public class MailController {
 			
 		}else if (boxType == 5){ // 휴지통
 
-			list = mService.selectTrashbox(pi, email);
+			list = mService.selectEtcbox(pi, boxType, email);
 			mv.setViewName("mail/trashboxListView");
+			
+		}else if (boxType == 6){ // 중요메일함
+
+			list = mService.selectEtcbox(pi, boxType, email);
+			mv.setViewName("mail/etcListView");
+			mv.addObject("boxType", boxType);
+			
+		}else if (boxType == 7){ // 안읽은메일함
+
+			list = mService.selectEtcbox(pi, boxType, email);
+			mv.setViewName("mail/etcListView");
+			mv.addObject("boxType", boxType);
 			
 		}
 
@@ -397,7 +406,7 @@ public class MailController {
 		String email = mem.getEmail();
 
 		int listCount = mService.selectOutboxListcount(email);
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 20);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 18);
 
 		// 메일 리스트 조회
 		ArrayList<Mail> list = new ArrayList<>();
@@ -414,10 +423,88 @@ public class MailController {
 	}
 	
 	@RequestMapping("sendSave.ma")
-	public void sendSaveMail(String existFileNo, int originMailNo, Mail m, MultipartFile[] upfile, HttpSession session, Model model) {
+	public String sendSaveMail(String deleteFileNo, Mail m, MultipartFile[] upfile, HttpSession session, Model model) {
+		int mailNo = Integer.parseInt(m.getMailNo());
+		deleteFileNo = deleteFileNo.substring(0,deleteFileNo.lastIndexOf(",")); 
+    	
+		
+		// 보낸사람 + 받은사람 + 참조 명수만큼 ArrayList에 담기 (mailNo 담아서)
+		ArrayList<MailStatus> msList = new ArrayList<>();
 
+		// sender
+		String userName = mService.selectUserName(m.getSender());
+		msList.add(new MailStatus(mailNo, m.getSender(), userName, 2));
 
+		// receiver
+		String[] receiverArr = m.getReceiver().split(","); // ["aaa.com", "bbb.com"]
+		for (String receiver : receiverArr) {
+			msList.add(new MailStatus(mailNo, receiver, mService.selectUserName(receiver), 1));
+		}
 
+		// ref
+		if (!m.getMailRef().equals("")) { // 참조인이 있는 경우
+			String[] refArr = m.getMailRef().split(",");
+			for (String ref : refArr) {
+				msList.add(new MailStatus(mailNo, ref, mService.selectUserName(ref), 3));
+			}
+		}
+		
+		ArrayList<Attachment> atList = new ArrayList<>();
+		String[] noArr = deleteFileNo.split(",");
+		int[] fileNoArr = new int[noArr.length];
+        
+        for (int i=0; i<noArr.length; i++) {
+        	fileNoArr[i] = Integer.parseInt(noArr[i]);
+        }
+        
+		// mailNo으로 첨부파일 리스트 조회
+		ArrayList<Attachment> saveMailAt = mService.selectAttachment(mailNo);
+
+		if(!saveMailAt.isEmpty()) { // 해당 메일에 기존 첨부파일 있었을 경우
+			
+			for(int fileNo : fileNoArr) {
+				
+				// deleteFileNo들을 ATTACHMENT에 DELETE
+				int atResult = mService.deleteAttachmentbyFileNo(fileNo);
+				
+				if(atResult > 0) { // DELETE 성공 시 서버에 업로드된 파일도 삭제
+					for(Attachment at : saveMailAt) {
+						new File( session.getServletContext().getRealPath(at.getChangeName()) ).delete();
+					}
+				}
+				
+			}
+		}
+		
+		// 다시 새롭게 업로드
+		for (int i = 0; i < upfile.length; i++) {
+			if (!upfile[i].getOriginalFilename().equals("")) {
+				String saveFilePath = FileUpload.saveFile(upfile[i], session, "resources/mail_upfiles/");
+
+				// 첨부파일의 **참조메일번호**, 원본명, 파일경로+수정명 담기
+				atList.add(new Attachment(mailNo, upfile[i].getOriginalFilename(), saveFilePath));
+			}
+		}
+	
+		// MAIL 한 행 UPDATE
+		int result1 = mService.sendSaveMail(m, atList);
+
+		if (result1 > 0) { // MAIL UPDATE 성공 => MAILSTATUS INSERT && 발송 성공 페이지
+
+			int result2 = mService.insertMailStatusSaveMail(msList);
+
+			if (result2 > 0) {
+				return "mail/insertSuccess";
+			} else {
+				model.addAttribute("errorMsg", "메일 발송 실패");
+				return "common/errorPage";
+			}
+
+		} else { // 실패
+			model.addAttribute("errorMsg", "메일 발송 실패");
+			return "common/errorPage";
+		}
+		 
 	}
 
 

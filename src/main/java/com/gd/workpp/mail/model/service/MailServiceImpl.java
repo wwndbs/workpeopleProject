@@ -230,8 +230,8 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public ArrayList<Mail> selectTrashbox(PageInfo pi, String email) {
-		return mDao.selectTrashbox(sqlSession, pi, email);
+	public ArrayList<Mail> selectEtcbox(PageInfo pi, int boxType, String email) {
+		return mDao.selectEtcbox(sqlSession, pi, boxType, email);
 	}
 
 	@Override
@@ -254,8 +254,44 @@ public class MailServiceImpl implements MailService {
 		return mDao.realDelete(sqlSession, checkMailNo, email);
 	}
 
+	@Override
+	public int restoreMail(String checkMailNo, String email) {
+		return mDao.restoreMail(sqlSession, checkMailNo, email);
+	}
 
-	
+	@Override
+	public int vacateTrashbox(String email) {
+		return mDao.vacateTrashbox(sqlSession, email);
+	}
+
+	@Override
+	public int deleteAttachmentbyFileNo(int fileNo) {
+		return mDao.deleteAttachmentbyFileNo(sqlSession, fileNo);
+	}
+
+	@Override
+	public int sendSaveMail(Mail m, ArrayList<Attachment> atList) {
+		int result1 = mDao.sendSaveMail(sqlSession, m);
+		
+		int result2 = 1;
+		if(!atList.isEmpty()) {
+			for(Attachment at : atList) {
+				result2 = mDao.updateSaveMailAttachment(sqlSession, at);
+			}
+		}
+		return result1 * result2;
+	}
+
+	@Override
+	public int insertMailStatusSaveMail(ArrayList<MailStatus> msList) {
+		int result = 0;
+		
+		for(MailStatus ms : msList) {
+			result = mDao.insertMailStatusSaveMail(sqlSession, ms);
+		}
+		
+		return result;
+	}
 
 
 }

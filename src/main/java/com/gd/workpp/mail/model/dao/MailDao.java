@@ -259,12 +259,16 @@ public class MailDao {
 		return (ArrayList)sqlSession.selectList("mailMapper.selectSpambox", email, rowBounds);
 	}
 	
-	public ArrayList<Mail> selectTrashbox(SqlSessionTemplate sqlSession, PageInfo pi, String email){
+	public ArrayList<Mail> selectEtcbox(SqlSessionTemplate sqlSession, PageInfo pi, int boxType, String email){
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * limit;
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlSession.selectList("mailMapper.selectTrashbox", email, rowBounds);
+		HashMap<String, Object> data = new HashMap<>();
+		data.put("boxType", boxType);
+		data.put("email", email);
+		
+		return (ArrayList)sqlSession.selectList("mailMapper.selectEtcbox", data, rowBounds);
 	}
 	
 	public int updateSpamCancle(SqlSessionTemplate sqlSession, String checkMailNo, String email) {
@@ -298,6 +302,32 @@ public class MailDao {
 		data.put("noArr", noArr);
 
 		return sqlSession.delete("mailMapper.realDelete", data);
+	}
+	
+	public int restoreMail(SqlSessionTemplate sqlSession, String checkMailNo, String email) {
+		String[] noArr = checkMailNo.split(",");
+		
+		HashMap<String, Object> data = new HashMap<>();
+		data.put("email", email);
+		data.put("noArr", noArr);
+
+		return sqlSession.delete("mailMapper.restoreMail", data);
+	}
+	
+	public int vacateTrashbox(SqlSessionTemplate sqlSession, String email) {
+		return sqlSession.delete("mailMapper.vacateTrashbox", email);
+	}
+	
+	public int deleteAttachmentbyFileNo(SqlSessionTemplate sqlSession, int fileNo) {
+		return sqlSession.delete("mailMapper.deleteAttachmentbyFileNo", fileNo);
+	}
+	
+	public int sendSaveMail(SqlSessionTemplate sqlSession, Mail m) {
+		return sqlSession.update("mailMapper.sendSaveMail", m);
+	}
+
+	public int insertMailStatusSaveMail(SqlSessionTemplate sqlSession, MailStatus ms) {
+		return sqlSession.insert("mailMapper.insertMailStatusSaveMail", ms);
 	}
 	
 }

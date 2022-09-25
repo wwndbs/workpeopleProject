@@ -29,5 +29,13 @@ public class MailStatus {
 		this.userName = userName;
 		this.mailType = mailType;
 	}
+
+	public MailStatus(int mailNo, String userMail, String userName, int mailType) {
+		super();
+		this.mailNo = mailNo;
+		this.userMail = userMail;
+		this.userName = userName;
+		this.mailType = mailType;
+	}
 	
 }
