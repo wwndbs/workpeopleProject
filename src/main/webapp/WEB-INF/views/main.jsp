@@ -101,7 +101,7 @@
                      <ul>
                         <li>근태</li>
                         <li>
-                           <a href="commute.at"><i class="fas fa-ellipsis-h"></i></a>
+                           <a href="commuteList.at"><i class="fas fa-ellipsis-h"></i></a>
                         </li>
                      </ul>
                      <div id="time">
