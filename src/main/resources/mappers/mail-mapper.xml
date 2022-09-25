@@ -397,6 +397,9 @@
 		 	<when test='boxType == "2"'>
 		 		and mail_type = 2
 		 	</when>
+		 	<when test='boxType == "4"'>
+		 		and mail_type in (1, 3)
+		 	</when>
 		 </choose>
 	</select>
 	
@@ -657,5 +660,23 @@
 		       )
 		 order by mail_no desc
 	</select>
+	
+	<update id="updateSpamCancle">
+		update
+		       mail_status
+		   set mail_spam = 'N'
+		 where mail_no in
+ 	     <foreach collection="noArr" item='no' index='i' open="(" close=")" separator=",">
+           #{no}
+         </foreach>
+		   and user_mail = #{email}
+	</update>
+	
+	<delete id="deleteSpam">
+		delete
+		  from mail_spam
+		 where user_mail = #{email}
+		   and spam_address = #{spamAddress}
+	</delete>
 	
 </mapper>
