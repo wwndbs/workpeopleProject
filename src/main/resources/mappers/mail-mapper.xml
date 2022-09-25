@@ -692,7 +692,15 @@
 		   and spam_address = #{deleteMail}
 	</delete>
 	
-
+	<delete id="realDelete">
+		delete
+		  from mail_status
+		 where user_mail = #{email}
+		   and mail_no in
+ 	     <foreach collection="noArr" item='no' index='i' open="(" close=")" separator=",">
+           #{no}
+         </foreach>
+	</delete>
 	
 	
 

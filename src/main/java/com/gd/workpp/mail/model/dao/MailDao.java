@@ -290,4 +290,14 @@ public class MailDao {
 		return sqlSession.delete("mailMapper.deleteSpam", data);
 	}
 	
+	public int realDelete(SqlSessionTemplate sqlSession, String checkMailNo, String email) {
+		String[] noArr = checkMailNo.split(",");
+		
+		HashMap<String, Object> data = new HashMap<>();
+		data.put("email", email);
+		data.put("noArr", noArr);
+
+		return sqlSession.delete("mailMapper.realDelete", data);
+	}
+	
 }

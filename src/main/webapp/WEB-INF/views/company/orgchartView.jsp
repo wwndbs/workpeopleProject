@@ -16,7 +16,14 @@
 	
 	header.jsp에 link 넣음
  -->
-
+<style>
+.google-visualization-orgchart-table {
+	width:90%;
+	height:80%;
+	font-size:18px;
+	font-border:10px;
+}
+</style>
 </head>
 <body>
 	<div class="adminx-container">

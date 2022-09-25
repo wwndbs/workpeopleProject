@@ -21,6 +21,11 @@
 		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
 		<property name="username" value="WORKPP" />
 		<property name="password" value="WORKPP" />-->
+	 	<!--  
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
+		<property name="username" value="WORKPP" />
+		<property name="password" value="WORKPP" />
+		-->
 		 
 	</bean>
 	

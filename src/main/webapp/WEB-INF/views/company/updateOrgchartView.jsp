@@ -16,7 +16,14 @@
 	
 	header.jsp에 link 넣음
  -->
-
+<style>
+.google-visualization-orgchart-table {
+	width:90%;
+	height:80%;
+	font-size:18px;
+	font-border:10px;
+}
+</style>
 </head>
 <body>
 	<div class="adminx-container">
@@ -53,7 +60,7 @@
 			                                data.addColumn('string', 'Manager');
 			                        
 			                                data.addRows([
-					                               [{v:'이사장', f:'이사장<div style="color:blue; ">홍길동</div>'},
+					                               [{v:'이사장', f:'이사장<div style="color:blue;">홍길동</div>'},
 					                               ''],
 													
 					                               <c:choose>

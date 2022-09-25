@@ -384,4 +384,18 @@ public class AjaxMailController {
 		 
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="realDelete.ma", produces="text/html; charset=UTF-8")
+	public String realDelete(String checkMailNo, HttpSession session) {
+		
+		Member mem = (Member)session.getAttribute("loginUser");
+		String email = mem.getEmail();
+		
+		int result = mService.realDelete(checkMailNo, email);
+		
+		return result > 0 ? "success" : "fail";
+		
+	}
+
+	
 }
