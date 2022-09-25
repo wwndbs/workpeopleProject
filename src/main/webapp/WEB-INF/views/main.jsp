@@ -442,7 +442,7 @@
 	</script>
 	
 	<!-- 장서원 / 출근 등록 모달 -->
-	<form action="" method="POST">
+	<form action="commuteIn.at" method="POST">
 		<div class="modal" id="commute-start-modal">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
@@ -465,7 +465,7 @@
     </form>
     
     <!-- 장서원 / 퇴근 등록 모달 -->
-	<form action="" method="POST">
+	<form action="commuteOut.at" method="POST">
 		<div class="modal" id="commute-end-modal">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
