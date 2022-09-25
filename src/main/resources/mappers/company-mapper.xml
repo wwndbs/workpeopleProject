@@ -189,11 +189,6 @@
 	
 	</insert>
 	
-	<update id="uploadComImg">
-	  		update
-	  			company
-	  		set com_img = #{comfImg}
-	  			,modify_date = sysdate
-	</update>
+
 	
 </mapper>	  

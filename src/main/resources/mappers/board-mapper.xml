@@ -40,6 +40,17 @@
 		<result column="job_name" property="jobName"/>
 		<result column="level" property="level"/>
 	</resultMap>
+	
+	<resultMap id="reportResult" type="Report">
+		<result column="rp_code" property="reportCode"/>
+		<result column="rp_type" property="reportType"/>
+		<result column="rp_refNo" property="reportRefNo"/>
+		<result column="user_no" property="userNo"/>
+		<result column="rp_date" property="reportDate"/>
+		<result column="rp_content" property="reportContent"/>
+		<result column="status" property="status"/>
+		<result column="handling_date" property="handlingDate"/>
+	</resultMap>
 
 	<!-- Author : 최영헌 -->
 	<select id="mainBoardList" resultMap="boardResult">
@@ -447,6 +458,15 @@
 		   and b.status = 'Y'
 	</select>
 	
+	<!-- 게시글 좋아요 여부 -->
+	<select id="selectBoardLike" resultType="_int">
+		select
+		       count(*)
+		  from b_like
+		 where board_no = #{boardNo}
+		   and user_no = #{userNo}
+	</select>
+	
 	<!-- 댓글 리스트 조회 -->
 	<select id="selectReplyList" resultMap="replyResult">
 		select
@@ -514,5 +534,67 @@
 		 where reply_no = #{replyNo}
 		   and status = 'Y'
 	</update>
+	
+	<!-- 게시글 좋아요 -->
+	<insert id="insertBoardLike">
+		insert
+		  into b_like
+		  (
+		    board_no
+		  , user_no
+		  )
+		  values
+		  (
+		    #{boardNo}
+		  , #{userNo}
+		  )
+	</insert>
+	
+	<!-- 게시글 좋아요 해제 -->
+	<delete id="deleteBoardLike">
+		delete
+		       b_like
+		 where board_no = #{boardNo}
+		   and user_no = #{userNo}
+	</delete>
+	
+	<!-- 게시글 좋아요 개수 -->
+	<select id="selectBoardLikeCount" resultType="_int">
+		select
+	 		   count(*)
+	 	  from b_like
+	 	 where board_no = #{boardNo}
+	</select>
+	
+	<!-- 신고 여부 조회 -->
+	<select id="checkReport" resultMap="reportResult">
+		select
+		       rp_refno
+		     , user_no
+		  from rp_board
+		 where rp_refno = #{reportRefNo}
+		   and user_no = #{userNo}
+	</select>
+	
+	<!-- 신고 -->
+	<insert id="insertReport">
+		insert
+		  into rp_board
+		  (
+		    rp_code
+		  , rp_type
+		  , rp_refno
+		  , user_no
+		  , rp_content
+		  )
+		  values
+		  (
+		    seq_rp.nextval
+		  , #{reportType}
+		  , #{reportRefNo}
+		  , #{userNo}
+		  , #{reportContent}
+		  )
+	</insert>
 
 </mapper>

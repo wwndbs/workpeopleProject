@@ -144,29 +144,6 @@ public class CompanyController {
 	}
 	
 	
-	@ResponseBody
-	@RequestMapping("uploadImg.co")
-	public void ajaxUploadProfile(MultipartFile uploadFile, Company co,String originalFile, HttpSession session) {
-		
-		if(uploadFile != null) { // 넘어온 파일이 있을경우
-			
-			String saveFilePath = FileUpload.saveFile(uploadFile, session , "resources/company_upfiles/");
-			// 업로드 시킬 파일 / session / 저장시킬 경로 / 를 넣으면 파일 경로 + 파일명이 붙어서 파일 경로가 반환됨
-			co.setComImg(saveFilePath);
-			
-			int result = cService.uploadComImg(co);
-			
-			if(result > 0) { // db에 update 성공시
-				
-				session.setAttribute("co", cService.updateCompany(co));
-
-				// 기존의 파일 지우기
-				if(!originalFile.equals("")) {
-					new File(session.getServletContext().getRealPath(originalFile)).delete();
-											// original 파일의 물리적인 경로 찾기
-				}
-			}
-		}
-	}
+	
 	
 }
