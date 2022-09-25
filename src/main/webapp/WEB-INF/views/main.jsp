@@ -111,11 +111,11 @@
 	                    </div>
                         <span><strong>출근시간</strong></span>
                         &nbsp;&nbsp;
-                        <span><strong style="color: gray;">09:16</strong></span>
+                        <span><strong style="color: gray;">${ atStart }</strong></span>
                         <br>
                         <span><strong>퇴근시간</strong></span>
                         &nbsp;&nbsp;
-                        <span><strong style="color: gray;">미확인</strong></span>
+                        <span><strong style="color: gray;">${ atEnd }</strong></span>
                      </div>
                      <div id="btn">
                         <button class="btn btn-primary" data-toggle="modal" data-target="#commute-start-modal" data-backdrop="static">출근</button>

@@ -13,6 +13,11 @@ import com.gd.workpp.common.model.vo.PageInfo;
 @Repository
 public class AttendanceDao {
 	
+	// 메인페이지 select
+	public Attendance mainAttendance(SqlSessionTemplate sqlSession, String userNo) {
+		return sqlSession.selectOne("attendanceMapper.mainAttendance", userNo);
+	}
+	
 	// 출근버튼
 	public int insertCommute(SqlSessionTemplate sqlSession, String userNo) {
 		return sqlSession.update("attendanceMapper.insertCommute", userNo);

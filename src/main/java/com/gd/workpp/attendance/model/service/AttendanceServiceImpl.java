@@ -18,6 +18,12 @@ public class AttendanceServiceImpl implements AttendanceService {
 	@Autowired
 	private SqlSessionTemplate sqlSession;	
 	
+	// 메인페이지 select
+	@Override
+	public Attendance mainAttendance(String userNo) {
+		return atDao.mainAttendance(sqlSession, userNo);
+	}
+	
 	// 출근버튼 insert
 	@Override
 	public int insertCommute(String userNo) {
@@ -183,7 +189,6 @@ public class AttendanceServiceImpl implements AttendanceService {
 			String searchDep, String keyword) {
 		return atDao.holidayMemberAllList(sqlSession, pi, hCategory, searchDep, keyword);
 	}
-
 
 
 

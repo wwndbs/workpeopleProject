@@ -63,6 +63,16 @@
 	
 	<!-- 1. 출퇴근기록 / commuteList.jsp -->
 	
+	<!-- 메인페이지 출퇴근 -->
+	<select id="mainAttendance" resultMap="attendanceResult">
+		select 
+		       nvl(at_start, '00:00') as at_start
+		     , nvl(at_end, '00:00') as at_end
+          from attendance
+		 where user_no = '00014'
+		   and at_date = '2022-09-26'
+	</select>
+	
 	<!-- 출근버튼 클릭시 insert -->
 	<update id="insertCommute">
 		update

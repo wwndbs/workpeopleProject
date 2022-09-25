@@ -7,6 +7,9 @@ import com.gd.workpp.common.model.vo.PageInfo;
 
 public interface AttendanceService {
 	
+	// 메인페이지 select
+	Attendance mainAttendance(String userNo);
+	
 	// 메인페이지 / 출근버튼 클릭시 insert
 	int insertCommute(String userNo);
 	

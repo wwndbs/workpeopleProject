@@ -26,6 +26,21 @@ public class AttendanceController {
 	@Autowired
 	private AttendanceService atService;
 	
+	@RequestMapping("main.wp")
+	public ModelAndView mainAttendance(ModelAndView mv, HttpSession session) {
+		Member m = (Member)session.getAttribute("loginUser");
+		String userNo = m.getUserNo();
+		
+		Attendance mainAttendance = atService.mainAttendance(userNo);
+		
+		mv.addObject("atStart", mainAttendance.getAtStart())
+		  .addObject("atEnd", mainAttendance.getAtEnd())
+		  .setViewName("main");		
+
+		return mv;
+		
+		
+	}
 
 	// 메인페이지 출근버튼 클릭시 insert
 	@RequestMapping("commuteIn.at")
