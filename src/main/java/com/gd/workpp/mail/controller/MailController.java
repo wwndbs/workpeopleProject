@@ -34,7 +34,8 @@ public class MailController {
 	private MailServiceImpl mService;
 
 	/**
-	 * Author : 정주윤 메인페이지 이동 요청을 처리해 주는 메소드
+	 * Author : 정주윤 
+	 * 메인페이지 이동 요청을 처리해 주는 메소드
 	 */
 	@RequestMapping("main.wp")
 	public String mainPage() {
@@ -42,7 +43,8 @@ public class MailController {
 	}
 
 	/**
-	 * Author : 정주윤 메일 작성 페이지 이동 요청을 처리해 주는 메소드
+	 * Author : 정주윤 
+	 * 메일 작성 페이지 이동 요청을 처리해 주는 메소드
 	 */
 	@RequestMapping("enrollForm.ma")
 	public String enrollForm() {
@@ -50,7 +52,8 @@ public class MailController {
 	}
 
 	/**
-	 * Author : 정주윤 메일 발송 요청을 처리해 주는 메소드
+	 * Author : 정주윤 
+	 * 메일 발송 요청을 처리해 주는 메소드
 	 */
 	@RequestMapping("insert.ma")
 	public String insertMail(Mail m, MultipartFile[] upfile, HttpSession session, Model model, HttpServletResponse response, HttpServletRequest request) {
@@ -142,7 +145,6 @@ public class MailController {
 
 	/**
 	 * Author : 정주윤 메일 전달 요청을 처리해 주는 메소드
-	 * 
 	 * @param existFileNo : 전달 시에 삭제하지 않고 남아있는 파일번호
 	 * @param mailNo      : 원글의 메일번호
 	 */
@@ -245,11 +247,10 @@ public class MailController {
 	}
 
 	/**
-	 * Author : 정주윤 받은메일함 / 보낸메일함 조회 요청 처리하는 메소드
-	 * 
+	 * Author : 정주윤
+	 * 받은메일함 / 보낸메일함 / 내게쓴메일함 / 스팸메일함 / 휴지통 조회 요청 처리해 주는 메소드
 	 * @param currentPage : 요청한 페이지 번호
-	 * @param boxType     : {1:받은메일함, 2:받은메일함}
-	 * @return
+	 * @param boxType     : {1:받은메일함, 2:받은메일함, 3:내게쓴메일함, 4:스팸메일함, 5:휴지통}
 	 */
 	@RequestMapping("box.ma")
 	public ModelAndView selectBox(@RequestParam(value = "cpage", defaultValue = "1") int currentPage,
@@ -266,16 +267,31 @@ public class MailController {
 
 		// 메일 리스트 조회
 		ArrayList<Mail> list = new ArrayList<>();
-		if (boxType == 1) { // 받은 메일함
+		if (boxType == 1){ // 받은 메일함
 
 			list = mService.selectInbox(pi, email);
 			mv.setViewName("mail/inboxListView");
 
-		} else if (boxType == 2) { // 보낸 메일함
+		}else if (boxType == 2){ // 보낸 메일함
 
 			list = mService.selectSentbox(pi, email);
 			mv.setViewName("mail/sentboxListView");
 
+		}else if (boxType == 3){ // 내게쓴메일함
+
+			list = mService.selectToMe(pi, email);
+			mv.setViewName("mail/toMeListView");
+			
+		}else if (boxType == 4){ // 스팸메일함
+			
+			list = mService.selectSpambox(pi, email);
+			mv.setViewName("mail/spamboxListView");
+			
+		}else if (boxType == 5){ // 휴지통
+
+			list = mService.selectTrashbox(pi, email);
+			mv.setViewName("mail/trashboxListView");
+			
 		}
 
 		mv.addObject("listCount", listCount);
@@ -288,8 +304,8 @@ public class MailController {
 	}
 
 	/**
-	 * Author : 정주윤 메일 상세 조회 요청 처리하는 메소드
-	 * 
+	 * Author : 정주윤 
+	 * 메일 상세 조회 요청 처리해 주는 메소드
 	 * @param no      : 조회하고자 하는 메일번호
 	 * @param boxType : {1:받은메일함, 2:보낸메일함}
 	 * @return
@@ -316,21 +332,22 @@ public class MailController {
 		if (boxType == 1) { // 받은 메일함에서 상세 보기
 			mv.setViewName("mail/mailDetailView");
 		} else if (boxType == 2) { // 보낸 메일함에서 상세 보기
-			mv.setViewName("mail/sentboxDetailView");
+			mv.setViewName("mail/mailDetailView");
 		}
 
 		mv.addObject("m", m);
 		mv.addObject("atList", atList);
 		mv.addObject("receiverList", receiverList);
 		mv.addObject("refList", refList);
-
+		mv.addObject("boxType", boxType);
+		
 		return mv;
 
 	}
 
 	/**
-	 * Author : 정주윤 메일 답장 페이지 요청 처리하는 메소드
-	 * 
+	 * Author : 정주윤 
+	 * 메일 답장 페이지 요청 처리해 주는 메소드
 	 * @param no : 답장하고자 하는 글번호
 	 */
 	@RequestMapping("reply.ma")
@@ -348,19 +365,20 @@ public class MailController {
 	}
 
 	/**
-	 * Author : 정주윤 메일 전달 페이지 요청 처리하는 메소드
-	 * 
+	 * Author : 정주윤 
+	 * 메일 전달 / 임시보관함->작성 페이지 요청 처리해 주는 메소드
 	 * @param no : 전달하고자 하는 글번호
+	 * @param type : {relay:전달, out:임시보관}
 	 */
 	@RequestMapping("relay.ma")
-	public ModelAndView relayForm(int no, ModelAndView mv) {
+	public ModelAndView relayForm(String type, int no, ModelAndView mv) {
 
-		// 메일 번호로 보낸사람, 글제목, 내용 조회해 오기
+		// 메일 번호로 글제목, 내용 조회해 오기
 		Mail m = mService.selectMailByNo(no);
 		// 첨부파일 조회해 오기
 		ArrayList<Attachment> atList = mService.selectAttachment(no);
-
-		mv.addObject("type", "relay");
+		
+		mv.addObject("type", type);
 		mv.addObject("m", m);
 		mv.addObject("relayAtList", atList);
 		mv.setViewName("mail/mailEnrollForm");
@@ -370,7 +388,8 @@ public class MailController {
 	}
 
 	/**
-	 * Author : 정주윤 임시보관함 조회 요청 처리하는 메소드
+	 * Author : 정주윤 
+	 * 임시보관함 조회 요청 처리해 주는 메소드
 	 */
 	@RequestMapping("outbox.ma")
 	public ModelAndView selectOutbox(@RequestParam(value = "cpage", defaultValue = "1") int currentPage,
@@ -395,5 +414,13 @@ public class MailController {
 		return mv;
 
 	}
+	
+	@RequestMapping("sendSave.ma")
+	public void sendSaveMail(String existFileNo, int originMailNo, Mail m, MultipartFile[] upfile, HttpSession session, Model model) {
+
+
+
+	}
+
 
 }

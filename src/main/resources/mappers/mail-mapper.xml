@@ -46,6 +46,16 @@
 		<result column="name" property="name" />
 	</resultMap>
 	
+	<resultMap id="memberResult" type="Member">
+		<result column="user_no" property="userNo"/>
+		<result column="dep_name" property="depName"/>
+		<result column="job_name" property="jobName"/>
+		<result column="user_name" property="userName"/>
+		<result column="email" property="email"/>
+		<result column="status" property="status"/>
+		<result column="prof_img" property="profImg"/>
+	</resultMap>
+	
 	<select id="selectTagList" resultMap="tagResult">
 		select
 			   tag_no
@@ -254,10 +264,10 @@
 		  from mail
 		  join mail_status using (mail_no)
 		 where user_mail = #{email}
-		   and mail_delete = 'N'
 		 <choose>
 		 	<when test='boxType == "1"'>
  			    and mail_spam = 'N'
+			    and mail_delete = 'N'
 				and mail_type in (1, 3)
 			    and sender not in (
 			                       select spam_address
@@ -266,7 +276,28 @@
 			                     )		 	
 		 	</when>
 		 	<when test='boxType == "2"'>
+			    and mail_delete = 'N'
 		 		and mail_type = 2
+		 	</when>
+		 	<when test='boxType == "3"'>
+			    and mail_delete = 'N'
+		 		and sender = #{email}
+			    and receiver like '%'||#{email}||'%'
+		 	</when>
+		 	<when test='boxType == "4"'>
+		 	    and mail_type in (1, 3)
+		 	    and mail_delete = 'N'
+	 	        and (
+			          mail_spam = 'Y' 
+			          or sender in ( 
+			                         select spam_address
+			                           from mail_spam
+			                          where user_mail = #{email}
+			                       )
+			         )
+		 	</when>
+		 	<when test='boxType == "5"'>
+			    and mail_delete = 'Y'
 		 	</when>
 		 </choose>
 	</select>
@@ -277,11 +308,11 @@
 		  from mail
 		  join mail_status using (mail_no)
 		 where user_mail = #{email}
-		   and mail_delete = 'N'
 		   and mail_read = 'N'
 		 <choose>
 		 	<when test='boxType == "1"'>
 			    and mail_spam = 'N'
+			    and mail_delete = 'N'
 				and mail_type in (1, 3)
 			    and sender not in (
 			                        select spam_address
@@ -291,6 +322,22 @@
 		 	</when>
 		 	<when test='boxType == "2"'>
 		 		and mail_type = 2
+			    and mail_delete = 'N'
+		 	</when>
+		 	<when test='boxType == "4"'>
+		 	    and mail_type in (1, 3)
+		 	    and mail_delete = 'N'
+	 	        and (
+			          mail_spam = 'Y' 
+			          or sender in ( 
+			                         select spam_address
+			                           from mail_spam
+			                          where user_mail = #{email}
+			                       )
+			         )
+		 	</when>
+		 	<when test='boxType == "5"'>
+			    and mail_delete = 'Y'
 		 	</when>
 		 </choose>
 	</select>
@@ -456,7 +503,9 @@
 			 , mail_title
 			 , mail_content
 			 , sender
-			 , m.user_name as "sender_name" 
+			 , m.user_name as "sender_name"
+			 , receiver
+			 , mail_ref
 		  from mail
 		  left join member m on (sender = email)
 		 where mail_no = #{mailNo}
@@ -503,5 +552,110 @@
 		   and tag_no = #{tagNo}
 		   </if>
 	</update>
+	
+	<delete id="deleteMail">
+		delete
+		  from mail
+		 where mail_no in
+		  <foreach collection="noArr" item='no' index='i' open="(" close=")" separator=",">
+           #{no}
+         </foreach>
+		   and sender = #{email}
+		   and send_status = 'N'
+	</delete>
+	
+	<select id="selectToMe" resultMap="mailResult">
+		 select 
+		       mail_no
+		     , s.user_mail
+		     , mail_type
+		     , mail_title
+		     , to_char(send_date, 'yy-mm-dd hh24:mi') as "send_date"
+		     , mail_read
+		     , mail_important
+		     , tag_no
+		     , tag_name
+		     , tag_color
+		  from mail
+		  join mail_status s using (mail_no)
+		  left join mail_tag using (tag_no)
+		 where s.user_mail = #{email}
+		   and mail_delete = 'N'
+		   and sender = #{email}
+		   and receiver like '%'||#{email}||'%'
+		 order by mail_no desc
+	</select>
+
+	<update id="updateToMeTagChange">
+		update
+		       mail_status
+		   set tag_no = 
+		   <choose>
+		   	<when test='type == "적용"'>
+		   		#{tagNo}
+		   	</when>
+		   	<when test='type == "해제"'>
+		   		''
+		   	</when>
+		   </choose>
+		 where mail_no = #{mailNo}
+		   and user_mail = #{email}
+		   <if test='type == "해제"'>
+		   and tag_no = #{tagNo}
+		   </if>
+		   and mail_type = #{mailType}
+	</update>
+	
+	<select id="selectTrashbox" resultMap="mailResult">
+			select 
+		       mail_no
+		     , mail_title
+		     , to_char(send_date, 'yy-mm-dd hh24:mi') as "send_date"
+		     , sender
+		     , mem.user_name as "sender_name"
+		     , mail_read
+		     , mail_important
+		     , t.tag_no
+		     , t.tag_name
+		     , t.tag_color
+		  from mail m
+		  join mail_status s using (mail_no)
+		  left join member mem on (sender = email)
+		  left join mail_tag t on (s.tag_no = t.tag_no)
+		 where s.user_mail = #{email}
+		   and mail_delete = 'Y'
+		 order by mail_no desc
+	</select>
+	
+	<select id="selectSpambox" resultMap="mailResult">
+			select 
+		       mail_no
+		     , mail_title
+		     , to_char(send_date, 'yy-mm-dd hh24:mi') as "send_date"
+		     , sender
+		     , mem.user_name as "sender_name"
+		     , mail_read
+		     , mail_important
+		     , tag_no
+		     , tag_name
+		     , tag_color
+		  from mail
+		  join mail_status s using (mail_no)
+		  left join member mem on (sender = email)
+ 		  left join mail_tag using (tag_no)
+		 where s.user_mail = #{email}
+		   and mail_type in (1, 3)
+		   and mail_delete = 'N'
+		   and (
+		        mail_spam = 'Y'
+		        or sender in (
+		                       select spam_address
+		                       
+		                         from mail_spam
+		                        where user_mail = #{email}
+		                     )
+		       )
+		 order by mail_no desc
+	</select>
 	
 </mapper>

@@ -86,14 +86,13 @@
 			                      			</c:otherwise>
 			                      		</c:choose>
 				                      </td>
-				                      <td class="d5">
+				                      <td class="d5" style="padding-left: 40px;">
 				                      	<c:choose>
 				                      		<c:when test="${ not empty m.tag }">
 				                      			<i class="fas fa-tag" style="color: ${ m.tag.tagColor };"></i>
 				                      		</c:when>
 				                      	</c:choose>
 				                        <span>${ m.mailTitle }</span>
-				                        <ion-icon name="copy-outline"></ion-icon>
 				                      </td>
 				                      <td class="d6">${ m.sendDate }</td>
 				                    </tr>
@@ -110,9 +109,9 @@
 							let tagArr = [];
 							$(function(){
 								
-								// 메일 상세조회 페이지 요청
+								// 임시보관메일 작성 페이지 요청
 			            		$(".d5>span").click(function(){
-			            			location.href = 'detail.ma?no=' + $(this).parent().siblings().eq(0).children().val();
+			            			location.href = 'relay.ma?no=' + $(this).parent().siblings().eq(0).children().val() + '&type=out';
 								})
 			            	
 	            				// 상단 체크박스로 전체 선택, 전체 해제 
@@ -153,30 +152,30 @@
 		                            })
 		                            
 		                            checkMailNo = checkMailNo.substring(0,checkMailNo.lastIndexOf(",")); // 맨 뒤 콤마 삭제
-
-		                            /* 
-		                            for (var i = 0; i < tagArr.length; i++) {
-										console.log(i + "번째 : " + tagArr[i])
-		                            }
-		                             */
 		                             
-								})        
-							
-				            	// 메일 선택 삭제 요청 (휴지통 이동)
+								})   
+								
+								// 삭제 버튼 클릭 시 토스트나 모달 출력
 				            	$("#deleteBtn").click(function(){
-
+	
 									if(checkMailNo == ''){
 										toast("선택된 메일이 없습니다.");
 										return;
 									}
 				            		
+				            		 $('#jyModal_confirm').modal('show'); 
+				            		 
+				            	})
+							
+				            	// 메일 선택 삭제 요청 (완전 삭제)
+				            	$("#realDelete").click(function(){
+
 				            		$.ajax({
-	                                    url:"updateMailTag.ma",
-	                                    data:{checkMailNo:checkMailNo,
-	                                    	  type:"mail_delete"},
+	                                    url:"deleteMail.ma",
+	                                    data:{checkMailNo:checkMailNo},
 	                                    success:function(result){
 	                        				if(result == "success"){
-		                                        toast("휴지통으로 이동했습니다.");
+		                                        toast("삭제되었습니다.");
 		                                        setTimeout(reload, 1000);
 	                        				}else{
 	                        					toast("삭제에 실패했습니다.");
@@ -214,6 +213,30 @@
 							}
 							
 			            </script>
+					    
+					    <!-- 모달: 삭제 컨펌 -->
+			            <div class="modal" id="jyModal_confirm">
+			                <div class="modal-dialog modal-dialog-centered">
+			                    <div class="modal-content">
+			                        <!-- Modal Header -->
+			                        <div class="modal-header">
+			                          <h6 class="modal-title">메일 삭제</h6>
+			                          <button type="button" class="modal_close" data-dismiss="modal">&times;</button>
+			                        </div>
+			                        <!-- Modal body -->
+			                        <div class="modal-body" style="text-align: center;">
+			                          임시보관함에서 삭제한 메일은 복구가 되지 않습니다. <br>
+			                          메일을 삭제하시겠습니까?
+			                        </div>
+			                        <!-- Modal footer -->
+			                        <div class="modal-footer">
+			                        <button type="button" class="btn btn-jycancle" data-dismiss="modal">취소</button>
+			                        <button type="button" class="btn btn-jyok" id="realDelete" data-dismiss="modal">확인</button>
+			                        </div>
+			                    </div>
+			                </div>
+			            </div>
+			            <!-- 모달 끝 -->
 					    
 	                  </div>
 	                  <!-- 메일함 끝 -->

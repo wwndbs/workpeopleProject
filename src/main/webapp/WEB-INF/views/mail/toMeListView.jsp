@@ -37,8 +37,8 @@
               <div class="mail-main-form">
               	<!-- 제목 + 버튼 + 리스트 div 시작 -->
 				<div class="mail-main-form-list">                
-	                <span class="mail-h">보낸 메일함</span>
-	                <span>전체 메일 <span id="allCount">${ listCount }</span> / 안 읽은 메일 <span id="notReadCount">${ notReadCount }</span> </span>
+	                <span class="mail-h">내게쓴메일함</span>
+	                ${ listCount }
 	
 	                <form action="">
 	                  <!-- 상단 버튼 박스 시작 -->
@@ -101,6 +101,7 @@
 				                      <td class="d1">
 				                      	  <input type="checkbox" name="check" value="${ m.mailNo }">
 					                      <input type="hidden" name="tag" value="${ m.tag.tagNo }">
+					                      <input type="hidden" name="mtype" value="${ m.mailStatus.mailType }">
 				                      </td>
 				                      <td class="d2">
 				                      	<c:choose>
@@ -123,14 +124,17 @@
 				                        </c:choose>
 				                      </td>
 				                      <td class="d4">
-				                      		<c:choose>
-				                      			<c:when test="${ fn:length(fn:split(m.receiver, ',')) eq 1 }">
-				                      				<span>${ m.receiver }</span>
-				                      			</c:when>
-				                      			<c:otherwise>
-				                      				<span>${ fn:split(m.receiver, ',')[0] } 외 ${ fn:length(fn:split(m.receiver, ',')) -1 }명</span>
-				                      			</c:otherwise>
-				                      		</c:choose>
+				                      	<span style="padding-left: 30px;">
+					                      	<c:choose>
+					                      		<c:when test="${ m.mailStatus.mailType eq '1' }">
+					                      		받은메일함
+					                      		</c:when>
+					                      		<c:when test="${ m.mailStatus.mailType eq '2' }">
+					                      		보낸메일함
+					                      		</c:when>
+					                      	</c:choose>
+				                      	</span>
+				                      	<span style="padding-left: 20px;">${ loginUser.userName }</span>
 				                      </td>
 				                      <td class="d5">
 				                      	<c:choose>
@@ -186,17 +190,20 @@
 								})
 								
 								let map = {};
-								let checkMailNo = "";								
+								let checkMailNo = "";		
+								let checkMailType = "";
 								$("input:checkbox").change(function(){
 									
 									// 체크박스 클릭 시마다 메일번호 담기
 									checkMailNo = ""; // 초기화
+									checkMailType = "";
 									$("input:checkbox[name=check]:checked").each(function(){
 										checkMailNo += ($(this).val()) + ","; // 체크된 것만 메일번호 뽑기 "2,3,4,"
+										checkMailType += ($(this).next().next().val()) + ","; // 체크된 것만 메일타입 뽑기
 		                            })
 		                            checkMailNo = checkMailNo.substring(0,checkMailNo.lastIndexOf(",")); // 맨 뒤 콤마 삭제
-
-									
+		                            checkMailType = checkMailType.substring(0,checkMailType.lastIndexOf(","));
+		                            
 		                            // 체크박스 클릭 시마다 태그 드롭다운 내부에 적용,해제 버튼 변경
 									let mailNo = $(this).val();
 									let tagNo = $(this).next().val();
@@ -305,11 +312,11 @@
 									}
 									
 				            		$.ajax({
-				            			url:"tagChange.ma",
+				            			url:"toMeTagChange.ma",
 				            			data:{type:$(this).text(),
 				            				  checkMailNo:checkMailNo,
 										   	  tagNo:tagNo,
-										   	  mailType:2
+										   	checkMailType:checkMailType
 				            			},
 				            			success:function(result){
 		                                      reload();
@@ -447,13 +454,13 @@
 			                    </c:when>
 								<c:otherwise>                    
 			                    	<li class="page-item">
-				                      <a class="page-link" href="box.ma?cpage=${ pi.currentPage - 1 }&boxType=2" tabindex="-1">‹</a>
+				                      <a class="page-link" href="box.ma?cpage=${ pi.currentPage - 1 }&boxType=3" tabindex="-1">‹</a>
 				                    </li>
                 				</c:otherwise>
 		                    </c:choose>
 		                    
 		                	<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">    
-		                    	<li class="page-item"><a class="page-link" href="box.ma?cpage=${ p }&boxType=2">${ p }</a></li>
+		                    	<li class="page-item"><a class="page-link" href="box.ma?cpage=${ p }&boxType=3">${ p }</a></li>
 		                	</c:forEach>
 		                	
 		                    <c:choose>
@@ -464,7 +471,7 @@
 			                	</c:when>
 			                    <c:otherwise>
 			                    	<li class="page-item">
-				                      <a class="page-link" href="box.ma?cpage=${ pi.currentPage + 1 }&boxType=2">›</a>
+				                      <a class="page-link" href="box.ma?cpage=${ pi.currentPage + 1 }&boxType=3">›</a>
 				                    </li>
 								</c:otherwise>
 		                    </c:choose>
