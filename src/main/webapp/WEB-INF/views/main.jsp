@@ -284,8 +284,8 @@
    				success : function(plist){
    					
    					value="";
-   					for(let i = 0; i < 3; i++){
-   						if(i < 4	){
+   					for(let i = 0; i < 4; i++){
+   						if(i < 5	){
    							value += '<div class="project" style="text-align: right">'
    								   +    '<input type="hidden" value="' + plist[i].projectNo + '">'
    								   + 	'<span style="text-align:left">' + plist[i].projectTitle + '</span> <span><i class="fas fa-user-alt"></i>&nbsp;'+ plist[i].countMember +'</span>'
