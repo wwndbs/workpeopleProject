@@ -151,5 +151,9 @@ public class BoardDao {
 	public int insertReport(SqlSessionTemplate sqlSession, Report rp) {
 		return sqlSession.insert("boardMapper.insertReport", rp);
 	}
+	
+	public ArrayList<Report> searchReport(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return (ArrayList)sqlSession.selectList("boardMapper.searchReport", map);
+	}
 
 }

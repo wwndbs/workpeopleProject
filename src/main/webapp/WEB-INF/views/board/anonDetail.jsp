@@ -188,7 +188,7 @@
 				                <!-- Modal footer -->
 				                <div class="modal-footer">
 				                <button type="button" class="btn btn-jycancle" data-dismiss="modal">취소</button>
-				                <button type="button" class="btn btn-jyok" id="realSpam" onclick="report();">신고</button>
+				                <button type="button" class="btn btn-jyok" id="realSpam" onclick="report(this);">신고</button>
 				                </div>
 				            </div>
 				        </div>
@@ -222,20 +222,38 @@
 
 	                	// 신고
 	                	function report(){
+				    		
+				    		// type이 1이면 게시글번호, type이 2면 댓글번호
+				    		let type = $("#rpType").val();
+		    				let reportRefNo = "";
+				    		
+	    					if(type == 1){
+	    						reportRefNo = ${b.boardNo};
+	    					}else{
+	    						reportRefNo = $(btn).parent().parent().parent().parent().children().eq(1).val();
+	    						console.log(reportRefNo);
+	    					}
 	                		
 				    		// 유저가 동일한 게시글을 신고한 이력이 있는지 조회
 				    		$.ajax({
 				    			url: "rpCheck.bo",
 				    			data: {
-				    				reportRefNo: ${b.boardNo},
+				    				reportRefNo: reportRefNo,
 				    				userNo: "${loginUser.userNo}"
 				    			},
 				    			success: function(rep){
 
 				    				if(rep == null){ // 이력 없음
 				    					
-				    					// 신고 접수
-				    					let type = $("#rpType").val();
+				    					// type이 1이면 게시글번호, type이 2면 댓글번호
+							    		let type = $("#rpType").val();
+					    				let reportRefNo = "";
+							    		
+				    					if(type == 1){
+				    						reportRefNo = ${b.boardNo};
+				    					}else{
+				    						reportRefNo = $(this).parent().parent().parent().parent().children().eq(1).val();
+				    					}
 				    					
 							    		if($("#etcBtn").is(":checked")){
 							    			$("#real").val($("#rpEtc").val());
@@ -247,7 +265,7 @@
 				                			url: "report.bo",
 				                			data: {
 				                				reportType: type,
-				                				reportRefNo: ${b.boardNo},
+				                				reportRefNo: reportRefNo,
 				                				userNo: "${loginUser.userNo}",
 				                				reportContent: value
 				                			},

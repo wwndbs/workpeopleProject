@@ -21,5 +21,7 @@ public class Report {
 	private String reportContent;
 	private String status;
 	private String handlingDate;
+	private String userName;
+	private String jobName;
 	
 }

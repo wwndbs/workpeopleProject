@@ -514,10 +514,30 @@ public class BoardController {
 	}
 	
 	// 신고 관리 페이지
-	@RequestMapping("rpHandle.bo")
+	@RequestMapping("reportForm.bo")
 	public String handleReport() {
 		
 		return "board/adminReport";
 		
 	}
+	
+	// 신고 검색
+	@ResponseBody
+	@RequestMapping(value="rpSearch.bo", produces="application/json; charset=UTF-8")
+	public String ajaxSearchReport(String searchRp, String keyword, String rpType, String rpHandle) {
+		
+		HashMap<String, String> map = new HashMap<>();
+		map.put("searchRp", searchRp);
+		map.put("keyword", keyword);
+		map.put("rpType", rpType);
+		map.put("rpHandle", rpHandle);
+		
+		ArrayList<Report> list = bService.searchReport(map);
+		
+		return new Gson().toJson(list);
+		
+	}
+	
+	// 신고 관리
+	//@RequestMapping("rpHandle.bo")
 }

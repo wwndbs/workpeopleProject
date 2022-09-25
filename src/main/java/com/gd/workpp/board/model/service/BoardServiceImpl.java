@@ -1,6 +1,7 @@
 package com.gd.workpp.board.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -203,6 +204,12 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int insertReport(Report rp) {
 		return bDao.insertReport(sqlSession, rp);
+	}
+
+	// 신고 검색
+	@Override
+	public ArrayList<Report> searchReport(HashMap<String, String> map) {
+		return bDao.searchReport(sqlSession, map);
 	}
 
 

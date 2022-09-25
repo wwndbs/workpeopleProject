@@ -87,7 +87,7 @@
                             	url: "like.bo",
                             	data: {
                             		boardNo: ${b.boardNo},
-                            		userNo: "${b.userNo}"
+                            		userNo: "${loginUser.userNo}"
                             	},
                             	success: function(r){
                             		if(r.result == 1){
@@ -109,7 +109,7 @@
                             	url: "unlike.bo",
                             	data: {
                             		boardNo: ${b.boardNo},
-                            		userNo: "${b.userNo}"
+                            		userNo: "${loginUser.userNo}"
                             	},
                             	success: function(r){
                             		if(r.result == 1){
@@ -158,7 +158,7 @@
                     		
                     		selectReplyList();
                     		
-                    		if(${bLike == 1}){
+                    		if(${bLike > 0}){
                     			
                     			$("#heart").attr("fill", "red");
                                 $("#heart").attr("stroke", "red");

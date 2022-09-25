@@ -65,9 +65,9 @@
 			
 			                        <div class="form-group">
 			                          <select class="form-control select1" id="searchRp" name="searchRp" style="height:35px;">
-			                            <option value="rp0" class="op1" selected>신고내용</option>
-			                            <option class="text-secondary" value="rp1"><label class="se-la">신고자</label></option>
-			                            <option class="text-secondary" value="rp2"><label class="se-la">작성자</label></option>
+			                            <option value="rp0" class="op1" selected>전체</option>
+			                            <option class="text-secondary" value="rp1"><label class="se-la">신고내용</label></option>
+			                            <option class="text-secondary" value="rp2"><label class="se-la">신고자</label></option>
 			                          </select>
 			                        </div>
 			                        <div class="search-div" style="width:90%; display:flex; ">
@@ -81,17 +81,19 @@
                 		<tr>
                 			<th>신고 구분</th>
                 			<td>
-                				<input type="radio" class="rpType" value="전체">&nbsp;&nbsp;전체&nbsp;&nbsp;
-                				<input type="radio" class="rpType" value="게시글">&nbsp;&nbsp;게시글&nbsp;&nbsp;
-                				<input type="radio" class="rpType" value="댓글">&nbsp;&nbsp;댓글
+                				<input type="radio" class="rpType" name="rpType" value="rt0">&nbsp;&nbsp;전체&nbsp;&nbsp;
+                				<input type="radio" class="rpType" name="rpType" value="rt1">&nbsp;&nbsp;게시글&nbsp;&nbsp;
+                				<input type="radio" class="rpType" name="rpType" value="rt2">&nbsp;&nbsp;댓글
+                				<input type="hidden" id="rpType">
                 			</td>
                 		</tr>
                 		<tr>
                 			<th>처리 여부</th>
                 			<td>
-                				<input type="radio" class="rpHandle" value="전체">&nbsp;&nbsp;전체&nbsp;&nbsp;
-                				<input type="radio" class="rpHandle" value="처리">&nbsp;&nbsp;처리&nbsp;&nbsp;
-                				<input type="radio" class="rpHandle" value="미처리">&nbsp;&nbsp;미처리
+                				<input type="radio" class="rpHandle" name="rpHandle" value="rh0">&nbsp;&nbsp;전체&nbsp;&nbsp;
+                				<input type="radio" class="rpHandle" name="rpHandle" value="rh1">&nbsp;&nbsp;처리&nbsp;&nbsp;
+                				<input type="radio" class="rpHandle" name="rpHandle" value="rh2">&nbsp;&nbsp;미처리
+                				<input type="hidden" id="rpHandle">
                 			</td>
                 		</tr>
                 	
@@ -101,12 +103,14 @@
 	                	$(document).on("click", ".rpType", function(){
 				    		
 				    		$(this).siblings("input").prop("checked", false);
+				    		$("#rpType").val($(this).val());
 				    		
 				    	})
 				    	
 				    	$(document).on("click", ".rpHandle", function(){
 				    		
 				    		$(this).siblings("input").prop("checked", false);
+				    		$("#rpHandle").val($(this).val());
 				    		
 				    	})
                 	</script>
@@ -115,23 +119,107 @@
                     	<button type="button" class="btn btn-sm btn-primary" onclick="search();" style="width: 70px; height: 40px; font-size: 16px; margin-right: 1%;">검색</button>
                      	<button type="button" class="btn btn-sm btn-light" onclick="reset();" style="width: 70px; height: 40px; font-size: 16px;">초기화</button>
                     </div>
-                	
-                	
-                	<div class="board-table">
+                    
+                    <div class="board-table">
                     <table class="table table-hover" align="center">
                         <thead>
                             <tr>
-                                <th width="4%">번호</th>
-                                <th width="10%">신고구분</th>
-                                <th width="10%">신고일</th>
-                                <th width="10%">신고자</th>
-                                <th width="32%">신고내용</th>
-                                <th width="10%">작성자</th>
-                                <th width="6%">누적개수</th>
-                                <th width="10%">처리일</th>
-                                <th width="8%">처리여부</th>
+                                <th width="7%">번호</th>
+                                <th width="12%">신고구분</th>
+                                <th width="12%">신고일</th>
+                                <th width="12%">신고자</th>
+                                <th width="34%">신고내용</th>
+                                <th width="12%">처리일</th>
+                                <th width="11%">처리여부</th>
                             </tr>
                         </thead>
+                        <tbody id="rpTbody">
+                        
+                        
+                        </tbody>
+                    </table>
+                    
+                    <script>
+                    	function search(){
+                    		
+                    		$.ajax({
+                    			url: "rpSearch.bo",
+                    			data: {
+                    				searchRp: $("#searchRp").val(),
+                    				keyword: $("#keyword").val(),
+                    				rpType: $("#rpType").val(),
+                    				rpHandle: $("#rpHandle").val()
+                    			},
+                    			success: function(list){
+                    				let value = "";
+                    				
+                    				if(list.length == 0){
+                    					
+                    					value += '<tr>'
+                    							+	'<td colspan="7">검색 결과가 없습니다.</td>'
+                    							+'</tr>';
+                    					
+                    				}else{
+
+                    					for(let i=0; i<list.length; i++){
+                    						
+                    						let reportType = "";
+                    						if(list[i].reportType == 1){
+                    							reportType = "게시글";
+                    						}else{
+                    							reportType = "댓글";
+                    						}
+                    						
+                    						let status = "";
+                    						let handlingDate = "";
+                    						if(list[i].status = 'N'){ // 미처리
+                    							status = "미처리";
+                    						}else{ // 처리완료
+                    							status = "처리완료";
+                    							handlingDate = list[i].handlingDate;
+                    						}
+                    						
+                    						value += '<tr onclick="rpHandle(this);">'
+                    								+	'<td>' + list[i].reportCode + '</td>'
+                    								+	'<td>' + reportType + '</td>'
+                    								+	'<td>' + list[i].reportDate + '</td>'
+                    								+	'<td>' + list[i].userName + ' ' + list[i].jobName + '</td>'
+                    								+	'<td>' + list[i].reportContent + '</td>'
+                    								+	'<td>' + handlingDate + '</td>'
+                    								+	'<td>' + status + '</td>'
+                    								+'</tr>';
+                    						
+                    					}
+                    					
+
+                    				}
+                    				
+                   					$("#rpTbody").html(value);
+                    					
+                    			},error: function(){
+                    				console.log("신고 검색 ajax 실패");
+                    			}
+                    		});
+                    		
+                    	}
+                    	
+                    	function reset(){
+                    		
+                    		$("#keyword").val("");
+                    		$("#searchRp>.op1").prop("selected", true);
+                    		$("input[type=radio]").prop("checked", false);
+                    		
+                    	}
+                    	
+                    	function rpHandle(t){
+                    		let rpNo = $(t).children().eq(0).text();
+                    		
+                    		locaion.href="rpHandle.bo?rpNo=" + rpNo;
+                    	}
+                    </script>
+                	
+                	
+                	
                 	
                 	
                 	

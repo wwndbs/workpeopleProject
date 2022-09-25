@@ -91,7 +91,7 @@
                   <a href=""><h6>내 게시글 조회</h6></a>
                   
                   <c:if test="${ loginUser.jobName eq '부장' or loginUser.jobName eq '팀장' }">
-                  	<a href="rpHandle.bo"><h6>신고 관리</h6></a>
+                  	<a href="reportForm.bo"><h6>신고 관리</h6></a>
                   </c:if>
                 </div>
 

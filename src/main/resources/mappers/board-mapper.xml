@@ -50,6 +50,8 @@
 		<result column="rp_content" property="reportContent"/>
 		<result column="status" property="status"/>
 		<result column="handling_date" property="handlingDate"/>
+		<result column="user_name" property="userName"/>
+		<result column="job_name" property="jobName"/>
 	</resultMap>
 
 	<!-- Author : 최영헌 -->
@@ -58,7 +60,7 @@
 		     , user_no
 		     , board_type
 		     , board_title
-		     , to_char(create_date, 'YYYY-MM-DD') as "CREATE_DATE"
+		     , to_char(create_date, 'YYYY-MM-DD HH24:MI') as "CREATE_DATE"
 		     , count
 		     , dep_name
 		  from board
@@ -108,7 +110,7 @@
 					   board_no
 					 , user_no
 					 , board_title
-					 , b.create_date
+					 , to_char(b.create_date, 'YYYY-MM-DD HH24:MI') as "CREATE_DATE"
 					 , count
 					 , job_name
 					 , user_name
@@ -130,7 +132,7 @@
 				   and save_status = 'N'
 				   and board_type = #{no}
 				 order
-				    by b.create_date asc
+				    by create_date asc
 		  		) "A"
 		 order
 		    by b_no desc
@@ -147,7 +149,7 @@
 					   board_no
 					 , user_no
 					 , board_title
-					 , b.create_date
+					 , to_char(b.create_date, 'YYYY-MM-DD HH24:MI') as "CREATE_DATE"
 					 , count
 					 , job_name
 					 , user_name
@@ -172,7 +174,7 @@
 				   and top_exp = 'N'
 				   and b.dep_name = #{depName}
 				 order
-				    by b.create_date asc
+				    by create_date asc
 		  	  ) "A"
 		 order
 		    by b_no desc
@@ -189,7 +191,7 @@
 					   board_no
 					 , user_no
 					 , board_title
-					 , b.create_date
+					 , to_char(b.create_date, 'YYYY-MM-DD HH24:MI') as "CREATE_DATE"
 					 , count
 					 , job_name
 					 , user_name
@@ -214,7 +216,7 @@
 				   and top_exp = 'Y'
 				   and b.dep_name = #{depName}
 				 order
-				    by b.create_date asc
+				    by create_date asc
 		  	  ) "A"
 		 order
 		    by b_no desc
@@ -393,7 +395,7 @@
 		select
 			   board_no
 			 , board_title
-			 , to_char(create_date, 'YY-MM-DD') "CREATE_DATE"
+			 , to_char(create_date, 'YYYY-MM-DD HH24:MI') as "CREATE_DATE"
 			 , dep_name
 		  from board
 		 where user_no = #{userNo}
@@ -435,7 +437,7 @@
 		     , user_name
 		     , board_title
 		     , board_content
-		     , b.create_date
+		     , to_char(b.create_date, 'YYYY-MM-DD HH24:MI') as "CREATE_DATE"
 		     , top_exp
 		     , count
 		     , job_name
@@ -474,7 +476,7 @@
 		     , user_no
 		     , user_name
 		     , reply_content
-		     , r.create_date
+		     , to_char(r.create_date, 'YYYY-MM-DD HH24:MI') as "CREATE_DATE"
 		     , job_name
 		     , level
 		  from reply r
@@ -483,7 +485,7 @@
 		   and r.status = 'Y'
 		 start with ref_rno = 0
 	   connect by prior reply_no = ref_rno
-		 order siblings by r.create_date desc
+		 order siblings by create_date desc
 	</select>
 	
 	<!-- 댓글 작성 -->
@@ -596,5 +598,56 @@
 		  , #{reportContent}
 		  )
 	</insert>
+	
+	<!-- 신고 검색 -->
+	<select id="searchReport" resultMap="reportResult">
+		select
+		       rp_code
+		     , rp_type
+		     , rp_refno
+		     , to_char(rp_date, 'YYYY-MM-DD HH24:MI') as "RP_DATE"
+		     , user_no
+		     , user_name
+		     , job_name
+		     , rp_content
+		     , rp.status
+		     , to_char(handling_date, 'YYYY-MM-DD HH24:MI') as "HANDLING_DATE"
+		  from rp_board rp
+		  join member using(user_no)
+		 where <choose>
+		 		  <when test="searchRp == 'rp1'">
+		 		  	rp_content like '%' || #{keyword} || '%'
+		 		  </when>
+		 		  <when test="searchRp == 'rp2'">
+		 		  	user_name like '%' || #{keyword} || '%'
+		 		  </when>
+		 		  <otherwise>
+		 		  	dep_name like '%팀%'
+		 		  </otherwise>
+		 	   </choose>
+		   and <choose>
+		   		  <when test="rpType == 'rt1'">
+		   		  	rp_type = 1
+		   		  </when>
+		   		  <when test="rpType == 'rt2'">
+		   		  	rp_type = 2
+		   		  </when>
+		   		  <otherwise>
+		   		  	(rp_type = 1 or rp_type = 2)
+		   		  </otherwise>
+		   	   </choose>
+		   and <choose>
+		   		  <when test="rpHandle == 'rh1'">
+		   		  	rp.status = 'Y'
+		   		  </when>
+		   		  <when test="rpHandle == 'rh2'">
+		   		  	rp.status = 'N'
+		   		  </when>
+		   		  <otherwise>
+		   		  	(rp.status = 'Y' or rp.status = 'N')
+		   		  </otherwise>
+		   	   </choose>
+		  
+	</select>
 
 </mapper>

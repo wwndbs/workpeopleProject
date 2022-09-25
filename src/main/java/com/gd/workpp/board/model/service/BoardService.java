@@ -1,6 +1,7 @@
 package com.gd.workpp.board.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.gd.workpp.board.model.vo.Board;
 import com.gd.workpp.board.model.vo.Reply;
@@ -64,5 +65,8 @@ public interface BoardService {
 	// 신고
 	Report checkReport(Report rp);
 	int insertReport(Report rp);
+	
+	// 신고 검색
+	ArrayList<Report> searchReport(HashMap<String, String> map);
 	
 }
