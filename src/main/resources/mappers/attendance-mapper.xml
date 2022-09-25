@@ -432,11 +432,11 @@
 		     , nvl(at.at_start, '-') as at_start
 		     , nvl(at.at_end, '-') as at_end
 		     , nvl(at_overtime, 0) as at_overtime
-		     , at_totaltime
-		     , DECODE(AT_STATUS, 1, '정상',
-		                         2, '지각',
-		          			     3, '휴가',
-                                 4, '결근') AS AT_STATUS
+		     , nvl(at_totaltime, 0) as at_totaltime
+		     , DECODE(AT_STATUS, '1', '정상',
+		                         '2', '지각',
+		          			     '3', '휴가',
+                                 '4', '결근') AS AT_STATUS
           from attendance at
 		  join member m on(m.user_no = at.user_no)
 		 where m.status = 'N'
