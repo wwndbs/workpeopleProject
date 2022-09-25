@@ -14,6 +14,7 @@ import com.gd.workpp.mail.model.vo.Mail;
 import com.gd.workpp.mail.model.vo.MailStatus;
 import com.gd.workpp.mail.model.vo.SplitEmail;
 import com.gd.workpp.mail.model.vo.Tag;
+import com.gd.workpp.member.model.vo.Member;
 
 @Repository
 public class MailDao {
@@ -158,9 +159,6 @@ public class MailDao {
 		data.put("sender", sender);
 		data.put("email", email);
 		
-		System.out.println("sender : " + sender);
-		System.out.println("email : " + email);
-		
 		return sqlSession.insert("mailMapper.insertSpam", data);
 	}
 	
@@ -223,5 +221,51 @@ public class MailDao {
 		
 		return sqlSession.update("mailMapper.updateTagChange", data);
 	}
+	
+	public int deleteMail(SqlSessionTemplate sqlSession, String checkMailNo, String email) {
+		String[] noArr = checkMailNo.split(",");
+		
+		HashMap<String, Object> data = new HashMap<>();
+		data.put("noArr", noArr);
+		data.put("email", email);
+		
+		return sqlSession.delete("mailMapper.deleteMail", data);
+	}
+	
+	public ArrayList<Mail> selectToMe(SqlSessionTemplate sqlSession, PageInfo pi, String email){
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("mailMapper.selectToMe", email, rowBounds);
+	}
+	
+	public int updateToMeTagChange(SqlSessionTemplate sqlSession, String type, int tagNo, int mailNo, String email, int mailType) {
+		HashMap<String, Object> data = new HashMap<>();
+		data.put("type", type);
+		data.put("tagNo", tagNo);
+		data.put("mailNo", mailNo);
+		data.put("email", email);
+		data.put("mailType", mailType);
+		
+		return sqlSession.update("mailMapper.updateToMeTagChange", data);
+	}
+	
+	public ArrayList<Mail> selectSpambox(SqlSessionTemplate sqlSession, PageInfo pi, String email){
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("mailMapper.selectSpambox", email, rowBounds);
+	}
+	
+	public ArrayList<Mail> selectTrashbox(SqlSessionTemplate sqlSession, PageInfo pi, String email){
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("mailMapper.selectTrashbox", email, rowBounds);
+	}
+	
 	
 }

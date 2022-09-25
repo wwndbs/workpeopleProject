@@ -382,7 +382,7 @@
     margin-right: 3px;
 }
 
-/*여기부터 받는사람*/
+/*메일쓰기-받는사람*/
 
 .mail-input-wrap{
     width: 100%;
@@ -485,6 +485,48 @@
 	vertical-align: -3px;
 }
 
+/*메일쓰기-주소록*/
+.content-04>.adr-receiver,
+.content-04>.adr-reference{
+    height : 49%;
+    overflow : auto;
+    padding : 15px;
+    background-color: white;
+    border : 1px solid rgb(224, 224, 224);
+}
+
+.content-04>.adr-receiver li,
+.content-04>.adr-reference li{
+    display : flex;
+    margin : 10px 0 10px 0;
+    align-items: center;
+}
+
+.content-04>.adr-receiver input,
+.content-04>.adr-reference input{
+    margin-right : 10px;
+}
+
+.content-04>.adr-receiver img,
+.content-04>.adr-reference img{
+    width : 30px;
+    border-radius: 50%;
+}
+
+.content-04>.adr-receiver button,
+.content-04>.adr-reference button{
+    background-color : #00ff0000;
+    color : gray;
+    cursor: pointer;
+    border-style: none;
+    margin-left : 90px;
+}
+
+.content-04>.adr-receiver button:hover,
+.content-04>.adr-reference button:hover{
+    color : rgb(231, 76, 60);
+}
+
 /*메일함*/
 .mail-table-list{
     width: 98%;
@@ -579,6 +621,11 @@
 	line-height: 50px !important;
 	padding-left: 25px;
 	font-size: 15px;
+	width: 100px;
+}
+
+.mail-btn-cntbox .mail-btn-content2 a{
+	color: black;
 }
 
 .mail-detail-content{
