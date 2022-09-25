@@ -71,10 +71,7 @@ public class CompanyServiceImpl implements CompanyService{
 		return cDao.updateCompany(sqlSession,co);
 	}
 
-	@Override
-	public int uploadComImg(Company co) {
-		return cDao.uploadComImg(sqlSession,co);
-	}
+
 
 
 	

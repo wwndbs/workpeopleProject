@@ -30,5 +30,4 @@ public interface CompanyService {
 	
 	int updateCompany(Company co);
 	
-	int uploadComImg(Company co);
 }
