@@ -179,7 +179,7 @@
                     						
                     						let status = "";
                     						let handlingDate = "";
-                    						if(list[i].status = 'N'){ // 미처리
+                    						if(list[i].status == 'N'){ // 미처리
                     							status = '<span class="standby"> 미처리 </span>';
                     						}else{ // 처리완료
                     							status = '<span class="complete"> 처리완료 </span>';
