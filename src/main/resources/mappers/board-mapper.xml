@@ -132,7 +132,7 @@
 				   and save_status = 'N'
 				   and board_type = #{no}
 				 order
-				    by create_date asc
+				    by board_no asc
 		  		) "A"
 		 order
 		    by b_no desc
@@ -174,7 +174,7 @@
 				   and top_exp = 'N'
 				   and b.dep_name = #{depName}
 				 order
-				    by create_date asc
+				    by board_no asc
 		  	  ) "A"
 		 order
 		    by b_no desc
@@ -216,10 +216,19 @@
 				   and top_exp = 'Y'
 				   and b.dep_name = #{depName}
 				 order
-				    by create_date asc
+				    by board_no asc
 		  	  ) "A"
 		 order
 		    by b_no desc
+	</select>
+	
+	<!-- 임시저장 개수 조회 -->
+	<select id="selectSaveCount" resultType="_int">
+		select
+		       count(*)
+		  from board
+		 where save_status = 'Y'
+		   and status = 'Y'
 	</select>
 	
 	<!-- 게시글 임시저장 -->

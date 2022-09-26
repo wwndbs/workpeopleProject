@@ -80,9 +80,12 @@ public class BoardController {
 		} else {
 			boardType = "익명";
 		}
+		
+		int saveCount = bService.selectSaveCount();
 
 		model.addAttribute("typeNo", no);
 		model.addAttribute("boardType", boardType);
+		model.addAttribute("saveCount", saveCount);
 
 		return "board/enrollForm";
 

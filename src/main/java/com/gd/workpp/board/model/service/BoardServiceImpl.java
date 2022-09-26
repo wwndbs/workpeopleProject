@@ -61,6 +61,11 @@ public class BoardServiceImpl implements BoardService {
 		return result1 * result2;
 	}
 	
+	@Override
+	public int selectSaveCount() {
+		return bDao.selectSaveCount(sqlSession);
+	}
+	
 	// 임시저장 후 넘길 글번호 조회
 	@Override
 	public String selectBoardNo() {

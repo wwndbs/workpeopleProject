@@ -88,7 +88,7 @@
                   
                   <a href="list.bo?no=3"><h6>익명 게시판</h6></a>
                 
-                  <a href=""><h6>내 게시글 조회</h6></a>
+                  <!--  <a href=""><h6>내 게시글 조회</h6></a>-->
                   
                   <c:if test="${ loginUser.jobName eq '부장' or loginUser.jobName eq '팀장' }">
                   	<a href="reportForm.bo"><h6>신고 관리</h6></a>

@@ -34,7 +34,7 @@
                 <div class="board-title">
                     <h5>익명 게시판</h5>
 
-                    <div class="board-search">
+                    <!-- <div class="board-search">
                         <select name="" id="" style="height: 27px;">
                             <option value="">제목+내용</option>
                             <option value="">제목</option>
@@ -42,7 +42,7 @@
                         </select>
                         <input type="text">
                         <button type="button" class="btn btn-sm btn-primary">search</button>
-                    </div>
+                    </div> -->
                 </div>
 
                 <br>

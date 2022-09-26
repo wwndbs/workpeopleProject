@@ -56,6 +56,10 @@ public class BoardDao {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectTopList", depName);
 	}
 	
+	public int selectSaveCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("boardMapper.selectSaveCount");
+	}
+	
 	public int saveBoard(SqlSessionTemplate sqlSession, Board b) {
 		return sqlSession.insert("boardMapper.saveBoard", b);
 	}

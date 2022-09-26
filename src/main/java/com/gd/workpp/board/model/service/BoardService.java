@@ -19,6 +19,9 @@ public interface BoardService {
 	ArrayList<Board> selectList(PageInfo pi, int no, String depName);
 	ArrayList<Board> selectTopList(String depName);
 	
+	// 임시저장 개수 조회
+	int selectSaveCount();
+	
 	// 게시글 새로 임시저장
 	int saveBoard(Board b, Attachment at);
 	String selectBoardNo();
