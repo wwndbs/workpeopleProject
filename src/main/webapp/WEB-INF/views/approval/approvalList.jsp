@@ -136,17 +136,17 @@
 							        </c:choose>
 
 							        
-							        <c:choose>
-							        	<c:when test="${ category != 4 }">
-									        <li class="page-item"><a class="page-link" href="approvalList.ap?category=${ category }&cpage=${ pi.currentPage + 1 }">›</a></li>
-									        <li class="page-item"><a class="page-link" href="approvalList.ap?category=${ category }&cpage=${ pi.endPage }">»</a></li>							        	
-							        	</c:when>
-							        	<c:otherwise>
-									        <li class="page-item"><a class="page-link" href="approvalList.ap?cpage=${ pi.currentPage + 1 }">›</a></li>
-									        <li class="page-item"><a class="page-link" href="approvalList.ap?cpage=${ pi.endPage }">»</a></li>							        	
-							        	</c:otherwise>
-							        </c:choose>
 							        <c:if test="${ pi.currentPage != pi.endPage }">
+								        <c:choose>
+								        	<c:when test="${ category != 4 }">
+										        <li class="page-item"><a class="page-link" href="approvalList.ap?category=${ category }&cpage=${ pi.currentPage + 1 }">›</a></li>
+										        <li class="page-item"><a class="page-link" href="approvalList.ap?category=${ category }&cpage=${ pi.endPage }">»</a></li>							        	
+								        	</c:when>
+								        	<c:otherwise>
+										        <li class="page-item"><a class="page-link" href="approvalList.ap?cpage=${ pi.currentPage + 1 }">›</a></li>
+										        <li class="page-item"><a class="page-link" href="approvalList.ap?cpage=${ pi.endPage }">»</a></li>							        	
+								        	</c:otherwise>
+								        </c:choose>
 								    </c:if>
 							    </ul>
 						    </c:if>
