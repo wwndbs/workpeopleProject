@@ -165,6 +165,18 @@
 			 )
 	</insert>
 	
+	<select id="selectPreviewSplitEmail" resultMap="splitEmailResult">
+		select split_email as "email"        
+		     , user_name as "name"     
+		  from (            
+		        select substr(m.list, instr(m.list, ',', 1, level) + 1, instr(m.list, ',', 1, level + 1) - instr(m.list, ',', 1, level)-1 ) AS split_email              
+		          from (select ',' || #{email} || ',' AS list 
+		                  from dual) m          
+     <![CDATA[ connect by level <= length(m.list) - length(replace(m.list, ',')) - 1 ]]>
+		       ) result     
+		  left join member mem on result.split_email = mem.email
+	</select>
+	
 	<select id="selectUserName" resultType="String">
 		select
 			   user_name

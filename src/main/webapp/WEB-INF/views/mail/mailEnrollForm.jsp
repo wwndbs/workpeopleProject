@@ -104,27 +104,25 @@
 	                <input type="hidden" name="deleteFileNo" value="">
 	              	
 	                <!-- 상단 버튼 박스 시작 -->
-	                <div class="mail-btn-content" style="width: 320px;">
+	                <div class="mail-btn-content" style="width: 420px;">
 	                  <button type="button" class="mail-btn1">
 	                    <ion-icon name="paper-plane-outline" style="margin-top: 8px; font-size: 17px;"></ion-icon>
-	                    &nbsp;&nbsp;보내기
+	                    <span>&nbsp;&nbsp;보내기</span>
 	                  </button>
 	
 	                  <button type="button" class="mail-btn2" onclick="saveMail();">
 	                    <ion-icon name="cloud-download-outline" style="margin-top:8px; font-size: 19px;"></ion-icon>
-	                    <span style="margin-top: 0px;">&nbsp;&nbsp;임시저장</span>
+	                    <span>&nbsp;&nbsp;임시저장</span>
 	                  </button>
 					
-					  <!-- 
-	                  <button type="button" class="mail-btn3" onclick="toast('토스트 알림 예시입니다. 필요하신 분 쓰세요');">
+	                  <button type="button" class="mail-btn3" onclick="openPreview();">
 	                    <ion-icon name="eye-outline" style="margin-top:5px; font-size: 23px;"></ion-icon>
-	                    <span style="margin-top: 0px;">&nbsp;&nbsp;미리보기</span>
+	                    <span>&nbsp;&nbsp;미리보기</span>
 	                  </button>
-					   -->
 					   
 	                  <button type="reset" class="mail-btn4">
 	                    <ion-icon name="refresh-outline" style="margin-top:5px; font-size: 20px;"></ion-icon>
-	                    <span style="margin-top: 0px;">&nbsp;&nbsp;다시쓰기</span>
+	                    <span>&nbsp;&nbsp;다시쓰기</span>
 	                  </button>
 	                </div>
 	                <!-- 상단 버튼 박스 끝 -->
@@ -811,27 +809,7 @@
 			            	$("input[name=upfile]")[0].files = dataTransfer.files;
 				            
 		                }
-                   		
-                   		// 보내기 버튼 클릭
-                   		$(".mail-btn1").click(function(){
-                   			if(document.querySelectorAll('.to-li').length == 0){
-                   				toast("받는 사람 메일 주소를 입력해 주세요.");
-                   			}else if($("input[name=mailTitle]").val() == ''){
-                   				toast("제목을 입력해 주세요.");
-                   			}else{
-                   				$('#jyModal_confirm').modal('show');
-                   			} 
-                   		})
-                   		
-                   		// 다시쓰기 버튼 클릭
-                   		$(".mail-btn4").click(function(){
-                   			$("#summernote").summernote("code", "");
-                   			$("#receiver").val("");
-                   			$("#ref").val("");
-                   			
-                   			$(".to-li").remove();
-                   			$(".ref-li").remove();
-                   		})
+
 	                  </script>
 	
 	                  <tr>
@@ -878,6 +856,18 @@
 					</div>
 					
 					<script>
+               		
+	               		// 보내기 버튼 클릭
+	               		$(".mail-btn1").click(function(){
+	               			if(document.querySelectorAll('.to-li').length == 0){
+	               				toast("받는 사람 메일 주소를 입력해 주세요.");
+	               			}else if($("input[name=mailTitle]").val() == ''){
+	               				toast("제목을 입력해 주세요.");
+	               			}else{
+	               				$('#jyModal_confirm').modal('show');
+	               			} 
+	               		})
+					
 						// 메일 임시저장
 						function saveMail(){
 			      			
@@ -909,6 +899,27 @@
 				    		})
                    			
 						}
+	               		
+	               		// 미리보기 버튼 클릭
+	               		function openPreview(){
+	               			 
+	               			window.open("", "popupOpener", "width=900, height=800, top=100, left=400");
+
+	               			$("#mailForm").attr("target", "popupOpener");
+	               			$('#mailForm').attr('action', 'enrollPreview.ma');
+	               			$('#mailForm').submit();
+	               			
+	               		}
+                   		
+                   		// 다시쓰기 버튼 클릭
+                   		$(".mail-btn4").click(function(){
+                   			$("#summernote").summernote("code", "");
+                   			$("#receiver").val("");
+                   			$("#ref").val("");
+                   			
+                   			$(".to-li").remove();
+                   			$(".ref-li").remove();
+                   		})
 					
 						// 토스트
 						let removeToast;

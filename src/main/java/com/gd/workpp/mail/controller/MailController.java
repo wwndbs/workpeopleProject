@@ -51,6 +51,39 @@ public class MailController {
 	public String enrollForm() {
 		return "mail/mailEnrollForm";
 	}
+	
+	/**
+	 * Author : 정주윤
+	 * 메일 미리보기 팝업창 띄우기 처리해 주는 메소드
+	 */
+	@RequestMapping("enrollPreview.ma")
+	public ModelAndView openPreview(Mail m, MultipartFile[] upfile, ModelAndView mv) {
+		System.out.println(m);
+		
+		// 받는사람, 참조인 메일주소+이름 배열로 조회
+		ArrayList<SplitEmail> receiverList = mService.selectPreviewSplitEmail(m.getReceiver());
+		ArrayList<SplitEmail> refList = mService.selectPreviewSplitEmail(m.getMailRef());
+		
+		String[] atOriginNameList = new String[upfile.length];
+		for (int i = 0; i < upfile.length; i++) {
+
+			// 전달된 파일이 있을 경우 => 파일명만 전달
+			if (!upfile[i].getOriginalFilename().equals("")) {
+
+				atOriginNameList[i] = upfile[i].getOriginalFilename();
+				
+			}
+
+		}
+		
+		mv.addObject("m", m);
+		mv.addObject("receiverList", receiverList);
+		mv.addObject("refList", refList);
+		mv.addObject("atOriginNameList", atOriginNameList);
+		mv.setViewName("mail/enrollPreview");
+		
+		return mv;
+	}
 
 	/**
 	 * Author : 정주윤 

@@ -30,9 +30,12 @@ public interface MailService {
 	String selectUserName(String email);
 	int insertMailStatus(ArrayList<MailStatus> ms);
 	
+	// 메일 미리보기 시 받는사람,참조인 메일주소+이름 배열로 조회
+	ArrayList<SplitEmail> selectPreviewSplitEmail(String email);
+	
 	// 메일 임시저장 서비스
 	int saveMail(Mail m, ArrayList<Attachment> atList);
-	
+
 	// 임시저장 후 해당 메일번호 조회
 	int selectCurrMailNo();
 
@@ -57,7 +60,7 @@ public interface MailService {
 	// 메일 상세조회 서비스
 	Mail selectMailDetail(int mailNo, int boxType, String email);
 	
-	// 받는사람,참조인 메일주소+이름 배열로 조회
+	// 상세조회 시 받는사람,참조인 메일주소+이름 배열로 조회
 	ArrayList<SplitEmail> selectSplitEmail(String type, int mailNo);
 	
 	// 메일 중요 여부 변경 서비스

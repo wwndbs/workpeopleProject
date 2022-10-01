@@ -59,6 +59,7 @@
 			dep_name
 		from department
 		where status= 'Y'
+		order by dep_name asc
 	</select>
 	
 	<insert id="addOrgChart">

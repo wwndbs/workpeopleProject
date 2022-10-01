@@ -120,6 +120,10 @@
     margin: 15px 0px 15px 0px;
 }
 
+.mail-btn-content span{
+	margin-top: 0px;
+}
+
 .mail-btn1{
     width: 90px;
     height: 33px;

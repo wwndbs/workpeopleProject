@@ -75,6 +75,11 @@ public class MailServiceImpl implements MailService {
 		
 		return result;
 	}
+	
+	@Override
+	public ArrayList<SplitEmail> selectPreviewSplitEmail(String email) {
+		return mDao.selectPreviewSplitEmail(sqlSession, email);
+	}
 
 	@Override
 	public int saveMail(Mail m, ArrayList<Attachment> atList) {

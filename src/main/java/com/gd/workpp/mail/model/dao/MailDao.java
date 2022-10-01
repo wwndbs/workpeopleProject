@@ -51,6 +51,10 @@ public class MailDao {
 		return sqlSession.insert("mailMapper.insertMailStatus", ms);
 	}
 	
+	public ArrayList<SplitEmail> selectPreviewSplitEmail(SqlSessionTemplate sqlSession, String email){
+		return (ArrayList)sqlSession.selectList("mailMapper.selectPreviewSplitEmail", email);
+	}
+	
 	public int saveMail(SqlSessionTemplate sqlSession, Mail m) {
 		return sqlSession.insert("mailMapper.saveMail", m);
 	}

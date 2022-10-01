@@ -131,12 +131,12 @@
 				                      </td>
 				                      <td class="d4">
 				                      		<c:choose>
-				                      			<c:when test="${ fn:length(fn:split(m.receiver, ',')) eq 1 }">
-				                      				<span>${ m.receiver }</span>
-				                      			</c:when>
-				                      			<c:otherwise>
-				                      				<span>${ fn:split(m.receiver, ',')[0] } 외 ${ fn:length(fn:split(m.receiver, ',')) -1 }명</span>
-				                      			</c:otherwise>
+				                      		<c:when test="${ empty m.senderName }">
+				                      			<span>${ m.sender }</span>
+				                      		</c:when>
+				                      		<c:when test="${ not empty m.senderName }">
+						                        <span>${ m.senderName }</span>
+				                      		</c:when>
 				                      		</c:choose>
 				                      </td>
 				                      <td class="d5">

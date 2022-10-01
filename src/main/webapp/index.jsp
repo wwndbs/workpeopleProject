@@ -45,6 +45,7 @@
     #body3{
         height: 300px;
     }
+    
     #body3>div{
         height:100%;
         float:left;
@@ -62,6 +63,7 @@
     #loginTable input{
         width: 100%;
         height: 100%;
+        box-sizing:border-box;
     }
     #loginbtn{
         width: 100%;
