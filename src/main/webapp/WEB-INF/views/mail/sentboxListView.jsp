@@ -139,7 +139,7 @@
 				                      		</c:when>
 				                      	</c:choose>
 				                        <span>${ m.mailTitle }</span>
-				                        <!-- 팝업 <ion-icon name="copy-outline"></ion-icon>  -->
+				                        <ion-icon name="copy-outline"></ion-icon>
 				                      </td>
 				                      <td class="d6">${ m.sendDate }</td>
 				                    </tr>
@@ -161,6 +161,15 @@
 			            			location.href = 'detail.ma?no=' + $(this).parent().siblings().eq(0).children().val() + '&boxType=2';
 								})
 			            	
+								
+								// 메일 미리보기 팝업 요청
+								$(document).on("click", "ion-icon[name=copy-outline]", function(){
+									
+									let url = 'detail.ma?no=' + $(this).parent().siblings().eq(0).children().val() + '&boxType=2&preview=2'; 
+			               			window.open(url, "popupOpener", "width=900, height=800, top=80, left=400");
+									
+								})
+								
 	            				// 상단 체크박스로 전체 선택, 전체 해제 
 								$("#checkAll").click(function(){
 

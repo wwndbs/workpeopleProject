@@ -58,7 +58,6 @@ public class MailController {
 	 */
 	@RequestMapping("enrollPreview.ma")
 	public ModelAndView openPreview(Mail m, MultipartFile[] upfile, ModelAndView mv) {
-		System.out.println(m);
 		
 		// 받는사람, 참조인 메일주소+이름 배열로 조회
 		ArrayList<SplitEmail> receiverList = mService.selectPreviewSplitEmail(m.getReceiver());
@@ -351,10 +350,11 @@ public class MailController {
 	 * 메일 상세 조회 요청 처리해 주는 메소드
 	 * @param no      : 조회하고자 하는 메일번호
 	 * @param boxType : {1:받은메일함, 2:보낸메일함, 4:스팸메일함}
+	 * @param preview : {1:미리보기 아님, 2:미리보기}
 	 */
 	@RequestMapping("detail.ma")
 	public ModelAndView selectMailDetail(int no, @RequestParam(value = "boxType", defaultValue = "1") int boxType,
-			ModelAndView mv, HttpSession session) {
+			@RequestParam(value = "preview", defaultValue = "1") int preview, ModelAndView mv, HttpSession session) {
 
 		Member mem = (Member) session.getAttribute("loginUser");
 		String email = mem.getEmail();
@@ -380,10 +380,13 @@ public class MailController {
 		mv.addObject("receiverList", receiverList);
 		mv.addObject("refList", refList);
 		mv.addObject("boxType", boxType);
+		mv.addObject("preview", preview);
 		
 		return mv;
 
 	}
+	
+	
 
 	/**
 	 * Author : 정주윤 

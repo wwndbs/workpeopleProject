@@ -659,15 +659,19 @@
 .mail-table-detail tr{
     height: 33px;
     font-size: 14px;
+	line-height: 33px;
+	word-wrap: normal;
 }
 
 .mail-table-detail th{
 	font-weight: 500 !important;
+	min-width: 58px;
 }
 
 .mail-table-detail tr td span{
     margin-left: 5px;
     font-size: 13px;
+    white-space: nowrap;
 }
 
 .filelist>.filelist-header{
@@ -697,7 +701,7 @@
     background-color: white;
     border : 1px solid rgb(224, 224, 224);
     border-radius: 10px;
-    height: 68%;
+    min-height: 68%;
     padding: 20px;
 }
 

@@ -6,6 +6,26 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<!-- bootstrap template -->
+<link rel="stylesheet" type="text/css" href="resources/bootstrap/dist/css/adminx.css" media="screen" />
+
+<!--bootstrap, jQuery-->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+
+<!--pretendard font-->
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+<link rel="stylesheet" href="resources/bootstrap/dist/css/font-pretendard.css">
+
+<!--fontawesome kit-->
+<script src="https://kit.fontawesome.com/ea8287c514.js" crossorigin="anonymous"></script>
+
+<!-- google icon -->
+<link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
+    
+<!-- css -->
+<link rel="stylesheet" href="resources/css/juyun.css">
 <style>
 	hr {
 		margin-top: 0.5rem !important;
@@ -13,20 +33,37 @@
 </style>
 </head>
 <body>
-
-	<div class="adminx-container">
+	<c:choose>
+		<c:when test="${ preview eq 1 }">
+			<div class="adminx-container">
+		</c:when>
+		<c:otherwise>
+			<div class="adminx-container" style="padding-top:10px">
+		</c:otherwise>
+	</c:choose>
 	
+	<c:if test="${ preview eq 1 }">
 		<jsp:include page="../common/header.jsp" />
 		<jsp:include page="../common/menubar.jsp" />
-		
+	</c:if>
+	
       <!-- 컨텐츠 부분 wrapper -->
-      <div class="adminx-content" style="padding-left:65px;">
+      <c:choose>
+		<c:when test="${ preview eq 1 }">
+			<div class="adminx-content" style="padding-left:65px;">
+		</c:when>
+		<c:otherwise>
+			<div class="adminx-content" style="padding-left:35px;">
+		</c:otherwise>
+	  </c:choose>
         <div class="adminx-main-content" style="padding: 0; height: 100%;">
           <div class="container-fluid" style="padding: 0; height: 100%;">
             <!-- 메일 전체 div 시작 -->
             <div class="container-mail">
 	
-			<jsp:include page="../mail/mailSidebar.jsp"/>
+			<c:if test="${ preview eq 1 }">
+				<jsp:include page="../mail/mailSidebar.jsp"/>
+            </c:if>
               
               <!-- 메일 내용 시작 -->
               <div class="mail-main-form">
@@ -45,8 +82,10 @@
 
                 <form action="">
                 
+                
                  <div class="mail-btn-cntbox">
                   <!-- 상단 버튼 박스 시작 -->
+		<c:if test="${ preview eq 1 }">
                  <c:choose>
               		<c:when test="${ boxType eq 1 }">
 		                <div class="mail-btn-content" style="width: 460px;">
@@ -129,6 +168,9 @@
 
                   </div>
                   <!-- 상단 버튼 박스 끝 -->
+                  </c:if>
+                  
+				  <c:if test="${ preview eq 1 }">
                   <!-- 목록 버튼박스 시작-->
                   <div class="mail-btn-content2">
                   	<!-- 
@@ -147,6 +189,8 @@
                     	</c:when>
                     </c:choose>
                   </div>
+                  
+                </c:if>
                  </div>
 
                <hr>
@@ -248,6 +292,7 @@
                    <div class="content">
                      ${ m.mailContent }
                    </div>
+                   <br>
 
                  </div>
                  <!-- 상세보기 끝 -->
