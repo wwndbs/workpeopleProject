@@ -152,7 +152,7 @@
 	        <input type="hidden" name="userMemNo" id="userMemNo" value="${ loginUser.userNo }">
 	        <input type="hidden" name="proApprove" id="userMemNo" value="${ loginUser.userNo }">
 	        
-			 <!-- 승인요청 모달 -->
+		   <!-- 승인요청 모달 -->
 	       <div class="modal" id="appoveRequest">
 	           <div class="modal-dialog modal-dialog-centered">
 	               <div class="modal-content" style="height:200px; width: 370px;">

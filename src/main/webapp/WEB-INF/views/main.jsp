@@ -137,7 +137,7 @@
                         <!-- ajax 조회부분 -->                                            
                      </div>
                      <div class="slide-btn">
-                        <i class="fas fa-chevron-left" id="left-btn"></i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="fas fa-chevron-right" id="right-btn"></i>
+                        <i class="fas fa-chevron-left" id="left-btn"></i> <i class="fas fa-chevron-right" id="right-btn"></i>
                      </div>
                   </div>
    
@@ -279,7 +279,7 @@
    				}
    			})
    			
-   			// 프로젝트 조회
+   			// [김은지] 프로젝트 조회
    			$.ajax({
    				url : "homeList.pr",  
    				success : function(plist){
@@ -300,18 +300,10 @@
    				}
    			})
    			
-   			// 프로젝트 상세조회
+   			// [김은지] 프로젝트 상세조회
    			$(document).on('click', ".project-container div", function(){
    				location.href="proList.pr?no=" + $(this).children().eq(0).val();
-   			})
-   			
-   			/*
-   			// 프로젝트 상세조회
-   			$(document).on('click', ".project-container div", function(){
-   				location.href="proList.pr?no=" + $(this).children().eq(0).val()
-   			})
-   			*/
-   			
+   			})   			   			
    		})
 	</script>
 
