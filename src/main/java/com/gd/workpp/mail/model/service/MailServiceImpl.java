@@ -265,6 +265,11 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
+	public int vacateSpambox(String email) {
+		return mDao.vacateSpambox(sqlSession, email);
+	}
+	
+	@Override
 	public int vacateTrashbox(String email) {
 		return mDao.vacateTrashbox(sqlSession, email);
 	}
@@ -297,6 +302,5 @@ public class MailServiceImpl implements MailService {
 		
 		return result;
 	}
-
 
 }

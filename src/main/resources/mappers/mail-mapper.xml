@@ -745,7 +745,20 @@
          </foreach>
 		   and user_mail = #{email}
 	</update>
-
+	
+	<delete id="vacateSpambox">
+		delete
+		  from mail_status
+		 where user_mail = #{email}
+		  join mail using (mail_no)
+		   and mail_spam = 'Y' 
+			or sender in ( 
+	                       select spam_address
+	                         from mail_spam
+	                        where user_mail = #{email}
+	                      )
+	</delete>
+		
 	<delete id="vacateTrashbox">
 		delete
 		  from mail_status

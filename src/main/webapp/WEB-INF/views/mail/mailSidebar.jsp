@@ -14,131 +14,174 @@
 </style>
 </head>
 <body>
-	
-    <!-- 메일 사이드바 시작 -->
-    <div class="mail-sidebar">
 		
-    	<div class="sidebar1">
-	        <h5>메일</h5>
-	        <div class="div">
-	       		<button type="button" class="mail-btn-enroll" onclick="location.href='enrollForm.ma'">메일 쓰기</button>
-	        </div>
-      	</div>
-
-        <div class="sidebar2">
-        	<h5>메일함</h5>
-            <ul class="mailbox-list">
-            	<li><a href="box.ma">받은메일함</a></li>
-	            <li><span><a href="box.ma?boxType=2">보낸메일함</a></span>
-	            <!-- <span><button class="mail-btn-sidebar">수신확인</button><br></span></li> -->
-	            <li><a href="box.ma?boxType=3">내게쓴메일함</a></li>
-	            <li><a href="outbox.ma?">임시보관함</a></li>
-	            <br>
-	            <li><span><a href="box.ma?boxType=4">스팸메일함</a></span>
-	            <!-- <span><button class="mail-btn-sidebar">비우기</button><br></span></li>  -->
-	            <li><span><a href="box.ma?boxType=5">휴지통</a></span>
-	            <span><button class="mail-btn-sidebar" data-toggle="modal" data-target="#jyModal_vacate_confirm">비우기</button><br></span></li>
-	            <br>
-	            <li><a href="box.ma?boxType=6">중요메일함</a></li>
-	            <li><a href="box.ma?boxType=7">안읽은메일함</a></li>
-        	</ul>
-        </div>
-        
+	<!-- 메일 사이드바 시작 -->
+	<div class="mail-sidebar">
+		
+		<div class="sidebar1">
+			<h5>메일</h5>
+			<div class="div">
+				<button type="button" class="mail-btn-enroll" onclick="location.href='enrollForm.ma'">메일 쓰기</button>
+			</div>
+		</div>
+			
+	    <div class="sidebar2">
+			<h5>메일함</h5>
+			<ul class="mailbox-list">
+				<li><a href="box.ma">받은메일함</a></li>
+			    <li><span><a href="box.ma?boxType=2">보낸메일함</a></span>
+			    <!-- <span><button class="mail-btn-sidebar">수신확인</button><br></span></li> -->
+			    <li><a href="box.ma?boxType=3">내게쓴메일함</a></li>
+			    <li><a href="outbox.ma?">임시보관함</a></li>
+			    <br>
+			    <li><span><a href="box.ma?boxType=4">스팸메일함</a></span>
+			    <span><button class="mail-btn-sidebar" data-toggle="modal" data-target="#jyModal_vacate_confirm">비우기</button><br></span></li>
+			    <li><span><a href="box.ma?boxType=5">휴지통</a></span>
+			    <span><button class="mail-btn-sidebar" data-toggle="modal" data-target="#jyModal_vacate_confirm2">비우기</button><br></span></li>
+			    <br>
+			    <li><a href="box.ma?boxType=6">중요메일함</a></li>
+			    <li><a href="box.ma?boxType=7">안읽은메일함</a></li>
+			</ul>
+	    </div>
+	    
 		<div class="sidebar3">
-       		<h5>태그</h5>
-        	<ul class="tag-list">
-        		<div id="tagArea">
-
-	           </div>	
-    	       <a href="" class="add" data-toggle="modal" data-target="#jyModal_insertTag"> + &nbsp;태그 추가</a>
-        	</ul>
-       	</div>
-       
-        <script>
-        	$(function(){
-        		
-        		// 사이드바, 페이지 내 상단 버튼 태그 리스트 조회
-        		$.ajax({
-          			url: "selectTag.ma",
-          			success:function(list){
-   	  					
-       					let value = "";
-       					let dropvalue = "";
-       
-       					for(let i=0; i<list.length; i++){
-       						value += '<li>'
-       							   + 	'<span>'
-       							   +		'<input type="hidden" name="tagNo" value="' + list[i].tagNo + '">'
-       							   +		'<i class="fas fa-tag" style="color:' + list[i].tagColor + ';"></i>'
-	  							   +		'<a href="">' + list[i].tagName + '</a>'
-	  							   +	'</span>'
-	  							   +	'<button type="button" class="dropdown">'
-	  							   +		'<ion-icon name="ellipsis-vertical-outline"></ion-icon>'
-	  							   +		'<div class="dropdown-tagEtc">'
-	  							   +			'<span class="tag-update" data-toggle="modal" data-target="#jyModal_updateTag">태그 수정</span><br>'
-	  							   +			'<span class="tag-delete" data-toggle="modal" data-target="#jyModal_deleteTag">태그 삭제</span>'
-	  							   +		'</div>'
-	  							   +	'</button>'
-	  							   + '</li>';
-	  							   
-       						dropvalue += '<tr id="tag' + list[i].tagNo +  '">'
-	   								   +	'<td>'
-	   								   +		'<i class="fas fa-tag" style="color:' + list[i].tagColor + ';"></i>'
-	   								   +		'<span class="tagName">' + list[i].tagName + '</span>'
-	   								   +	'</td>'
-	   								   +	'<td class="addBtn">'
-	   								   + 		'<input type="hidden" name="tagNo" value="' + list[i].tagNo + '">'
-	   								   +		'<a class="mail-a-taglist tagBtn">적용</a>'
-	   								   +	'</td>'
+			<h5>태그</h5>
+			<ul class="tag-list">
+				<div id="tagArea">
+			
+				</div>	
+				<a href="" class="add" data-toggle="modal" data-target="#jyModal_insertTag"> + &nbsp;태그 추가</a>
+			</ul>
+		</div>
+	   
+		<script>
+			$(function(){
+				
+				// 사이드바, 페이지 내 상단 버튼 태그 리스트 조회
+				$.ajax({
+					url: "selectTag.ma",
+					success:function(list){
+						
+						let value = "";
+						let dropvalue = "";
+				
+						for(let i=0; i<list.length; i++){
+							value += '<li>'
+								   + 	'<span>'
+								   +		'<input type="hidden" name="tagNo" value="' + list[i].tagNo + '">'
+								   +		'<i class="fas fa-tag" style="color:' + list[i].tagColor + ';"></i>'
+								   +		'<a href="">' + list[i].tagName + '</a>'
+								   +	'</span>'
+								   +	'<button type="button" class="dropdown">'
+								   +		'<ion-icon name="ellipsis-vertical-outline"></ion-icon>'
+								   +		'<div class="dropdown-tagEtc">'
+								   +			'<span class="tag-update" data-toggle="modal" data-target="#jyModal_updateTag">태그 수정</span><br>'
+								   +			'<span class="tag-delete" data-toggle="modal" data-target="#jyModal_deleteTag">태그 삭제</span>'
+								   +		'</div>'
+								   +	'</button>'
+								   + '</li>';
+								   
+							dropvalue += '<tr id="tag' + list[i].tagNo +  '">'
+									   +	'<td>'
+									   +		'<i class="fas fa-tag" style="color:' + list[i].tagColor + ';"></i>'
+									   +		'<span class="tagName">' + list[i].tagName + '</span>'
+									   +	'</td>'
+									   +	'<td class="addBtn">'
+									   + 		'<input type="hidden" name="tagNo" value="' + list[i].tagNo + '">'
+									   +		'<a class="mail-a-taglist tagBtn">적용</a>'
+									   +	'</td>'
 									   + '</tr>';
-       					}
-       					
-       					$("#tagArea").html(value); // 사이드바 태그
-           				$("#tagDropArea").html(dropvalue); // 상단 버튼 드롭다운 태그
-           				
-          			},
-          			error:function(){
-	  				console.log("태그리스트 조회 ajax통신 실패");
-          			}
-        		})        	
-        		
-        		// 휴지통 비우기 버튼 클릭
-        		$("#realVacate").click(function(){
-        			
-            		$.ajax({
-            			url: "vacateTrashbox.ma",
-            			success:function(result){
-
-            				if(result == "success"){
-            					toast("삭제되었습니다.");
-            					setTimeout(reload, 1000);
-							}
+						}
+						
+						$("#tagArea").html(value); // 사이드바 태그
+						$("#tagDropArea").html(dropvalue); // 상단 버튼 드롭다운 태그
 							
-            			},
-            			error:function(){
-							console.log("휴지통 비우기 ajax통신 실패");
-            			}
-            		})
-            		
-        		})
-        		
-        	})
-        </script>
-      
-        <br><br><br>
-       
-        <div class="sidebar4">
-        	<ion-icon name="settings-outline" style="vertical-align: -3px;"></ion-icon>
-          	<a href="" style="margin-left: 5px;">
-            	메일 환경설정
-          	</a>
+					},
+					error:function(){
+						console.log("태그리스트 조회 ajax통신 실패");
+					}
+				})        	
+				
+				// 스팸메일함 비우기 버튼 클릭
+				$("#realVacate_spam").click(function(){
+						
+					$.ajax({
+						url: "vacateSpambox.ma",
+						success:function(result){
+				
+							if(result == "success"){
+								toast("삭제되었습니다.");
+								setTimeout(reload, 1000);
+							}
+						
+						},
+						error:function(){
+							console.log("스팸메일함 비우기 ajax통신 실패");
+						}
+					})
+						
+				})
+				
+				// 휴지통 비우기 버튼 클릭
+				$("#realVacate_trash").click(function(){
+					
+						$.ajax({
+							url: "vacateTrashbox.ma",
+							success:function(result){
+			
+								if(result == "success"){
+									toast("삭제되었습니다.");
+									setTimeout(reload, 1000);
+								}
+							
+							},
+							error:function(){
+								console.log("휴지통 비우기 ajax통신 실패");
+							}
+						})
+						
+				})
+				
+			})
+		</script>
+	  
+	    <br><br><br>
+	   
+		<div class="sidebar4">
+			<ion-icon name="settings-outline" style="vertical-align: -3px;"></ion-icon>
+			<a href="" style="margin-left: 5px;">
+				메일 환경설정
+			</a>
+		</div>
+	
+	</div>
+	<!-- 메일 사이드바 끝 -->
+	  
+    <!-- 모달: 스팸메일함 비우기 컨펌 -->
+    <div class="modal" id="jyModal_vacate_confirm">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <button type="button" class="modal_close" data-dismiss="modal" style="margin-left: 95%;">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body" style="text-align: center;">
+                    스팸메일함을 비우면 메일이 완전히 삭제됩니다. <br>
+			        스팸메일함을 비우시겠습니까?
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-jycancle" data-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-jyok" id="realVacate_spam">확인</button>
+                </div>
+            </div>
         </div>
-
     </div>
-    <!-- 메일 사이드바 끝 -->
+    <!-- 모달 끝 -->
    
     <!-- 모달: 휴지통 비우기 컨펌 -->
-    <div class="modal" id="jyModal_vacate_confirm">
+    <div class="modal" id="jyModal_vacate_confirm2">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <!-- Modal Header -->
@@ -153,7 +196,7 @@
                 <!-- Modal footer -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-jycancle" data-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-jyok" id="realVacate">확인</button>
+                    <button type="button" class="btn btn-jyok" id="realVacate_trash">확인</button>
                 </div>
             </div>
         </div>
@@ -373,13 +416,12 @@
     		})
 
 		})
-		
 					            	
 	    // 페이지 재요청
 		function reload(){
 			location.reload();
 		}
-		</script>    
+	</script>    
 
 </body>
 </html>

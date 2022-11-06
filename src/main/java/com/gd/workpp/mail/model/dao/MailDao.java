@@ -317,6 +317,10 @@ public class MailDao {
 
 		return sqlSession.delete("mailMapper.restoreMail", data);
 	}
+
+	public int vacateSpambox(SqlSessionTemplate sqlSession, String email) {
+		return sqlSession.delete("mailMapper.vacateSpambox", email);
+	}
 	
 	public int vacateTrashbox(SqlSessionTemplate sqlSession, String email) {
 		return sqlSession.delete("mailMapper.vacateTrashbox", email);

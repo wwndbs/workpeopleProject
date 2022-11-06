@@ -54,7 +54,7 @@ public class MailController {
 	
 	/**
 	 * Author : 정주윤
-	 * 메일 미리보기 팝업창 띄우기 처리해 주는 메소드
+	 * 메일 작성 중 미리보기 팝업창 띄우기 처리해 주는 메소드
 	 */
 	@RequestMapping("enrollPreview.ma")
 	public ModelAndView openPreview(Mail m, MultipartFile[] upfile, ModelAndView mv) {
@@ -68,9 +68,7 @@ public class MailController {
 
 			// 전달된 파일이 있을 경우 => 파일명만 전달
 			if (!upfile[i].getOriginalFilename().equals("")) {
-
 				atOriginNameList[i] = upfile[i].getOriginalFilename();
-				
 			}
 
 		}
@@ -82,6 +80,7 @@ public class MailController {
 		mv.setViewName("mail/enrollPreview");
 		
 		return mv;
+		
 	}
 
 	/**
@@ -124,19 +123,15 @@ public class MailController {
 				originCookieVal = cookie.getValue() + "_"; // "aaa@gmail.com_bbb@workpp.com_ccc@workpp.com_"
 			}
 		}
-		System.out.println("originCookieVal : " + originCookieVal);
 		
 		// 2) 메일 발송 시 입력한 receiver에서 중복 제거
 		String receivers = m.getReceiver().replace(",", "_"); // 쿠키에 추가할 변수. "bbb@gmail.com_ddd@workpp.com"
-		System.out.println("receivers : " + receivers);
 		
 		String[] receiverArr = m.getReceiver().split(","); // ["bbb@gmail.com", "ddd@workpp.com"]
 		for (String receiver : receiverArr) {
 			msList.add(new MailStatus(receiver, mService.selectUserName(receiver), 1));
 			
-			System.out.println("receiver : "  + receiver);
 			if(originCookieVal.contains(receiver)) { // 기존 쿠키에 있는 주소이면 쿠키에 추가할 변수에서 해당 주소를 빈 문자열로 치환 (중복 방지)
-				System.out.println("포함되어있음");
 				receivers = receivers.replace("_" + receiver, "");
 				receivers = receivers.replace(receiver + "_", "");
 				receivers = receivers.replace(receiver, "");
@@ -159,7 +154,7 @@ public class MailController {
 		int result1 = mService.insertMail(m, atList);
 
 		if (result1 > 0) { // MAIL INSERT 성공 => MAILSTATUS INSERT && 발송 성공 페이지
-
+			
 			int result2 = mService.insertMailStatus(msList);
 
 			if (result2 > 0) {
@@ -168,8 +163,8 @@ public class MailController {
 				model.addAttribute("errorMsg", "메일 발송 실패");
 				return "common/errorPage";
 			}
-
-		} else { // 실패
+			
+		}else { // 실패
 			model.addAttribute("errorMsg", "메일 발송 실패");
 			return "common/errorPage";
 		}
@@ -182,8 +177,7 @@ public class MailController {
 	 * @param originMailNo : 원글의 메일번호
 	 */
 	@RequestMapping("insertRelay.ma")
-	public String insertRelay(String existFileNo, int originMailNo, Mail m, MultipartFile[] upfile, HttpSession session,
-			Model model) {
+	public String insertRelay(String existFileNo, int originMailNo, Mail m, MultipartFile[] upfile, HttpSession session, Model model) {
 
 		// 보낸사람 + 받은사람 + 참조 명수만큼 ArrayList에 담기
 		ArrayList<MailStatus> msList = new ArrayList<>();
@@ -284,8 +278,8 @@ public class MailController {
 	 * @param boxType     : {1:받은메일함, 2:받은메일함, 3:내게쓴메일함, 4:스팸메일함, 5:휴지통, 6: 중요메일함, 7: 안읽은메일함}
 	 */
 	@RequestMapping("box.ma")
-	public ModelAndView selectBox(@RequestParam(value = "cpage", defaultValue = "1") int currentPage,
-			@RequestParam(value = "boxType", defaultValue = "1") int boxType, ModelAndView mv, HttpSession session) {
+	public ModelAndView selectBox(@RequestParam(value = "cpage", defaultValue = "1") int currentPage, 
+								  @RequestParam(value = "boxType", defaultValue = "1") int boxType, ModelAndView mv, HttpSession session) {
 
 		Member mem = (Member) session.getAttribute("loginUser");
 		String email = mem.getEmail();
@@ -349,12 +343,12 @@ public class MailController {
 	 * Author : 정주윤 
 	 * 메일 상세 조회 요청 처리해 주는 메소드
 	 * @param no      : 조회하고자 하는 메일번호
-	 * @param boxType : {1:받은메일함, 2:보낸메일함, 4:스팸메일함}
+	 * @param boxType : {1:받은메일함, 2:보낸메일함, 3:내게쓴메일함, 4:스팸메일함, 5:휴지통, 6:중요메일함, 7:안읽은메일함}
 	 * @param preview : {1:미리보기 아님, 2:미리보기}
 	 */
 	@RequestMapping("detail.ma")
 	public ModelAndView selectMailDetail(int no, @RequestParam(value = "boxType", defaultValue = "1") int boxType,
-			@RequestParam(value = "preview", defaultValue = "1") int preview, ModelAndView mv, HttpSession session) {
+										@RequestParam(value = "preview", defaultValue = "1") int preview, ModelAndView mv, HttpSession session) {
 
 		Member mem = (Member) session.getAttribute("loginUser");
 		String email = mem.getEmail();
@@ -371,9 +365,7 @@ public class MailController {
 		ArrayList<SplitEmail> receiverList = mService.selectSplitEmail("receiver", no);
 		ArrayList<SplitEmail> refList = mService.selectSplitEmail("mail_ref", no);
 
-		if (boxType == 1 || boxType == 2 || boxType == 4) {
-			mv.setViewName("mail/mailDetailView");
-		}
+		mv.setViewName("mail/mailDetailView");
 
 		mv.addObject("m", m);
 		mv.addObject("atList", atList);
@@ -385,7 +377,6 @@ public class MailController {
 		return mv;
 
 	}
-	
 	
 
 	/**
@@ -436,7 +427,7 @@ public class MailController {
 	 */
 	@RequestMapping("outbox.ma")
 	public ModelAndView selectOutbox(@RequestParam(value = "cpage", defaultValue = "1") int currentPage,
-			ModelAndView mv, HttpSession session) {
+									 ModelAndView mv, HttpSession session) {
 
 		Member mem = (Member) session.getAttribute("loginUser");
 		String email = mem.getEmail();
@@ -542,6 +533,5 @@ public class MailController {
 		}
 		 
 	}
-
 
 }

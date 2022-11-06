@@ -126,6 +126,9 @@ public interface MailService {
 	
 	// 기타메일함 (휴지통, 중요, 앍읽은메일함) 리스트 페이지 서비스
 	ArrayList<Mail> selectEtcbox(PageInfo pi, int boxType, String email);
+
+	// 사이드바에서 스팸메일함 비우기 서비스
+	int vacateSpambox(String email);
 	
 	// 사이드바에서 휴지통 비우기 서비스
 	int vacateTrashbox(String email);

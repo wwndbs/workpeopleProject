@@ -44,6 +44,7 @@ public class AjaxMailController {
 		int mailCount = mService.selectNotReadCount(boxType, email);
 		
 		return new Gson().toJson(mailCount);
+		
 	}
 	
 	/**
@@ -277,6 +278,7 @@ public class AjaxMailController {
 		
 		
 		return result > 0 ? "success" : "fail";
+		
 	}
 
 	/**
@@ -350,6 +352,7 @@ public class AjaxMailController {
 		}
 		
 		return result > 0 ? "success" : "fail";
+		
 	}
 	
 	/**
@@ -378,23 +381,22 @@ public class AjaxMailController {
 		String deleteAddr = "";
 		for(int i=0; i<addr.length; i++) {
 				
-				for(int j=0; j<spamList.size(); j++) {
-					if(addr[i].equals(spamList.get(j).getSpamAddress())) {
+			for(int j=0; j<spamList.size(); j++) {
+				if(addr[i].equals(spamList.get(j).getSpamAddress())) {
 						deleteAddr += addr[i] + ",";
-					}
-					
 				}
+			}
 			
 		}
 		
 		 // 스팸에 등록되어 있는 경우 보낸 사람 주소를 스팸 목록에서 제거 
 		String[] deleteMailArr =deleteAddr.split(",");
 		  
-		 for(String deleteMail : deleteMailArr) { 
+		for(String deleteMail : deleteMailArr) { 
 			 result2 = mService.deleteSpam(email, deleteMail); 
-		  }
+		}
 		  
-		  return result1 * result2 > 0 ? "success" : "fail";
+		return result1 * result2 > 0 ? "success" : "fail";
 		 
 	}
 	
@@ -444,6 +446,23 @@ public class AjaxMailController {
 		String email = mem.getEmail();
 		
 		int result = mService.vacateTrashbox(email);
+		
+		return result > 0 ? "success" : "fail";
+		
+	}
+	
+	/**
+	 * Author : 정주윤
+	 * 사이드바의 스팸메일함 비우기 기능 처리해 주는 메소드
+	 */
+	@ResponseBody
+	@RequestMapping(value="vacateSpambox.ma", produces="text/html; charset=UTF-8")
+	public String vacateSpambox(String checkMailNo, HttpSession session) {
+		
+		Member mem = (Member)session.getAttribute("loginUser");
+		String email = mem.getEmail();
+		
+		int result = mService.vacateSpambox(email);
 		
 		return result > 0 ? "success" : "fail";
 		

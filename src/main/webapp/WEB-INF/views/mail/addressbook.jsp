@@ -14,11 +14,7 @@
 				<div class="content-01">
 					<button id="department" type="button">부서 ▼</button>
 					<ul id="department-list" style="display : none">
-<!-- 						<li onclick="memberList('인사팀');" style="cursor : pointer;"><a>인사팀</a></li>
-						<li onclick="memberList('개발팀');" style="cursor : pointer;"><a>개발팀</a></li>
-						<li onclick="memberList('총무팀');" style="cursor : pointer;"><a>총무팀</a></li>
-						<li onclick="memberList('회계팀');" style="cursor : pointer;"><a>회계팀</a></li>
-						<li onclick="memberList('영업팀');" style="cursor : pointer;"><a>영업팀</a></li> -->
+
 					</ul>
 				</div>
 				<div class="content-02">
@@ -69,11 +65,10 @@
 	<script>
 		// 부서별 멤버 조회
 		$(document).on("click", "#department-list li", function(){
+			
 			$.ajax({
 				url : "memberList.ap",
-				data : {
-					dept : $(this).text()
-				},
+				data : {dept : $(this).text()},
 				success : function(result){
 					value = "";
 					if(result.length == 0){
@@ -82,12 +77,12 @@
 						for(let i = 0; i < result.length; i++){
 							value += '<li>'
 							      +  	'<input type="checkbox" id="member-check" value="' + result[i].userNo + '">'
-							      +     '<div>';
+							      +  	'<div>';
 							      
 							if(result[i].profImg){
-								value += '<img src="' + result[i].profImg + '">';
+								value += 	'<img src="' + result[i].profImg + '">';
 							}else{
-								value += '<img src="resources/profile_images/defaultProfile.jpg">';
+								value += 	'<img src="resources/profile_images/defaultProfile.jpg">';
 							}   
 							      
 							value +=		'&nbsp;&nbsp;<strong>' + result[i].userName + '</strong>&nbsp;&nbsp;' + result[i].jobName + '&nbsp;' + result[i].depName
@@ -101,6 +96,7 @@
 					console.log("부서별 멤버 조회 부분 ajax 연결 실패");
 				}
 			})
+			
 		})	
 	</script>
 	
@@ -134,6 +130,7 @@
 	<script>
 		// 부서 조회
 		$(function(){
+			
 			$.ajax({
 				url : "departmentList.ap",
 				success : function(dep){
@@ -147,6 +144,7 @@
 					console.log("부서조회 부분 ajax연결 실패");
 				}
 			})
+			
 		})
 	</script>
 
@@ -215,9 +213,9 @@
 							      +  		'<div>';
 							      
 							if(list[i].profImg){
-								value += '<img src="' + list[i].profImg + '">  <strong>' + list[i].userName + '</strong>  ' + list[i].jobName + ' ' + list[i].depName;
+								value += 		'<img src="' + list[i].profImg + '">  <strong>' + list[i].userName + '</strong>  ' + list[i].jobName + ' ' + list[i].depName;
 							}else{
-								value += '<img src="resources/profile_images/defaultProfile.jpg">  <strong>' + list[i].userName + '</strong>  ' + list[i].jobName + ' ' + list[i].depName;
+								value += 		'<img src="resources/profile_images/defaultProfile.jpg">  <strong>' + list[i].userName + '</strong>  ' + list[i].jobName + ' ' + list[i].depName;
 							}     
 							      
 							value +=  		'</div>'
@@ -270,9 +268,9 @@
 							      +  		'<div>';
 							      
 							if(list[i].profImg){
-								value += '<img src="' + list[i].profImg + '">  <strong>' + list[i].userName + '</strong>  ' + list[i].jobName + ' ' + list[i].depName;
+								value += 		'<img src="' + list[i].profImg + '">  <strong>' + list[i].userName + '</strong>  ' + list[i].jobName + ' ' + list[i].depName;
 							}else{
-								value += '<img src="resources/profile_images/defaultProfile.jpg">  <strong>' + list[i].userName + '</strong>  ' + list[i].jobName + ' ' + list[i].depName;
+								value += 		'<img src="resources/profile_images/defaultProfile.jpg">  <strong>' + list[i].userName + '</strong>  ' + list[i].jobName + ' ' + list[i].depName;
 							}    
 							      
 							value +=  		'</div>'
@@ -325,9 +323,9 @@
 							      
 							      
 							if(list[i].profImg){
-								value += '<img src="' + list[i].profImg + '">  <strong>' + list[i].userName + '</strong>  ' + list[i].jobName + ' ' + list[i].depName;
+								value += 		'<img src="' + list[i].profImg + '">  <strong>' + list[i].userName + '</strong>  ' + list[i].jobName + ' ' + list[i].depName;
 							}else{
-								value += '<img src="resources/profile_images/defaultProfile.jpg">  <strong>' + list[i].userName + '</strong>  ' + list[i].jobName + ' ' + list[i].depName;
+								value +=		'<img src="resources/profile_images/defaultProfile.jpg">  <strong>' + list[i].userName + '</strong>  ' + list[i].jobName + ' ' + list[i].depName;
 							}
 							      
 							value +=  		'</div>'
@@ -379,9 +377,9 @@
 							      +  		'<div>';
 							      
 							if(list[i].profImg){
-								value += '<img src="' + list[i].profImg + '">  <strong>' + list[i].userName + '</strong>  ' + list[i].jobName + ' ' + list[i].depName;
+								value += 		'<img src="' + list[i].profImg + '">  <strong>' + list[i].userName + '</strong>  ' + list[i].jobName + ' ' + list[i].depName;
 							}else{
-								value += '<img src="resources/profile_images/defaultProfile.jpg">  <strong>' + list[i].userName + '</strong>  ' + list[i].jobName + ' ' + list[i].depName;
+								value += 		'<img src="resources/profile_images/defaultProfile.jpg">  <strong>' + list[i].userName + '</strong>  ' + list[i].jobName + ' ' + list[i].depName;
 							}    
 							      
 							value +=  		'</div>'
@@ -412,13 +410,13 @@
 			let receiverMail = "";
 			for(let i = 0; i < receiverArr.length; i++){
 				value +='<li class="mail-addr-out to-li">'
-                    + '<span class="addr-block">' 
-                    + receiverArr[i].value
-                    + '</span>'
-                    + '<span class="btn-addr-remove">'
-                    + '<ion-icon name="close-outline"></ion-icon>'
-                    + '</span>'
-                    + '</li>';
+                  	  + 	'<span class="addr-block">' 
+                  	  + 		receiverArr[i].value
+                   	  + 	'</span>'
+                      + 	'<span class="btn-addr-remove">'
+                  	  + 		'<ion-icon name="close-outline"></ion-icon>'
+                 	  + 	'</span>'
+                	  + '</li>';
                     
                 receiverMail += receiverArr[i].value + ",";
 				
@@ -443,19 +441,18 @@
           	
           	toLimit();
           	
-          	
         	// 참조인 주소 li요소로 추가
         	let refVal = "";
         	let refMail = ""
 		    for(let i = 0; i < refArr.length; i++){
 		    	refVal +='<li class="mail-addr-out ref-li">'
-			          + '<span class="addr-block">' 
-			          + refArr[i].value
-			          + '</span>'
-			          + '<span class="btn-addr-remove">'
-			          + '<ion-icon name="close-outline"></ion-icon>'
-			          + '</span>'
-			          + '</li>';
+			           + 	'<span class="addr-block">' 
+			           + 		refArr[i].value
+			           + 	'</span>'
+			           + 	'<span class="btn-addr-remove">'
+			           + 		'<ion-icon name="close-outline"></ion-icon>'
+			           + 	'</span>'
+			           + '</li>';
 			    
 		    	refMail += refArr[i].value + ",";      
 			          
