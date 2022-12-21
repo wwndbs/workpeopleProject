@@ -292,10 +292,10 @@
 									    	var $addr = $("#to").val().replace(/,$/, "");
 									    }
 									  	
-											if(!addrCheck($addr)){ // 유효성 검사 결과 false일 경우
-												$("#to").val("");
-												return;
-											}
+										if(!addrCheck($addr)){ // 유효성 검사 결과 false일 경우
+											$("#to").val("");
+											return;
+										}
 									  
 									  	// 주소 li요소로 추가
 									    let value = "";
@@ -311,12 +311,11 @@
 									    $("#to").val("");
 									    $("#toAddrWrap .mail-addr-create").before(value);
 									    
-									  	
-											if($addr == "${ loginUser.email }"){ // 내 주소를 입력시 나에게 체크박스 체크
-												$("#toMe").prop("checked", true);
-											}
-									
-											// input value에 입력한 주소 추가
+										if($addr == "${ loginUser.email }"){ // 내 주소를 입력시 나에게 체크박스 체크
+											$("#toMe").prop("checked", true);
+										}
+								
+										// input value에 입력한 주소 추가
 									  	let currTo = $("#receiver").val();
 									  	if(currTo == ''){ // 처음 주소 추가 시
 									  		$("#receiver").val($addr);
@@ -380,10 +379,10 @@
 									  	let deleteTo = $(this).parent().prev().text().replace("\n", ""); // "bbb.com"
 									  	
 									  	currToArr.splice(currToArr.indexOf(deleteTo), 1);
-									     
-											if(deleteTo == "${loginUser.email}"){ // 내 주소를 버튼으로 삭제시 나에게 체크박스 해제
-												$("#toMe").prop("checked", false);
-											}
+								     
+										if(deleteTo == "${loginUser.email}"){ // 내 주소를 버튼으로 삭제시 나에게 체크박스 해제
+											$("#toMe").prop("checked", false);
+										}
 									  	
 									  	$("#receiver").val(currToArr.join()); // "aaa.com, ccc.com"
 									  	
@@ -645,7 +644,9 @@
 									    for(var i=0; i<obj.files.length; i++){
 									      
 									      value += '<div class="each-file">'
-									             + 	'<span class="btn-file-remove"><ion-icon name="close-outline" index="' + i + '" class="new"></ion-icon></span>'
+									             + 	'<span class="btn-file-remove">'
+									      		 +		'<ion-icon name="close-outline" index="' + i + '" class="new"></ion-icon>'
+									      		 +	'</span>'
 									             + 	'<span>' + obj.files[i].name + '</span>'
 									             + '</div>';
 									

@@ -378,7 +378,6 @@ public class MailController {
 
 	}
 	
-
 	/**
 	 * Author : 정주윤 
 	 * 메일 답장 페이지 요청 처리해 주는 메소드
@@ -449,11 +448,14 @@ public class MailController {
 
 	}
 	
+	/**
+	 * Author : 정주윤
+	 * 임시보관함에서 불러 온 메일 발송 처리해 주는 메소드
+	 */
 	@RequestMapping("sendSave.ma")
 	public String sendSaveMail(String deleteFileNo, Mail m, MultipartFile[] upfile, HttpSession session, Model model) {
 		int mailNo = Integer.parseInt(m.getMailNo());
 		deleteFileNo = deleteFileNo.substring(0,deleteFileNo.lastIndexOf(",")); 
-    	
 		
 		// 보낸사람 + 받은사람 + 참조 명수만큼 ArrayList에 담기 (mailNo 담아서)
 		ArrayList<MailStatus> msList = new ArrayList<>();
